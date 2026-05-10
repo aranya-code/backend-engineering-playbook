@@ -1,9 +1,11 @@
 # AWS CLI
 
 ## Version
+
+```
 ### Gives the version
 aws --version
-
+```
 
 
 
