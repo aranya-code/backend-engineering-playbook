@@ -1,7 +1,7 @@
 # AWS CLI
 
 ## Version
-# Gives the version
+### Gives the version
 aws --version
 
 
