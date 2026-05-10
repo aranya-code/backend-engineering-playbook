@@ -13,7 +13,7 @@ aws --version
 aws configure
 ```
 
-### You will be prompted for:
+## You will be prompted for:
 
 ```text
 AWS Access Key ID:
@@ -22,7 +22,7 @@ Default region name:
 Default output format:
 ```
 
-### Example:
+## Example:
 
 ```text
 AWS Access Key ID: AKIAXXXXXXXX
