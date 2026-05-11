@@ -63,3 +63,46 @@ User without any group can be assigned to **Inline policies**.
   ]
 }
 ```
+
+# IAM Roles
+
+**IAM roles** are secure AWS identities with specific permissions that can be assumed by trusted entities, such as users, applications, or AWS services, rather than being uniquely associated with a single person. 
+
+ Unlike IAM users, roles **do not have long-term credentials** like passwords or access keys; instead, they provide **temporary security credentials** when assumed, which significantly reduces security risks associated with key exposure. 
+
+## Common IAM Roles
+
+- EC2 Instance Roles
+- Lambda Function Roles
+- Roles for Cloud Formation
+
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "sts:AssumeRole"
+            ],
+            "Principal": {
+                "Service": [
+                    "ec2.amazonaws.com"
+                ]
+            }
+        }
+    ]
+}
+```
+
+# **IAM Security Tools**
+
+### IAM Credentials Report (account-level)
+
+A report that lists all your account's users and the status of their various credentials
+
+### IAM Access Advisor (user-level)
+
+Access advisor shows the service permissions granted to a user and when those services were last accessed.
+
+You can use this information to revise your policies.
