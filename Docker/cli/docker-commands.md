@@ -157,3 +157,75 @@ docker compose -f <filename>.yml down
 ```docker
 docker build -t <appname>:tag .
 ```
+
+### To remove the docker login credentials
+
+```docker
+docker logout
+```
+
+### To login to Docker Hub via command prompt
+
+```docker
+docker login -u <username>
+```
+
+### To create and map the volume to the container
+
+```docker
+docker run -it -v <absolute path of host data folder>:<path of data folder in container> <image name>
+```
+
+### To check the available volumes
+
+```docker
+docker volume ls
+```
+
+### To create a custom volume
+
+```docker
+docker volume create <volume name> 
+```
+
+### To remove or delete a volume
+
+```docker
+docker volume rm <volume name>
+```
+
+### These are called named volumes
+
+```docker
+docker run -v <volume name>:<container directory>
+```
+
+### These are called anonymous volumes
+
+```docker
+docker run -v <mount path>
+```
+
+### This is how we bind mount our local host
+
+```docker
+docker run -v <host directory>:<container directory>
+```
+
+### To delete unused volumes
+
+```docker
+docker volume prune
+```
+
+### This line of code prevents creation of Python cache files or .pyc files
+
+```docker
+PYTHONDONTWRITEBYTECODE = 1
+```
+
+### Shows logs or output immediately
+
+```docker
+PYTHONUNBUFFERED = 1
+```
