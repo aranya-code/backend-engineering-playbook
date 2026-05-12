@@ -221,11 +221,11 @@ docker volume prune
 ### This line of code prevents creation of Python cache files or .pyc files
 
 ```docker
-PYTHONDONTWRITEBYTECODE = 1
+ENV PYTHONDONTWRITEBYTECODE = 1
 ```
 
 ### Shows logs or output immediately
 
 ```docker
-PYTHONUNBUFFERED = 1
+ENV PYTHONUNBUFFERED = 1
 ```
