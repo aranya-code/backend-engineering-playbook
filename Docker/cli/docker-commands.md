@@ -229,3 +229,21 @@ ENV PYTHONDONTWRITEBYTECODE = 1
 ```docker
 ENV PYTHONUNBUFFERED = 1
 ```
+
+### To install project requirements without caching the dependencies
+
+```docker
+pip install --no-cache-dir -r requirements-docker.txt
+```
+
+### This command starts our Django development server, opens it up to accept connections from outside the Docker container, and forcefully serves our CSS and JavaScript files even if we are testing in production mode
+
+```docker
+python manage.py runserver 0.0.0.0:8000 --insecure
+```
+
+### Automatically gathers all CSS, JavaScript, and image files from every app into one centralized folder for production, bypassing the 'are you sure?' confirmation prompt so the Docker build doesn't freeze
+
+```docker
+python manage.py collectstatic --noinput
+```
