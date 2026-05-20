@@ -6,6 +6,11 @@ Temporary, ephemeral physical storage physically attached to the host machine ru
 ### Characteristics
 - Extremely fast (lowest latency possible)
 - Ephemeral: Data is permanently lost if the instance is stopped, terminated, or hardware fails. (Reboots are okay).
+- Better I/O performance than EBS
+- Used for high-performance workloads
+- Temporary storage
+- Data is lost if the instance stops
+- Risk of data loss if hardware fails
 
 ### Use Cases
 - High-speed caching
