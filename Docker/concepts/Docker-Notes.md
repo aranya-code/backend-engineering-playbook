@@ -2,6 +2,8 @@
 
 Created by: aranya majumdar
 
+----
+
 # Background
 
 **Docker** is an open-source platform that allows developers to automate the deployment, scaling, and management of applications. It does this by packaging software into standardized, isolated units called **containers**.
@@ -36,6 +38,8 @@ CMD python manage.py collectstatic --noinput && \
     python manage.py runserver 0.0.0.0:8000
 
 ```
+
+----
 
 ### Sample Docker Compose File
 
@@ -123,3 +127,109 @@ volumes:
   # so that web-1 and web-2 can share files seamlessly.
   static_volume:
 ```
+
+----
+
+# Docker Volumes
+
+## Definition
+
+Docker Volumes are managed storage locations created and maintained by Docker to persist container data.
+
+Volumes remain even if the container is removed.
+
+
+
+## Why Use Volumes?
+
+- Persistent data storage
+- Share data between containers
+- Backup and restore support
+- Better performance
+- Docker-managed storage
+
+
+
+## Volume Lifecycle
+
+Container deleted ❌
+
+Volume deleted ❌
+
+Volume survives independently.
+
+
+### Create a Volume
+
+```bash
+docker volume create <volume name>
+```
+
+## Best Practices
+
+- Use volumes for databases
+- Use named volumes in production
+- Avoid storing important data inside containers
+- Backup volumes regularly
+
+# Docker Bind Mounts
+
+### Definition
+
+Bind Mounts map a file or directory from the host machine directly into the container.
+
+Host controls the data.
+
+### Why Use Bind Mounts?
+
+- Real-time file sharing
+- Local development
+- Code synchronization
+- Easy debugging
+
+
+### Difference Between Volume and Bind Mount
+
+| Feature | Volume | Bind Mount |
+|---|---|---|
+| Managed by Docker | Yes | No |
+| Stored by Docker | Yes | No |
+| Host Path Required | No | Yes |
+| Best for Production | Yes | Usually No |
+| Best for Development | Good | Excellent |
+
+
+### Bind Mount Syntax
+
+```docker
+docker run -v <host_path>:<container_path> <image>
+```
+
+```docker
+docker run --mount type=bind,source=<host_path>,target=<container_path> <image>
+```
+
+## Common Bind Mount Use Cases
+
+- Local code development
+- Live reload applications
+- Sharing configuration files
+- Sharing logs
+- Testing applications
+
+## Important Notes
+
+- Host path must exist
+- Changes reflect instantly
+- Bind mounts depend on host filesystem
+- Not ideal for portability
+
+## Best Practices
+
+- Use bind mounts during development
+- Use volumes in production
+- Use read-only mounts when possible
+- Avoid mounting sensitive host directories
+
+
+-----

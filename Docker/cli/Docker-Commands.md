@@ -140,6 +140,24 @@ docker network ls
 docker network create <network name>
 ```
 
+### To inspect the network status
+
+```docker
+docker network insepct
+```
+
+### To attach container to a network
+
+```docker
+docker network connect
+```
+
+### To detach container to a network
+
+```docker
+docker network disconnect
+```
+
 ### To create the docker container with yml file
 
 ```docker
@@ -218,6 +236,18 @@ docker run -v <host directory>:<container directory>
 docker volume prune
 ```
 
+### To cleanup everything that is not running
+
+```jsx
+docker system prune
+```
+
+### To cleanup dangling images
+
+```jsx
+docker image prune
+```
+
 ### This line of code prevents creation of Python cache files or .pyc files
 
 ```docker
@@ -246,4 +276,34 @@ python manage.py runserver 0.0.0.0:8000 --insecure
 
 ```docker
 python manage.py collectstatic --noinput
+```
+
+### To give the container a specific name
+
+```docker
+docker run -p 80:80 --name <Container name>
+```
+
+### To list the processes that are running inside a container
+
+```docker
+docker top <container name>
+```
+
+### To get the configuration of container
+
+```docker
+docker inspect <container name/id>
+```
+
+### To get performance stats of a container
+
+```docker
+docker stats <container name/id>
+```
+
+### To check the port details of a container
+
+```docker
+docker port <container id>
 ```

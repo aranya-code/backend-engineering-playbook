@@ -2,6 +2,10 @@
 
 Created by: aranya majumdar
 
+---
+
+# Problem Statement - 1
+
 ### Docker database issue
 
 ![Database Issue](../images/DB_Issue.png)
@@ -44,6 +48,10 @@ services:
       - "5432:5432"
 ```
 
+-----
+
+# Problem Statement - 2
+
 ### DRF CSS Styling Missing in Docker
 
 **The Problem Statement**
@@ -62,3 +70,56 @@ This is done by chaining commands in the `Dockerfile` or `docker-compose.yml`:
 # Gathers all static files into the STATIC_ROOT directory, then starts the server
 CMD python manage.py collectstatic --noinput && python manage.py runserver 0.0.0.0:8000
 ```
+
+---
+
+# Problem Statement - 3
+
+### Docker container is stopped after creation
+
+```docker
+docker run -d --name ubuntu ubuntu:14.04
+```
+
+### Why It Happens
+
+Starts the container, but Ubuntu has no foreground process to keep it alive, so it exits immediately.
+
+We need to keep it alive but running a process inside the container.
+
+Docker containers stay alive only while a foreground process is running.
+
+In this case:
+
+- Ubuntu image starts
+- No active foreground process exists
+- Container exits immediately
+
+### Solution 1 — Run Ubuntu Interactively
+
+```docker
+docker run -it --name ubuntu ubuntu:14.04 /bin/bash
+```
+
+## What Happens
+
+- `i` → interactive mode
+- `t` → terminal access
+- `/bin/bash` → keeps container alive
+
+Now you are inside the container.
+
+### Solution 2 — Run in Detached Mode
+
+```docker
+docker run -dit --name ubuntu ubuntu:14.04 bash
+```
+
+## What Happens
+
+- `d` → detached/background mode
+- `i` → interactive
+- `t` → terminal
+- `bash` → foreground process
+
+Container keeps running.
