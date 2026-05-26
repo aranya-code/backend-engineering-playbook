@@ -123,3 +123,67 @@ docker run -dit --name ubuntu ubuntu:14.04 bash
 - `bash` → foreground process
 
 Container keeps running.
+
+---
+
+# **Problem Statement - 4**
+
+![image.png](../images/Volume_Issue.png)
+
+### Docker Compose file with issue
+
+```docker
+services:
+  drupal:
+    image: drupal
+    ports:
+      - "8080:80"
+    volumes:
+      - drupal-modules:/var/www/html/modules
+      - drupal-profiles:/var/www/html/profiles
+      - drupal-sites:/var/www/html/sites
+      - drupal-themes:/var/www/html/themes
+      
+  postgres:
+    image: postgres
+    environment:
+      - POSTGRESS_PASSWORD=password
+
+volumes:
+  - drupal-modules:
+  - drupal-profiles:
+  - drupal-sites:
+  - drupal-themes:
+```
+
+The error **"volumes must be a mapping"** is happening because of how the top-level `volumes` are defined at the very end of your `docker-compose.yml` file.
+
+In YAML, the hyphen (`-`) creates a list (or array), but Docker Compose expects top-level named volumes to be defined as a mapping (a dictionary/object).
+
+### Corrected Code
+
+```docker
+services:
+  drupal:
+    image: drupal
+    ports:
+      - "8080:80"
+    volumes:
+      - drupal-modules:/var/www/html/modules
+      - drupal-profiles:/var/www/html/profiles
+      - drupal-sites:/var/www/html/sites
+      - drupal-themes:/var/www/html/themes
+      
+  postgres:
+    image: postgres
+    environment:
+      - POSTGRES_PASSWORD=passwor
+
+volumes:
+  drupal-modules:  # Removed the hyphens here
+  drupal-profiles:
+  drupal-sites:
+  drupal-themes:
+```
+
+---
