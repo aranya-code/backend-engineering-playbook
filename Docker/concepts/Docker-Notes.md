@@ -2,7 +2,7 @@
 
 Created by: aranya majumdar
 
-----
+---
 
 # Background
 
@@ -38,8 +38,6 @@ CMD python manage.py collectstatic --noinput && \
     python manage.py runserver 0.0.0.0:8000
 
 ```
-
-----
 
 ### Sample Docker Compose File
 
@@ -128,7 +126,7 @@ volumes:
   static_volume:
 ```
 
-----
+---
 
 # Docker Volumes
 
@@ -138,7 +136,7 @@ Docker Volumes are managed storage locations created and maintained by Docker to
 
 Volumes remain even if the container is removed.
 
-
+---
 
 ## Why Use Volumes?
 
@@ -148,7 +146,7 @@ Volumes remain even if the container is removed.
 - Better performance
 - Docker-managed storage
 
-
+---
 
 ## Volume Lifecycle
 
@@ -158,6 +156,7 @@ Volume deleted ❌
 
 Volume survives independently.
 
+---
 
 ### Create a Volume
 
@@ -187,9 +186,10 @@ Host controls the data.
 - Code synchronization
 - Easy debugging
 
-
 ### Difference Between Volume and Bind Mount
 
+
+```docker
 | Feature | Volume | Bind Mount |
 |---|---|---|
 | Managed by Docker | Yes | No |
@@ -197,7 +197,7 @@ Host controls the data.
 | Host Path Required | No | Yes |
 | Best for Production | Yes | Usually No |
 | Best for Development | Good | Excellent |
-
+```
 
 ### Bind Mount Syntax
 
@@ -231,5 +231,340 @@ docker run --mount type=bind,source=<host_path>,target=<container_path> <image>
 - Use read-only mounts when possible
 - Avoid mounting sensitive host directories
 
+---
 
------
+## ENTRYPOINT & CMD
+
+This is the command the container ALWAYS runs when it starts.
+
+This is the process that should keep the container alive.
+
+### Real world analogy
+
+Imagine Docker container = a machine.
+
+- `ENTRYPOINT` = machine engine
+- `CMD` = default settings/options for the engine
+- `ENTRYPOINT` = Fixed executable
+- `CMD` = Default arguments
+
+```docker
+ENTRYPOINT ["python"]
+CMD ["app.py"]
+```
+
+### Example 1 — Simple Python App
+
+```docker
+FROM python:3.12
+
+WORKDIR /app
+
+COPY . .
+
+ENTRYPOINT ["python", "main.py"]
+```
+
+### Example 2 — Using CMD + ENTRYPOINT Together
+
+```docker
+ENTRYPOINT ["nginx"]
+CMD ["-g", "daemon off;"]
+```
+
+### ENTRYPOINT vs CMD
+
+| Feature | ENTRYPOINT | CMD |
+| --- | --- | --- |
+| Purpose | Main command | Default arguments |
+| Mandatory? | No | No |
+| Easily overridden? | Harder | Easy |
+| Best use | Fixed application | Configurable defaults |
+| Runs as PID 1 | Usually Yes | Sometimes |
+
+---
+
+# Shell Form vs Exec Form in Docker
+
+## Definition
+
+Docker instructions like `RUN`, `CMD`, and `ENTRYPOINT` can be written in two formats:
+
+1. Shell Form
+2. Exec Form
+
+
+# 1. Shell Form
+
+## Syntax
+
+```docker
+CMD python app.py
+```
+
+or
+
+```docker
+ENTRYPOINT python app.py
+```
+
+
+## Internal Working
+
+Docker automatically runs:
+
+```bash
+/bin/sh -c "python app.py"
+```
+
+Meaning:
+
+- A shell process starts first
+- Then the shell starts the application
+
+
+## Process Structure
+
+```
+PID 1 -> sh -> python
+```
+
+
+## Advantages
+
+- Supports shell features
+- Supports variable expansion
+- Supports pipes and chaining
+
+Example:
+
+```docker
+RUN apt update && apt install -y nginx
+```
+
+
+## Disadvantages
+
+- Poor signal handling
+- Shell becomes PID 1
+- Not ideal for production
+- Can cause zombie processes
+- Kubernetes shutdown issues
+
+
+# 2. Exec Form
+
+## Syntax
+
+```docker
+CMD ["python", "app.py"]
+```
+
+or
+
+```docker
+ENTRYPOINT ["python", "app.py"]
+```
+
+
+## Internal Working
+
+Docker directly executes:
+
+```bash
+python app.py
+```
+
+No shell is involved.
+
+
+## Process Structure
+
+```
+PID 1 -> python
+```
+
+
+## Advantages
+
+- Proper signal handling
+- Application becomes PID 1
+- Better for production
+- Better Kubernetes compatibility
+- Cleaner process management
+- More secure
+
+
+## Disadvantages
+
+- No shell variable expansion
+- No shell operators like:
+    - `&&`
+    - pipes (`|`)
+    - redirects (`>`)
+
+
+# Signal Handling Difference
+
+## Shell Form
+
+```docker
+ENTRYPOINT python app.py
+```
+
+Docker sends signals to:
+
+```
+/bin/sh
+```
+
+Sometimes the shell does not properly forward signals to the app.
+
+Can cause:
+
+- hanging containers
+- improper shutdown
+- data corruption
+
+
+## Exec Form
+
+```docker
+ENTRYPOINT ["python", "app.py"]
+```
+
+Signals go directly to:
+
+```
+python
+```
+
+Result:
+
+- graceful shutdown
+- clean container stopping
+- better reliability
+
+
+# Environment Variable Difference
+
+## Shell Form
+
+Supports variable expansion:
+
+```docker
+CMD echo $HOME
+```
+
+
+## Exec Form
+
+Does NOT expand variables automatically:
+
+```docker
+CMD ["echo", "$HOME"]
+```
+
+Outputs:
+
+```
+$HOME
+```
+
+literally.
+
+
+# Using Variables in Exec Form
+
+Use explicit shell:
+
+```docker
+ENTRYPOINT ["sh", "-c", "echo $HOME"]
+```
+
+
+# Best Practices
+
+## Use Shell Form For
+
+### RUN instructions
+
+Example:
+
+```docker
+RUN apt update && apt install -y curl
+```
+
+Reason:
+
+- shell operators are useful
+
+
+## Use Exec Form For
+
+### CMD
+
+### ENTRYPOINT
+
+Example:
+
+```docker
+ENTRYPOINT ["gunicorn", "app.wsgi:application"]
+```
+
+Reason:
+
+- proper signal handling
+- production-grade containers
+
+
+# Comparison Table
+
+| Feature | Shell Form | Exec Form |
+| --- | --- | --- |
+| Uses shell | Yes | No |
+| PID 1 is application | No | Yes |
+| Signal handling | Poor | Excellent |
+| Variable expansion | Yes | No |
+| Supports shell operators | Yes | No |
+| Production recommended | No | Yes |
+| Kubernetes friendly | Weak | Strong |
+| Security | Less secure | More secure |
+
+
+# Professional Recommendation
+
+## Preferred Industry Standard
+
+```docker
+ENTRYPOINT ["python", "app.py"]
+```
+
+Use:
+
+- Exec form for CMD and ENTRYPOINT
+- Shell form mainly for RUN
+
+
+# Common Beginner Mistake
+
+## Bad
+
+```docker
+ENTRYPOINT python app.py
+```
+
+
+## Good
+
+```docker
+ENTRYPOINT ["python", "app.py"]
+```
+
+
+# Interview One-Liner
+
+> Shell form runs commands through `/bin/sh -c`, while exec form directly executes the process. Exec form is preferred in production because it provides proper signal handling and cleaner process management.
+> 
+
+---
