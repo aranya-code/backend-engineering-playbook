@@ -568,3 +568,11 @@ ENTRYPOINT ["python", "app.py"]
 > 
 
 ---
+
+# Docker Swarm
+
+With Swarm initialization Docker does many things. 
+
+- Root signing certificate for swarm
+- Certificates issued for first manager node
+- Join tokens are created
