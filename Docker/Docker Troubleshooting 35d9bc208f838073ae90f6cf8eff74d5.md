@@ -1,14 +1,14 @@
-# Docker Notes
+# Docker Troubleshooting
 
 Created by: aranya majumdar
 
 ---
 
-# Problem Statement - 1
+# **Problem Statement - 1**
 
 ### Docker database issue
 
-![Database Issue](../images/DB_Issue.png)
+![image.png](image.png)
 
 #### Option 1: Your database is running on your Windows machine
 
@@ -16,11 +16,11 @@ If you already have PostgreSQL installed and running natively on your local comp
 
 Docker has a special DNS name specifically for this: `host.docker.internal`.
 
-![Fix 1](../images/DB_Issue_Fix.png)
+![image.png](image%201.png)
 
 #### Option 2: Containerize the Database
 
-![Fix 2](../images/DB_Containerize.png)
+![image.png](image%202.png)
 
 ```yaml
 services:
@@ -48,9 +48,9 @@ services:
       - "5432:5432"
 ```
 
------
+---
 
-# Problem Statement - 2
+# **Problem Statement - 2**
 
 ### DRF CSS Styling Missing in Docker
 
@@ -73,7 +73,7 @@ CMD python manage.py collectstatic --noinput && python manage.py runserver 0.0.0
 
 ---
 
-# Problem Statement - 3
+# **Problem Statement - 3**
 
 ### Docker container is stopped after creation
 
@@ -128,7 +128,7 @@ Container keeps running.
 
 # **Problem Statement - 4**
 
-![image.png](../images/Volume_Issue.png)
+![image.png](image%203.png)
 
 ### Docker Compose file with issue
 
@@ -188,9 +188,9 @@ volumes:
 
 ---
 
-# **Problem Statement - 5**
+# Problem Statement - 5
 
-![image.png](../images/Swarm_Network_Issue.png)
+![image.png](image%204.png)
 
 ### Issue:
 
