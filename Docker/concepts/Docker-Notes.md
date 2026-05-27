@@ -569,10 +569,38 @@ ENTRYPOINT ["python", "app.py"]
 
 ---
 
-# Docker Swarm
+# Docker Swarm: Architecture & Feature Notes
 
-With Swarm initialization Docker does many things. 
+Docker Swarm is Docker's native clustering and orchestration tool. It turns a pool of individual Docker hosts into a single, virtual Docker host, allowing you to deploy, manage, and scale applications seamlessly across multiple machines.
 
-- Root signing certificate for swarm
-- Certificates issued for first manager node
-- Join tokens are created
+## Under the Hood: Swarm Initialization
+When you bootstrap a cluster using docker swarm init, you aren't just starting a service; Docker automatically sets up a secure, encrypted foundation for the cluster. Specifically, it handles the underlying Public Key Infrastructure (PKI):
+
+- Root Signing Certificate: Creates a root signing certificate for the entire Swarm.
+
+- Manager Certificates: Automatically issues cryptographic certificates for the first Manager node.
+
+- Join Tokens: Generates secure join tokens. These are required for any new nodes (whether they are joining as additional Managers or as Workers) to authenticate and securely attach to the cluster.
+
+## Core Components
+To understand Swarm, you need to understand its hierarchy:
+
+- Manager Nodes: The brains of the operation. They handle cluster management, maintain the desired state of the swarm, schedule tasks, and serve the Swarm mode HTTP API. (Best practice: run an odd number of managers, like 3 or 5, to maintain a quorum).
+
+- Worker Nodes: The muscle. Their sole purpose is to receive and execute tasks dispatched by the Manager nodes.
+
+- Services: The definition of what you want to run (e.g., an Nginx reverse proxy, a backend API, a Redis cache). You define the image, ports, and how many replicas you need.
+
+- Tasks: A single container and the commands running inside it. If a service asks for 3 replicas, the Manager schedules 3 tasks across the available nodes.
+
+## Key Features
+
+- Declarative Service Model: You declare the desired state of your application (e.g., "I need 5 instances of this backend API running"). The Swarm constantly monitors the cluster; if a node crashes and takes down 2 instances, the Manager automatically spins up 2 new instances on healthy nodes to maintain that desired state.
+
+- Multi-Host Networking (Overlay Networks): Swarm lets you create overlay networks that span across multiple physical hosts. Containers on different machines can communicate securely as if they were on the same local network, without exposing ports to the outside world.
+
+- Built-in Load Balancing: Swarm has an ingress routing mesh. You can publish a port for a service, and the Swarm will load balance incoming requests across all active containers for that service, regardless of which node receives the request.
+
+- Rolling Updates & Rollbacks: You can update a service's image or configuration incrementally. If a deployment fails (e.g., during an automated run via GitHub Actions), you can easily roll back to the previous stable state.
+
+- Secure by Default: All traffic between nodes on the overlay network is encrypted using mutual TLS (mTLS). It also includes built-in secrets management (for passwords, API keys, and SSL certs) so sensitive data is only transmitted to the nodes that actually need it.
