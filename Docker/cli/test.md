@@ -484,7 +484,7 @@ CMD curl -f <http://localhost> || exit 1
 
 ## Disable Health Check
 
-```bash
+```shell
 docker run --no-healthcheck nginx
 ```
 
