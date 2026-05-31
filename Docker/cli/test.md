@@ -475,7 +475,7 @@ docker inspect \\
 
 ## Dockerfile Health Check
 
-```docker
+```bash
 HEALTHCHECK --interval=30s \\
 --timeout=5s \\
 --retries=3 \\
