@@ -484,8 +484,8 @@ CMD curl -f <http://localhost> || exit 1
 
 ## Disable Health Check
 
-```shell
-docker run --no-healthcheck nginx
+```console
+$ docker run --no-healthcheck nginx
 ```
 
 ## Health Check in Compose
