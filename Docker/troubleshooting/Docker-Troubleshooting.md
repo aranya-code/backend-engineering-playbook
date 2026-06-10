@@ -8,7 +8,7 @@ Created by: aranya majumdar
 
 ### Docker database issue
 
-![Database Issue](../images/Volume_Detach.png)
+![Database Issue](../images/DB_Issue.png)
 
 #### Option 1: Your database is running on your Windows machine
 
