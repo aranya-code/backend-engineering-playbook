@@ -190,17 +190,4 @@ Every topic in this repo follows a deliberate format:
 
 ---
 
-## 📌 Issues Found in the Existing README
-
-The root `README.md` lists several services in the **Future Topics** section that are already documented in this repo:
-
-| Listed as "Future" | Actually Present |
-|--------------------|-----------------|
-| Route 53 | ✅ `concepts/Route 53/Route53.md` |
-| VPC Deep Dive | ✅ `concepts/Virtual_Private_Cloud/` (13 files) |
-
-These sections should be moved from "Future Topics" into the main topics list.
-
----
-
 *Created by Aranya Majumdar*
