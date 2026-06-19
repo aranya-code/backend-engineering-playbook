@@ -147,7 +147,7 @@ services:
   postgres:
     image: postgres
     environment:
-      - POSTGRESS_PASSWORD=password
+      - POSTGRES_PASSWORD=password
 
 volumes:
   - drupal-modules:
