@@ -8,7 +8,7 @@ Created by: aranya majumdar
 
 ### AWS EC2 Root EBS Volume Detach Failure
 
-![image.png](../images/Volume_Detach.png)
+![image.png](../../images/Volume_Detach.png)
 
 ### Error
 
