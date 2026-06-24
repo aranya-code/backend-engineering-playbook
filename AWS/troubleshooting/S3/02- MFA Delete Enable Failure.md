@@ -2,7 +2,7 @@
 
 ### AWS S3 MFA Delete Enablement Failure
 
-![image.png](../../images/MFA_Profile.png)
+![image.png](../../images/MFA_Profile.PNG)
 
 ### Error
 
