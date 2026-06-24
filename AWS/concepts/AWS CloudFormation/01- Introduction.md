@@ -436,3 +436,4 @@ A Stack is a collection of AWS resources managed as a single unit by CloudFormat
 | Blueprint      | Running Infrastructure |
 | YAML/JSON File | AWS Deployment         |
 | Definition     | Actual Resources       |
+
