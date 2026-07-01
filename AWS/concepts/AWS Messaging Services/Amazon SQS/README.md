@@ -61,34 +61,6 @@ Before starting this guide, you should be familiar with:
 
 ---
 
-# Folder Structure
-
-```text
-Amazon-SQS/
-│
-├── README.md
-│
-├── 01- Introduction.md
-├── 02- Queue Types.md
-├── 03- Message Lifecycle.md
-├── 04- Queue Attributes.md
-├── 05- Message Operations.md
-├── 06- Visibility Timeout.md
-├── 07- Delay Queue.md
-├── 08- Long Polling.md
-├── 09- Dead Letter Queue (DLQ).md
-├── 10- Queue Security and Access Policies.md
-├── 11- Monitoring and CloudWatch.md
-├── 12- Best Practices.md
-├── 13- Troubleshooting.md
-├── 14- Interview Questions.md
-├── 15- Hands-on Lab.md
-├── 16- Cheat Sheet.md
-├── 17- Architecture Patterns.md
-└── 18- AWS CLI and Boto3 Reference.md
-```
-
----
 
 # Amazon SQS Architecture
 
