@@ -1,3 +1,7 @@
+# Cli
+
+Created by: aranya majumdar
+
 # Kubectl Commands
 
 ### To get node details
@@ -54,6 +58,12 @@ kubectl logs <Name>
 kubectl describe pod <Name>
 ```
 
+### To get service details
+
+```bash
+kubectl describe service <name>
+```
+
 ### Entering execution mode
 
 ```bash
@@ -70,4 +80,100 @@ kubectl delete deployment <Name>
 
 ```bash
 kubectl apply -f <filename>
+```
+
+### To get detailed information of pod
+
+```bash
+kubectl get pod -o wide
+```
+
+### To get deployment configuration
+
+```bash
+kubectl get deployment nginx-depl -o yaml
+```
+
+### To get deployment configuration into a file
+
+```bash
+kubectl get deployment nginx-depl -o yaml > <filename.yaml>
+```
+
+### To delete the deployment
+
+```bash
+kubectl delete deployment -f <filename>
+```
+
+### To delete the service
+
+```bash
+kubectl delete service -f <filename>
+```
+
+### To get all the clusters
+
+```bash
+kubectl get all
+```
+
+### To create a namespace
+
+```bash
+kubectl create namespace <name of namespace>
+```
+
+### To add ingress controller to cluster
+
+```bash
+minikube addons enable ingress
+```
+
+### To get all the pods of Kube System
+
+```bash
+ kubectl get pod -n kube-system
+```
+
+### To list all the namespaces
+
+```bash
+kubectl get ns
+```
+
+### To get all the details of kubernetes resources
+
+```bash
+kubectl get all -n kubernetes-dashboard
+```
+
+### To install a Helm package
+
+```bash
+helm install <chartname>
+```
+
+### To provide values to Helm packages
+
+```bash
+helm install --values=<my-values.yaml> <chartname>
+```
+
+### To provide values to Helm packages using set
+
+```bash
+helm install --set <values>
+```
+
+### To upgrade Helm packages
+
+```bash
+helm upgrade <chartname>
+```
+
+### To rollback Helm packages
+
+```bash
+helm rollback <chartname>
 ```
