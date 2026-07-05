@@ -40,24 +40,28 @@ The goal is to make this repository useful for:
 ```text
 Kubernetes/
 │
-├── 01- Introduction.md
-├── 02- Kubernetes Core Components.md
-├── 03- Labels, Selectors & YAML Basics.md
-├── 04- Namespaces.md
-├── 05- Ingress.md
-├── 06- Helm.md
-├── 07- Persistent Storage (PV, PVC & StorageClass).md
-├── 08- StatefulSets.md
-├── 09- Kubernetes Services.md
-├── 10- Pods.md
-├── 11- ReplicaSets.md
-├── 12- Deployments.md
-├── 13- ConfigMaps & Secrets.md
-├── 14- kubectl Commands.md
-├── 15- Minikube.md
-├── 16- Kubernetes Interview Questions.md
+├── README.md
+│
+├── concepts/
+│   ├── 01 - Introduction.md
+│   ├── 02 - Core Components.md
+│   ├── 03 - Labels, Selectors & YAML Basics.md
+│   ├── 04- Namespaces.md
+│   ├── 05- Ingress.md
+│   ├── 06- Helm.md
+│   ├── 07- Persistent Storage.md
+│   ├── 08- StatefulSets.md
+│   ├── 09- Kubernetes Services.md
+│   ├── 10 - Pods.md
+│   ├── 11 - ReplicaSets.md
+│   ├── 12 - Deployments.md
+│   ├── 13 - ConfigMaps & Secrets.md
+│   ├── 14 - kubectl Commands.md
+│   ├── 15 - Minikube.md
+│   └── 16 - Kubernetes Interview Questions.md
 │
 ├── cli/
+│   ├── README.md
 │   ├── Cluster and Context.md
 │   ├── Pods.md
 │   ├── Deployments.md
@@ -73,10 +77,11 @@ Kubernetes/
 │   ├── Minikube.md
 │   ├── Debugging.md
 │   ├── YAML.md
-│   ├── Useful Aliases.md
-│   └── README.md
+│   └── Useful Aliases.md
 │
-└── README.md
+└── sample files/
+    ├── nginx-deployment.yaml
+    └── nginx-service.yaml
 ```
 
 ---
@@ -340,4 +345,3 @@ Feel free to use these notes for learning, teaching, and interview preparation.
 # 👨‍💻 Author
 
 **Aranya Majumdar**
-
