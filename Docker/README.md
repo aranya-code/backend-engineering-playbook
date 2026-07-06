@@ -32,7 +32,11 @@ Docker/
 │   ├── Docker Secrets.md
 │   └── Docker Health Checks.md
 ├── troubleshooting/
-│   └── Docker-Troubleshooting.md
+│   ├── 01- Container Cannot Connect to Host PostgreSQL.md
+│   ├── 02- DRF Admin CSS Missing in Docker.md
+│   ├── 03- Container Exits Immediately After Docker Run.md
+│   ├── 04- Compose Volumes Must Be a Mapping Error.md
+│   └── 05- Swarm Overlay Network Initialization Failure.md
 └── images/                 # Screenshots and diagrams
 ```
 
@@ -125,11 +129,11 @@ Real problems encountered and solved, with screenshots:
 
 | # | Problem | Fix |
 |---|---------|-----|
-| 1 | Container cannot connect to host PostgreSQL | Use `host.docker.internal` or containerize the DB |
-| 2 | DRF/Admin CSS missing in Docker | Run `collectstatic` before `runserver` |
-| 3 | Ubuntu container exits immediately after `docker run -d` | Use `-it` or `-dit` with a foreground process |
-| 4 | `volumes must be a mapping` error in Compose | Remove hyphens from top-level volume declarations |
-| 5 | Overlay network sandbox initialization failure in Swarm | Remove service → remove network → recreate network → redeploy |
+| 1 | [Container cannot connect to host PostgreSQL](troubleshooting/01-%20Container%20Cannot%20Connect%20to%20Host%20PostgreSQL.md) | Use `host.docker.internal` or containerize the DB |
+| 2 | [DRF/Admin CSS missing in Docker](troubleshooting/02-%20DRF%20Admin%20CSS%20Missing%20in%20Docker.md) | Run `collectstatic` before `runserver` |
+| 3 | [Ubuntu container exits immediately after `docker run -d`](troubleshooting/03-%20Container%20Exits%20Immediately%20After%20Docker%20Run.md) | Use `-it` or `-dit` with a foreground process |
+| 4 | [`volumes must be a mapping` error in Compose](troubleshooting/04-%20Compose%20Volumes%20Must%20Be%20a%20Mapping%20Error.md) | Remove hyphens from top-level volume declarations |
+| 5 | [Overlay network sandbox initialization failure in Swarm](troubleshooting/05-%20Swarm%20Overlay%20Network%20Initialization%20Failure.md) | Remove service → remove network → recreate network → redeploy |
 
 ---
 
