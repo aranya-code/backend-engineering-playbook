@@ -1,265 +1,210 @@
-# 🗄️ AWS Database Notes
+# AWS Database and Caching Services
 
-This folder contains structured notes on AWS database and caching services.
+A comprehensive, production-focused playbook on AWS database and caching services designed for Backend Engineers, DevOps Engineers, Cloud Engineers, Platform Engineers, and Solution Architects.
 
-The notes are written for:
-- Interview preparation
-- Real-world architecture understanding
-- Quick revision
-- Backend & DevOps learning
-- AWS certification preparation
+This playbook covers everything from core database theory to managed AWS services, caching architectures, production operations, security, scaling, cost optimization, and real-world interview preparation.
 
 ---
 
-# 📂 Folder Structure
+# What You Will Learn
+
+By completing this playbook, you will understand:
+
+- Core Database Theory (SQL vs NoSQL, ACID, BASE, CAP Theorem)
+- Data Organization (Indexing, Normalization, Partitioning, Sharding)
+- Database Reliability (Replication, Backups, HA, Disaster Recovery)
+- Amazon RDS Architecture and Operations
+- Amazon Aurora Architecture and Scaling
+- Amazon ElastiCache (Redis and Memcached)
+- Amazon MemoryDB for Redis
+- Caching Patterns and Failure Mitigations
+- Database Security and Encryption
+- Monitoring and Performance Tuning
+- Cost Optimization Strategies
+- Production Troubleshooting
+- System Design with Databases
+- Senior-Level Interview Preparation
+
+---
+
+# Playbook Structure
 
 ```text
-Databases/
+Database/
 │
-├── RDS/
-│   ├── RDS Overview.md
-│   ├── RDS Read Replicas.md
-│   ├── RDS Multi AZ.md
-│   ├── RDS Proxy.md
-│   ├── RDS Security.md
-│   ├── RDS Storage Auto Scaling.md
-│   ├── Single AZ to Multi AZ.md
-│   └── Quick Revision Notes.md
+├── README.md                          ← You are here
+├── Folder Structure.md
+├── Quick_Revision_Notes.md
 │
-├── Aurora/
-│   ├── Aurora Overview.md
-│   ├── Aurora Security.md
-│   └── Aurora vs RDS.md
+├── 00- Fundamentals/                  18 files – Core database theory
+│   ├── README.md
+│   ├── 01- SQL vs NoSQL.md
+│   ├── ...
+│   └── 18- Database Design Best Practices.md
 │
-├── ElastiCache/
-│   ├── ElastiCache Overview.md
-│   ├── Caching Strategies.md
-│   ├── DB Cache Architecture.md
-│   ├── Cache Aside.md
-│   ├── Write Through.md
-│   ├── TTL.md
-│   └── Quick Revision Notes.md
+├── 01- Amazon RDS/                    9 files – Relational database operations
+│   ├── README.md
+│   ├── 01- Overview and Architecture.md
+│   ├── ...
+│   └── 09- Best Practices and Cost Optimization.md
 │
-├── MemoryDB/
-│   ├── MemoryDB for Redis.md
-│   └── MemoryDB vs ElastiCache.md
+├── 02- Amazon ElastiCache/            7 files – In-memory caching operations
+│   ├── README.md
+│   ├── 01- Overview and Caching Patterns.md
+│   ├── ...
+│   └── 07- Best Practices and MemoryDB.md
 │
-└── README.md
+├── 03- Comparison Guide/              9 files – Side-by-side trade-off analysis
+│   ├── README.md
+│   ├── 01- RDS vs Database on EC2.md
+│   ├── ...
+│   └── 09- Partitioning vs Sharding.md
+│
+└── 04- Interview Questions/           6 files – 42 senior-level Q&A
+    ├── README.md
+    ├── 01- Relational and NoSQL.md
+    ├── ...
+    └── 06- Production Troubleshooting Scenarios.md
 ```
 
 ---
 
-# 🛢️ Amazon RDS
+# Module Directory
 
-## Topics Covered
-- RDS basics
-- Managed database concepts
-- Read replicas
-- Multi-AZ deployments
-- RDS Proxy
-- Storage auto scaling
-- Security & encryption
-- High availability
+| Directory | Files | Description |
+|-----------|-------|-------------|
+| 📂 [00- Fundamentals](./00-%20Fundamentals/) | 18 | Core database theory: SQL/NoSQL, CAP, ACID, indexing, sharding, replication, HA, DR |
+| 📂 [01- Amazon RDS](./01-%20Amazon%20RDS/) | 9 | RDS architecture, storage, Multi-AZ, replicas, proxy, security, monitoring, cost |
+| 📂 [02- Amazon ElastiCache](./02-%20Amazon%20ElastiCache/) | 7 | Caching patterns, Redis vs Memcached, clusters, eviction, failure modes, MemoryDB |
+| 📂 [03- Comparison Guide](./03-%20Comparison%20Guide/) | 9 | Side-by-side comparisons for rapid decision-making and interview prep |
+| 📂 [04- Interview Questions](./04-%20Interview%20Questions/) | 6 | 42 senior-level questions with detailed model answers and diagrams |
 
 ---
 
-## Important Concepts
+# Learning Path
 
-### Multi-AZ
-Used for:
-- High availability
-- Disaster recovery
+## Phase 1 – Database Foundations
 
-Uses:
-- Synchronous replication
+- Database Fundamentals (SQL vs NoSQL, ACID, BASE, CAP)
+- Data Organization (Indexing, Normalization, Partitioning, Sharding)
+- Reliability (Replication, Backups, HA, Disaster Recovery)
 
----
+## Phase 2 – AWS Managed Services
 
-### Read Replicas
-Used for:
-- Read scaling
-- Reporting workloads
-- Analytics
+- Amazon RDS (Architecture, Storage, Multi-AZ, Read Replicas)
+- Amazon RDS (Security, Backups, Proxy, Monitoring, Cost)
+- Amazon ElastiCache (Caching Patterns, Redis vs Memcached, Clusters)
 
-Uses:
-- Asynchronous replication
+## Phase 3 – Advanced Operations
 
----
+- Cache Failure Mitigations (Stampede, Penetration, Avalanche)
+- ElastiCache Security and Monitoring (EngineCPUUtilization)
+- Amazon MemoryDB vs ElastiCache
 
-### RDS Proxy
-Helps:
-- Connection pooling
-- Lambda scalability
-- Reducing DB stress
+## Phase 4 – Decision Making
 
----
+- Comparison Guides (9 side-by-side trade-off analyses)
+- Database Selection Guide
 
-# ⚡ Amazon Aurora
+## Phase 5 – Interview & Real World
 
-Aurora is AWS’s cloud-optimized relational database.
-
-## Benefits
-- Higher performance
-- Better scalability
-- Faster failover
-- Better replication
+- Interview Questions (42 Q&A across 6 categories)
+- Production Troubleshooting Scenarios
 
 ---
 
-## Common Interview Topic
+# Architecture Overview
 
-### Aurora vs Standard RDS
-
-Aurora provides:
-- Better performance
-- Distributed storage
-- Faster replication
-- Better failover handling
-
----
-
-# 🚀 Amazon ElastiCache
-
-Fully managed in-memory caching service.
-
-Supports:
-- Redis
-- Memcached
-
----
-
-## Main Benefits
-
-- Ultra-low latency
-- Reduced database load
-- Faster applications
-- Better scalability
-
----
-
-# 🧠 Caching Strategies
-
-## Cache Aside (Lazy Loading)
-
-Application:
-1. Checks cache
-2. Cache miss → DB
-3. Stores result in cache
-
-Most common strategy.
-
----
-
-## Write Through
-
-Writes happen to:
-- Cache
-- Database
-
-at the same time.
-
----
-
-## TTL (Time To Live)
-
-Defines:
-- How long cache data remains valid
-
----
-
-# 💾 Amazon MemoryDB for Redis
-
-Durable Redis-compatible in-memory database.
-
-Unlike ElastiCache:
-- Strong durability is a primary focus
-
-Useful for:
-- Real-time applications
-- Gaming
-- Financial systems
-
----
-
-# 🎯 Interview Focus Areas
-
-## Very Important Topics
-
-### Multi-AZ vs Read Replica
-Most commonly asked RDS interview topic.
-
----
-
-### Redis vs Memcached
-
-| Redis | Memcached |
-|---|---|
-| Persistent | Non-persistent |
-| Rich data structures | Simple key-value |
-| Replication support | Limited features |
-
----
-
-### RDS vs DB on EC2
-
-RDS advantages:
-- Managed backups
-- Monitoring
-- Automatic patching
-- High availability
-- Easier scaling
-
----
-
-# 🧠 Real-World Architecture Thinking
-
-Typical production setup:
+Typical production database tier utilizing caching, read scaling, and multi-AZ failover:
 
 ```text
-Application
-     ↓
-ElastiCache (Redis)
-     ↓
-Amazon RDS Multi-AZ
-     ↓
-Read Replicas
+                               Application Server
+                                       │
+                    ┌──────────────────┴──────────────────┐
+                    │ (Reads & Writes)                    │ (High-Throughput Reads)
+                    ▼                                     ▼
+        ┌──────────────────────┐              ┌──────────────────────┐
+        │  RDS Proxy (Pooling) │              │ ElastiCache (Redis)  │
+        └──────────┬───────────┘              │ (Sub-ms Cache Tier)  │
+                   │                          └──────────────────────┘
+                   ▼
+┌──────────────────────────────────────┐
+│       VPC Private Database Subnets   │
+│                                      │
+│  ┌────────────────────────────────┐  │
+│  │   Primary DB Instance (AZ-1)   │  │
+│  │   (Active - Processes Writes)  │  │
+│  └───────────────┬────────────────┘  │
+│                  │                   │
+│     Synchronous  │   Asynchronous    │
+│     Replication  │   Replication     │
+│                  │                   │
+│  ┌───────────────▼───┐  ┌───────────▼────────────┐  │
+│  │ Standby (AZ-2)    │  │ Read Replica (AZ-3)    │  │
+│  │ (Passive - HA)    │  │ (Active - Read Scale)  │  │
+│  └───────────────────┘  └────────────────────────┘  │
+└──────────────────────────────────────────────────────┘
 ```
 
-This architecture provides:
-- Faster reads
-- Lower DB load
-- High availability
-- Better scalability
+---
+
+# Database Selection Decision Tree
+
+```text
+Does the workload require complex SQL JOINs and ACID transactions?
+   ├── YES → Need max scale and fast failover?
+   │           ├── YES → Amazon Aurora
+   │           └── NO  → Amazon RDS
+   └── NO
+        │
+Need millisecond key-value lookups at massive scale?
+   ├── YES → Amazon DynamoDB
+   └── NO
+        │
+Need MongoDB-compatible document storage?
+   ├── YES → Amazon DocumentDB
+   └── NO
+        │
+Need graph relationship modeling?
+   ├── YES → Amazon Neptune
+   └── NO
+        │
+Need sub-millisecond in-memory caching?
+   ├── YES → Need durability (RPO=0)?
+   │           ├── YES → Amazon MemoryDB
+   │           └── NO  → Amazon ElastiCache
+   └── NO
+        │
+Need petabyte-scale analytics?
+   └── YES → Amazon Redshift
+```
 
 ---
 
-# 📝 Notes Philosophy
+# Core AWS Services Covered
 
-These notes focus on:
-- Small definitions
-- Interview-ready explanations
-- Real-world examples
-- Architecture thinking
-- Practical AWS usage
-
----
-
-# 📌 Best Practices
-
-- Use Multi-AZ for production databases
-- Use Read Replicas for scaling reads
-- Cache expensive queries
-- Use Redis for modern workloads
-- Use encryption at rest and in transit
-- Monitor database metrics with CloudWatch
+```text
+Amazon RDS              Amazon Aurora           Amazon ElastiCache
+Amazon MemoryDB         Amazon DynamoDB         Amazon Redshift
+AWS KMS                 AWS Secrets Manager     AWS IAM
+Amazon CloudWatch       Performance Insights    Enhanced Monitoring
+Amazon S3 (Backups)     AWS DMS                 Amazon Route 53
+```
 
 ---
 
-# 🔥 Final Goal
+# Key Takeaway
 
-This folder is designed to become:
-- A production-ready database knowledge base
-- An AWS interview preparation system
-- A backend engineering reference handbook
+Modern cloud architectures use **polyglot persistence** — selecting the right database for each workload rather than forcing all data into a single engine. This playbook equips you with the knowledge to make those decisions, operate databases at production scale, and defend your choices in technical interviews.
 
 ---
+
+# Navigation
+
+| Direction | Link |
+|-----------|------|
+| ⬆️ Parent | [AWS Concepts](../README.md) |
+
+---
+
+> **Part of the [Backend Engineering Playbook](../../../) — a structured learning resource for backend engineers.**
