@@ -50,7 +50,7 @@ After completing this section, you will be able to:
 | [03 - Global Options & Output Formats](./03-%20Global%20Options%20%26%20Output%20Formats.md) | `--profile`, `--region`, `--query`, `--output` |
 | [04 - CLI Productivity & Automation](./04-%20CLI%20Productivity%20%26%20Automation.md) | Shell scripting, automation, workflows |
 | [05 - Security & Troubleshooting](./05-%20Security%20%26%20Troubleshooting.md) | Security, debugging, production practices |
-| [06 - Cheat Sheet & Interview Guide](./06-%20Cheat%20Sheet%20%26%20Interview%20Guide.md) | Quick reference, interview Q&A, runbooks |
+| [06 - Cheat Sheet & Interview Guide](./06-%20Cheat%20Sheet%20%26%20Interview%20Questions.md) | Quick reference, interview Q&A, runbooks |
 
 
 ---
