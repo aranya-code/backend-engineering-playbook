@@ -2290,3 +2290,254 @@ These concepts form the foundation of secure AWS CLI usage and are essential kno
 
 ---
 
+
+# Senior-Level Deep Dives
+
+---
+
+## SigV4 Internals — What Actually Happens When You Sign a Request
+
+Most engineers know "the Secret Key signs the request." Senior engineers know the exact mechanics — which matters for debugging custom SDK integrations, Lambda authorizers, and IAM policy conditions.
+
+### The Four Steps of SigV4
+
+**Step 1 — Create a Canonical Request**
+
+A deterministic string is assembled from:
+- HTTP method (`GET`, `POST`, etc.)
+- URI path, URI-encoded
+- Query string parameters, sorted
+- Headers to sign (host, content-type, x-amz-date, etc.)
+- Signed headers list
+- SHA-256 hash of the request body
+
+```text
+GET
+/
+
+Action=ListBuckets&Version=2006-03-01
+host:s3.amazonaws.com
+x-amz-date:20260712T120000Z
+
+host;x-amz-date
+e3b0c44298fc1c149...  ← SHA-256 of empty body
+```
+
+**Step 2 — Create a String to Sign**
+
+```text
+AWS4-HMAC-SHA256
+20260712T120000Z
+20260712/ap-south-1/s3/aws4_request
+<SHA-256 of canonical request>
+```
+
+**Step 3 — Derive the Signing Key**
+
+A chain of HMAC-SHA256 operations derives a per-day/region/service signing key:
+
+```
+kSecret   = "AWS4" + SecretAccessKey
+kDate     = HMAC(kSecret, "20260712")
+kRegion   = HMAC(kDate, "ap-south-1")
+kService  = HMAC(kRegion, "s3")
+kSigning  = HMAC(kService, "aws4_request")
+```
+
+**Step 4 — Calculate the Signature**
+
+```
+signature = HMAC-SHA256(kSigning, StringToSign)
+```
+
+The resulting hex string goes into the `Authorization` header.
+
+### Why This Matters
+
+- The signing key is **scoped**: a key derived for `ap-south-1/s3` cannot sign a request for `us-east-1/iam`. This limits blast radius if a signing key leaks.
+- AWS recomputes the same signature server-side. If both match → request authenticated.
+- The `x-amz-date` timestamp prevents **replay attacks**: AWS rejects requests older than 15 minutes.
+- Debugging `SignatureDoesNotMatch` requires checking: Secret Key value, Region in the scope string, clock skew, and whether the body hash was computed correctly.
+
+---
+
+## The Credential Provider Chain — Full Details
+
+The lookup order matters enormously in production. Understanding it stops an entire class of "wrong account" incidents.
+
+```text
+Priority  Source                              Triggered by
+────────  ──────────────────────────────────  ────────────────────────────────────
+1         CLI option                          --profile, explicit flag
+2         AWS_ACCESS_KEY_ID env var           Injected by CI/CD, Docker, shell
+3         AWS_PROFILE env var                 Shell session setting
+4         ~/.aws/config [profile ...] assume  aws_role_arn + source_profile
+5         ~/.aws/credentials [profile]        Long-term or STS creds on disk
+6         Container credential endpoint       ECS task role via $AWS_CONTAINER_CREDENTIALS_RELATIVE_URI
+7         IMDSv2 on EC2                       Instance profile, fetched from 169.254.169.254
+8         SSO cache (~/.aws/sso/cache)        After aws sso login
+9         Process credentials                 credential_process = in config
+```
+
+### Dangerous Scenario
+
+An engineer ran this months ago:
+```bash
+export AWS_ACCESS_KEY_ID=AKIA...
+export AWS_SECRET_ACCESS_KEY=...
+```
+
+Then configured a new production profile. The environment variable still takes priority. `aws sts get-caller-identity` silently returns the old identity. Adding `--debug` reveals `credentials found in environment variables` in the provider chain output.
+
+**Fix:** `unset AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_SESSION_TOKEN`
+
+### Overriding the Chain in Code (Boto3 Context)
+
+The same chain applies to Boto3 and all AWS SDKs. A Lambda function with an execution role never needs explicit credentials — the SDK resolves the task's IAM role automatically via step 6.
+
+---
+
+## Assume-Role Chaining and Cross-Account Access
+
+A critical pattern in multi-account organizations:
+
+```bash
+# Assume a role in another account and capture temporary creds
+CREDS=$(aws sts assume-role \
+  --role-arn arn:aws:iam::987654321098:role/DeploymentRole \
+  --role-session-name my-deploy-session \
+  --duration-seconds 3600 \
+  --output json)
+
+export AWS_ACCESS_KEY_ID=$(echo $CREDS | jq -r .Credentials.AccessKeyId)
+export AWS_SECRET_ACCESS_KEY=$(echo $CREDS | jq -r .Credentials.SecretAccessKey)
+export AWS_SESSION_TOKEN=$(echo $CREDS | jq -r .Credentials.SessionToken)
+
+# Verify you are now acting in the target account
+aws sts get-caller-identity
+```
+
+Or configure it declaratively in `~/.aws/config`:
+
+```ini
+[profile production]
+role_arn = arn:aws:iam::987654321098:role/DeploymentRole
+source_profile = management
+role_session_name = engineer-session
+duration_seconds = 3600
+```
+
+Now `aws s3 ls --profile production` automatically chains the assume-role.
+
+### MFA-Protected Role Assumption
+
+```bash
+aws sts assume-role \
+  --role-arn arn:aws:iam::987654321098:role/AdminRole \
+  --role-session-name mfa-session \
+  --serial-number arn:aws:iam::123456789012:mfa/my-device \
+  --token-code 123456
+```
+
+Add `mfa_serial` to `~/.aws/config` and the CLI prompts for the token automatically.
+
+---
+
+## IMDSv2 — Why IMDSv1 Is Disabled in Modern Infrastructure
+
+The EC2 Instance Metadata Service (IMDS) at `169.254.169.254` is how an instance fetches its own IAM role credentials. IMDSv1 used a simple GET — vulnerable to SSRF attacks.
+
+**IMDSv2 requires a session token:**
+
+```bash
+# 1. Get a token (valid for up to 6 hours)
+TOKEN=$(curl -s -X PUT "http://169.254.169.254/latest/api/token" \
+  -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
+
+# 2. Use the token to fetch role credentials
+curl -s -H "X-aws-ec2-metadata-token: $TOKEN" \
+  http://169.254.169.254/latest/meta-data/iam/security-credentials/
+```
+
+AWS CLI automatically uses IMDSv2. When you launch EC2 instances, enforce it:
+
+```bash
+aws ec2 run-instances \
+  --image-id ami-0abcdef1234567890 \
+  --instance-type t3.micro \
+  --metadata-options \
+    HttpEndpoint=enabled,HttpTokens=required
+```
+
+`HttpTokens=required` means IMDSv1 is blocked. This is the current AWS recommended default.
+
+---
+
+## Session Token Refresh — Operational Patterns
+
+Long-running scripts must handle credential expiry. Patterns used in production:
+
+**Pattern 1 — Pre-check with `aws sts get-caller-identity` at script start**
+
+```bash
+if ! aws sts get-caller-identity --profile "$PROFILE" > /dev/null 2>&1; then
+  echo "Credentials expired or missing. Run: aws sso login --profile $PROFILE"
+  exit 1
+fi
+```
+
+**Pattern 2 — Credential refresh loop**
+
+```bash
+refresh_creds() {
+  EXPIRY=$(aws configure get aws_credential_expiry --profile "$PROFILE" 2>/dev/null)
+  NOW=$(date -u +%s)
+  EXPIRE_TS=$(date -d "$EXPIRY" +%s 2>/dev/null || echo 0)
+  if (( EXPIRE_TS - NOW < 300 )); then
+    aws sso login --profile "$PROFILE"
+  fi
+}
+```
+
+**Pattern 3 — Lambda credential refresh via environment**
+
+Lambda automatically rotates the execution role credentials. They are available at `$AWS_ACCESS_KEY_ID`, `$AWS_SECRET_ACCESS_KEY`, `$AWS_SESSION_TOKEN` in the function environment. Never cache them beyond the function invocation.
+
+---
+
+## Senior Interview Questions — Authentication Deep Dive
+
+**Q: A CI/CD pipeline runs fine in development but gets `AccessDenied` in production. Both use the same IAM policy. What do you check?**
+
+Strong answer:
+1. Verify the execution context — which IAM Role is the pipeline actually assuming in production vs. dev? Trust policies may differ.
+2. Check for SCPs (Service Control Policies) at the AWS Organizations level — a policy may restrict actions in the production OU even if the IAM policy allows them.
+3. Check Permission Boundaries — the production role might have one attached that limits effective permissions.
+4. Check resource-based policies (bucket policy, KMS key policy) — even if identity policy allows, a resource policy may explicitly deny.
+5. Run the command with `--debug` in a staging environment to capture the exact API call and compare against the policy.
+
+---
+
+**Q: You rotate an access key. Within an hour you receive alerts that a service is failing. What went wrong and how do you recover quickly?**
+
+Strong answer:
+- The new key was not propagated to all consumers. IAM key rotation creates the new key, but any application, container, CI/CD secret, or environment variable still holding the old key starts failing after it is disabled/deleted.
+- Recovery: immediately re-enable the old key → identify all consumers → rotate them → verify → disable old key → wait 24h → delete.
+- Prevention: audit key usage with IAM credential report and CloudTrail `AssumeRole`/`GetCredentials` events before rotation.
+
+---
+
+**Q: What is the difference between `sts:AssumeRole` and `sts:AssumeRoleWithWebIdentity`?**
+
+- `AssumeRole`: authenticated AWS identity (IAM user or role) assumes another role. Used for cross-account access, least-privilege elevation.
+- `AssumeRoleWithWebIdentity`: external OIDC identity (GitHub Actions, Kubernetes service account, Cognito) exchanges a web identity token for temporary AWS credentials. No long-lived AWS credentials needed. The preferred pattern for GitHub Actions CI/CD.
+
+```bash
+# GitHub Actions OIDC example (configured, not manually run)
+aws sts assume-role-with-web-identity \
+  --role-arn arn:aws:iam::123456789012:role/GitHubActionsRole \
+  --role-session-name github-deploy \
+  --web-identity-token "$GITHUB_OIDC_TOKEN"
+```
+
+---

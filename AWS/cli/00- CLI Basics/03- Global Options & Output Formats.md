@@ -1620,3 +1620,267 @@ These global options form the foundation of efficient AWS CLI usage and are appl
 
 ---
 
+
+# Senior-Level Deep Dives
+
+---
+
+## Pagination — The Hidden Trap in AWS CLI Automation
+
+Many AWS APIs return paginated results. A junior engineer's script works fine with 5 buckets but silently misses 50 in production because the first page has a limit of 50 items by default.
+
+### How Pagination Works
+
+AWS APIs return a `NextToken` (or `NextMarker`, `Marker`, `ContinuationToken`) when more results exist. You must loop until no token is returned.
+
+**Manual pagination — dangerous pattern**
+```bash
+# Only returns the first page — silently wrong in production
+aws ec2 describe-instances \
+  --query "Reservations[].Instances[].[InstanceId,State.Name]"
+```
+
+**Correct: use `--no-paginate` or the paginator**
+
+`--no-paginate` tells the CLI to automatically iterate all pages and concatenate results:
+
+```bash
+aws ec2 describe-instances \
+  --no-paginate \
+  --query "Reservations[].Instances[].[InstanceId,State.Name]"
+```
+
+**Manual page loop (when you need per-page control)**
+```bash
+next_token=""
+while true; do
+  if [ -z "$next_token" ]; then
+    result=$(aws ec2 describe-instances --output json)
+  else
+    result=$(aws ec2 describe-instances \
+      --starting-token "$next_token" \
+      --output json)
+  fi
+
+  echo "$result" | jq '.Reservations[].Instances[].InstanceId'
+
+  next_token=$(echo "$result" | jq -r '.NextToken // empty')
+  [ -z "$next_token" ] && break
+done
+```
+
+### Page Size Control
+
+```bash
+aws ec2 describe-instances \
+  --page-size 20 \
+  --no-paginate
+```
+
+Reducing `--page-size` lowers API call latency per page (useful for services with aggressive throttling) while `--no-paginate` still fetches all results.
+
+### Services That Commonly Trip Engineers
+
+| Service | Paginator Token | Default Limit |
+|---------|----------------|---------------|
+| EC2 describe-instances | NextToken | 100 per page |
+| S3 list-objects-v2 | ContinuationToken | 1000 per page |
+| CloudWatch get-metric-data | NextToken | varies |
+| IAM list-users | Marker | 100 per page |
+| Lambda list-functions | Marker | 50 per page |
+| CloudFormation list-stacks | NextToken | 100 per page |
+
+---
+
+## Advanced JMESPath — Production Patterns
+
+### Flattening Nested Arrays
+
+`Reservations[].Instances[]` (double `[]`) flattens nested arrays, while `Reservations[*].Instances[*]` preserves nesting:
+
+```bash
+# Returns [[["i-abc"]], [["i-def"]]] — nested
+aws ec2 describe-instances \
+  --query "Reservations[*].Instances[*].InstanceId"
+
+# Returns ["i-abc", "i-def"] — flat array — better for scripting
+aws ec2 describe-instances \
+  --query "Reservations[].Instances[].InstanceId" \
+  --output text
+```
+
+### Conditional Filtering
+
+```bash
+# Only running instances
+aws ec2 describe-instances \
+  --query "Reservations[].Instances[?State.Name=='running'].[InstanceId,InstanceType]" \
+  --output table
+
+# Only t3.micro instances
+aws ec2 describe-instances \
+  --query "Reservations[].Instances[?InstanceType=='t3.micro'].InstanceId" \
+  --output text
+
+# Instances with a specific tag value
+aws ec2 describe-instances \
+  --query "Reservations[].Instances[?Tags[?Key=='Environment' && Value=='production']].InstanceId" \
+  --output text
+```
+
+### Multi-Field Extraction with Hash Projection
+
+```bash
+# Return objects (not arrays) with named keys
+aws lambda list-functions \
+  --query "Functions[*].{Name: FunctionName, Runtime: Runtime, Memory: MemorySize}" \
+  --output table
+```
+
+### Sorting and Length
+
+```bash
+# Count running instances
+aws ec2 describe-instances \
+  --filters Name=instance-state-name,Values=running \
+  --query "length(Reservations[].Instances[])"
+
+# Sort S3 buckets by creation date
+aws s3api list-buckets \
+  --query "sort_by(Buckets, &CreationDate)[].Name" \
+  --output text
+
+# Get the newest bucket
+aws s3api list-buckets \
+  --query "sort_by(Buckets, &CreationDate)[-1].Name" \
+  --output text
+```
+
+### Nested Attribute Access
+
+```bash
+# Get the root device name for all instances
+aws ec2 describe-instances \
+  --query "Reservations[].Instances[].RootDeviceName" \
+  --output text
+
+# Get security group names for all instances
+aws ec2 describe-instances \
+  --query "Reservations[].Instances[].SecurityGroups[].GroupName" \
+  --output text
+```
+
+### Using `--query` in Shell Variable Assignment
+
+This pattern appears throughout production deployment scripts:
+
+```bash
+# Single value assignment
+LATEST_AMI=$(aws ec2 describe-images \
+  --owners amazon \
+  --filters "Name=name,Values=amzn2-ami-hvm-*-x86_64-gp2" \
+  --query "sort_by(Images, &CreationDate)[-1].ImageId" \
+  --output text)
+
+# Multiple values in a loop
+while IFS=$'\t' read -r id state; do
+  echo "Instance: $id is $state"
+done < <(aws ec2 describe-instances \
+  --query "Reservations[].Instances[].[InstanceId,State.Name]" \
+  --output text)
+```
+
+---
+
+## Output Format Decision Matrix — Senior Engineer Perspective
+
+| Scenario | Format | Why |
+|----------|--------|-----|
+| Shell variable assignment | `text` | No JSON parsing needed, direct assignment |
+| Bash loop over resource IDs | `text` | One value per line, works with `while read` |
+| Python/jq post-processing | `json` | Structured, composable |
+| Human dashboard / terminal review | `table` | Scannable at a glance |
+| IaC parameter file generation | `yaml` | Native YAML output |
+| Audit log (append to file) | `json` | Complete, structured, searchable |
+| API response debugging | `json` with `--debug` | Full response body visible |
+
+---
+
+## The `--cli-input-json` and `--generate-cli-skeleton` Pattern
+
+For complex API calls, embedding parameters inline becomes unmanageable. The professional approach:
+
+```bash
+# Generate the skeleton
+aws ec2 run-instances --generate-cli-skeleton input > launch-config.json
+```
+
+Edit `launch-config.json` with your values, then:
+
+```bash
+# Execute from file — version-controllable, reviewable
+aws ec2 run-instances --cli-input-json file://launch-config.json
+```
+
+This pattern is essential for:
+- Lambda function creation (30+ parameters)
+- ECS task definitions
+- CodeBuild project definitions
+- Any operation with complex nested JSON
+
+---
+
+## `--dry-run` — Available for Destructive EC2 Operations
+
+Many EC2 operations support `--dry-run`, which checks permissions without actually executing:
+
+```bash
+aws ec2 terminate-instances \
+  --instance-ids i-0abc123 \
+  --dry-run
+```
+
+Output if permissions are correct:
+```
+An error occurred (DryRunOperation): Request would have succeeded...
+```
+
+Output if missing permission:
+```
+An error occurred (UnauthorizedOperation): ...
+```
+
+Use this pattern in CI/CD preflight checks.
+
+---
+
+## Senior Interview Questions — Global Options & Output
+
+**Q: In a CI/CD pipeline, your `aws ec2 describe-instances` command only returns 50 instances but you know there are 200. How do you fix this?**
+
+The API is returning a paginated first page. Fix: add `--no-paginate` to the command, or implement a loop using `--starting-token` with the `NextToken` from each response. Note that `--no-paginate` with `--query` applies the JMESPath expression across all pages' merged results.
+
+---
+
+**Q: What is the difference between `--query "Reservations[*].Instances[*].InstanceId"` and `--query "Reservations[].Instances[].InstanceId"`?**
+
+`[*]` is a wildcard projection that preserves list structure. `[]` is a flatten projection that collapses nested arrays. In practice:
+- `[*]...[*]` returns `[["i-abc"], ["i-def"]]` — nested
+- `[]...[]` returns `["i-abc", "i-def"]` — flat
+
+For shell scripting and piping, the flat form combined with `--output text` is almost always what you want.
+
+---
+
+**Q: How do you use `--query` to extract a tag value when tags are represented as a list of key-value objects?**
+
+```bash
+aws ec2 describe-instances \
+  --instance-ids i-0abc123 \
+  --query "Reservations[].Instances[].Tags[?Key=='Name'].Value | [0]" \
+  --output text
+```
+
+The `?` filter on the array finds the matching key, `.Value` extracts the value, and `| [0]` unwraps the single-element array.
+
+---
