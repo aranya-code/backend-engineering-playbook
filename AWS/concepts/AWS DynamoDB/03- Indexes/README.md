@@ -50,45 +50,23 @@ After completing this section, you will understand:
 
 # Learning Path
 
-## Foundations
+## Quick Navigation
 
-| Chapter | Description |
-|----------|-------------|
-| **01 - Introduction to Indexes** | Learn why secondary indexes exist, how they differ from SQL indexes, and how DynamoDB uses indexes to support multiple access patterns. |
-| **02 - Global Secondary Index (GSI)** | Understand GSIs, independent partitioning, asynchronous replication, capacity planning, and common production use cases. |
-| **03 - Local Secondary Index (LSI)** | Learn how LSIs share partitions with the base table, support strong consistency, and where they fit in production systems. |
-| **04 - GSI vs LSI** | Compare architecture, scalability, consistency, limitations, and decision criteria for selecting the right index type. |
-
----
-
-## Index Design
-
-| Chapter | Description |
-|----------|-------------|
-| **05 - Sparse Indexes** | Design lightweight indexes that contain only relevant items, reducing storage and write costs. |
-| **06 - Composite Index Design** | Build reusable indexes using composite partition and sort keys to support multiple business queries. |
-| **07 - Index Projection Types** | Compare KEYS_ONLY, INCLUDE, and ALL projections and understand their impact on storage, performance, and cost. |
-
----
-
-## Performance & Operations
-
-| Chapter | Description |
-|----------|-------------|
-| **08 - Consistency Model of Indexes** | Understand strong consistency vs eventual consistency, GSI replication, and read-after-write behavior. |
-| **09 - Index Capacity & Cost** | Learn how indexes consume storage and throughput, calculate write amplification, and optimize operational costs. |
-| **10 - Index Performance & Optimization** | Optimize partition keys, sort keys, projections, and query patterns for predictable low-latency performance. |
-
----
-
-## Production Architecture
-
-| Chapter | Description |
-|----------|-------------|
-| **11 - Common Index Design Patterns** | Explore proven production patterns such as Lookup, Time-Series, Sparse, Composite, Hierarchical, Multi-Tenant, and Event Sourcing indexes. |
-| **12 - Index Anti-Patterns** | Identify common mistakes that lead to hot partitions, excessive costs, throttling, and poor scalability. |
-| **13 - Production Best Practices** | Learn enterprise strategies for designing, monitoring, reviewing, and continuously optimizing indexes in large-scale systems. |
-
+| Chapter | Topic |
+|----------|-------|
+| [01 - Introduction to Indexes](./01-%20Introduction%20to%20Indexes.md) | Learn why DynamoDB secondary indexes exist, how they differ from SQL indexes, and how they enable efficient access patterns in NoSQL databases. |
+| [02 - Global Secondary Index (GSI)](./02-%20Global%20Secondary%20Index%20(GSI).md) | Understand Global Secondary Indexes, independent partitioning, eventual consistency, throughput, and production use cases. |
+| [03 - Local Secondary Index (LSI)](./03-%20Local%20Secondary%20Index%20(LSI).md) | Learn how Local Secondary Indexes work, their strong consistency model, shared partitions, and limitations. |
+| [04 - GSI vs LSI](./04-%20GSI%20vs%20LSI.md) | Compare GSIs and LSIs across architecture, consistency, scalability, throughput, storage, and real-world design decisions. |
+| [05 - Sparse Indexes](./05-%20Sparse%20Indexes.md) | Learn how Sparse Indexes reduce storage costs, improve query performance, and optimize DynamoDB workloads. |
+| [06 - Composite Index Design](./06-%20Composite%20Index%20Design.md) | Master composite partition and sort key design to support multiple business access patterns using a single index. |
+| [07 - Index Projection Types](./07-%20Index%20Projection%20Types.md) | Explore KEYS_ONLY, INCLUDE, and ALL projection types and understand their impact on storage, performance, and cost. |
+| [08 - Consistency Model of Indexes](./08-%20Consistency%20Model%20of%20Indexes.md) | Understand strong consistency, eventual consistency, GSI replication, and read-after-write behavior in secondary indexes. |
+| [09 - Index Capacity & Cost](./09-%20Index%20Capacity%20%26%20Cost.md) | Learn how secondary indexes consume storage, read/write capacity, and influence DynamoDB pricing and operational costs. |
+| [10 - Index Performance & Optimization](./10-%20Index%20Performance%20%26%20Optimization.md) | Optimize partition keys, sort keys, projections, and query patterns for scalable, low-latency DynamoDB applications. |
+| [11 - Common Index Design Patterns](./11-%20Common%20Index%20Design%20Patterns.md) | Explore proven production design patterns including Lookup, Time-Series, Sparse, Composite, Hierarchical, Multi-Tenant, and Event Sourcing indexes. |
+| [12 - Index Anti-Patterns](./12-%20Index%20Anti-Patterns.md) | Identify common index design mistakes that cause hot partitions, throttling, high costs, and poor scalability. |
+| [13 - Production Best Practices](./13-%20Production%20Best%20Practices.md) | Learn enterprise best practices for designing, monitoring, optimizing, and maintaining DynamoDB indexes in production environments. |
 ---
 
 # Recommended Learning Order

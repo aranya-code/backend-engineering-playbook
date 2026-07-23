@@ -60,25 +60,26 @@ After completing this section, you will be able to:
 
 # Chapter Overview
 
-| Chapter | Description |
-|----------|-------------|
-| **01 - Data Modeling Principles** | Understand how DynamoDB data modeling differs from relational database design and the core principles behind NoSQL schema design. |
-| **02 - Access Patterns First Design** | Learn to identify business queries before designing tables, indexes, and primary keys. |
-| **03 - Single Table Design** | Master DynamoDB's most powerful modeling strategy by storing multiple entity types in a single table. |
-| **04 - One-to-One Relationships** | Model tightly coupled entities without joins while maintaining efficient queries. |
-| **05 - One-to-Many Relationships** | Design parent-child relationships using partition keys and sort keys. |
-| **06 - Many-to-Many Relationships** | Learn scalable techniques for modeling interconnected entities without junction tables. |
-| **07 - Composite Key Design Patterns** | Explore advanced partition key and sort key strategies for supporting multiple access patterns. |
-| **08 - Adjacency List Pattern** | Represent graph-like relationships such as organizational structures, social networks, and dependency trees. |
-| **09 - Sparse Index Pattern** | Build efficient Global Secondary Indexes that index only relevant items, reducing cost and improving performance. |
-| **10 - Time-Series Data Modeling** | Design schemas for logs, IoT telemetry, monitoring systems, metrics, and event data. |
-| **11 - Multi-Tenant Data Modeling** | Build SaaS applications with secure tenant isolation, scalable partitioning, and enterprise-grade authorization strategies. |
-| **12 - Version Control Pattern** | Preserve historical versions of records for auditing, rollback, compliance, and change tracking. |
-| **13 - Materialized Graph Pattern** | Optimize hierarchical queries by storing graph paths and hierarchy information directly within items. |
-| **14 - Write Sharding Pattern** | Eliminate hot partitions by distributing write traffic across multiple partition keys. |
-| **15 - Event Sourcing Pattern** | Store immutable business events to enable replay, auditing, event-driven architectures, and CQRS. |
-| **16 - Data Modeling Best Practices** | Consolidate production-ready guidelines, design principles, optimization techniques, and common pitfalls for DynamoDB schema design. |
+## Quick Navigation
 
+| Chapter | Topic |
+|----------|-------|
+| [01 - Data Modeling Principles](./01-%20Data%20Modeling%20Principles.md) | Learn the core principles of DynamoDB data modeling, including denormalization, access-pattern-first design, and schema flexibility. |
+| [02 - Access Patterns First Design](./02-%20Access%20Patterns%20First%20Design.md) | Understand how to identify business access patterns before designing tables, keys, and indexes. |
+| [03 - Single Table Design](./03-%20Single%20Table%20Design.md) | Master Single Table Design, entity modeling, item collections, and techniques for supporting multiple application workloads. |
+| [04 - One-to-One Relationships](./04-%20One-to-One%20Relationships.md) | Learn how to model one-to-one relationships efficiently using composite keys and item collections. |
+| [05 - One-to-Many Relationships](./05-%20One-to-Many%20Relationships.md) | Design scalable one-to-many relationships for real-world applications using partition and sort keys. |
+| [06 - Many-to-Many Relationships](./06-%20Many-to-Many%20Relationships.md) | Explore modeling techniques for many-to-many relationships using adjacency patterns and secondary indexes. |
+| [07 - Composite Key Design Patterns](./07-%20Composite%20Key%20Design%20Patterns.md) | Learn advanced composite key strategies to support multiple access patterns with minimal indexes. |
+| [08 - Adjacency List Pattern](./08-%20Adjacency%20List%20Pattern.md) | Understand how to model hierarchical and graph-like relationships using the Adjacency List Pattern. |
+| [09 - Sparse Index Pattern](./09-%20Sparse%20Index%20Pattern.md) | Learn how Sparse Indexes optimize storage, reduce costs, and efficiently retrieve subsets of data. |
+| [10 - Time-Series Data Modeling](./10-%20Time-Series%20Data%20Modeling.md) | Design DynamoDB tables for time-series workloads including logs, IoT telemetry, and event streams. |
+| [11 - Multi-Tenant Data Modeling](./11-%20Multi-Tenant%20Data%20Modeling.md) | Explore strategies for securely modeling multi-tenant SaaS applications with tenant isolation and scalability. |
+| [12 - Version Control Pattern](./12-%20Version%20Control%20Pattern.md) | Learn techniques for maintaining historical versions of data while efficiently accessing the latest version. |
+| [13 - Materialized Graph Pattern](./13-%20Materialized%20Graph%20Pattern.md) | Understand how to model graph-like relationships in DynamoDB without requiring a graph database. |
+| [14 - Write Sharding Pattern](./14-%20Write%20Sharding%20Pattern.md) | Learn how Write Sharding distributes high write traffic to prevent hot partitions and improve scalability. |
+| [15 - Event Sourcing Pattern](./15-%20Event%20Sourcing%20Pattern.md) | Explore Event Sourcing architectures using immutable events, append-only storage, and replay mechanisms. |
+| [16 - Data Modeling Best Practices](./16-%20Data%20Modeling%20Best%20Practices.md) | Consolidate production best practices, optimization strategies, and common pitfalls for designing scalable DynamoDB data models. |
 ---
 
 # Skills Progression

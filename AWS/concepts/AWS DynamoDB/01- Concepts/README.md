@@ -81,33 +81,35 @@ Amazon DynamoDB
 
 # Quick Navigation
 
+## Quick Navigation
+
 | Chapter | Topic |
 |----------|-------|
-| [01 - Introduction](./01-%20Concepts/01-%20Introduction.md) | Learn what DynamoDB is, why it exists, and where it fits in modern cloud architectures. |
-| [02 - NoSQL Fundamentals](./01-%20Concepts/02-%20NoSQL%20Fundamentals.md) | Understand NoSQL databases, CAP theorem, horizontal scaling, and why DynamoDB is different from relational databases. |
-| [03 - Tables, Items and Attributes](./01-%20Concepts/03-%20Tables,%20Items%20and%20Attributes.md) | Learn the fundamental building blocks of DynamoDB and flexible schema design. |
-| [04 - Data Types](./01-%20Concepts/04-%20Data%20Types.md) | Explore scalar, document, and set data types supported by DynamoDB. |
-| [05 - Primary Keys](./01-%20Concepts/05-%20Primary%20Keys.md) | Understand simple and composite primary keys and their role in data distribution. |
-| [06 - Partition Keys and Sort Keys](./01-%20Concepts/06-%20Partition%20Keys%20and%20Sort%20Keys.md) | Learn how DynamoDB organizes data using partition and sort keys. |
-| [07 - Partitions and Data Distribution](./01-%20Concepts/07-%20Partitions%20and%20Data%20Distribution.md) | Discover how DynamoDB partitions data and scales horizontally. |
-| [08 - Read Consistency Models](./01-%20Concepts/08-%20Read%20Consistency%20Models.md) | Learn eventual consistency, strong consistency, and replication trade-offs. |
-| [09 - Read Capacity Units (RCU) and Write Capacity Units (WCU)](./01-%20Concepts/09-%20Read%20Capacity%20Units%20(RCU)%20and%20Write%20Capacity%20Units%20(WCU).md) | Calculate throughput consumption and understand capacity planning. |
-| [10 - Capacity Modes](./01-%20Concepts/10-%20Capacity%20Modes.md) | Compare On-Demand and Provisioned Capacity modes. |
-| [11 - CRUD Operations](./01-%20Concepts/11-%20CRUD%20Operations.md) | Master DynamoDB CRUD APIs, conditional writes, and update expressions. |
-| [12 - Adaptive Capacity](./01-%20Concepts/12-%20Adaptive%20Capacity.md) | Learn how DynamoDB automatically redistributes capacity to busy partitions. |
-| [13 - Hot Partitions](./01-%20Concepts/13-%20Hot%20Partitions.md) | Understand causes, detection, and mitigation strategies for hot partitions. |
-| [14 - Auto Scaling](./01-%20Concepts/14-%20Auto%20Scaling.md) | Learn how DynamoDB automatically adjusts throughput based on demand. |
-| [15 - DynamoDB Accelerator (DAX)](./01-%20Concepts/15-%20DynamoDB%20Accelerator%20(DAX).md) | Explore DynamoDB's in-memory caching layer for microsecond latency. |
-| [16 - Streams](./01-%20Concepts/16-%20Streams.md) | Understand change data capture, event-driven architectures, and Lambda integration. |
-| [17 - Time To Live (TTL)](./01-%20Concepts/17-%20Time%20To%20Live%20(TTL).md) | Learn automatic data expiration and lifecycle management. |
-| [18 - Transactions](./01-%20Concepts/18-%20Transactions.md) | Explore ACID transactions, optimistic locking, and multi-item consistency. |
-| [19 - Global Tables](./01-%20Concepts/19-%20Global%20Tables.md) | Learn active-active multi-region replication and global application design. |
-| [20 - PartiQL](./01-%20Concepts/20-%20PartiQL.md) | Query DynamoDB using SQL-like syntax with PartiQL. |
-| [21 - Backup, Restore and Export](./01-%20Concepts/21-%20Backup,%20Restore%20and%20Export.md) | Understand backup strategies, disaster recovery, and exporting data to Amazon S3. |
-| [22 - Security and Encryption](./01-%20Concepts/22-%20Security%20and%20Encryption.md) | Learn IAM, KMS, encryption, VPC endpoints, and auditing with CloudTrail. |
-| [23 - Point-in-Time Recovery (PITR)](./01-%20Concepts/23-%20Point-in-Time%20Recovery%20(PITR).md) | Deep dive into continuous backups, recovery strategies, RPO, and RTO. |
-| [24 - DynamoDB Architecture Deep Dive](./01-%20Concepts/24-%20DynamoDB%20Architecture%20Deep%20Dive.md) | Explore DynamoDB internals including partitions, request routing, replication, and storage architecture. |
-| [25 - Best Practices and Anti-Patterns](./01-%20Concepts/25-%20Best%20Practices%20and%20Anti-Patterns.md) | Consolidate production recommendations, architectural guidelines, and common mistakes. |
+| [01 - Introduction](./01-%20Introduction.md) | Learn what Amazon DynamoDB is, why it exists, its core architecture, and how it differs from traditional relational databases. |
+| [02 - NoSQL Fundamentals](./02-%20NoSQL%20Fundamentals.md) | Understand NoSQL concepts, CAP theorem, eventual consistency, and why DynamoDB is a key-value/document database. |
+| [03 - Tables, Items and Attributes](./03-%20Tables,%20Items%20and%20Attributes.md) | Learn the core building blocks of DynamoDB including tables, items, attributes, and schema flexibility. |
+| [04 - Data Types](./04-%20Data%20Types.md) | Explore DynamoDB scalar, document, and set data types along with serialization and storage considerations. |
+| [05 - Primary Keys](./05-%20Primary%20Keys.md) | Learn simple and composite primary keys, uniqueness, and how primary keys determine data access. |
+| [06 - Partition Keys and Sort Keys](./06-%20Partition%20Keys%20and%20Sort%20Keys.md) | Understand partition key selection, composite keys, sorting, and efficient query patterns. |
+| [07 - Partitions and Data Distribution](./07-%20Partitions%20and%20Data%20Distribution.md) | Learn how DynamoDB distributes data across partitions, partition splitting, and scaling mechanisms. |
+| [08 - Read Consistency Models](./08-%20Read%20Consistency%20Models.md) | Understand strong consistency, eventual consistency, and when each consistency model should be used. |
+| [09 - Read Capacity Units (RCU) and Write Capacity Units (WCU)](./09-%20Read%20Capacity%20Units%20(RCU)%20and%20Write%20Capacity%20Units%20(WCU).md) | Learn how DynamoDB measures throughput, calculates capacity consumption, and handles reads and writes. |
+| [10 - Capacity Modes](./10-%20Capacity%20Modes.md) | Compare Provisioned and On-Demand capacity modes, auto scaling, and workload optimization. |
+| [11 - CRUD Operations](./11-%20CRUD%20Operations.md) | Master Create, Read, Update, and Delete operations using DynamoDB APIs and best practices. |
+| [12 - Adaptive Capacity](./12-%20Adaptive%20Capacity.md) | Learn how Adaptive Capacity automatically balances throughput to reduce hot partition issues. |
+| [13 - Hot Partitions](./13-%20Hot%20Partitions.md) | Understand why hot partitions occur, how they impact performance, and strategies to prevent them. |
+| [14 - Auto Scaling](./14-%20Auto%20Scaling.md) | Learn how DynamoDB Auto Scaling adjusts provisioned throughput automatically based on demand. |
+| [15 - DynamoDB Accelerator (DAX)](./15-%20DynamoDB%20Accelerator%20(DAX).md) | Explore DynamoDB Accelerator, in-memory caching, architecture, and performance improvements. |
+| [16 - Streams](./16-%20Streams.md) | Learn how DynamoDB Streams capture item-level changes for event-driven architectures and integrations. |
+| [17 - Time To Live (TTL)](./17-%20Time%20To%20Live%20(TTL).md) | Understand automatic item expiration, lifecycle management, and cost optimization using TTL. |
+| [18 - Transactions](./18-%20Transactions.md) | Learn ACID transactions in DynamoDB, transactional APIs, and multi-item consistency. |
+| [19 - Global Tables](./19-%20Global%20Tables.md) | Explore multi-region replication, disaster recovery, and globally distributed DynamoDB deployments. |
+| [20 - PartiQL](./20-%20PartiQL.md) | Learn how PartiQL provides SQL-like querying capabilities for DynamoDB while retaining NoSQL scalability. |
+| [21 - Backup, Restore and Export](./21-%20Backup,%20Restore%20and%20Export.md) | Understand backup strategies, point-in-time recovery, exports, and disaster recovery planning. |
+| [22 - Security and Encryption](./22-%20Security%20and%20Encryption.md) | Learn IAM integration, encryption at rest, encryption in transit, KMS, and security best practices. |
+| [23 - Point-in-Time Recovery (PITR)](./23-%20Point-in-Time-Recovery%20(PITR).md) | Explore continuous backups, recovery windows, and restoring tables to specific points in time. |
+| [24 - DynamoDB Architecture Deep Dive](./24-%20DynamoDB%20Architecture%20Deep%20Dive.md) | Understand DynamoDB internals including partition management, request routing, replication, and scaling architecture. |
+| [25 - Best Practices and Anti-Patterns](./25-%20Best%20Practices%20and%20Anti-Patterns.md) | Learn production best practices, common design mistakes, optimization techniques, and architectural recommendations for DynamoDB. |
 
 ---
 
