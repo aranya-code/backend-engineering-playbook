@@ -61,6 +61,28 @@ If not, complete the previous sections first.
 
 ---
 
+# Chapters Overview
+
+## Quick Navigation
+
+| Chapter | Topic |
+|----------|-------|
+| [01 - DynamoDB Streams](./01-%20DynamoDB%20Streams.md) | Learn Change Data Capture (CDC), stream architecture, stream records, Lambda integration, ordering guarantees, and event-driven architectures. |
+| [02 - Time To Live (TTL)](./02-%20Time%20To%20Live%20(TTL).md) | Understand automatic item expiration, lifecycle management, storage optimization, and TTL behavior in production. |
+| [03 - DynamoDB Accelerator (DAX)](./03-%20DynamoDB%20Accelerator%20(DAX).md) | Explore DynamoDB's in-memory caching layer, microsecond latency reads, cache consistency, and production caching strategies. |
+| [04 - Global Tables](./04-%20Global%20Tables.md) | Learn active-active multi-region replication, conflict resolution, eventual consistency, and globally distributed architectures. |
+| [05 - Point-in-Time Recovery (PITR)](./05-%20Point-in-Time%20Recovery%20(PITR).md) | Understand continuous backups, point-in-time restoration, disaster recovery, and recovery workflows. |
+| [06 - Backup & Restore](./06-%20Backup%20%26%20Restore.md) | Learn on-demand backups, restore operations, backup strategies, and disaster recovery planning. |
+| [07 - Export to Amazon S3](./07-%20Export%20to%20Amazon%20S3.md) | Export DynamoDB data to Amazon S3 for analytics, compliance, data lakes, and long-term archival. |
+| [08 - Import from Amazon S3](./08-%20Import%20from%20Amazon%20S3.md) | Learn bulk data migration and high-speed imports from Amazon S3 into DynamoDB tables. |
+| [09 - PartiQL](./09-%20PartiQL.md) | Use SQL-compatible PartiQL to query and modify DynamoDB tables while understanding its capabilities and limitations. |
+| [10 - Time-to-Live Design Patterns](./10-%20Time-to-Live%20Design%20Patterns.md) | Apply TTL in production using sessions, OTPs, shopping carts, distributed locks, and temporary data workflows. |
+| [11 - Streams Design Patterns](./11-%20Streams%20Design%20Patterns.md) | Build event-driven systems using CQRS, cache invalidation, notifications, search indexing, analytics, and microservices. |
+| [12 - Global Tables Best Practices](./12-%20Global%20Tables%20Best%20Practices.md) | Design resilient multi-region systems with conflict management, routing, disaster recovery, monitoring, and compliance. |
+| [13 - Advanced DynamoDB Patterns](./13-%20Advanced%20DynamoDB%20Patterns.md) | Combine multiple DynamoDB features into enterprise-grade architectures including Event Sourcing, CQRS, Materialized Views, Multi-Tenant SaaS, Leaderboards, and Data Lake integration. |
+
+---
+
 # Learning Path
 
 ```text
@@ -89,28 +111,6 @@ Production Design Patterns
 ```
 
 The chapters are intentionally ordered so that each topic builds upon the previous one, culminating in real-world architectural patterns.
-
----
-
-# Chapters Overview
-
-## Quick Navigation
-
-| Chapter | Topic |
-|----------|-------|
-| [01 - DynamoDB Streams](./01-%20DynamoDB%20Streams.md) | Learn Change Data Capture (CDC), stream architecture, stream records, Lambda integration, ordering guarantees, and event-driven architectures. |
-| [02 - Time To Live (TTL)](./02-%20Time%20To%20Live%20(TTL).md) | Understand automatic item expiration, lifecycle management, storage optimization, and TTL behavior in production. |
-| [03 - DynamoDB Accelerator (DAX)](./03-%20DynamoDB%20Accelerator%20(DAX).md) | Explore DynamoDB's in-memory caching layer, microsecond latency reads, cache consistency, and production caching strategies. |
-| [04 - Global Tables](./04-%20Global%20Tables.md) | Learn active-active multi-region replication, conflict resolution, eventual consistency, and globally distributed architectures. |
-| [05 - Point-in-Time Recovery (PITR)](./05-%20Point-in-Time%20Recovery%20(PITR).md) | Understand continuous backups, point-in-time restoration, disaster recovery, and recovery workflows. |
-| [06 - Backup & Restore](./06-%20Backup%20%26%20Restore.md) | Learn on-demand backups, restore operations, backup strategies, and disaster recovery planning. |
-| [07 - Export to Amazon S3](./07-%20Export%20to%20Amazon%20S3.md) | Export DynamoDB data to Amazon S3 for analytics, compliance, data lakes, and long-term archival. |
-| [08 - Import from Amazon S3](./08-%20Import%20from%20Amazon%20S3.md) | Learn bulk data migration and high-speed imports from Amazon S3 into DynamoDB tables. |
-| [09 - PartiQL](./09-%20PartiQL.md) | Use SQL-compatible PartiQL to query and modify DynamoDB tables while understanding its capabilities and limitations. |
-| [10 - Time-to-Live Design Patterns](./10-%20Time-to-Live%20Design%20Patterns.md) | Apply TTL in production using sessions, OTPs, shopping carts, distributed locks, and temporary data workflows. |
-| [11 - Streams Design Patterns](./11-%20Streams%20Design%20Patterns.md) | Build event-driven systems using CQRS, cache invalidation, notifications, search indexing, analytics, and microservices. |
-| [12 - Global Tables Best Practices](./12-%20Global%20Tables%20Best%20Practices.md) | Design resilient multi-region systems with conflict management, routing, disaster recovery, monitoring, and compliance. |
-| [13 - Advanced DynamoDB Patterns](./13-%20Advanced%20DynamoDB%20Patterns.md) | Combine multiple DynamoDB features into enterprise-grade architectures including Event Sourcing, CQRS, Materialized Views, Multi-Tenant SaaS, Leaderboards, and Data Lake integration. |
 
 ---
 
