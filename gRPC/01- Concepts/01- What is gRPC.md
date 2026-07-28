@@ -1,6 +1,5 @@
 # What is gRPC?
 
-# What is gRPC?
 
 **gRPC (Google Remote Procedure Call)** is a high-performance, open-source Remote Procedure Call (RPC) framework developed by Google.
 
