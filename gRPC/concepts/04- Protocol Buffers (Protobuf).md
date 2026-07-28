@@ -1,18 +1,5 @@
 # Protocol Buffers (Protobuf)
 
-## Learning Objectives
-
-After completing this chapter, you will be able to:
-
-- Understand what Protocol Buffers are.
-- Learn why gRPC uses Protocol Buffers instead of JSON.
-- Understand how Protocol Buffers work.
-- Learn the structure of a `.proto` file.
-- Understand serialization and deserialization.
-- Explain the benefits of Protocol Buffers in distributed systems.
-
----
-
 # What are Protocol Buffers?
 
 **Protocol Buffers (Protobuf)** are Google's language-neutral, platform-neutral, extensible mechanism for serializing structured data.

@@ -1,19 +1,5 @@
 # Defining Messages
 
-## Learning Objectives
-
-After completing this chapter, you will be able to:
-
-- Understand what a Protocol Buffer message is.
-- Learn how to define messages in a `.proto` file.
-- Understand fields and field numbers.
-- Learn how to use scalar data types.
-- Understand nested messages.
-- Learn about repeated fields.
-- Understand message design best practices.
-
----
-
 # What is a Message?
 
 A **message** is the fundamental data structure in Protocol Buffers.

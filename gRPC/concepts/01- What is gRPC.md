@@ -1,18 +1,5 @@
 # What is gRPC?
 
-## Learning Objectives
-
-After completing this chapter, you will be able to:
-
-- Understand what gRPC is.
-- Explain why gRPC was created.
-- Understand how Remote Procedure Calls (RPCs) work.
-- Explain the advantages of gRPC over traditional REST APIs.
-- Identify common use cases for gRPC.
-- Understand where gRPC fits into modern distributed systems.
-
----
-
 # What is gRPC?
 
 **gRPC (Google Remote Procedure Call)** is a high-performance, open-source Remote Procedure Call (RPC) framework developed by Google.

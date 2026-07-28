@@ -1,17 +1,5 @@
 # gRPC Architecture
 
-## Learning Objectives
-
-After completing this chapter, you will be able to:
-
-- Understand the overall architecture of gRPC.
-- Identify the responsibilities of each gRPC component.
-- Understand how a request flows from client to server.
-- Learn how Protocol Buffers and HTTP/2 fit into the architecture.
-- Understand the role of generated client and server code.
-
----
-
 # Overview
 
 A gRPC application consists of several components working together to allow two applications to communicate efficiently.

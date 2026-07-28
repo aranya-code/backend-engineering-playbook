@@ -1,20 +1,5 @@
 # HTTP/2 Fundamentals
 
-## Learning Objectives
-
-After completing this chapter, you will be able to:
-
-- Understand what HTTP/2 is.
-- Explain why gRPC uses HTTP/2 instead of HTTP/1.1.
-- Understand multiplexing and streams.
-- Learn about binary framing.
-- Understand header compression.
-- Learn how flow control improves performance.
-- Understand Server Push.
-- Explain why HTTP/2 is ideal for gRPC.
-
----
-
 # Introduction
 
 HTTP/2 is the underlying transport protocol used by gRPC.
