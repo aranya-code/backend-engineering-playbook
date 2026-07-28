@@ -1,0 +1,48 @@
+// Define Syntax
+syntax = "proto3";
+
+// Define the package
+package greet;
+
+// Define services
+service Greeter {
+
+  // Unary
+  rpc SayHello (Hello) returns (Reply);
+
+  // Client Streaming
+  rpc ClientHello (stream Hello) returns (MoreHello);
+
+  // Server Streaming
+  rpc ServerHello (Hello) returns (stream Reply);
+
+  // Bi-Directional Streaming
+  rpc InteractiveHello (stream Hello) returns (stream Reply);
+
+
+}
+
+
+// Defined messages
+
+// Request
+message Hello {
+
+  string name = 1;
+  string greeting = 2;
+
+}
+
+// Response
+message Reply {
+
+  string greeting = 1;
+
+}
+
+// Repeated Response
+message MoreHello {
+
+  string greeting = 1;
+  repeated Hello request= 2;
+}
