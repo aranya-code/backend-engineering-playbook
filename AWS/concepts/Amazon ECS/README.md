@@ -1,526 +1,283 @@
-# Amazon ECS Playbook
+# Amazon ECS
 
-A comprehensive, production-focused guide to Amazon Elastic Container Service (ECS) designed for Backend Engineers, DevOps Engineers, Cloud Engineers, Platform Engineers, and Solution Architects.
+A comprehensive, production-focused guide to Amazon Elastic Container Service — covering architecture, core components, networking, security, scaling, deployment strategies, monitoring, CI/CD, disaster recovery, infrastructure as code, and real-world production design.
 
-This playbook covers everything from ECS fundamentals to production-grade container orchestration, networking, security, scaling, deployment strategies, troubleshooting, disaster recovery, and real-world architecture design.
-
----
-
-# What You Will Learn
-
-By completing this playbook, you will understand:
-
-- Amazon ECS Fundamentals
-- ECS Architecture
-- ECS Core Components
-- ECS Launch Types
-- Task Definitions
-- ECS Services
-- ECS Networking
-- IAM Roles and Security
-- Load Balancing
-- Service Discovery
-- Storage Options
-- Auto Scaling
-- Capacity Providers
-- Deployment Strategies
-- Placement Strategies
-- Monitoring and Logging
-- Event-Driven Integrations
-- CI/CD Pipelines
-- Cost Optimization
-- Security Best Practices
-- Troubleshooting Methodologies
-- Production Architectures
-- Disaster Recovery
-- Hands-On Labs
-- Interview Preparation
+These notes are written for **Senior Backend Engineers**, **DevOps Engineers**, **Platform Engineers**, and **Solutions Architects** who need to design, deploy, and operate containerized workloads on AWS at production scale.
 
 ---
 
-# Target Audience
+## Why ECS?
 
-This playbook is intended for:
-
-- Python Developers
-- Django Developers
-- FastAPI Developers
-- Backend Engineers
-- DevOps Engineers
-- Platform Engineers
-- Cloud Engineers
-- Site Reliability Engineers (SREs)
-- AWS Practitioners
-- Solution Architects
-
----
-
-# Prerequisites
-
-Recommended knowledge:
-
-- Linux Fundamentals
-- Docker Basics
-- AWS Fundamentals
-- Networking Basics
-- CI/CD Concepts
-- Python (Optional)
-- Django / FastAPI (Optional)
-
----
-
-# Playbook Structure
+Amazon ECS is AWS's fully managed container orchestration service. It runs Docker containers without requiring you to install, operate, or scale your own cluster management infrastructure.
 
 ```text
-amazon-ecs-playbook/
-│
-├── 01- ECS Introduction.md
-├── 02- ECS Architecture.md
-├── 03- ECS Core Components.md
-├── 04- ECS Launch Types.md
-├── 05- ECS Task Definitions.md
-├── 06- ECS Services.md
-├── 07- ECS Networking.md
-├── 08- ECS IAM Roles and Security.md
-├── 09- ECS Load Balancing.md
-├── 10- ECS Service Discovery.md
-├── 11- ECS Storage.md
-├── 12- ECS Auto Scaling.md
-├── 13- ECS Capacity Providers.md
-├── 14- ECS Deployment Strategies.md
-├── 15- ECS Placement Strategies and Constraints.md
-├── 16- ECS Monitoring and Logging.md
-├── 17- ECS EventBridge Integration.md
-├── 18- ECS CI-CD and GitHub Actions.md
-├── 19- ECS Cost Optimization.md
-├── 20- ECS Security Best Practices.md
-├── 21- ECS Troubleshooting Playbook.md
-├── 22- ECS Production Architectures.md
-├── 23- ECS Real World Case Studies.md
-├── 24- ECS Interview Questions.md
-├── 25- ECS Disaster Recovery and High Availability.md
-├── 26- ECS Best Practices Checklist.md
-├── 27- ECS Hands-On Labs.md
-├── 28- ECS Commands Cheat Sheet.md
-├── 29- ECS Terraform Deployment.md
-└── 30- ECS End-to-End Production Project.md
+┌──────────────────────────────────────────────────────────────────┐
+│                       ECS Architecture                           │
+│                                                                  │
+│   Client Request                                                 │
+│        │                                                         │
+│        ▼                                                         │
+│   ┌──────────┐     ┌──────────────────┐     ┌────────────────┐  │
+│   │   ALB /  │────▶│   ECS Service    │────▶│  Task (Docker  │  │
+│   │   NLB    │     │  (desired count, │     │  containers)   │  │
+│   │          │     │   scaling rules) │     │                │  │
+│   └──────────┘     └──────────────────┘     └───────┬────────┘  │
+│                                                     │            │
+│                    ┌────────────────────────────────┘            │
+│                    │                                             │
+│          ┌─────────┴──────────┐                                  │
+│          │                    │                                   │
+│   ┌──────▼──────┐    ┌───────▼──────┐                           │
+│   │  Fargate    │    │    EC2       │                            │
+│   │ (Serverless │    │ (Self-      │                             │
+│   │  compute)   │    │  managed    │                             │
+│   │             │    │  instances) │                             │
+│   └─────────────┘    └─────────────┘                            │
+│                                                                  │
+│   ┌──────────────────────────────────────────────────────────┐  │
+│   │  Supporting Services:                                     │  │
+│   │  ECR (images) · IAM (security) · CloudWatch (monitoring) │  │
+│   │  Cloud Map (discovery) · Secrets Manager · EFS/EBS       │  │
+│   └──────────────────────────────────────────────────────────┘  │
+└──────────────────────────────────────────────────────────────────┘
+```
+
+**ECS vs EKS — when to choose ECS:**
+- You want a simpler operational model (no Kubernetes cluster management)
+- Your team is already invested in the AWS ecosystem
+- You prefer AWS-native integrations (ALB, IAM, CloudWatch, CodeDeploy)
+- You want Fargate for fully serverless containers with zero EC2 management
+
+**When ECS is NOT the right choice:**
+- You need multi-cloud portability → use EKS / Kubernetes
+- Your team already has deep Kubernetes expertise
+- You need advanced scheduling (CronJobs, DaemonSets, StatefulSets) → use EKS
+
+---
+
+## Module Index
+
+This playbook contains **27 content files** across **4 modules**, organized from foundational concepts to hands-on production deployment.
+
+| # | Module | Files | Focus |
+|---|--------|-------|-------|
+| 01 | [Concepts](./01-%20Concepts/) | 11 | Architecture, core components, launch types, task definitions, services, networking, IAM, load balancing, service discovery, storage |
+| 02 | [Production](./02-%20Production/) | 12 | Auto scaling, capacity providers, deployment strategies, placement, monitoring, EventBridge, CI/CD, cost optimization, security, DR, production architectures |
+| 03 | [Infrastructure](./03-%20Infrastructure/) | 1 | Terraform-based ECS deployment |
+| 04 | [Hands On](./04-%20Hands%20On/) | 3 | Labs, end-to-end production project, real-world case studies |
+
+---
+
+## Learning Path
+
+```text
+Phase 1 — Foundations                  Phase 2 — Production Operations
+┌────────────────────────┐            ┌──────────────────────────────┐
+│  01- Concepts          │            │  02- Production              │
+│                        │            │                              │
+│  Introduction          │            │  Auto Scaling                │
+│       ↓                │            │       ↓                      │
+│  Architecture          │            │  Capacity Providers          │
+│       ↓                │            │       ↓                      │
+│  Core Components       │            │  Deployment Strategies       │
+│       ↓                │    ────▶   │       ↓                      │
+│  Launch Types          │            │  Monitoring & Logging        │
+│       ↓                │            │       ↓                      │
+│  Task Definitions      │            │  CI/CD & GitHub Actions      │
+│       ↓                │            │       ↓                      │
+│  Services, Networking  │            │  Security, Cost, DR          │
+│       ↓                │            │       ↓                      │
+│  IAM, LB, Discovery   │            │  Production Architectures    │
+└────────────────────────┘            └──────────────┬───────────────┘
+                                                     │
+                                                     ▼
+                              ┌──────────────────────────────────────┐
+                              │  03- Infrastructure                  │
+                              │  Terraform Deployment                │
+                              └──────────────┬───────────────────────┘
+                                             │
+                                             ▼
+                              ┌──────────────────────────────────────┐
+                              │  04- Hands On                        │
+                              │  Labs → Production Project → Cases   │
+                              └──────────────────────────────────────┘
 ```
 
 ---
 
-# Learning Path
+## Module Breakdown
 
-## Phase 1 – ECS Foundations
+### 01 — Concepts (11 files)
 
-- ECS Introduction
-- ECS Architecture
-- ECS Core Components
-- ECS Launch Types
+Foundational ECS knowledge — from architecture to storage. Read these sequentially before moving to production topics.
 
----
-
-## Phase 2 – Running Containers
-
-- Task Definitions
-- Services
-- Networking
-- IAM Roles and Security
-
----
-
-## Phase 3 – Production Infrastructure
-
-- Load Balancing
-- Service Discovery
-- Storage
-- Auto Scaling
-- Capacity Providers
+| # | File | Topic |
+|---|------|-------|
+| 01 | [Introduction](./01-%20Concepts/01-%20Introduction.md) | What ECS is, managed vs self-managed orchestration, Fargate vs EC2 |
+| 02 | [Architecture](./01-%20Concepts/02-%20Architecture.md) | Control plane, data plane, cluster architecture, request flow |
+| 03 | [Core Components](./01-%20Concepts/03-%20Core%20Components.md) | Clusters, tasks, services, task definitions, container definitions |
+| 04 | [Launch Types](./01-%20Concepts/04-%20Launch%20Types.md) | Fargate vs EC2 — pricing, control, networking, use cases |
+| 05 | [Task Definitions](./01-%20Concepts/05-%20Task%20Definitions.md) | Container definitions, resource limits, environment variables, volumes |
+| 06 | [Services](./01-%20Concepts/06-%20Services.md) | Desired count, health checks, deployment configuration, service types |
+| 07 | [Networking](./01-%20Concepts/07-%20Networking.md) | awsvpc mode, bridge mode, host mode, security groups, VPC design |
+| 08 | [IAM Roles and Security](./01-%20Concepts/08-%20IAM%20Roles%20and%20Security.md) | Task role vs execution role, least privilege, secrets management |
+| 09 | [Load Balancing](./01-%20Concepts/09-%20Load%20Balancing.md) | ALB vs NLB, target groups, health checks, path-based routing |
+| 10 | [Service Discovery](./01-%20Concepts/10-%20Service%20Discovery.md) | AWS Cloud Map, DNS-based discovery, service-to-service communication |
+| 11 | [Storage](./01-%20Concepts/11-%20Storage.md) | EFS, EBS, bind mounts, ephemeral storage, shared volumes |
 
 ---
 
-## Phase 4 – Advanced ECS Operations
+### 02 — Production (12 files)
 
-- Deployment Strategies
-- Placement Strategies
-- Monitoring and Logging
-- EventBridge Integration
+Everything needed to run ECS in production — scaling, deployment, monitoring, security, and disaster recovery.
 
----
-
-## Phase 5 – DevOps & Automation
-
-- CI/CD and GitHub Actions
-- Terraform Deployment
-- Cost Optimization
-
----
-
-## Phase 6 – Production Readiness
-
-- Security Best Practices
-- Troubleshooting
-- Disaster Recovery
-- High Availability
+| # | File | Topic |
+|---|------|-------|
+| 01 | [Auto Scaling](./02-%20Production/01-%20Auto%20Scaling.md) | Target tracking, step scaling, scheduled scaling, scaling policies |
+| 02 | [Capacity Providers](./02-%20Production/02-%20Capacity%20Providers.md) | Fargate, Fargate Spot, EC2 Auto Scaling Group capacity providers |
+| 03 | [Deployment Strategies](./02-%20Production/03-%20Deployment%20Strategies.md) | Rolling update, blue/green (CodeDeploy), canary, circuit breaker |
+| 04 | [Placement Strategies and Constraints](./02-%20Production/04-%20Placement%20Strategies%20and%20Constraints.md) | Spread, binpack, random, attribute-based constraints, AZ balancing |
+| 05 | [Monitoring and Logging](./02-%20Production/05-%20Monitoring%20and%20Logging.md) | CloudWatch metrics, Container Insights, CloudWatch Logs, X-Ray |
+| 06 | [EventBridge Integration](./02-%20Production/06-%20EventBridge%20Integration.md) | Task state change events, automated responses, event-driven scaling |
+| 07 | [CI/CD and GitHub Actions](./02-%20Production/07-%20CI-CD%20and%20GitHub%20Actions.md) | Build → push ECR → deploy ECS pipeline, GitHub Actions workflows |
+| 08 | [Cost Optimization](./02-%20Production/08-%20Cost%20Optimization.md) | Fargate Spot, right-sizing, Savings Plans, reserved instances |
+| 09 | [Security Best Practices](./02-%20Production/09-%20Security%20Best%20Practices.md) | Image scanning, network isolation, secrets, runtime security |
+| 10 | [Production Architectures](./02-%20Production/10-%20Production%20Architectures.md) | Multi-AZ, microservices, SaaS platforms, event-driven patterns |
+| 11 | [Disaster Recovery and High Availability](./02-%20Production/11-%20Disaster%20Recovery%20and%20High%20Availability.md) | Multi-AZ failover, cross-region DR, service recovery, rollback |
+| 12 | [Best Practices Checklist](./02-%20Production/12-%20Best%20Practices%20Checklist.md) | Production readiness checklist across networking, security, scaling, monitoring |
 
 ---
 
-## Phase 7 – Interview & Real World
+### 03 — Infrastructure (1 file)
 
-- Production Architectures
-- Real World Case Studies
-- Interview Questions
-- End-to-End Production Project
+Infrastructure as Code for ECS deployments.
+
+| # | File | Topic |
+|---|------|-------|
+| 01 | [Terraform Deployment](./03-%20Infrastructure/01-%20Terraform%20Deployment.md) | Complete Terraform modules for ECS cluster, service, ALB, IAM, ECR |
 
 ---
 
-# Core AWS Services Covered
+### 04 — Hands On (3 files)
 
-Amazon ECS works with multiple AWS services.
+Practical exercises and real-world implementations.
 
-This playbook explains ECS integration with:
+| # | File | Topic |
+|---|------|-------|
+| 01 | [Hands-On Labs](./04-%20Hands%20On/01-%20Hands-On%20Labs.md) | Step-by-step labs for deploying containers on ECS |
+| 02 | [End-to-End Production Project](./04-%20Hands%20On/02-%20End-to-End%20Production%20Project.md) | Full production deployment: ECS Fargate + ALB + RDS + ECR + CI/CD |
+| 03 | [Real World Case Studies](./04-%20Hands%20On/03-%20Real%20World%20Case%20Studies.md) | Production architectures from real-world ECS deployments |
+
+---
+
+## Quick Reference
+
+### ECS Core Concepts
 
 ```text
-Amazon ECS
-AWS Fargate
-Amazon EC2
-Application Load Balancer (ALB)
-Network Load Balancer (NLB)
-AWS Cloud Map
-Amazon ECR
-AWS IAM
-Amazon VPC
-Security Groups
-Amazon CloudWatch
-AWS CloudTrail
-AWS EventBridge
-Amazon S3
-Amazon EFS
-AWS Secrets Manager
-AWS Systems Manager
-AWS Auto Scaling
-AWS CodePipeline
-AWS CodeBuild
-AWS CodeDeploy
-AWS Route53
+Cluster         A logical grouping of tasks and services.
+                One cluster per environment (dev, staging, prod).
+
+Task Definition A blueprint (like a Dockerfile for ECS) that describes:
+                - Container image, CPU, memory
+                - Port mappings, environment variables
+                - IAM roles, log configuration
+                Versioned — each revision is immutable.
+
+Task            A running instance of a task definition.
+                One task = one or more Docker containers running together.
+
+Service         Maintains a desired count of tasks.
+                Handles rolling deployments, health checks, and scaling.
+                Integrates with ALB/NLB for traffic distribution.
+
+Container       A Docker container running inside a task.
+                One task can run multiple containers (sidecar pattern).
+```
+
+### ECS Limits
+
+| Resource | Limit |
+|----------|-------|
+| Clusters per region | 10,000 |
+| Services per cluster | 5,000 |
+| Tasks per service | 5,000 |
+| Containers per task definition | 10 |
+| Task definition revisions | Unlimited |
+| Max task CPU (Fargate) | 16 vCPU |
+| Max task memory (Fargate) | 120 GB |
+| Max ephemeral storage (Fargate) | 200 GB |
+
+### Fargate vs EC2 at a Glance
+
+```text
+                    Fargate                     EC2
+                    ─────────────────           ─────────────────
+Infra Management    None (serverless)           You manage instances
+Pricing             Per-task (vCPU + GB/hr)     Per-instance (EC2 pricing)
+Scaling             Instant task launch         ASG + Capacity Provider
+Networking          awsvpc only (ENI per task)  awsvpc, bridge, host
+GPU Support         No                          Yes
+Spot Pricing        Fargate Spot (70% off)      EC2 Spot Instances
+Best For            Most workloads              GPU, large batch, cost control
+```
+
+### Key Design Principles
+
+```text
+1. Use Fargate unless you need GPU, custom AMI, or extreme cost optimization
+2. One service per microservice — don't colocate unrelated containers
+3. Use awsvpc networking mode for task-level security group isolation
+4. Separate Task Role (app permissions) from Execution Role (ECS permissions)
+5. Store secrets in Secrets Manager, never in environment variables or images
+6. Enable Container Insights from day one for CPU, memory, and network metrics
+7. Use blue/green deployments (CodeDeploy) for zero-downtime production releases
+8. Set deployment circuit breaker to auto-rollback failed deployments
+9. Right-size tasks: start small, monitor CloudWatch, adjust CPU/memory
+10. Use Fargate Spot for non-critical workloads to save up to 70%
 ```
 
 ---
 
-# Container Technologies Covered
+## Prerequisites
+
+- Docker fundamentals (images, containers, Dockerfile)
+- AWS core services (VPC, IAM, EC2, ALB)
+- Basic networking (subnets, security groups, DNS)
+- CI/CD concepts (pipelines, build/test/deploy)
+- Linux command line basics
+- Python / Django / FastAPI experience (optional, for hands-on labs)
+
+---
+
+## Who These Notes Are For
+
+- **Senior Backend Engineers** deploying containerized applications
+- **DevOps / Platform Engineers** building container platforms on AWS
+- **Cloud Engineers** designing ECS infrastructure
+- **Solutions Architects** evaluating ECS vs EKS
+- **SREs** operating and troubleshooting ECS in production
+- **Interview candidates** preparing for AWS and system design interviews
+
+---
+
+## AWS Services Covered
 
 ```text
-Docker Fundamentals
-Container Lifecycle
-Docker Images
-Container Networking
-Container Storage
-Container Security
-Multi-Container Applications
-Image Optimization
+Core ECS                  Networking               Security
+────────────              ──────────               ────────
+Amazon ECS                Amazon VPC               AWS IAM
+AWS Fargate               ALB / NLB                Secrets Manager
+Amazon ECR                Security Groups          Systems Manager
+AWS Cloud Map             Route 53                 KMS
+
+Monitoring                CI/CD                    Storage
+──────────                ─────                    ───────
+CloudWatch Metrics        GitHub Actions           Amazon EFS
+CloudWatch Logs           AWS CodePipeline         Amazon EBS
+Container Insights        AWS CodeBuild            Ephemeral Storage
+AWS X-Ray                 AWS CodeDeploy
+EventBridge               Terraform
 ```
 
 ---
-
-# Production Skills Covered
-
-This playbook teaches real-world engineering concepts including:
-
-```text
-Container Orchestration
-Microservices Architecture
-High Availability
-Disaster Recovery
-Observability
-Scalability
-Blue/Green Deployments
-Rolling Deployments
-Infrastructure as Code
-Cost Optimization
-Security Hardening
-Platform Engineering
-```
-
----
-
-# Architecture Topics Covered
-
-You will learn how to design:
-
-### Monolithic Applications
-
-```text
-ALB
- ↓
-ECS Service
- ↓
-RDS
-```
-
----
-
-### Microservices Architecture
-
-```text
-ALB
- ↓
-ECS Cluster
- ├── User Service
- ├── Product Service
- ├── Order Service
- └── Payment Service
-```
-
----
-
-### Event-Driven Architecture
-
-```text
-EventBridge
- ↓
-ECS Tasks
- ↓
-Background Processing
-```
-
----
-
-### Container-Based SaaS Platforms
-
-```text
-CloudFront
- ↓
-ALB
- ↓
-ECS Fargate
- ↓
-RDS
- ↓
-S3
-```
-
----
-
-# CI/CD Topics Covered
-
-Production deployment workflows include:
-
-```text
-GitHub Actions
-AWS CodePipeline
-AWS CodeBuild
-Blue/Green Deployments
-Rolling Deployments
-Canary Deployments
-Automated Testing
-Container Security Scanning
-```
-
----
-
-# Security Topics Covered
-
-```text
-IAM Roles
-Task Roles
-Execution Roles
-Secrets Manager
-Parameter Store
-Private Networking
-Security Groups
-Image Security
-Least Privilege
-Encryption
-Compliance
-```
-
----
-
-# Monitoring & Observability
-
-Learn how to monitor production ECS workloads using:
-
-```text
-CloudWatch Metrics
-CloudWatch Logs
-CloudWatch Alarms
-Container Insights
-CloudTrail
-AWS X-Ray
-EventBridge
-```
-
----
-
-# Disaster Recovery & High Availability
-
-Topics include:
-
-```text
-Multi-AZ Architecture
-Failover Strategies
-Backup Strategies
-Service Recovery
-Cluster Recovery
-Container Recovery
-Deployment Rollbacks
-Business Continuity
-```
-
----
-
-# Interview Preparation
-
-Dedicated interview chapter covering:
-
-- Beginner Questions
-- Intermediate Questions
-- Senior Engineer Questions
-- Architect-Level Questions
-- Troubleshooting Scenarios
-- Production Design Questions
-- ECS vs EKS Discussions
-- ECS vs Kubernetes Discussions
-
-Suitable for:
-
-```text
-Backend Developer
-Senior Backend Developer
-DevOps Engineer
-Platform Engineer
-Cloud Engineer
-AWS Engineer
-SRE
-Solution Architect
-```
-
----
-
-# End-to-End Production Project
-
-The final project combines everything into a complete enterprise-grade deployment featuring:
-
-```text
-Amazon ECS Fargate
-Application Load Balancer
-Auto Scaling
-Amazon RDS
-Amazon ECR
-CloudWatch Monitoring
-GitHub Actions CI/CD
-Secrets Manager
-Multi-AZ Deployment
-Disaster Recovery
-Production Security
-```
-
----
-
-# Recommended Learning Order
-
-Follow the chapters sequentially:
-
-```text
-01 → 02 → 03 → 04
-                ↓
-05 → 06 → 07 → 08
-                ↓
-09 → 10 → 11 → 12 → 13
-                ↓
-14 → 15 → 16 → 17
-                ↓
-18 → 19 → 20 → 21
-                ↓
-22 → 23 → 24
-                ↓
-25 → 26 → 27 → 28 → 29 → 30
-```
-
----
-
-# ECS vs Elastic Beanstalk
-
-This playbook helps bridge the progression:
-
-```text
-Elastic Beanstalk
-        ↓
-Amazon ECS
-        ↓
-Amazon EKS
-```
-
-Understanding ECS is often the next step after learning Elastic Beanstalk.
-
----
-
-# Who Should Read This?
-
-Read this playbook if you want to:
-
-- Learn container orchestration on AWS
-- Deploy Docker applications professionally
-- Build microservices architectures
-- Prepare for AWS interviews
-- Learn ECS in depth
-- Improve DevOps skills
-- Design scalable backend systems
-- Transition from Elastic Beanstalk to containers
-
----
-
-# Key Takeaway
-
-Amazon ECS provides a powerful managed container orchestration platform that enables teams to run containerized workloads at scale without managing Kubernetes complexity.
-
-By mastering ECS, engineers gain expertise in:
-
-```text
-Containers
-Microservices
-Cloud Architecture
-DevOps
-Automation
-Scalability
-Production Operations
-```
-
-This playbook is designed to take you from:
-
-```text
-Beginner
-    ↓
-Intermediate
-    ↓
-Senior Engineer
-    ↓
-Production Architect
-```
-
-for Amazon ECS.
-
----
-
-## Author
-
-**Aranya Majumdar**
-
-Senior Backend Developer | Team Lead
-
-Specializing in:
-
-- Python
-- Django
-- FastAPI
-- AWS
-- Docker
-- ECS
-- System Design
-- Microservices
-- Cloud Architecture
-
----
-
-## License
-
-This repository is intended for learning, interview preparation, and professional development.
