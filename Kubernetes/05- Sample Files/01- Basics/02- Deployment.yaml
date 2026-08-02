@@ -1,0 +1,234 @@
+# ==========================================================
+# Kubernetes Deployment Example
+# ==========================================================
+#
+# Description:
+# Creates a Deployment that manages multiple Nginx Pods.
+#
+# Purpose:
+# - Learn how Deployments manage Pods
+# - Understand ReplicaSets
+# - Learn scaling
+# - Learn rolling updates
+# - Learn labels and selectors
+#
+# Prerequisites:
+# - Kubernetes cluster
+# - kubectl configured
+#
+# Deploy:
+# kubectl apply -f 02-deployment.yaml
+#
+# Verify:
+# kubectl get deployments
+# kubectl get replicasets
+# kubectl get pods
+#
+# Describe Deployment:
+# kubectl describe deployment nginx-deployment
+#
+# Scale Deployment:
+# kubectl scale deployment nginx-deployment --replicas=5
+#
+# Delete:
+# kubectl delete -f 02-deployment.yaml
+#
+# Notes:
+# - Deployments are the recommended way to run stateless
+#   applications in Kubernetes.
+# - Deployments automatically create and manage ReplicaSets.
+# - ReplicaSets ensure the desired number of Pods are running.
+# - Deployments support rolling updates and rollbacks.
+#
+# ==========================================================
+
+# Kubernetes API version for Deployments.
+apiVersion: apps/v1
+
+# Resource type.
+kind: Deployment
+
+# ----------------------------------------------------------
+# Metadata
+# ----------------------------------------------------------
+metadata:
+
+  # Deployment name.
+  name: nginx-deployment
+
+  # Labels identify this Deployment.
+  labels:
+    app: nginx
+    environment: development
+
+# ----------------------------------------------------------
+# Deployment Specification
+# ----------------------------------------------------------
+spec:
+
+  # Desired number of Pod replicas.
+  replicas: 3
+
+  # --------------------------------------------------------
+  # Selector
+  # --------------------------------------------------------
+  # The selector tells the Deployment which Pods it owns.
+  # This MUST match the labels defined in the Pod template.
+  selector:
+    matchLabels:
+      app: nginx
+
+  # --------------------------------------------------------
+  # Deployment Strategy
+  # --------------------------------------------------------
+  # RollingUpdate is the default strategy.
+  #
+  # It gradually replaces old Pods with new ones,
+  # minimizing downtime.
+  strategy:
+
+    type: RollingUpdate
+
+    rollingUpdate:
+
+      # Maximum unavailable Pods during update.
+      maxUnavailable: 1
+
+      # Maximum extra Pods created during update.
+      maxSurge: 1
+
+  # --------------------------------------------------------
+  # Pod Template
+  # --------------------------------------------------------
+  # Defines the Pods created by this Deployment.
+  template:
+
+    metadata:
+
+      labels:
+        app: nginx
+        tier: frontend
+
+    spec:
+
+      containers:
+
+        - name: nginx
+
+          # Container image.
+          image: nginx:latest
+
+          imagePullPolicy: IfNotPresent
+
+          ports:
+
+            - containerPort: 80
+              name: http
+
+          # --------------------------------------------------
+          # Resource Requests & Limits
+          # --------------------------------------------------
+          resources:
+
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+
+            limits:
+              cpu: "200m"
+              memory: "256Mi"
+
+          # --------------------------------------------------
+          # Environment Variables
+          # --------------------------------------------------
+          env:
+
+            - name: APP_NAME
+              value: "Nginx Demo"
+
+            - name: APP_ENV
+              value: "Development"
+
+          # --------------------------------------------------
+          # Liveness Probe
+          # --------------------------------------------------
+          # Determines whether the container is still healthy.
+          # If it repeatedly fails, Kubernetes restarts it.
+          livenessProbe:
+
+            httpGet:
+              path: /
+              port: 80
+
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+
+          # --------------------------------------------------
+          # Readiness Probe
+          # --------------------------------------------------
+          # Determines whether the Pod is ready to receive
+          # traffic from a Service.
+          readinessProbe:
+
+            httpGet:
+              path: /
+              port: 80
+
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            timeoutSeconds: 3
+            failureThreshold: 3
+
+      # ------------------------------------------------------
+      # Restart Policy
+      # ------------------------------------------------------
+      # Pods managed by Deployments always use Always.
+      restartPolicy: Always
+
+      # ------------------------------------------------------
+      # Graceful Shutdown
+      # ------------------------------------------------------
+      # Kubernetes waits this many seconds before forcefully
+      # terminating the container.
+      terminationGracePeriodSeconds: 30
+
+# ==========================================================
+# Expected Resources Created
+# ==========================================================
+#
+# Deployment
+#      │
+#      ▼
+# ReplicaSet
+#      │
+#      ▼
+# 3 Nginx Pods
+#
+# ==========================================================
+#
+# Useful Commands
+#
+# View Deployments
+# kubectl get deployments
+#
+# View ReplicaSets
+# kubectl get replicasets
+#
+# View Pods
+# kubectl get pods
+#
+# Scale Deployment
+# kubectl scale deployment nginx-deployment --replicas=5
+#
+# Restart Deployment
+# kubectl rollout restart deployment nginx-deployment
+#
+# Check Rollout Status
+# kubectl rollout status deployment nginx-deployment
+#
+# Rollback Deployment
+# kubectl rollout undo deployment nginx-deployment
+#
+# ==========================================================

@@ -1,0 +1,275 @@
+# ==========================================================
+# Kubernetes LoadBalancer Service Example
+# ==========================================================
+#
+# Description:
+# Creates a LoadBalancer Service that exposes an application
+# to the internet using a cloud provider's load balancer.
+#
+# Purpose:
+# - Learn how LoadBalancer Services work
+# - Understand cloud load balancers
+# - Learn external traffic routing
+# - Understand Service networking
+# - Demonstrate production service exposure
+#
+# Prerequisites:
+# - Kubernetes cluster running on a cloud provider
+#   (AWS, Azure, GCP, DigitalOcean, etc.)
+# - A Deployment or Pods with the label:
+#     app: nginx
+#
+# Deploy:
+# kubectl apply -f 06-Service-LoadBalancer.yaml
+#
+# Verify:
+# kubectl get services
+# kubectl describe service nginx-loadbalancer-service
+#
+# Delete:
+# kubectl delete -f 06-Service-LoadBalancer.yaml
+#
+# Notes:
+# - Kubernetes automatically provisions a cloud load balancer.
+# - Every cloud provider creates a different type of load
+#   balancer.
+# - This is the preferred way to expose a single application
+#   externally in cloud environments.
+# - For multiple HTTP applications, Ingress is usually a
+#   better solution.
+#
+# ==========================================================
+
+# Kubernetes API version.
+apiVersion: v1
+
+# Resource type.
+kind: Service
+
+# ----------------------------------------------------------
+# Metadata
+# ----------------------------------------------------------
+metadata:
+
+  # Service name.
+  name: nginx-loadbalancer-service
+
+  # Labels attached to this Service.
+  labels:
+
+    app: nginx
+
+    environment: development
+
+# ----------------------------------------------------------
+# Service Specification
+# ----------------------------------------------------------
+spec:
+
+  # --------------------------------------------------------
+  # Service Type
+  # --------------------------------------------------------
+  #
+  # LoadBalancer
+  #
+  # Kubernetes asks the cloud provider to provision an
+  # external load balancer.
+  #
+  # The cloud load balancer forwards traffic to the
+  # Kubernetes Service.
+  #
+  type: LoadBalancer
+
+  # --------------------------------------------------------
+  # Selector
+  # --------------------------------------------------------
+  #
+  # Selects Pods that receive traffic.
+  #
+  selector:
+
+    app: nginx
+
+  # --------------------------------------------------------
+  # Service Ports
+  # --------------------------------------------------------
+  ports:
+
+    - name: http
+
+      # Port exposed by the LoadBalancer.
+      port: 80
+
+      # Port exposed by the application container.
+      targetPort: 80
+
+      protocol: TCP
+
+# ==========================================================
+# Request Flow
+# ==========================================================
+#
+# Internet
+#      │
+#      ▼
+# Cloud Load Balancer
+#      │
+#      ▼
+# Kubernetes Service
+#      │
+#      ▼
+# ClusterIP
+#      │
+#      ▼
+# ┌──────────────┐
+# │ Pod 1        │
+# ├──────────────┤
+# │ Pod 2        │
+# ├──────────────┤
+# │ Pod 3        │
+# └──────────────┘
+#
+# ==========================================================
+#
+# What Kubernetes Creates
+#
+# Service
+#      │
+#      ▼
+# Cloud Load Balancer
+#      │
+#      ▼
+# Public IP Address
+#      │
+#      ▼
+# Routes traffic to healthy Pods
+#
+# ==========================================================
+#
+# Example Output
+#
+# kubectl get svc
+#
+# NAME                          TYPE
+# nginx-loadbalancer-service    LoadBalancer
+#
+# CLUSTER-IP
+# 10.96.155.25
+#
+# EXTERNAL-IP
+# 34.120.25.100
+#
+# PORT(S)
+# 80:31520/TCP
+#
+# ==========================================================
+#
+# Useful Commands
+#
+# View Services
+# kubectl get svc
+#
+# Describe Service
+# kubectl describe svc nginx-loadbalancer-service
+#
+# View Endpoints
+# kubectl get endpoints
+#
+# Watch until an External IP is assigned
+# kubectl get svc -w
+#
+# Test Connectivity
+# curl http://<External-IP>
+#
+# ==========================================================
+#
+# Cloud Provider Mapping
+#
+# AWS
+#
+# → Elastic Load Balancer (ELB)
+#
+# Azure
+#
+# → Azure Load Balancer
+#
+# Google Cloud
+#
+# → Google Cloud Load Balancer
+#
+# DigitalOcean
+#
+# → DigitalOcean Load Balancer
+#
+# ==========================================================
+#
+# Common Mistakes
+#
+# ❌ Running on Minikube or Kind and expecting an
+#    External IP.
+#
+# ❌ No cloud LoadBalancer controller installed.
+#
+# ❌ Firewall blocks incoming traffic.
+#
+# ❌ Service selector does not match Pod labels.
+#
+# ❌ Pods are failing Readiness Probes.
+#
+# ❌ Application not listening on targetPort.
+#
+# ==========================================================
+#
+# Comparison
+#
+# ClusterIP
+#
+# ✓ Internal communication only
+#
+# NodePort
+#
+# ✓ External access through Node IP
+#
+# LoadBalancer
+#
+# ✓ External cloud-managed load balancer
+#
+# Ingress
+#
+# ✓ HTTP/HTTPS routing for multiple applications
+#
+# ==========================================================
+#
+# Production Considerations
+#
+# ✓ One LoadBalancer usually exposes one application.
+#
+# ✓ Each LoadBalancer may incur cloud costs.
+#
+# ✓ For many applications, use one LoadBalancer with an
+#   Ingress Controller instead of multiple LoadBalancer
+#   Services.
+#
+# ✓ Always configure Readiness Probes so only healthy Pods
+#   receive traffic.
+#
+# ✓ Enable TLS when exposing applications publicly.
+#
+# ==========================================================
+#
+# Interview Tips
+#
+# ✓ LoadBalancer builds on top of ClusterIP and NodePort.
+#
+# ✓ Kubernetes requests the cloud provider to provision
+#   an external load balancer automatically.
+#
+# ✓ Every cloud provider implements LoadBalancer Services
+#   differently.
+#
+# ✓ In production, LoadBalancer Services are commonly used
+#   to expose applications externally, while Ingress is
+#   preferred when multiple HTTP/HTTPS services share a
+#   single external entry point.
+#
+# ==========================================================

@@ -1,0 +1,230 @@
+# ==========================================================
+# Kubernetes Pod Disruption Budget (PDB) Example
+# ==========================================================
+#
+# Description:
+# Ensures that a minimum number of application Pods remain
+# available during voluntary disruptions such as node
+# maintenance, upgrades, or cluster scaling.
+#
+# Purpose:
+# - Learn Pod Disruption Budgets
+# - Improve application availability
+# - Protect critical workloads
+# - Understand voluntary disruptions
+#
+# Prerequisites:
+# - Kubernetes cluster
+# - kubectl configured
+# - Deployment already created
+#
+# Deploy:
+# kubectl apply -f 04-Pod-Disruption-Budget.yaml
+#
+# Verify:
+# kubectl get pdb
+# kubectl describe pdb backend-api-pdb
+#
+# Delete:
+# kubectl delete -f 04-Pod-Disruption-Budget.yaml
+#
+# Notes:
+# - PDBs only protect against voluntary disruptions.
+# - They do NOT prevent failures caused by crashes,
+#   hardware failures, or OOMKilled Pods.
+#
+# ==========================================================
+
+# API version.
+apiVersion: policy/v1
+
+# Kubernetes resource type.
+kind: PodDisruptionBudget
+
+# ----------------------------------------------------------
+# Metadata
+# ----------------------------------------------------------
+metadata:
+
+  # PDB name.
+  name: backend-api-pdb
+
+  labels:
+
+    app: backend-api
+
+    environment: production
+
+# ----------------------------------------------------------
+# Specification
+# ----------------------------------------------------------
+spec:
+
+  # --------------------------------------------------------
+  # Minimum Available Pods
+  # --------------------------------------------------------
+  #
+  # At least two Pods must remain available.
+  #
+  minAvailable: 2
+
+  # --------------------------------------------------------
+  # Target Pods
+  # --------------------------------------------------------
+  #
+  # This PDB applies to Pods with:
+  #
+  # app=backend-api
+  #
+  selector:
+
+    matchLabels:
+
+      app: backend-api
+
+# ==========================================================
+# Architecture
+# ==========================================================
+#
+#           Deployment
+#                │
+#                ▼
+#      backend-api Pods
+#                │
+#                ▼
+#      Pod Disruption Budget
+#                │
+#                ▼
+# Minimum Available = 2
+#
+# ==========================================================
+#
+# Example
+#
+# Deployment Replicas
+#
+# 3
+#
+# PDB
+#
+# minAvailable: 2
+#
+# Allowed Evictions
+#
+# 1 Pod
+#
+# ==========================================================
+#
+# During Node Maintenance
+#
+# Node Drain
+#      │
+#      ▼
+# Kubernetes Checks PDB
+#      │
+#      ▼
+# Enough Pods Available?
+#      │
+#      ├── Yes
+#      │     │
+#      │     ▼
+#      │  Eviction Allowed
+#      │
+#      └── No
+#            │
+#            ▼
+#      Eviction Blocked
+#
+# ==========================================================
+#
+# Alternative Configuration
+#
+# Instead of:
+#
+# minAvailable: 2
+#
+# You can use:
+#
+# maxUnavailable: 1
+#
+# Only one of these should be specified.
+#
+# ==========================================================
+#
+# Useful Commands
+#
+# View PDBs
+# kubectl get pdb
+#
+# Describe PDB
+# kubectl describe pdb backend-api-pdb
+#
+# Drain a Node
+# kubectl drain <node-name> --ignore-daemonsets
+#
+# View Pods
+# kubectl get pods
+#
+# ==========================================================
+#
+# Expected Output
+#
+# NAME
+# backend-api-pdb
+#
+# MIN AVAILABLE
+# 2
+#
+# MAX UNAVAILABLE
+# N/A
+#
+# ALLOWED DISRUPTIONS
+# 1
+#
+# ==========================================================
+#
+# Common Mistakes
+#
+# ❌ Creating a PDB for a single-replica Deployment.
+#
+# ❌ Setting minAvailable equal to the replica count.
+#
+# ❌ Assuming PDB protects against node crashes.
+#
+# ❌ Forgetting to update the PDB after changing replica
+#    counts.
+#
+# ==========================================================
+#
+# Best Practices
+#
+# ✓ Use PDBs for production workloads.
+#
+# ✓ Run at least two or three replicas before creating a PDB.
+#
+# ✓ Use PDBs together with Readiness Probes.
+#
+# ✓ Test node drain operations before production upgrades.
+#
+# ✓ Review PDB settings whenever replica counts change.
+#
+# ==========================================================
+#
+# Interview Tips
+#
+# ✓ A Pod Disruption Budget protects applications during
+#   voluntary disruptions such as node maintenance and
+#   cluster upgrades.
+#
+# ✓ PDBs do not protect against involuntary disruptions like
+#   hardware failures or application crashes.
+#
+# ✓ Kubernetes consults the PDB before evicting Pods.
+#
+# ✓ Use `minAvailable` or `maxUnavailable` to define the
+#   application's availability requirements.
+#
+# ✓ PDBs are an important component of highly available
+#   production Kubernetes deployments.
+#
+# ==========================================================

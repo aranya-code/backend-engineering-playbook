@@ -1,0 +1,336 @@
+# ==========================================================
+# Kubernetes Path-Based Ingress Routing Example
+# ==========================================================
+#
+# Description:
+# Routes requests to different applications based on
+# the URL path while using the same hostname.
+#
+# Purpose:
+# - Learn Path-Based Routing
+# - Expose multiple services using one domain
+# - Build API Gateways
+# - Reduce infrastructure cost
+#
+# Prerequisites:
+# - Kubernetes cluster
+# - kubectl configured
+# - NGINX Ingress Controller installed
+# - Services already created:
+#     • frontend-service
+#     • backend-service
+#     • admin-service
+#
+# Deploy:
+# kubectl apply -f 05-Ingress-Path-Routing.yaml
+#
+# Verify:
+# kubectl get ingress
+# kubectl describe ingress company-path-ingress
+#
+# Delete:
+# kubectl delete -f 05-Ingress-Path-Routing.yaml
+#
+# Notes:
+# - Path-based routing is extremely common in production.
+# - Multiple applications can share the same domain.
+# - The Ingress Controller routes requests based on the
+#   URL path.
+#
+# ==========================================================
+
+# API version.
+apiVersion: networking.k8s.io/v1
+
+# Kubernetes resource type.
+kind: Ingress
+
+# ----------------------------------------------------------
+# Metadata
+# ----------------------------------------------------------
+metadata:
+
+  # Ingress name.
+  name: company-path-ingress
+
+  labels:
+
+    environment: production
+
+  annotations:
+
+    nginx.ingress.kubernetes.io/rewrite-target: /
+
+# ----------------------------------------------------------
+# Ingress Specification
+# ----------------------------------------------------------
+spec:
+
+  # Ingress Controller
+  ingressClassName: nginx
+
+  # --------------------------------------------------------
+  # Path-Based Routing Rules
+  # --------------------------------------------------------
+  rules:
+
+    - host: company.example.com
+
+      http:
+
+        paths:
+
+          # --------------------------------------------------
+          # Frontend Website
+          # --------------------------------------------------
+          - path: /
+
+            pathType: Prefix
+
+            backend:
+
+              service:
+
+                name: frontend-service
+
+                port:
+
+                  number: 80
+
+          # --------------------------------------------------
+          # Backend API
+          # --------------------------------------------------
+          - path: /api
+
+            pathType: Prefix
+
+            backend:
+
+              service:
+
+                name: backend-service
+
+                port:
+
+                  number: 80
+
+          # --------------------------------------------------
+          # Administration Portal
+          # --------------------------------------------------
+          - path: /admin
+
+            pathType: Prefix
+
+            backend:
+
+              service:
+
+                name: admin-service
+
+                port:
+
+                  number: 80
+
+# ==========================================================
+# Path Routing Architecture
+# ==========================================================
+#
+#                  Internet
+#                      │
+#                      ▼
+#             company.example.com
+#                      │
+#                      ▼
+#             Ingress Controller
+#                      │
+#      ┌───────────────┼────────────────┐
+#      ▼               ▼                ▼
+#      /             /api            /admin
+#      │               │                │
+#      ▼               ▼                ▼
+# Frontend        Backend API      Admin Portal
+#   Service          Service          Service
+#      │               │                │
+#      ▼               ▼                ▼
+# Frontend Pods   Backend Pods    Admin Pods
+#
+# ==========================================================
+#
+# Request Examples
+#
+# https://company.example.com/
+#
+# →
+#
+# frontend-service
+#
+#
+# https://company.example.com/api
+#
+# →
+#
+# backend-service
+#
+#
+# https://company.example.com/admin
+#
+# →
+#
+# admin-service
+#
+# ==========================================================
+#
+# Routing Table
+#
+# URL
+#
+# /
+#
+# → frontend-service
+#
+#
+# /api
+#
+# → backend-service
+#
+#
+# /admin
+#
+# → admin-service
+#
+# ==========================================================
+#
+# Useful Commands
+#
+# View Ingress
+# kubectl get ingress
+#
+# Describe Ingress
+# kubectl describe ingress company-path-ingress
+#
+# View Services
+# kubectl get svc
+#
+# Test Frontend
+# curl http://company.example.com/
+#
+# Test API
+# curl http://company.example.com/api
+#
+# Test Admin
+# curl http://company.example.com/admin
+#
+# ==========================================================
+#
+# Expected Output
+#
+# NAME
+# company-path-ingress
+#
+# HOSTS
+# company.example.com
+#
+# ADDRESS
+# <LoadBalancer-IP>
+#
+# ==========================================================
+#
+# Common Mistakes
+#
+# ❌ Incorrect path ordering.
+#
+# ❌ Wrong Service names.
+#
+# ❌ Missing Ingress Controller.
+#
+# ❌ Incorrect rewrite annotations.
+#
+# ❌ Application expects a different base path.
+#
+# ❌ DNS does not point to the Ingress Controller.
+#
+# ==========================================================
+#
+# Best Practices
+#
+# ✓ Keep path names predictable.
+#
+# ✓ Use Prefix matching for REST APIs.
+#
+# ✓ Enable HTTPS for all routes.
+#
+# ✓ Group related services under one domain.
+#
+# ✓ Monitor traffic through the Ingress Controller.
+#
+# ✓ Document API paths clearly.
+#
+# ==========================================================
+#
+# Production Example
+#
+# company.com/
+#
+# → React Frontend
+#
+#
+# company.com/api
+#
+# → Django REST API
+#
+#
+# company.com/admin
+#
+# → Django Admin
+#
+#
+# company.com/docs
+#
+# → Swagger / OpenAPI
+#
+#
+# company.com/auth
+#
+# → Authentication Service
+#
+# ==========================================================
+#
+# Host-Based vs Path-Based Routing
+#
+# Host-Based Routing
+#
+# app.company.com
+#
+# api.company.com
+#
+# admin.company.com
+#
+#
+# Path-Based Routing
+#
+# company.com/
+#
+# company.com/api
+#
+# company.com/admin
+#
+# ==========================================================
+#
+# Interview Tips
+#
+# ✓ Path-based routing uses the URL path to determine the
+#   destination Service.
+#
+# ✓ Multiple applications can share a single hostname.
+#
+# ✓ This approach is commonly used for monolithic
+#   applications, REST APIs, and microservices.
+#
+# ✓ Ingress Controllers evaluate routing rules and forward
+#   requests to the appropriate Kubernetes Service.
+#
+# ✓ Combining host-based and path-based routing provides a
+#   flexible and scalable traffic management solution for
+#   production Kubernetes environments.
+#
+# ==========================================================

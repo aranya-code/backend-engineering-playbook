@@ -1,0 +1,290 @@
+# ==========================================================
+# Kubernetes Labels & Selectors Example
+# ==========================================================
+#
+# Description:
+# Demonstrates how Labels and Selectors work together in
+# Kubernetes to organize and select resources.
+#
+# Purpose:
+# - Learn Kubernetes Labels
+# - Learn Label Selectors
+# - Understand how Services find Pods
+# - Understand how Deployments manage Pods
+# - Learn Kubernetes resource organization
+#
+# Prerequisites:
+# - Kubernetes cluster
+# - kubectl configured
+#
+# Deploy:
+# kubectl apply -f 08-Labels-Selectors.yaml
+#
+# Verify:
+# kubectl get pods --show-labels
+#
+# Describe:
+# kubectl describe pod nginx-pod
+#
+# Delete:
+# kubectl delete -f 08-Labels-Selectors.yaml
+#
+# Notes:
+# - Labels are key-value pairs attached to Kubernetes
+#   resources.
+# - Selectors use labels to identify resources.
+# - Services, ReplicaSets, Deployments, and NetworkPolicies
+#   all rely heavily on labels and selectors.
+#
+# ==========================================================
+
+# Kubernetes API version.
+apiVersion: v1
+
+# Resource type.
+kind: Pod
+
+# ----------------------------------------------------------
+# Metadata
+# ----------------------------------------------------------
+metadata:
+
+  # Pod name.
+  name: nginx-pod
+
+  # --------------------------------------------------------
+  # Labels
+  # --------------------------------------------------------
+  #
+  # Labels describe the resource.
+  #
+  # They should answer questions like:
+  #
+  # What application?
+  # Which environment?
+  # Which team?
+  # Which version?
+  #
+  labels:
+
+    # Application name.
+    app: nginx
+
+    # Frontend component.
+    component: frontend
+
+    # Development environment.
+    environment: development
+
+    # API version.
+    version: v1
+
+    # Responsible team.
+    team: backend
+
+# ----------------------------------------------------------
+# Pod Specification
+# ----------------------------------------------------------
+spec:
+
+  containers:
+
+    - name: nginx
+
+      image: nginx:latest
+
+      ports:
+
+        - containerPort: 80
+
+# ==========================================================
+# Label Examples
+# ==========================================================
+#
+# app=nginx
+#
+# environment=development
+#
+# component=frontend
+#
+# version=v1
+#
+# team=backend
+#
+# ==========================================================
+#
+# Common Label Keys
+#
+# app
+#
+# component
+#
+# environment
+#
+# version
+#
+# tier
+#
+# team
+#
+# project
+#
+# owner
+#
+# ==========================================================
+#
+# How Selectors Work
+#
+# Service
+#      │
+#      ▼
+# selector:
+#
+# app: nginx
+#      │
+#      ▼
+# Finds every Pod that has:
+#
+# labels:
+#
+# app: nginx
+#
+# ==========================================================
+#
+# Example Service Selector
+#
+# selector:
+#
+#   app: nginx
+#
+# Matches:
+#
+# labels:
+#
+#   app: nginx
+#
+# Does NOT Match:
+#
+# labels:
+#
+#   app: apache
+#
+# ==========================================================
+#
+# Deployment Selector Example
+#
+# selector:
+#
+#   matchLabels:
+#
+#     app: nginx
+#
+# Pod Template:
+#
+# labels:
+#
+#   app: nginx
+#
+# These MUST match.
+#
+# ==========================================================
+#
+# Useful Commands
+#
+# View Labels
+# kubectl get pods --show-labels
+#
+# Filter by Label
+# kubectl get pods -l app=nginx
+#
+# Multiple Labels
+# kubectl get pods -l app=nginx,environment=development
+#
+# Show YAML
+# kubectl get pod nginx-pod -o yaml
+#
+# Add a Label
+# kubectl label pod nginx-pod owner=aranya
+#
+# Update a Label
+# kubectl label pod nginx-pod version=v2 --overwrite
+#
+# Remove a Label
+# kubectl label pod nginx-pod version-
+#
+# ==========================================================
+#
+# Label Selection Flow
+#
+# Deployment
+#      │
+#      ▼
+# Selector
+#
+# app=nginx
+#      │
+#      ▼
+# ReplicaSet
+#      │
+#      ▼
+# Pod
+#
+# app=nginx
+#
+#
+# Service
+#      │
+#      ▼
+# Selector
+#
+# app=nginx
+#      │
+#      ▼
+# Same Pod
+#
+# ==========================================================
+#
+# Common Mistakes
+#
+# ❌ Deployment selector does not match Pod labels.
+#
+# ❌ Service selector uses the wrong label.
+#
+# ❌ Using inconsistent label names across applications.
+#
+# ❌ Forgetting to update selectors after changing labels.
+#
+# ❌ Using labels for large or frequently changing data.
+#
+# ==========================================================
+#
+# Best Practices
+#
+# ✓ Use consistent label naming conventions.
+#
+# ✓ Always define an app label.
+#
+# ✓ Include environment labels.
+#
+# ✓ Include version labels for deployments.
+#
+# ✓ Keep labels short, meaningful, and consistent.
+#
+# ✓ Ensure Deployment selectors exactly match Pod labels.
+#
+# ==========================================================
+#
+# Interview Tips
+#
+# ✓ Labels identify Kubernetes resources.
+#
+# ✓ Selectors query Kubernetes resources using labels.
+#
+# ✓ Services use selectors to discover Pods.
+#
+# ✓ Deployments and ReplicaSets use selectors to manage Pods.
+#
+# ✓ Labels are one of the most fundamental concepts in
+#   Kubernetes and are heavily used throughout the platform.
+#
+# ==========================================================

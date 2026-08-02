@@ -1,0 +1,212 @@
+# ==========================================================
+# Kubernetes ClusterIP Service Example
+# ==========================================================
+#
+# Description:
+# Creates a ClusterIP Service that exposes an application
+# internally within the Kubernetes cluster.
+#
+# Purpose:
+# - Learn how Services work
+# - Understand ClusterIP Services
+# - Learn label selectors
+# - Understand service discovery
+# - Demonstrate internal load balancing
+#
+# Prerequisites:
+# - A Deployment or Pods with the label:
+#     app: nginx
+#
+# Deploy:
+# kubectl apply -f 04-Service-ClusterIP.yaml
+#
+# Verify:
+# kubectl get services
+# kubectl describe service nginx-service
+# kubectl get endpoints
+#
+# Delete:
+# kubectl delete -f 04-Service-ClusterIP.yaml
+#
+# Notes:
+# - ClusterIP is the default Service type.
+# - ClusterIP Services are only accessible from inside the
+#   Kubernetes cluster.
+# - Services provide a stable virtual IP even if Pods are
+#   recreated.
+# - Kubernetes automatically load balances traffic across
+#   all matching Pods.
+#
+# ==========================================================
+
+# API version for Service resources.
+apiVersion: v1
+
+# Kubernetes resource type.
+kind: Service
+
+# ----------------------------------------------------------
+# Metadata
+# ----------------------------------------------------------
+metadata:
+
+  # Service name.
+  name: nginx-service
+
+  # Labels attached to the Service.
+  labels:
+
+    app: nginx
+
+    environment: development
+
+# ----------------------------------------------------------
+# Service Specification
+# ----------------------------------------------------------
+spec:
+
+  # --------------------------------------------------------
+  # Service Type
+  # --------------------------------------------------------
+  #
+  # ClusterIP
+  # ----------
+  # Exposes the Service only inside the cluster.
+  #
+  # Other types:
+  #
+  # NodePort
+  # LoadBalancer
+  # ExternalName
+  #
+  type: ClusterIP
+
+  # --------------------------------------------------------
+  # Selector
+  # --------------------------------------------------------
+  #
+  # The Service forwards traffic only to Pods whose labels
+  # match this selector.
+  #
+  selector:
+
+    app: nginx
+
+  # --------------------------------------------------------
+  # Ports
+  # --------------------------------------------------------
+  #
+  # Port:
+  # Port exposed by the Service.
+  #
+  # targetPort:
+  # Port on the container.
+  #
+  ports:
+
+    - name: http
+
+      # Port clients inside the cluster connect to.
+      port: 80
+
+      # Port exposed by the container.
+      targetPort: 80
+
+      protocol: TCP
+
+# ==========================================================
+# Request Flow
+# ==========================================================
+#
+# Client Pod
+#      │
+#      ▼
+# nginx-service
+# (ClusterIP)
+#      │
+#      ▼
+# ┌──────────────┐
+# │ Pod 1        │
+# ├──────────────┤
+# │ Pod 2        │
+# ├──────────────┤
+# │ Pod 3        │
+# └──────────────┘
+#
+# The Service automatically load balances requests
+# across all healthy Pods.
+#
+# ==========================================================
+#
+# Service Discovery
+#
+# Every Service automatically receives a DNS name.
+#
+# Same Namespace:
+#
+# nginx-service
+#
+# Different Namespace:
+#
+# nginx-service.default.svc.cluster.local
+#
+# ==========================================================
+#
+# Useful Commands
+#
+# List Services
+# kubectl get svc
+#
+# Describe Service
+# kubectl describe svc nginx-service
+#
+# View Endpoints
+# kubectl get endpoints
+#
+# Test DNS Resolution
+# kubectl exec -it <pod-name> -- nslookup nginx-service
+#
+# Test Connectivity
+# kubectl exec -it <pod-name> -- wget -qO- http://nginx-service
+#
+# View Service YAML
+# kubectl get svc nginx-service -o yaml
+#
+# ==========================================================
+#
+# Expected Output
+#
+# NAME            TYPE        CLUSTER-IP      PORT(S)
+#
+# nginx-service   ClusterIP   10.96.24.101   80/TCP
+#
+# ==========================================================
+#
+# Common Mistakes
+#
+# ❌ Selector does not match Pod labels
+#
+# ❌ Wrong targetPort
+#
+# ❌ Pods are not Ready
+#
+# ❌ Trying to access ClusterIP from outside the cluster
+#
+# ❌ Application not listening on targetPort
+#
+# ==========================================================
+#
+# Interview Tips
+#
+# ✓ ClusterIP is the default Service type.
+#
+# ✓ ClusterIP provides internal load balancing.
+#
+# ✓ Services route traffic using labels and selectors.
+#
+# ✓ Services use Endpoints to identify healthy Pods.
+#
+# ✓ Pods should be accessed through Services instead of
+#   using Pod IP addresses directly.
+#
+# ==========================================================

@@ -1,0 +1,344 @@
+# ==========================================================
+# Kubernetes Liveness, Readiness & Startup Probes Example
+# ==========================================================
+#
+# Description:
+# Demonstrates all three Kubernetes health probes:
+#
+# • Startup Probe
+# • Readiness Probe
+# • Liveness Probe
+#
+# Purpose:
+# - Learn Kubernetes health checks
+# - Understand probe lifecycle
+# - Build self-healing applications
+# - Enable zero-downtime deployments
+#
+# Prerequisites:
+# - Kubernetes cluster
+# - kubectl configured
+#
+# Deploy:
+# kubectl apply -f 02-Liveness-Readiness-Startup-Probes.yaml
+#
+# Verify:
+# kubectl get pods
+# kubectl describe pod <pod-name>
+#
+# Delete:
+# kubectl delete -f 02-Liveness-Readiness-Startup-Probes.yaml
+#
+# Notes:
+# - Startup Probe runs FIRST.
+# - Readiness Probe determines if traffic can be sent.
+# - Liveness Probe detects unhealthy containers.
+#
+# ==========================================================
+
+# Deployment API.
+apiVersion: apps/v1
+
+# Kubernetes resource type.
+kind: Deployment
+
+# ----------------------------------------------------------
+# Metadata
+# ----------------------------------------------------------
+metadata:
+
+  name: backend-api
+
+  labels:
+
+    app: backend-api
+
+    environment: production
+
+# ----------------------------------------------------------
+# Deployment Specification
+# ----------------------------------------------------------
+spec:
+
+  replicas: 3
+
+  selector:
+
+    matchLabels:
+
+      app: backend-api
+
+  template:
+
+    metadata:
+
+      labels:
+
+        app: backend-api
+
+    spec:
+
+      containers:
+
+        - name: nginx
+
+          image: nginx:latest
+
+          imagePullPolicy: IfNotPresent
+
+          ports:
+
+            - containerPort: 80
+
+          # --------------------------------------------------
+          # Resource Requests & Limits
+          # --------------------------------------------------
+          resources:
+
+            requests:
+
+              cpu: "100m"
+
+              memory: "128Mi"
+
+            limits:
+
+              cpu: "500m"
+
+              memory: "512Mi"
+
+          # --------------------------------------------------
+          # Startup Probe
+          # --------------------------------------------------
+          #
+          # Runs only when the container starts.
+          #
+          # Kubernetes waits for this probe to succeed
+          # before enabling Liveness and Readiness probes.
+          #
+          startupProbe:
+
+            httpGet:
+
+              path: /
+
+              port: 80
+
+            failureThreshold: 30
+
+            periodSeconds: 10
+
+          # --------------------------------------------------
+          # Readiness Probe
+          # --------------------------------------------------
+          #
+          # Determines whether the Pod is ready to receive
+          # production traffic.
+          #
+          readinessProbe:
+
+            httpGet:
+
+              path: /
+
+              port: 80
+
+            initialDelaySeconds: 5
+
+            periodSeconds: 5
+
+            timeoutSeconds: 2
+
+            failureThreshold: 3
+
+            successThreshold: 1
+
+          # --------------------------------------------------
+          # Liveness Probe
+          # --------------------------------------------------
+          #
+          # Determines whether the application is healthy.
+          #
+          # If this probe repeatedly fails, Kubernetes
+          # restarts the container.
+          #
+          livenessProbe:
+
+            httpGet:
+
+              path: /
+
+              port: 80
+
+            initialDelaySeconds: 15
+
+            periodSeconds: 10
+
+            timeoutSeconds: 2
+
+            failureThreshold: 3
+
+# ==========================================================
+# Probe Lifecycle
+# ==========================================================
+#
+# Container Starts
+#        │
+#        ▼
+# Startup Probe
+#        │
+#        ▼
+# Success
+#        │
+#        ▼
+# Readiness Probe
+#        │
+#        ▼
+# Pod Ready
+#        │
+#        ▼
+# Receives Traffic
+#        │
+#        ▼
+# Liveness Probe
+#        │
+#        ▼
+# Healthy?
+#      │      │
+#     Yes     No
+#      │       │
+#      ▼       ▼
+# Continue   Restart Container
+#
+# ==========================================================
+#
+# Probe Responsibilities
+#
+# Startup Probe
+#
+# ✓ Slow application startup
+#
+# ✓ Prevents premature restarts
+#
+#
+# Readiness Probe
+#
+# ✓ Controls traffic routing
+#
+# ✓ Removes unhealthy Pods from Services
+#
+#
+# Liveness Probe
+#
+# ✓ Detects application hangs
+#
+# ✓ Restarts unhealthy containers
+#
+# ==========================================================
+#
+# Request Flow
+#
+# User
+#      │
+#      ▼
+# Service
+#      │
+#      ▼
+# Ready Pod?
+#      │
+#   Yes │ No
+#      │
+#      ▼
+# Application
+#
+# Pods failing the Readiness Probe are automatically
+# removed from the Service endpoints.
+#
+# ==========================================================
+#
+# Useful Commands
+#
+# View Pods
+# kubectl get pods
+#
+# Describe Pod
+# kubectl describe pod <pod-name>
+#
+# View Events
+# kubectl get events
+#
+# View Logs
+# kubectl logs <pod-name>
+#
+# Watch Pod Status
+# kubectl get pods -w
+#
+# View Endpoints
+# kubectl get endpoints
+#
+# ==========================================================
+#
+# Expected Output
+#
+# READY
+#
+# 1/1
+#
+# STATUS
+#
+# Running
+#
+# RESTARTS
+#
+# 0
+#
+# ==========================================================
+#
+# Common Mistakes
+#
+# ❌ No health probes configured.
+#
+# ❌ Using the wrong application path.
+#
+# ❌ Timeout too small.
+#
+# ❌ Startup Probe omitted for slow applications.
+#
+# ❌ Confusing Readiness and Liveness probes.
+#
+# ==========================================================
+#
+# Best Practices
+#
+# ✓ Configure all three probes for production workloads.
+#
+# ✓ Use Startup Probes for slow-starting applications.
+#
+# ✓ Configure Readiness Probes on every API service.
+#
+# ✓ Configure Liveness Probes for self-healing.
+#
+# ✓ Tune probe timings based on application startup time.
+#
+# ✓ Monitor probe failures using Kubernetes Events.
+#
+# ==========================================================
+#
+# Interview Tips
+#
+# ✓ Startup Probe runs only during application startup.
+#
+# ✓ Readiness Probe determines whether a Pod receives
+#   traffic from a Service.
+#
+# ✓ Liveness Probe determines whether a container should
+#   be restarted.
+#
+# ✓ Readiness failures remove Pods from Service endpoints,
+#   while Liveness failures restart the container.
+#
+# ✓ Using all three probes together is considered a
+#   production best practice for highly available
+#   Kubernetes applications.
+#
+# ==========================================================

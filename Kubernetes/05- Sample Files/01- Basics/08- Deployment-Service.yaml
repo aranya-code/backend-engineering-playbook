@@ -1,0 +1,332 @@
+# ==========================================================
+# Kubernetes Deployment + Service Example
+# ==========================================================
+#
+# Description:
+# Deploys an Nginx application using a Deployment and
+# exposes it internally using a ClusterIP Service.
+#
+# Purpose:
+# - Demonstrate a complete application deployment
+# - Show how Deployments and Services work together
+# - Learn label selectors
+# - Learn internal service discovery
+# - Understand production deployment basics
+#
+# Prerequisites:
+# - Kubernetes cluster
+# - kubectl configured
+#
+# Deploy:
+# kubectl apply -f 09-Deployment-Service.yaml
+#
+# Verify:
+# kubectl get deployments
+# kubectl get pods
+# kubectl get services
+# kubectl get endpoints
+#
+# Delete:
+# kubectl delete -f 09-Deployment-Service.yaml
+#
+# Notes:
+# - This file contains TWO Kubernetes resources:
+#     1. Deployment
+#     2. Service
+#
+# - Multiple resources can exist in a single YAML file.
+#
+# ==========================================================
+
+# ==========================================================
+# Resource 1 - Deployment
+# ==========================================================
+
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+
+  name: nginx-deployment
+
+  labels:
+
+    app: nginx
+
+    environment: development
+
+spec:
+
+  # Number of desired Pods.
+  replicas: 3
+
+  # Deployment selector.
+  #
+  # MUST match the Pod labels below.
+  selector:
+
+    matchLabels:
+
+      app: nginx
+
+  # Pod Template
+  template:
+
+    metadata:
+
+      labels:
+
+        app: nginx
+
+        tier: frontend
+
+    spec:
+
+      containers:
+
+        - name: nginx
+
+          image: nginx:latest
+
+          imagePullPolicy: IfNotPresent
+
+          ports:
+
+            - containerPort: 80
+
+              name: http
+
+          # Resource configuration.
+          resources:
+
+            requests:
+
+              cpu: "100m"
+
+              memory: "128Mi"
+
+            limits:
+
+              cpu: "200m"
+
+              memory: "256Mi"
+
+          # Readiness Probe
+          #
+          # Determines when the Pod is ready to
+          # receive traffic.
+          readinessProbe:
+
+            httpGet:
+
+              path: /
+
+              port: 80
+
+            initialDelaySeconds: 5
+
+            periodSeconds: 5
+
+          # Liveness Probe
+          #
+          # Restarts unhealthy containers.
+          livenessProbe:
+
+            httpGet:
+
+              path: /
+
+              port: 80
+
+            initialDelaySeconds: 15
+
+            periodSeconds: 10
+
+---
+
+# ==========================================================
+# Resource 2 - ClusterIP Service
+# ==========================================================
+
+apiVersion: v1
+kind: Service
+
+metadata:
+
+  name: nginx-service
+
+  labels:
+
+    app: nginx
+
+spec:
+
+  # Internal Kubernetes Service.
+  type: ClusterIP
+
+  # Select Pods created by the Deployment.
+  selector:
+
+    app: nginx
+
+  ports:
+
+    - name: http
+
+      # Service Port.
+      port: 80
+
+      # Container Port.
+      targetPort: 80
+
+      protocol: TCP
+
+# ==========================================================
+# Architecture
+# ==========================================================
+#
+#                Client Pod
+#                     │
+#                     ▼
+#             nginx-service
+#             (ClusterIP)
+#                     │
+#                     ▼
+#             Load Balancing
+#                     │
+#      ┌──────────────┼──────────────┐
+#      ▼              ▼              ▼
+#   Pod-1          Pod-2          Pod-3
+#      ▲              ▲              ▲
+#      └──────────────┼──────────────┘
+#                     │
+#                     ▼
+#             ReplicaSet
+#                     │
+#                     ▼
+#              Deployment
+#
+# ==========================================================
+#
+# Resource Relationship
+#
+# Deployment
+#      │
+#      ▼
+# ReplicaSet
+#      │
+#      ▼
+# Pods
+#      ▲
+#      │
+# Service
+#
+# ==========================================================
+#
+# Useful Commands
+#
+# View Deployments
+# kubectl get deployments
+#
+# View ReplicaSets
+# kubectl get replicasets
+#
+# View Pods
+# kubectl get pods
+#
+# View Services
+# kubectl get svc
+#
+# View Endpoints
+# kubectl get endpoints
+#
+# Describe Deployment
+# kubectl describe deployment nginx-deployment
+#
+# Describe Service
+# kubectl describe svc nginx-service
+#
+# Check Rollout Status
+# kubectl rollout status deployment nginx-deployment
+#
+# Scale Deployment
+# kubectl scale deployment nginx-deployment --replicas=5
+#
+# Test DNS Resolution
+# kubectl exec -it <pod-name> -- nslookup nginx-service
+#
+# Test Service Connectivity
+# kubectl exec -it <pod-name> -- wget -qO- http://nginx-service
+#
+# ==========================================================
+#
+# Expected Output
+#
+# kubectl get deployment
+#
+# NAME               READY   UP-TO-DATE   AVAILABLE
+# nginx-deployment   3/3     3            3
+#
+#
+# kubectl get svc
+#
+# NAME            TYPE        CLUSTER-IP
+# nginx-service   ClusterIP   10.96.120.10
+#
+#
+# kubectl get endpoints
+#
+# NAME
+# nginx-service
+#
+# ENDPOINTS
+# 10.244.1.5:80,
+# 10.244.2.6:80,
+# 10.244.3.8:80
+#
+# ==========================================================
+#
+# Common Mistakes
+#
+# ❌ Service selector does not match Pod labels.
+#
+# ❌ targetPort does not match containerPort.
+#
+# ❌ Pods fail Readiness Probe, so no Endpoints are created.
+#
+# ❌ Deployment selector differs from Pod template labels.
+#
+# ❌ Application is not listening on the expected port.
+#
+# ==========================================================
+#
+# Best Practices
+#
+# ✓ Use Deployments instead of standalone Pods.
+#
+# ✓ Expose applications through Services, not Pod IPs.
+#
+# ✓ Configure Readiness and Liveness Probes.
+#
+# ✓ Set Resource Requests and Limits.
+#
+# ✓ Use meaningful labels and selectors.
+#
+# ✓ Keep Deployment and Service labels consistent.
+#
+# ==========================================================
+#
+# Interview Tips
+#
+# ✓ A Deployment manages ReplicaSets, which manage Pods.
+#
+# ✓ A Service does not communicate directly with a Deployment;
+#   it routes traffic to Pods using label selectors.
+#
+# ✓ Services provide a stable virtual IP, allowing Pods to be
+#   replaced without affecting clients.
+#
+# ✓ This Deployment + Service pattern is the foundation of
+#   almost every stateless application deployed in Kubernetes.
+#
+# ==========================================================

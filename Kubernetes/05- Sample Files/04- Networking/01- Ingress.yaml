@@ -1,0 +1,294 @@
+# ==========================================================
+# Kubernetes Ingress Example
+# ==========================================================
+#
+# Description:
+# Creates an Ingress resource that exposes an application
+# over HTTP using host-based routing.
+#
+# Purpose:
+# - Learn how Ingress works
+# - Expose HTTP/HTTPS applications
+# - Route traffic using hostnames
+# - Reduce the number of LoadBalancers
+#
+# Prerequisites:
+# - Kubernetes cluster
+# - kubectl configured
+# - Ingress Controller installed
+#   (NGINX, Traefik, HAProxy, AWS ALB, etc.)
+# - A Service named "backend-service"
+#
+# Deploy:
+# kubectl apply -f 01-Ingress.yaml
+#
+# Verify:
+# kubectl get ingress
+# kubectl describe ingress backend-ingress
+#
+# Delete:
+# kubectl delete -f 01-Ingress.yaml
+#
+# Notes:
+# - Ingress only defines routing rules.
+# - An Ingress Controller processes these rules.
+# - Without an Ingress Controller, this resource does
+#   nothing.
+#
+# ==========================================================
+
+# API version for Ingress resources.
+apiVersion: networking.k8s.io/v1
+
+# Kubernetes resource type.
+kind: Ingress
+
+# ----------------------------------------------------------
+# Metadata
+# ----------------------------------------------------------
+metadata:
+
+  # Ingress name.
+  name: backend-ingress
+
+  # Labels for organization.
+  labels:
+
+    app: backend-api
+
+    environment: development
+
+  # --------------------------------------------------------
+  # Annotations
+  # --------------------------------------------------------
+  #
+  # Annotations provide configuration specific to the
+  # Ingress Controller.
+  #
+  annotations:
+
+    # Use the NGINX Ingress Controller.
+    nginx.ingress.kubernetes.io/rewrite-target: /
+
+# ----------------------------------------------------------
+# Ingress Specification
+# ----------------------------------------------------------
+spec:
+
+  # --------------------------------------------------------
+  # Ingress Class
+  # --------------------------------------------------------
+  #
+  # Determines which Ingress Controller processes
+  # this resource.
+  #
+  ingressClassName: nginx
+
+  # --------------------------------------------------------
+  # Routing Rules
+  # --------------------------------------------------------
+  #
+  rules:
+
+    # Hostname clients use.
+    - host: backend.example.com
+
+      http:
+
+        paths:
+
+          # URL path.
+          - path: /
+
+            # Prefix matches everything below "/"
+            pathType: Prefix
+
+            backend:
+
+              service:
+
+                # Existing Kubernetes Service.
+                name: backend-service
+
+                port:
+
+                  # Service Port.
+                  number: 80
+
+# ==========================================================
+# Request Flow
+# ==========================================================
+#
+# Internet
+#      │
+#      ▼
+# backend.example.com
+#      │
+#      ▼
+# Ingress Controller
+#      │
+#      ▼
+# Ingress Resource
+#      │
+#      ▼
+# backend-service
+#      │
+#      ▼
+# Pods
+#
+# ==========================================================
+#
+# DNS Flow
+#
+# backend.example.com
+#          │
+#          ▼
+# Public IP
+#          │
+#          ▼
+# Load Balancer
+#          │
+#          ▼
+# Ingress Controller
+#          │
+#          ▼
+# Kubernetes Service
+#
+# ==========================================================
+#
+# Path Types
+#
+# Prefix
+#
+# /api
+# matches
+#
+# /api
+# /api/users
+# /api/orders
+#
+#
+# Exact
+#
+# /login
+#
+# matches ONLY
+#
+# /login
+#
+#
+# ImplementationSpecific
+#
+# Behavior depends on the Ingress Controller.
+#
+# ==========================================================
+#
+# Useful Commands
+#
+# View Ingress Resources
+# kubectl get ingress
+#
+# Short Form
+# kubectl get ing
+#
+# Describe Ingress
+# kubectl describe ingress backend-ingress
+#
+# View YAML
+# kubectl get ingress backend-ingress -o yaml
+#
+# View Services
+# kubectl get svc
+#
+# View Ingress Controller Pods
+# kubectl get pods -n ingress-nginx
+#
+# ==========================================================
+#
+# Expected Output
+#
+# NAME
+# backend-ingress
+#
+# CLASS
+# nginx
+#
+# HOSTS
+# backend.example.com
+#
+# ADDRESS
+# 192.168.1.100
+#
+# PORTS
+# 80
+#
+# ==========================================================
+#
+# Common Mistakes
+#
+# ❌ No Ingress Controller installed.
+#
+# ❌ Incorrect Service name.
+#
+# ❌ Incorrect Service port.
+#
+# ❌ DNS does not point to the Ingress Controller.
+#
+# ❌ Wrong ingressClassName.
+#
+# ❌ Pods are failing Readiness Probes.
+#
+# ==========================================================
+#
+# Best Practices
+#
+# ✓ Use Ingress for HTTP/HTTPS traffic.
+#
+# ✓ Configure TLS for production.
+#
+# ✓ Use meaningful hostnames.
+#
+# ✓ Keep routing rules simple.
+#
+# ✓ Monitor the Ingress Controller.
+#
+# ✓ Use one Ingress Controller for multiple applications.
+#
+# ==========================================================
+#
+# Ingress vs LoadBalancer
+#
+# LoadBalancer
+#
+# ✓ One external IP per Service
+#
+# ✓ Suitable for exposing a single application
+#
+#
+# Ingress
+#
+# ✓ One external IP for multiple Services
+#
+# ✓ Host-based routing
+#
+# ✓ Path-based routing
+#
+# ✓ TLS termination
+#
+# ==========================================================
+#
+# Interview Tips
+#
+# ✓ An Ingress is a Layer 7 (HTTP/HTTPS) routing resource.
+#
+# ✓ An Ingress Controller implements the routing rules
+#   defined by Ingress resources.
+#
+# ✓ Ingress routes traffic to Kubernetes Services, not
+#   directly to Pods.
+#
+# ✓ In production, Ingress is preferred over creating
+#   multiple LoadBalancer Services because it reduces cost
+#   and provides centralized traffic management.
+#
+# ==========================================================

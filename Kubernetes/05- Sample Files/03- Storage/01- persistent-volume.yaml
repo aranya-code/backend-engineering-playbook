@@ -1,0 +1,281 @@
+# ==========================================================
+# Kubernetes Persistent Volume (PV) Example
+# ==========================================================
+#
+# Description:
+# Creates a Persistent Volume (PV) that provides storage
+# for applications running inside a Kubernetes cluster.
+#
+# Purpose:
+# - Learn how Persistent Volumes work
+# - Understand persistent storage
+# - Learn storage abstraction
+# - Understand the relationship between PV and PVC
+#
+# Prerequisites:
+# - Kubernetes cluster
+# - kubectl configured
+#
+# Deploy:
+# kubectl apply -f 01-Persistent-Volume.yaml
+#
+# Verify:
+# kubectl get pv
+# kubectl describe pv backend-pv
+#
+# Delete:
+# kubectl delete -f 01-Persistent-Volume.yaml
+#
+# Notes:
+# - A Persistent Volume is a cluster-wide storage resource.
+# - It exists independently of Pods.
+# - Applications should access storage through
+#   Persistent Volume Claims (PVCs), not directly.
+# - In cloud environments, PVs are usually provisioned
+#   dynamically using a StorageClass.
+#
+# ==========================================================
+
+# API version for Persistent Volume resources.
+apiVersion: v1
+
+# Kubernetes resource type.
+kind: PersistentVolume
+
+# ----------------------------------------------------------
+# Metadata
+# ----------------------------------------------------------
+metadata:
+
+  # Persistent Volume name.
+  name: backend-pv
+
+  labels:
+
+    storage: local
+
+    environment: development
+
+# ----------------------------------------------------------
+# Persistent Volume Specification
+# ----------------------------------------------------------
+spec:
+
+  # --------------------------------------------------------
+  # Storage Capacity
+  # --------------------------------------------------------
+  #
+  # Total storage available in this volume.
+  #
+  capacity:
+
+    storage: 5Gi
+
+  # --------------------------------------------------------
+  # Access Modes
+  # --------------------------------------------------------
+  #
+  # ReadWriteOnce (RWO)
+  # ReadOnlyMany (ROX)
+  # ReadWriteMany (RWX)
+  # ReadWriteOncePod (RWOP)
+  #
+  # This example allows one node to mount the volume
+  # with read-write access.
+  #
+  accessModes:
+
+    - ReadWriteOnce
+
+  # --------------------------------------------------------
+  # Persistent Volume Reclaim Policy
+  # --------------------------------------------------------
+  #
+  # Retain
+  # Delete
+  # Recycle (Deprecated)
+  #
+  # Retain keeps the data even after the PVC is deleted.
+  #
+  persistentVolumeReclaimPolicy: Retain
+
+  # --------------------------------------------------------
+  # Storage Class
+  # --------------------------------------------------------
+  #
+  # Empty string disables dynamic provisioning and
+  # indicates this PV is manually provisioned.
+  #
+  storageClassName: manual
+
+  # --------------------------------------------------------
+  # Volume Mode
+  # --------------------------------------------------------
+  #
+  # Filesystem (Default)
+  # Block
+  #
+  volumeMode: Filesystem
+
+  # --------------------------------------------------------
+  # Local Storage
+  # --------------------------------------------------------
+  #
+  # HostPath is intended for development and testing.
+  #
+  # DO NOT use HostPath in production clusters.
+  #
+  hostPath:
+
+    path: /mnt/data/backend-storage
+
+    type: DirectoryOrCreate
+
+# ==========================================================
+# Storage Architecture
+# ==========================================================
+#
+#                 Pod
+#                  │
+#                  ▼
+#        PersistentVolumeClaim
+#                  │
+#                  ▼
+#          Persistent Volume
+#                  │
+#                  ▼
+#         Physical Storage
+#
+# ==========================================================
+#
+# Persistent Volume Lifecycle
+#
+# Create PV
+#      │
+#      ▼
+# Available
+#      │
+#      ▼
+# PVC Created
+#      │
+#      ▼
+# Bound
+#      │
+#      ▼
+# Pod Uses Storage
+#      │
+#      ▼
+# PVC Deleted
+#      │
+#      ▼
+# Reclaim Policy Applied
+#
+# ==========================================================
+#
+# Useful Commands
+#
+# View Persistent Volumes
+# kubectl get pv
+#
+# Describe Persistent Volume
+# kubectl describe pv backend-pv
+#
+# View YAML
+# kubectl get pv backend-pv -o yaml
+#
+# Delete Persistent Volume
+# kubectl delete pv backend-pv
+#
+# ==========================================================
+#
+# Expected Output
+#
+# NAME
+# backend-pv
+#
+# CAPACITY
+# 5Gi
+#
+# ACCESS MODES
+# RWO
+#
+# RECLAIM POLICY
+# Retain
+#
+# STATUS
+# Available
+#
+# STORAGECLASS
+# manual
+#
+# ==========================================================
+#
+# Access Modes Explained
+#
+# ReadWriteOnce (RWO)
+#
+# ✓ Mounted as read-write by one node.
+#
+#
+# ReadOnlyMany (ROX)
+#
+# ✓ Mounted as read-only by multiple nodes.
+#
+#
+# ReadWriteMany (RWX)
+#
+# ✓ Mounted as read-write by multiple nodes.
+#
+#
+# ReadWriteOncePod (RWOP)
+#
+# ✓ Mounted by only one Pod in the cluster.
+#
+# ==========================================================
+#
+# Common Mistakes
+#
+# ❌ Creating a PV but never creating a PVC.
+#
+# ❌ Assuming Pods use PVs directly.
+#
+# ❌ Using HostPath storage in production.
+#
+# ❌ Mismatched StorageClass names.
+#
+# ❌ Requested PVC size larger than the PV capacity.
+#
+# ==========================================================
+#
+# Best Practices
+#
+# ✓ Access storage through PVCs, not directly.
+#
+# ✓ Prefer dynamic provisioning with StorageClasses.
+#
+# ✓ Use cloud-managed storage in production.
+#
+# ✓ Choose the appropriate access mode.
+#
+# ✓ Select the correct reclaim policy based on
+#   application requirements.
+#
+# ✓ Monitor storage utilization regularly.
+#
+# ==========================================================
+#
+# Interview Tips
+#
+# ✓ A Persistent Volume is a cluster resource that
+#   represents physical storage.
+#
+# ✓ Pods do not use Persistent Volumes directly;
+#   they access storage through Persistent Volume Claims.
+#
+# ✓ Persistent Volumes outlive Pods, allowing data
+#   to survive Pod restarts and recreations.
+#
+# ✓ In production Kubernetes clusters, Persistent Volumes
+#   are typically created dynamically by a StorageClass.
+#
+# ==========================================================

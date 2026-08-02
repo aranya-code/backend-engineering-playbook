@@ -1,0 +1,300 @@
+# ==========================================================
+# Kubernetes Deployment with ConfigMap Example
+# ==========================================================
+#
+# Description:
+# Deploys an Nginx application that consumes configuration
+# from a ConfigMap using environment variables.
+#
+# Purpose:
+# - Learn how Deployments consume ConfigMaps
+# - Separate configuration from application code
+# - Learn envFrom
+# - Understand externalized configuration
+#
+# Prerequisites:
+# - Kubernetes cluster
+# - kubectl configured
+# - ConfigMap created
+#
+# Create ConfigMap:
+# kubectl apply -f 01-ConfigMap.yaml
+#
+# Deploy:
+# kubectl apply -f 03-Deployment-With-ConfigMap.yaml
+#
+# Verify:
+# kubectl get deployments
+# kubectl get pods
+#
+# Delete:
+# kubectl delete -f 03-Deployment-With-ConfigMap.yaml
+#
+# Notes:
+# - The ConfigMap MUST exist before deploying this
+#   Deployment.
+# - Configuration is injected as environment variables.
+# - Updating the ConfigMap does not automatically restart
+#   existing Pods.
+#
+# ==========================================================
+
+# Kubernetes Deployment API.
+apiVersion: apps/v1
+
+# Resource type.
+kind: Deployment
+
+# ----------------------------------------------------------
+# Metadata
+# ----------------------------------------------------------
+metadata:
+
+  # Deployment name.
+  name: backend-api
+
+  labels:
+
+    app: backend-api
+
+    environment: development
+
+# ----------------------------------------------------------
+# Deployment Specification
+# ----------------------------------------------------------
+spec:
+
+  # Number of application instances.
+  replicas: 3
+
+  # Deployment selector.
+  selector:
+
+    matchLabels:
+
+      app: backend-api
+
+  # Pod Template
+  template:
+
+    metadata:
+
+      labels:
+
+        app: backend-api
+
+        tier: backend
+
+    spec:
+
+      containers:
+
+        - name: backend-api
+
+          # Example container image.
+          image: nginx:latest
+
+          imagePullPolicy: IfNotPresent
+
+          ports:
+
+            - containerPort: 80
+
+          # --------------------------------------------------
+          # ConfigMap as Environment Variables
+          # --------------------------------------------------
+          #
+          # Imports ALL keys from the ConfigMap.
+          #
+          envFrom:
+
+            - configMapRef:
+
+                name: backend-config
+
+          # --------------------------------------------------
+          # Resource Configuration
+          # --------------------------------------------------
+          resources:
+
+            requests:
+
+              cpu: "100m"
+
+              memory: "128Mi"
+
+            limits:
+
+              cpu: "250m"
+
+              memory: "256Mi"
+
+          # --------------------------------------------------
+          # Readiness Probe
+          # --------------------------------------------------
+          readinessProbe:
+
+            httpGet:
+
+              path: /
+
+              port: 80
+
+            initialDelaySeconds: 5
+
+            periodSeconds: 5
+
+          # --------------------------------------------------
+          # Liveness Probe
+          # --------------------------------------------------
+          livenessProbe:
+
+            httpGet:
+
+              path: /
+
+              port: 80
+
+            initialDelaySeconds: 15
+
+            periodSeconds: 10
+
+      restartPolicy: Always
+
+# ==========================================================
+# Architecture
+# ==========================================================
+#
+#            ConfigMap
+#                 │
+#                 ▼
+#      backend-config
+#                 │
+#                 ▼
+#     Environment Variables
+#                 │
+#                 ▼
+#          Deployment
+#                 │
+#                 ▼
+#          ReplicaSet
+#                 │
+#                 ▼
+#             3 Pods
+#
+# ==========================================================
+#
+# Environment Variables Created
+#
+# APP_NAME
+#
+# APP_ENV
+#
+# APP_DEBUG
+#
+# DB_HOST
+#
+# DB_PORT
+#
+# DB_NAME
+#
+# REDIS_HOST
+#
+# REDIS_PORT
+#
+# LOG_LEVEL
+#
+# ==========================================================
+#
+# Alternative Approach
+#
+# Instead of importing ALL variables:
+#
+# env:
+#
+# - name: APP_ENV
+#
+#   valueFrom:
+#
+#     configMapKeyRef:
+#
+#       name: backend-config
+#
+#       key: APP_ENV
+#
+# This imports only one configuration value.
+#
+# ==========================================================
+#
+# Useful Commands
+#
+# View Deployment
+# kubectl get deployment
+#
+# View Pods
+# kubectl get pods
+#
+# Describe Deployment
+# kubectl describe deployment backend-api
+#
+# View ConfigMap
+# kubectl get configmap
+#
+# Describe ConfigMap
+# kubectl describe configmap backend-config
+#
+# View Pod Environment Variables
+# kubectl exec -it <pod-name> -- env
+#
+# Filter Environment Variables
+# kubectl exec -it <pod-name> -- env | grep APP
+#
+# ==========================================================
+#
+# Common Mistakes
+#
+# ❌ ConfigMap does not exist.
+#
+# ❌ ConfigMap name is incorrect.
+#
+# ❌ Assuming Pods automatically reload updated ConfigMaps.
+#
+# ❌ Mixing sensitive credentials into ConfigMaps.
+#
+# ❌ Forgetting to restart the Deployment after configuration
+#    changes.
+#
+# ==========================================================
+#
+# Best Practices
+#
+# ✓ Keep application configuration inside ConfigMaps.
+#
+# ✓ Store secrets separately in Kubernetes Secrets.
+#
+# ✓ Give ConfigMaps meaningful names.
+#
+# ✓ Restart Deployments after ConfigMap updates if the
+#   application only reads configuration during startup.
+#
+# ✓ Version configuration changes alongside deployments.
+#
+# ==========================================================
+#
+# Interview Tips
+#
+# ✓ ConfigMaps allow configuration to be managed separately
+#   from application code.
+#
+# ✓ envFrom imports every key from a ConfigMap.
+#
+# ✓ configMapKeyRef imports a single configuration value.
+#
+# ✓ Updating a ConfigMap does not automatically restart
+#   running Pods.
+#
+# ✓ This pattern is commonly used for application settings,
+#   feature flags, logging configuration, and service
+#   endpoints.
+#
+# ==========================================================

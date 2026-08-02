@@ -1,0 +1,288 @@
+# ==========================================================
+# Kubernetes Host-Based Ingress Routing Example
+# ==========================================================
+#
+# Description:
+# Routes traffic to different applications based on
+# the requested hostname.
+#
+# Purpose:
+# - Learn Host-Based Routing
+# - Route multiple applications through one Ingress
+# - Reduce the number of LoadBalancer Services
+# - Understand virtual hosting in Kubernetes
+#
+# Prerequisites:
+# - Kubernetes cluster
+# - kubectl configured
+# - NGINX Ingress Controller installed
+# - Services already created:
+#     • frontend-service
+#     • backend-service
+#     • admin-service
+#
+# Deploy:
+# kubectl apply -f 04-Ingress-Host-Routing.yaml
+#
+# Verify:
+# kubectl get ingress
+# kubectl describe ingress company-ingress
+#
+# Delete:
+# kubectl delete -f 04-Ingress-Host-Routing.yaml
+#
+# Notes:
+# - Multiple hostnames can share one Ingress.
+# - Each hostname routes to a different Service.
+# - Commonly used in production environments.
+#
+# ==========================================================
+
+# API version.
+apiVersion: networking.k8s.io/v1
+
+# Kubernetes resource type.
+kind: Ingress
+
+# ----------------------------------------------------------
+# Metadata
+# ----------------------------------------------------------
+metadata:
+
+  # Ingress name.
+  name: company-ingress
+
+  labels:
+
+    environment: production
+
+  annotations:
+
+    # Redirect requests to the root path.
+    nginx.ingress.kubernetes.io/rewrite-target: /
+
+# ----------------------------------------------------------
+# Ingress Specification
+# ----------------------------------------------------------
+spec:
+
+  # Ingress Controller
+  ingressClassName: nginx
+
+  # --------------------------------------------------------
+  # Host-Based Routing Rules
+  # --------------------------------------------------------
+  rules:
+
+    # ------------------------------------------------------
+    # Frontend Website
+    # ------------------------------------------------------
+    - host: app.example.com
+
+      http:
+
+        paths:
+
+          - path: /
+
+            pathType: Prefix
+
+            backend:
+
+              service:
+
+                name: frontend-service
+
+                port:
+
+                  number: 80
+
+    # ------------------------------------------------------
+    # Backend API
+    # ------------------------------------------------------
+    - host: api.example.com
+
+      http:
+
+        paths:
+
+          - path: /
+
+            pathType: Prefix
+
+            backend:
+
+              service:
+
+                name: backend-service
+
+                port:
+
+                  number: 80
+
+    # ------------------------------------------------------
+    # Admin Portal
+    # ------------------------------------------------------
+    - host: admin.example.com
+
+      http:
+
+        paths:
+
+          - path: /
+
+            pathType: Prefix
+
+            backend:
+
+              service:
+
+                name: admin-service
+
+                port:
+
+                  number: 80
+
+# ==========================================================
+# Host Routing Architecture
+# ==========================================================
+#
+#                     Internet
+#                         │
+#                         ▼
+#               Ingress Controller
+#                         │
+#        ┌────────────────┼────────────────┐
+#        ▼                ▼                ▼
+# app.example.com   api.example.com   admin.example.com
+#        │                │                │
+#        ▼                ▼                ▼
+# frontend-service backend-service admin-service
+#        │                │                │
+#        ▼                ▼                ▼
+# Frontend Pods     Backend Pods      Admin Pods
+#
+# ==========================================================
+#
+# DNS Configuration
+#
+# app.example.com
+#
+# api.example.com
+#
+# admin.example.com
+#
+#             │
+#             ▼
+#
+# Same Load Balancer IP
+#
+# ==========================================================
+#
+# Useful Commands
+#
+# View Ingress
+# kubectl get ingress
+#
+# Describe Ingress
+# kubectl describe ingress company-ingress
+#
+# Test Frontend
+# curl http://app.example.com
+#
+# Test API
+# curl http://api.example.com
+#
+# Test Admin Portal
+# curl http://admin.example.com
+#
+# View Services
+# kubectl get svc
+#
+# ==========================================================
+#
+# Expected Output
+#
+# NAME
+# company-ingress
+#
+# HOSTS
+# app.example.com,
+# api.example.com,
+# admin.example.com
+#
+# ADDRESS
+# <LoadBalancer-IP>
+#
+# ==========================================================
+#
+# Common Mistakes
+#
+# ❌ DNS records do not point to the Ingress Controller.
+#
+# ❌ Incorrect Service names.
+#
+# ❌ Missing Ingress Controller.
+#
+# ❌ Wrong ingressClassName.
+#
+# ❌ Services are unavailable.
+#
+# ==========================================================
+#
+# Best Practices
+#
+# ✓ Use one Ingress for related applications.
+#
+# ✓ Use meaningful subdomains.
+#
+# ✓ Enable HTTPS for every hostname.
+#
+# ✓ Keep routing rules organized.
+#
+# ✓ Monitor Ingress traffic.
+#
+# ==========================================================
+#
+# Production Example
+#
+# app.company.com
+#
+# → Frontend
+#
+#
+# api.company.com
+#
+# → Backend API
+#
+#
+# admin.company.com
+#
+# → Administration Portal
+#
+#
+# auth.company.com
+#
+# → Authentication Service
+#
+#
+# docs.company.com
+#
+# → Documentation
+#
+# ==========================================================
+#
+# Interview Tips
+#
+# ✓ Host-based routing directs traffic based on the HTTP
+#   Host header.
+#
+# ✓ Multiple applications can share a single external IP.
+#
+# ✓ This approach reduces infrastructure cost compared to
+#   creating multiple LoadBalancer Services.
+#
+# ✓ Host-based routing is one of the most common production
+#   Ingress patterns used in Kubernetes.
+#
+# ==========================================================

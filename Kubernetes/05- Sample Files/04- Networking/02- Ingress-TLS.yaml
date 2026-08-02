@@ -1,0 +1,295 @@
+# ==========================================================
+# Kubernetes Ingress with TLS Example
+# ==========================================================
+#
+# Description:
+# Creates an Ingress that exposes an application securely
+# over HTTPS using a TLS certificate.
+#
+# Purpose:
+# - Learn TLS termination with Ingress
+# - Secure applications using HTTPS
+# - Understand Kubernetes TLS Secrets
+# - Build production-ready Ingress configurations
+#
+# Prerequisites:
+# - Kubernetes cluster
+# - kubectl configured
+# - NGINX Ingress Controller installed
+# - A Service named "backend-service"
+# - A TLS Secret already created
+#
+# Example TLS Secret:
+#
+# kubectl create secret tls backend-tls \
+#   --cert=tls.crt \
+#   --key=tls.key
+#
+# Deploy:
+# kubectl apply -f 02-Ingress-TLS.yaml
+#
+# Verify:
+# kubectl get ingress
+# kubectl describe ingress backend-ingress
+#
+# Delete:
+# kubectl delete -f 02-Ingress-TLS.yaml
+#
+# Notes:
+# - TLS is terminated at the Ingress Controller.
+# - Traffic between clients and the Ingress is encrypted.
+# - Internal traffic may remain HTTP unless configured
+#   otherwise.
+#
+# ==========================================================
+
+# API version.
+apiVersion: networking.k8s.io/v1
+
+# Kubernetes resource type.
+kind: Ingress
+
+# ----------------------------------------------------------
+# Metadata
+# ----------------------------------------------------------
+metadata:
+
+  # Ingress name.
+  name: backend-ingress
+
+  labels:
+
+    app: backend-api
+
+    environment: production
+
+  # --------------------------------------------------------
+  # Controller Annotations
+  # --------------------------------------------------------
+  annotations:
+
+    # Redirect HTTP requests to HTTPS.
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+
+    # Force HTTPS.
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+
+# ----------------------------------------------------------
+# Ingress Specification
+# ----------------------------------------------------------
+spec:
+
+  # Use the NGINX Ingress Controller.
+  ingressClassName: nginx
+
+  # --------------------------------------------------------
+  # TLS Configuration
+  # --------------------------------------------------------
+  #
+  # The Secret must contain:
+  #
+  # tls.crt
+  # tls.key
+  #
+  tls:
+
+    - hosts:
+
+        - backend.example.com
+
+      secretName: backend-tls
+
+  # --------------------------------------------------------
+  # Routing Rules
+  # --------------------------------------------------------
+  rules:
+
+    - host: backend.example.com
+
+      http:
+
+        paths:
+
+          - path: /
+
+            pathType: Prefix
+
+            backend:
+
+              service:
+
+                name: backend-service
+
+                port:
+
+                  number: 80
+
+# ==========================================================
+# HTTPS Request Flow
+# ==========================================================
+#
+# Browser
+#      │
+# HTTPS (443)
+#      │
+#      ▼
+# Load Balancer
+#      │
+#      ▼
+# Ingress Controller
+#      │
+# TLS Termination
+#      │
+#      ▼
+# Ingress
+#      │
+#      ▼
+# Service
+#      │
+#      ▼
+# Pods
+#
+# ==========================================================
+#
+# TLS Secret
+#
+# backend-tls
+#
+# ├── tls.crt
+# │
+# └── tls.key
+#
+# ==========================================================
+#
+# SSL Redirect
+#
+# HTTP
+#
+# http://backend.example.com
+#
+#          │
+#          ▼
+#
+# 301 Redirect
+#
+#          │
+#          ▼
+#
+# HTTPS
+#
+# https://backend.example.com
+#
+# ==========================================================
+#
+# Useful Commands
+#
+# View Ingress
+# kubectl get ingress
+#
+# Describe Ingress
+# kubectl describe ingress backend-ingress
+#
+# View Secrets
+# kubectl get secrets
+#
+# Describe TLS Secret
+# kubectl describe secret backend-tls
+#
+# Create TLS Secret
+#
+# kubectl create secret tls backend-tls \
+# --cert=tls.crt \
+# --key=tls.key
+#
+# Test HTTPS
+#
+# curl https://backend.example.com
+#
+# ==========================================================
+#
+# Expected Output
+#
+# NAME
+# backend-ingress
+#
+# HOSTS
+# backend.example.com
+#
+# TLS
+# backend-tls
+#
+# PORTS
+# 80,443
+#
+# ==========================================================
+#
+# Common Mistakes
+#
+# ❌ TLS Secret does not exist.
+#
+# ❌ Certificate has expired.
+#
+# ❌ Wrong hostname in certificate.
+#
+# ❌ DNS does not point to the Load Balancer.
+#
+# ❌ HTTP redirect not enabled.
+#
+# ❌ Incorrect Secret name.
+#
+# ==========================================================
+#
+# Best Practices
+#
+# ✓ Always enable HTTPS in production.
+#
+# ✓ Use trusted CA certificates.
+#
+# ✓ Renew certificates before expiration.
+#
+# ✓ Redirect HTTP to HTTPS.
+#
+# ✓ Store certificates inside Kubernetes Secrets.
+#
+# ✓ Use cert-manager to automate certificate renewal.
+#
+# ==========================================================
+#
+# Production Architecture
+#
+# Internet
+#      │
+#      ▼
+# HTTPS
+#      │
+#      ▼
+# Load Balancer
+#      │
+#      ▼
+# Ingress Controller
+#      │
+#      ▼
+# Kubernetes Service
+#      │
+#      ▼
+# Application Pods
+#
+# ==========================================================
+#
+# Interview Tips
+#
+# ✓ TLS certificates are stored in Kubernetes Secrets.
+#
+# ✓ Ingress Controllers terminate HTTPS connections.
+#
+# ✓ Applications can continue using HTTP internally if
+#   desired.
+#
+# ✓ Most production Kubernetes clusters automate TLS
+#   certificate management using cert-manager together
+#   with Let's Encrypt or another Certificate Authority.
+#
+# ✓ Enforcing HTTPS is considered a production best
+#   practice for all public-facing applications.
+#
+# ==========================================================

@@ -1,0 +1,218 @@
+# ==========================================================
+# Kubernetes Namespace Example
+# ==========================================================
+#
+# Description:
+# Creates a Namespace used to logically organize Kubernetes
+# resources within a cluster.
+#
+# Purpose:
+# - Learn how Namespaces work
+# - Organize Kubernetes resources
+# - Separate environments
+# - Apply resource quotas and RBAC
+#
+# Prerequisites:
+# - Kubernetes cluster
+# - kubectl configured
+#
+# Deploy:
+# kubectl apply -f 07-Namespace.yaml
+#
+# Verify:
+# kubectl get namespaces
+#
+# Describe:
+# kubectl describe namespace backend-dev
+#
+# Delete:
+# kubectl delete -f 07-Namespace.yaml
+#
+# Notes:
+# - Namespaces provide logical isolation.
+# - They DO NOT create separate Kubernetes clusters.
+# - Resources inside one namespace are isolated from
+#   resources in another namespace unless explicitly shared.
+#
+# ==========================================================
+
+# Kubernetes API version.
+apiVersion: v1
+
+# Kubernetes resource type.
+kind: Namespace
+
+# ----------------------------------------------------------
+# Metadata
+# ----------------------------------------------------------
+metadata:
+
+  # Name of the Namespace.
+  name: backend-dev
+
+  # Labels help organize Namespaces.
+  labels:
+
+    # Environment name.
+    environment: development
+
+    # Team responsible.
+    team: backend
+
+    # Application domain.
+    project: backend-engineering-playbook
+
+# ==========================================================
+# Namespace Architecture
+# ==========================================================
+#
+# Kubernetes Cluster
+#
+# ├── default
+# │
+# ├── kube-system
+# │
+# ├── kube-public
+# │
+# ├── backend-dev
+# │     ├── Deployments
+# │     ├── Pods
+# │     ├── Services
+# │     ├── ConfigMaps
+# │     └── Secrets
+# │
+# └── backend-prod
+#
+# ==========================================================
+#
+# Typical Namespace Layout
+#
+# development
+#
+# testing
+#
+# staging
+#
+# production
+#
+# monitoring
+#
+# ingress-nginx
+#
+# ==========================================================
+#
+# Useful Commands
+#
+# List Namespaces
+# kubectl get namespaces
+#
+# Short Form
+# kubectl get ns
+#
+# Describe Namespace
+# kubectl describe namespace backend-dev
+#
+# Create Namespace
+# kubectl create namespace backend-dev
+#
+# Delete Namespace
+# kubectl delete namespace backend-dev
+#
+# List Resources Inside Namespace
+# kubectl get all -n backend-dev
+#
+# Deploy Resources to Namespace
+# kubectl apply -f deployment.yaml -n backend-dev
+#
+# Set Default Namespace
+# kubectl config set-context --current --namespace=backend-dev
+#
+# ==========================================================
+#
+# Working with Namespaces
+#
+# Deploy a Deployment
+#
+# kubectl apply -f deployment.yaml -n backend-dev
+#
+# View Pods
+#
+# kubectl get pods -n backend-dev
+#
+# View Services
+#
+# kubectl get svc -n backend-dev
+#
+# View ConfigMaps
+#
+# kubectl get configmap -n backend-dev
+#
+# ==========================================================
+#
+# Resource Isolation
+#
+# Namespace A
+#
+# ├── Deployment
+# ├── Service
+# ├── ConfigMap
+# └── Secret
+#
+#
+# Namespace B
+#
+# ├── Deployment
+# ├── Service
+# ├── ConfigMap
+# └── Secret
+#
+# Resources remain logically separated.
+#
+# ==========================================================
+#
+# Common Mistakes
+#
+# ❌ Forgetting to specify the namespace.
+#
+# ❌ Deploying production workloads into the default namespace.
+#
+# ❌ Assuming Namespaces isolate the cluster itself.
+#
+# ❌ Forgetting that Services are namespace-scoped.
+#
+# ❌ Deleting a Namespace removes ALL resources inside it.
+#
+# ==========================================================
+#
+# Best Practices
+#
+# ✓ Use separate Namespaces for each environment.
+#
+# ✓ Avoid deploying production workloads into the default
+#   namespace.
+#
+# ✓ Apply Resource Quotas to shared Namespaces.
+#
+# ✓ Use RBAC to control Namespace access.
+#
+# ✓ Use consistent naming conventions.
+#
+# ✓ Label Namespaces for easier management.
+#
+# ==========================================================
+#
+# Interview Tips
+#
+# ✓ A Namespace is a logical partition inside a Kubernetes
+#   cluster.
+#
+# ✓ Namespaces help organize resources and enable multi-team
+#   and multi-environment deployments.
+#
+# ✓ System components typically run in the kube-system
+#   Namespace.
+#
+# ✓ Namespaces do not provide complete security isolation;
+#   RBAC and Network Policies are also required.
+#
+# ==========================================================

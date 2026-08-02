@@ -1,0 +1,378 @@
+# ==========================================================
+# Kubernetes StatefulSet with Persistent Volume Claim Example
+# ==========================================================
+#
+# Description:
+# Deploys a StatefulSet where each Pod receives its own
+# dedicated Persistent Volume using volumeClaimTemplates.
+#
+# Purpose:
+# - Learn StatefulSets
+# - Learn volumeClaimTemplates
+# - Understand stable Pod identities
+# - Understand persistent storage for stateful applications
+#
+# Prerequisites:
+# - Kubernetes cluster
+# - kubectl configured
+# - StorageClass available
+#
+# Deploy:
+# kubectl apply -f 05-StatefulSet-With-PVC.yaml
+#
+# Verify:
+# kubectl get statefulsets
+# kubectl get pods
+# kubectl get pvc
+#
+# Delete:
+# kubectl delete -f 05-StatefulSet-With-PVC.yaml
+#
+# Notes:
+# - StatefulSets are designed for stateful workloads.
+# - Every Pod receives its own Persistent Volume Claim.
+# - Each Pod has a stable hostname and stable storage.
+# - Common use cases include:
+#     • PostgreSQL
+#     • MySQL
+#     • MongoDB
+#     • Cassandra
+#     • Elasticsearch
+#     • Kafka
+#
+# ==========================================================
+
+# StatefulSet API version.
+apiVersion: apps/v1
+
+# Kubernetes resource type.
+kind: StatefulSet
+
+# ----------------------------------------------------------
+# Metadata
+# ----------------------------------------------------------
+metadata:
+
+  # StatefulSet name.
+  name: postgres
+
+  labels:
+
+    app: postgres
+
+    environment: development
+
+# ----------------------------------------------------------
+# StatefulSet Specification
+# ----------------------------------------------------------
+spec:
+
+  # --------------------------------------------------------
+  # Headless Service
+  # --------------------------------------------------------
+  #
+  # StatefulSets require a Headless Service.
+  #
+  serviceName: postgres-headless
+
+  # Desired number of Pods.
+  replicas: 3
+
+  # Pod selector.
+  selector:
+
+    matchLabels:
+
+      app: postgres
+
+  # --------------------------------------------------------
+  # Pod Template
+  # --------------------------------------------------------
+  template:
+
+    metadata:
+
+      labels:
+
+        app: postgres
+
+    spec:
+
+      containers:
+
+        - name: postgres
+
+          image: postgres:16
+
+          imagePullPolicy: IfNotPresent
+
+          ports:
+
+            - containerPort: 5432
+
+              name: postgres
+
+          # --------------------------------------------------
+          # Environment Variables
+          # --------------------------------------------------
+          env:
+
+            - name: POSTGRES_DB
+
+              value: appdb
+
+            - name: POSTGRES_USER
+
+              value: postgres
+
+            - name: POSTGRES_PASSWORD
+
+              value: postgres123
+
+          # --------------------------------------------------
+          # Persistent Storage
+          # --------------------------------------------------
+          #
+          # Each Pod mounts its own dedicated volume.
+          #
+          volumeMounts:
+
+            - name: postgres-storage
+
+              mountPath: /var/lib/postgresql/data
+
+          # --------------------------------------------------
+          # Resource Requests & Limits
+          # --------------------------------------------------
+          resources:
+
+            requests:
+
+              cpu: "250m"
+
+              memory: "512Mi"
+
+            limits:
+
+              cpu: "500m"
+
+              memory: "1Gi"
+
+          # --------------------------------------------------
+          # Readiness Probe
+          # --------------------------------------------------
+          readinessProbe:
+
+            exec:
+
+              command:
+
+                - pg_isready
+
+                - "-U"
+
+                - postgres
+
+            initialDelaySeconds: 10
+
+            periodSeconds: 10
+
+          # --------------------------------------------------
+          # Liveness Probe
+          # --------------------------------------------------
+          livenessProbe:
+
+            exec:
+
+              command:
+
+                - pg_isready
+
+                - "-U"
+
+                - postgres
+
+            initialDelaySeconds: 30
+
+            periodSeconds: 20
+
+  # --------------------------------------------------------
+  # Volume Claim Template
+  # --------------------------------------------------------
+  #
+  # Kubernetes automatically creates one PVC per Pod.
+  #
+  volumeClaimTemplates:
+
+    - metadata:
+
+        name: postgres-storage
+
+      spec:
+
+        accessModes:
+
+          - ReadWriteOnce
+
+        storageClassName: standard-storage
+
+        resources:
+
+          requests:
+
+            storage: 10Gi
+
+# ==========================================================
+# Architecture
+# ==========================================================
+#
+#               StatefulSet
+#                    │
+#        ┌───────────┼───────────┐
+#        ▼           ▼           ▼
+#   postgres-0  postgres-1  postgres-2
+#        │           │           │
+#        ▼           ▼           ▼
+#     PVC-0       PVC-1       PVC-2
+#        │           │           │
+#        ▼           ▼           ▼
+#      PV-0        PV-1        PV-2
+#
+# Each Pod owns its own storage.
+#
+# ==========================================================
+#
+# Stable Identity
+#
+# Pod Name
+#
+# postgres-0
+#
+# postgres-1
+#
+# postgres-2
+#
+#
+# DNS Names
+#
+# postgres-0.postgres-headless
+#
+# postgres-1.postgres-headless
+#
+# postgres-2.postgres-headless
+#
+# ==========================================================
+#
+# Volume Creation
+#
+# StatefulSet
+#      │
+#      ▼
+# volumeClaimTemplates
+#      │
+#      ▼
+# PVC Created
+#      │
+#      ▼
+# StorageClass
+#      │
+#      ▼
+# Persistent Volume
+#
+# ==========================================================
+#
+# Useful Commands
+#
+# View StatefulSets
+# kubectl get statefulsets
+#
+# Short Form
+# kubectl get sts
+#
+# View Pods
+# kubectl get pods
+#
+# View PVCs
+# kubectl get pvc
+#
+# View PVs
+# kubectl get pv
+#
+# Describe StatefulSet
+# kubectl describe statefulset postgres
+#
+# Scale StatefulSet
+# kubectl scale statefulset postgres --replicas=5
+#
+# ==========================================================
+#
+# Expected Output
+#
+# StatefulSet
+#
+# postgres
+#
+# Replicas
+#
+# 3
+#
+#
+# PVCs
+#
+# postgres-storage-postgres-0
+#
+# postgres-storage-postgres-1
+#
+# postgres-storage-postgres-2
+#
+# ==========================================================
+#
+# Common Mistakes
+#
+# ❌ Using a Deployment instead of a StatefulSet for
+#    databases.
+#
+# ❌ Forgetting the Headless Service.
+#
+# ❌ Sharing one PVC among multiple database Pods.
+#
+# ❌ Using HostPath storage in production.
+#
+# ❌ Assuming Pod names change after restart.
+#
+# ==========================================================
+#
+# Best Practices
+#
+# ✓ Use StatefulSets for stateful applications.
+#
+# ✓ Use Deployments for stateless applications.
+#
+# ✓ Use volumeClaimTemplates for automatic PVC creation.
+#
+# ✓ Use a StorageClass for dynamic provisioning.
+#
+# ✓ Configure regular database backups.
+#
+# ✓ Use anti-affinity rules for high availability.
+#
+# ✓ Monitor storage usage and database health.
+#
+# ==========================================================
+#
+# Interview Tips
+#
+# ✓ StatefulSets provide stable Pod identities.
+#
+# ✓ Each StatefulSet Pod gets its own Persistent Volume.
+#
+# ✓ Pods are created and terminated in order.
+#
+# ✓ StatefulSets are the preferred choice for databases
+#   and distributed systems.
+#
+# ✓ Deployments are for stateless applications, while
+#   StatefulSets are for applications that require stable
+#   network identities and persistent storage.
+#
+# ==========================================================

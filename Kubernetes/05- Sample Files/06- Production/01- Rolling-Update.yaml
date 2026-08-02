@@ -1,0 +1,340 @@
+# ==========================================================
+# Kubernetes Rolling Update Deployment Example
+# ==========================================================
+#
+# Description:
+# Demonstrates a Deployment configured with a Rolling Update
+# strategy for zero-downtime application deployments.
+#
+# Purpose:
+# - Learn Rolling Updates
+# - Deploy new application versions
+# - Achieve zero downtime
+# - Understand update strategies
+# - Build production-ready deployments
+#
+# Prerequisites:
+# - Kubernetes cluster
+# - kubectl configured
+#
+# Deploy:
+# kubectl apply -f 01-Rolling-Update.yaml
+#
+# Verify:
+# kubectl get deployment
+# kubectl rollout status deployment nginx-app
+#
+# Update Image:
+# kubectl set image deployment/nginx-app \
+# nginx=nginx:1.27
+#
+# Delete:
+# kubectl delete -f 01-Rolling-Update.yaml
+#
+# Notes:
+# - RollingUpdate is the default Deployment strategy.
+# - Pods are replaced gradually.
+# - The application remains available throughout the update.
+#
+# ==========================================================
+
+# Deployment API version.
+apiVersion: apps/v1
+
+# Kubernetes resource type.
+kind: Deployment
+
+# ----------------------------------------------------------
+# Metadata
+# ----------------------------------------------------------
+metadata:
+
+  # Deployment name.
+  name: nginx-app
+
+  labels:
+
+    app: nginx
+
+    environment: production
+
+# ----------------------------------------------------------
+# Deployment Specification
+# ----------------------------------------------------------
+spec:
+
+  # Desired number of Pods.
+  replicas: 4
+
+  # --------------------------------------------------------
+  # Update Strategy
+  # --------------------------------------------------------
+  strategy:
+
+    # Rolling update deployment.
+    type: RollingUpdate
+
+    rollingUpdate:
+
+      # Maximum number of additional Pods that can be
+      # created during the update.
+      #
+      # 25% of 4 Pods = 1 Pod
+      #
+      maxSurge: 25%
+
+      # Maximum number of unavailable Pods during update.
+      #
+      # Ensures application availability.
+      #
+      maxUnavailable: 25%
+
+  # --------------------------------------------------------
+  # Deployment Selector
+  # --------------------------------------------------------
+  selector:
+
+    matchLabels:
+
+      app: nginx
+
+  # --------------------------------------------------------
+  # Pod Template
+  # --------------------------------------------------------
+  template:
+
+    metadata:
+
+      labels:
+
+        app: nginx
+
+        version: v1
+
+    spec:
+
+      containers:
+
+        - name: nginx
+
+          image: nginx:1.26
+
+          imagePullPolicy: IfNotPresent
+
+          ports:
+
+            - containerPort: 80
+
+          # --------------------------------------------------
+          # Resource Configuration
+          # --------------------------------------------------
+          resources:
+
+            requests:
+
+              cpu: "100m"
+
+              memory: "128Mi"
+
+            limits:
+
+              cpu: "500m"
+
+              memory: "512Mi"
+
+          # --------------------------------------------------
+          # Readiness Probe
+          # --------------------------------------------------
+          #
+          # Ensures traffic is sent only to ready Pods.
+          #
+          readinessProbe:
+
+            httpGet:
+
+              path: /
+
+              port: 80
+
+            initialDelaySeconds: 5
+
+            periodSeconds: 5
+
+          # --------------------------------------------------
+          # Liveness Probe
+          # --------------------------------------------------
+          #
+          # Restarts unhealthy containers.
+          #
+          livenessProbe:
+
+            httpGet:
+
+              path: /
+
+              port: 80
+
+            initialDelaySeconds: 15
+
+            periodSeconds: 10
+
+# ==========================================================
+# Rolling Update Process
+# ==========================================================
+#
+# Initial Deployment
+#
+# Pod-1 (v1)
+# Pod-2 (v1)
+# Pod-3 (v1)
+# Pod-4 (v1)
+#
+#          │
+#          ▼
+#
+# Deploy Version 2
+#
+#          │
+#          ▼
+#
+# Pod-5 (v2)
+#
+# Wait Until Ready
+#
+#          │
+#          ▼
+#
+# Delete Pod-1
+#
+#          │
+#          ▼
+#
+# Pod-6 (v2)
+#
+# Wait Until Ready
+#
+#          │
+#          ▼
+#
+# Delete Pod-2
+#
+#          │
+#          ▼
+#
+# Continue Until All Pods Run v2
+#
+# ==========================================================
+#
+# Zero Downtime Deployment
+#
+# Old Pods
+#
+# v1
+#
+#      │
+#      ▼
+#
+# New Pods
+#
+# v2
+#
+#      │
+#      ▼
+#
+# Users Continue Accessing Application
+#
+# ==========================================================
+#
+# Useful Commands
+#
+# View Deployments
+# kubectl get deployment
+#
+# View ReplicaSets
+# kubectl get rs
+#
+# View Pods
+# kubectl get pods
+#
+# Check Rollout Status
+# kubectl rollout status deployment nginx-app
+#
+# View Rollout History
+# kubectl rollout history deployment nginx-app
+#
+# Update Image
+# kubectl set image deployment/nginx-app \
+# nginx=nginx:1.27
+#
+# Pause Rollout
+# kubectl rollout pause deployment nginx-app
+#
+# Resume Rollout
+# kubectl rollout resume deployment nginx-app
+#
+# ==========================================================
+#
+# Expected Output
+#
+# NAME
+# nginx-app
+#
+# READY
+# 4/4
+#
+# UP-TO-DATE
+# 4
+#
+# AVAILABLE
+# 4
+#
+# ==========================================================
+#
+# Common Mistakes
+#
+# ❌ No Readiness Probe configured.
+#
+# ❌ maxUnavailable set too high.
+#
+# ❌ Updating directly on production without testing.
+#
+# ❌ Using the latest image tag in production.
+#
+# ❌ Ignoring rollout failures.
+#
+# ==========================================================
+#
+# Best Practices
+#
+# ✓ Use immutable image tags.
+#
+# ✓ Configure Readiness and Liveness Probes.
+#
+# ✓ Monitor rollout progress.
+#
+# ✓ Keep replica count greater than one.
+#
+# ✓ Test new versions before production deployment.
+#
+# ✓ Keep rollout history for quick rollbacks.
+#
+# ==========================================================
+#
+# Interview Tips
+#
+# ✓ RollingUpdate is the default Deployment strategy.
+#
+# ✓ Kubernetes gradually replaces old Pods with new Pods.
+#
+# ✓ Readiness Probes ensure traffic is routed only to
+#   healthy Pods during deployment.
+#
+# ✓ maxSurge controls extra Pods created during updates.
+#
+# ✓ maxUnavailable controls how many Pods may be unavailable
+#   during the rollout.
+#
+# ✓ Rolling Updates enable zero-downtime deployments for
+#   stateless applications.
+#
+# ==========================================================

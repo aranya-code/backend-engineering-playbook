@@ -1,0 +1,408 @@
+# ==========================================================
+# Kubernetes Production Deployment Example
+# ==========================================================
+#
+# Description:
+# A production-ready Deployment manifest that combines
+# Kubernetes best practices into a single example.
+#
+# Features Included:
+# - Rolling Update Strategy
+# - Resource Requests & Limits
+# - Startup Probe
+# - Readiness Probe
+# - Liveness Probe
+# - Security Context
+# - ConfigMap
+# - Secret
+# - Persistent Volume Claim
+# - Node Affinity
+# - Pod Anti-Affinity
+# - Graceful Shutdown
+#
+# Deploy:
+# kubectl apply -f 04-Production-Deployment.yaml
+#
+# Verify:
+# kubectl get deployment
+# kubectl get pods
+#
+# ==========================================================
+
+apiVersion: apps/v1
+kind: Deployment
+
+# ----------------------------------------------------------
+# Metadata
+# ----------------------------------------------------------
+metadata:
+
+  name: backend-api
+
+  labels:
+
+    app: backend-api
+
+    environment: production
+
+# ----------------------------------------------------------
+# Deployment Specification
+# ----------------------------------------------------------
+spec:
+
+  replicas: 3
+
+  revisionHistoryLimit: 10
+
+  progressDeadlineSeconds: 600
+
+  minReadySeconds: 15
+
+  # --------------------------------------------------------
+  # Rolling Update Strategy
+  # --------------------------------------------------------
+  strategy:
+
+    type: RollingUpdate
+
+    rollingUpdate:
+
+      maxUnavailable: 25%
+
+      maxSurge: 25%
+
+  selector:
+
+    matchLabels:
+
+      app: backend-api
+
+  # --------------------------------------------------------
+  # Pod Template
+  # --------------------------------------------------------
+  template:
+
+    metadata:
+
+      labels:
+
+        app: backend-api
+
+        version: v1
+
+    spec:
+
+      # ----------------------------------------------------
+      # Graceful Shutdown
+      # ----------------------------------------------------
+      terminationGracePeriodSeconds: 30
+
+      # ----------------------------------------------------
+      # Service Account
+      # ----------------------------------------------------
+      serviceAccountName: backend-service-account
+
+      # ----------------------------------------------------
+      # Pod Security Context
+      # ----------------------------------------------------
+      securityContext:
+
+        runAsNonRoot: true
+
+        runAsUser: 1000
+
+        fsGroup: 1000
+
+      # ----------------------------------------------------
+      # Pod Anti-Affinity
+      # ----------------------------------------------------
+      #
+      # Spread Pods across worker nodes.
+      #
+      affinity:
+
+        podAntiAffinity:
+
+          preferredDuringSchedulingIgnoredDuringExecution:
+
+            - weight: 100
+
+              podAffinityTerm:
+
+                topologyKey: kubernetes.io/hostname
+
+                labelSelector:
+
+                  matchLabels:
+
+                    app: backend-api
+
+      containers:
+
+        - name: backend-api
+
+          image: company/backend-api:1.0.0
+
+          imagePullPolicy: IfNotPresent
+
+          ports:
+
+            - containerPort: 8000
+
+          # ------------------------------------------------
+          # Resource Requests & Limits
+          # ------------------------------------------------
+          resources:
+
+            requests:
+
+              cpu: "250m"
+
+              memory: "256Mi"
+
+            limits:
+
+              cpu: "1000m"
+
+              memory: "1Gi"
+
+          # ------------------------------------------------
+          # Environment Variables
+          # ------------------------------------------------
+          envFrom:
+
+            - configMapRef:
+
+                name: backend-config
+
+            - secretRef:
+
+                name: backend-secret
+
+          # ------------------------------------------------
+          # Persistent Storage
+          # ------------------------------------------------
+          volumeMounts:
+
+            - name: uploads
+
+              mountPath: /app/uploads
+
+          # ------------------------------------------------
+          # Startup Probe
+          # ------------------------------------------------
+          startupProbe:
+
+            httpGet:
+
+              path: /health
+
+              port: 8000
+
+            failureThreshold: 30
+
+            periodSeconds: 10
+
+          # ------------------------------------------------
+          # Readiness Probe
+          # ------------------------------------------------
+          readinessProbe:
+
+            httpGet:
+
+              path: /health
+
+              port: 8000
+
+            initialDelaySeconds: 10
+
+            periodSeconds: 5
+
+            timeoutSeconds: 2
+
+          # ------------------------------------------------
+          # Liveness Probe
+          # ------------------------------------------------
+          livenessProbe:
+
+            httpGet:
+
+              path: /health
+
+              port: 8000
+
+            initialDelaySeconds: 30
+
+            periodSeconds: 10
+
+            timeoutSeconds: 2
+
+          # ------------------------------------------------
+          # Lifecycle Hooks
+          # ------------------------------------------------
+          lifecycle:
+
+            preStop:
+
+              exec:
+
+                command:
+
+                  - sh
+
+                  - -c
+
+                  - sleep 10
+
+      # ----------------------------------------------------
+      # Volumes
+      # ----------------------------------------------------
+      volumes:
+
+        - name: uploads
+
+          persistentVolumeClaim:
+
+            claimName: uploads-pvc
+
+# ==========================================================
+# Production Architecture
+# ==========================================================
+#
+#                 Ingress
+#                    │
+#                    ▼
+#                 Service
+#                    │
+#                    ▼
+#              Deployment
+#                    │
+#      ┌─────────────┼─────────────┐
+#      ▼             ▼             ▼
+#     Pod           Pod           Pod
+#      │             │             │
+#      ├─────────────┼─────────────┤
+#      │             │             │
+#      ▼             ▼             ▼
+# Startup      Readiness      Liveness
+#  Probe          Probe          Probe
+#      │
+#      ▼
+# ConfigMap + Secret
+#      │
+#      ▼
+# Persistent Volume Claim
+#
+# ==========================================================
+#
+# Production Features Included
+#
+# ✓ Rolling Update
+#
+# ✓ Resource Requests
+#
+# ✓ Resource Limits
+#
+# ✓ Startup Probe
+#
+# ✓ Readiness Probe
+#
+# ✓ Liveness Probe
+#
+# ✓ Security Context
+#
+# ✓ ConfigMap
+#
+# ✓ Secret
+#
+# ✓ Persistent Storage
+#
+# ✓ Pod Anti-Affinity
+#
+# ✓ Graceful Shutdown
+#
+# ✓ Revision History
+#
+# ==========================================================
+#
+# Useful Commands
+#
+# Deploy
+# kubectl apply -f 04-Production-Deployment.yaml
+#
+# Check Rollout
+# kubectl rollout status deployment backend-api
+#
+# View Deployment
+# kubectl get deployment
+#
+# View Pods
+# kubectl get pods
+#
+# Describe Deployment
+# kubectl describe deployment backend-api
+#
+# Rollback
+# kubectl rollout undo deployment backend-api
+#
+# ==========================================================
+#
+# Common Mistakes
+#
+# ❌ Using the "latest" image tag.
+#
+# ❌ Missing Readiness Probe.
+#
+# ❌ No Resource Requests or Limits.
+#
+# ❌ Running containers as root.
+#
+# ❌ No graceful shutdown.
+#
+# ❌ No anti-affinity causing all Pods to run on one node.
+#
+# ==========================================================
+#
+# Best Practices
+#
+# ✓ Use immutable image tags.
+#
+# ✓ Configure all three health probes.
+#
+# ✓ Define CPU and Memory Requests & Limits.
+#
+# ✓ Load configuration from ConfigMaps and Secrets.
+#
+# ✓ Run containers as non-root users.
+#
+# ✓ Spread replicas across worker nodes.
+#
+# ✓ Configure graceful shutdown with preStop hooks.
+#
+# ✓ Keep multiple replicas for high availability.
+#
+# ✓ Maintain rollout history for quick rollback.
+#
+# ==========================================================
+#
+# Interview Tips
+#
+# ✓ A production Deployment should prioritize
+#   availability, security, scalability, and
+#   maintainability.
+#
+# ✓ Readiness Probes prevent traffic from reaching
+#   unhealthy Pods, while Liveness Probes restart
+#   failed containers.
+#
+# ✓ Resource Requests and Limits improve scheduling
+#   efficiency and cluster stability.
+#
+# ✓ Rolling Updates combined with multiple replicas
+#   provide zero-downtime deployments.
+#
+# ✓ Security Contexts, ConfigMaps, Secrets, PVCs,
+#   and anti-affinity rules are standard components
+#   of production-grade Kubernetes deployments.
+#
+# ==========================================================

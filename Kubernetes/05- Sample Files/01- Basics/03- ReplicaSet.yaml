@@ -1,0 +1,232 @@
+# ==========================================================
+# Kubernetes ReplicaSet Example
+# ==========================================================
+#
+# Description:
+# Creates a ReplicaSet that maintains a fixed number of
+# identical Pods.
+#
+# Purpose:
+# - Learn how ReplicaSets work
+# - Understand Pod self-healing
+# - Learn label selectors
+# - Learn desired state management
+#
+# Prerequisites:
+# - Kubernetes cluster
+# - kubectl configured
+#
+# Deploy:
+# kubectl apply -f 03-ReplicaSet.yaml
+#
+# Verify:
+# kubectl get replicasets
+# kubectl get pods
+#
+# Describe ReplicaSet:
+# kubectl describe replicaset nginx-replicaset
+#
+# Scale ReplicaSet:
+# kubectl scale replicaset nginx-replicaset --replicas=5
+#
+# Delete:
+# kubectl delete -f 03-ReplicaSet.yaml
+#
+# Notes:
+# - ReplicaSets ensure that a specified number of Pods are
+#   always running.
+# - If a Pod crashes or is deleted, the ReplicaSet
+#   automatically creates a replacement.
+# - In production, ReplicaSets are usually managed by
+#   Deployments rather than created directly.
+#
+# ==========================================================
+
+# API version for ReplicaSet resources.
+apiVersion: apps/v1
+
+# Kubernetes resource type.
+kind: ReplicaSet
+
+# ----------------------------------------------------------
+# Metadata
+# ----------------------------------------------------------
+metadata:
+
+  # ReplicaSet name.
+  name: nginx-replicaset
+
+  # Labels attached to the ReplicaSet.
+  labels:
+    app: nginx
+    environment: development
+
+# ----------------------------------------------------------
+# ReplicaSet Specification
+# ----------------------------------------------------------
+spec:
+
+  # Desired number of Pod replicas.
+  replicas: 3
+
+  # --------------------------------------------------------
+  # Selector
+  # --------------------------------------------------------
+  # Determines which Pods belong to this ReplicaSet.
+  #
+  # IMPORTANT:
+  # These labels MUST match the labels defined in the
+  # Pod template below.
+  #
+  selector:
+    matchLabels:
+      app: nginx
+
+  # --------------------------------------------------------
+  # Pod Template
+  # --------------------------------------------------------
+  # Defines the Pods that the ReplicaSet creates.
+  #
+  template:
+
+    metadata:
+
+      labels:
+
+        # Must match selector.matchLabels
+        app: nginx
+
+        tier: frontend
+
+    spec:
+
+      containers:
+
+        - name: nginx
+
+          # Official Nginx image.
+          image: nginx:latest
+
+          imagePullPolicy: IfNotPresent
+
+          # Container listens on port 80.
+          ports:
+
+            - containerPort: 80
+              name: http
+              protocol: TCP
+
+          # --------------------------------------------------
+          # Resource Requests & Limits
+          # --------------------------------------------------
+          resources:
+
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+
+            limits:
+              cpu: "200m"
+              memory: "256Mi"
+
+          # --------------------------------------------------
+          # Environment Variables
+          # --------------------------------------------------
+          env:
+
+            - name: APP_NAME
+              value: "ReplicaSet Demo"
+
+            - name: APP_ENV
+              value: "Development"
+
+          # --------------------------------------------------
+          # Liveness Probe
+          # --------------------------------------------------
+          # Restarts the container if it becomes unhealthy.
+          #
+          livenessProbe:
+
+            httpGet:
+              path: /
+              port: 80
+
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+
+          # --------------------------------------------------
+          # Readiness Probe
+          # --------------------------------------------------
+          # Determines when the Pod is ready to receive
+          # traffic from a Service.
+          #
+          readinessProbe:
+
+            httpGet:
+              path: /
+              port: 80
+
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            timeoutSeconds: 3
+            failureThreshold: 3
+
+      # Pods managed by ReplicaSets always restart if they exit.
+      restartPolicy: Always
+
+      # Graceful shutdown period.
+      terminationGracePeriodSeconds: 30
+
+# ==========================================================
+# ReplicaSet Architecture
+# ==========================================================
+#
+# ReplicaSet
+#      │
+#      ▼
+# Desired Replicas = 3
+#      │
+#      ▼
+# ┌─────────┐
+# │ Pod 1   │
+# ├─────────┤
+# │ Pod 2   │
+# ├─────────┤
+# │ Pod 3   │
+# └─────────┘
+#
+# If any Pod is deleted or crashes:
+#
+# ReplicaSet
+#      │
+#      ▼
+# Detect Missing Pod
+#      │
+#      ▼
+# Create New Pod
+#
+# ==========================================================
+#
+# Useful Commands
+#
+# View ReplicaSets
+# kubectl get replicasets
+#
+# View Pods
+# kubectl get pods
+#
+# Describe ReplicaSet
+# kubectl describe replicaset nginx-replicaset
+#
+# Scale ReplicaSet
+# kubectl scale replicaset nginx-replicaset --replicas=5
+#
+# Delete a Pod (ReplicaSet will recreate it)
+# kubectl delete pod <pod-name>
+#
+# Watch Pods Being Recreated
+# kubectl get pods -w
+#
+# ==========================================================

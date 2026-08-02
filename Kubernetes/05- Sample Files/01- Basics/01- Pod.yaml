@@ -1,0 +1,195 @@
+# ==========================================================
+# Kubernetes Pod Example
+# ==========================================================
+#
+# Description:
+# Creates a single Pod running an Nginx web server.
+#
+# Purpose:
+# - Learn the basic Pod resource
+# - Understand Pod structure
+# - Learn container configuration
+# - Demonstrate labels
+# - Demonstrate resource requests and limits
+#
+# Prerequisites:
+# - Kubernetes cluster
+# - kubectl configured
+#
+# Deploy:
+# kubectl apply -f 01-pod.yaml
+#
+# Verify:
+# kubectl get pods
+# kubectl describe pod nginx-pod
+#
+# View Logs:
+# kubectl logs nginx-pod
+#
+# Delete:
+# kubectl delete -f 01-pod.yaml
+#
+# Notes:
+# - A Pod is the smallest deployable unit in Kubernetes.
+# - Pods are ephemeral and should generally not be created
+#   directly in production.
+# - In production environments, Pods are usually managed by
+#   Deployments, StatefulSets, or DaemonSets.
+#
+# ==========================================================
+
+# Kubernetes API version for Pod resources.
+apiVersion: v1
+
+# Specifies the type of Kubernetes resource.
+kind: Pod
+
+# ----------------------------------------------------------
+# Metadata
+# ----------------------------------------------------------
+# Metadata contains information that identifies the resource.
+metadata:
+
+  # Unique name of the Pod.
+  name: nginx-pod
+
+  # Labels are key-value pairs attached to resources.
+  # They are commonly used by Services and Deployments
+  # to identify and select Pods.
+  labels:
+
+    # Application name.
+    app: nginx
+
+    # Logical application tier.
+    tier: frontend
+
+    # Environment label.
+    environment: development
+
+# ----------------------------------------------------------
+# Pod Specification
+# ----------------------------------------------------------
+# The spec defines the desired state of the Pod.
+spec:
+
+  # List of containers running inside this Pod.
+  containers:
+
+    # Name of the container.
+    - name: nginx
+
+      # Container image pulled from Docker Hub.
+      image: nginx:latest
+
+      # Image pull policy.
+      #
+      # Always       -> Pull image every time
+      # IfNotPresent -> Pull only if image does not exist locally
+      # Never        -> Never pull
+      imagePullPolicy: IfNotPresent
+
+      # Container ports exposed by this container.
+      ports:
+
+        # Port where Nginx listens inside the container.
+        - containerPort: 80
+
+          # Optional name for the port.
+          name: http
+
+          # Network protocol.
+          protocol: TCP
+
+      # ------------------------------------------------------
+      # Resource Requests & Limits
+      # ------------------------------------------------------
+      #
+      # Requests:
+      # Minimum resources required by the Scheduler to place
+      # this Pod onto a Worker Node.
+      #
+      # Limits:
+      # Maximum resources the container can consume.
+      #
+      resources:
+
+        requests:
+
+          # Minimum CPU requested.
+          cpu: "100m"
+
+          # Minimum memory requested.
+          memory: "128Mi"
+
+        limits:
+
+          # Maximum CPU allowed.
+          cpu: "200m"
+
+          # Maximum memory allowed.
+          memory: "256Mi"
+
+      # ------------------------------------------------------
+      # Environment Variables
+      # ------------------------------------------------------
+      # Demonstrates how to define environment variables.
+      env:
+
+        - name: APP_NAME
+          value: "Nginx Demo"
+
+        - name: APP_ENV
+          value: "Development"
+
+      # ------------------------------------------------------
+      # Health Check
+      # ------------------------------------------------------
+      # Kubernetes periodically checks whether the container
+      # is alive. If the probe fails repeatedly, Kubernetes
+      # restarts the container automatically.
+      #
+      livenessProbe:
+
+        httpGet:
+
+          # Health endpoint.
+          path: /
+
+          # Container port.
+          port: 80
+
+        # Wait before performing the first health check.
+        initialDelaySeconds: 15
+
+        # Check every 10 seconds.
+        periodSeconds: 10
+
+        # Probe timeout.
+        timeoutSeconds: 5
+
+        # Number of consecutive failures before restart.
+        failureThreshold: 3
+
+      # ------------------------------------------------------
+      # Readiness Probe
+      # ------------------------------------------------------
+      # Determines when the Pod is ready to receive traffic.
+      # Until this probe succeeds, Services will not send
+      # requests to this Pod.
+      #
+      readinessProbe:
+
+        httpGet:
+
+          path: /
+
+          port: 80
+
+        initialDelaySeconds: 5
+
+        periodSeconds: 5
+
+        timeoutSeconds: 3
+
+        failureThreshold: 3

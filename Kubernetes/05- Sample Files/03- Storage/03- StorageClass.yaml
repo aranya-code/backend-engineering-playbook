@@ -1,0 +1,283 @@
+# ==========================================================
+# Kubernetes StorageClass Example
+# ==========================================================
+#
+# Description:
+# Creates a StorageClass that enables dynamic provisioning
+# of Persistent Volumes.
+#
+# Purpose:
+# - Learn how StorageClasses work
+# - Enable dynamic storage provisioning
+# - Decouple applications from storage infrastructure
+# - Understand storage provisioning in cloud environments
+#
+# Prerequisites:
+# - Kubernetes cluster
+# - CSI Driver installed
+#   (AWS EBS CSI, Azure Disk CSI, GCE PD CSI, etc.)
+#
+# Deploy:
+# kubectl apply -f 03-StorageClass.yaml
+#
+# Verify:
+# kubectl get storageclass
+# kubectl describe storageclass standard-storage
+#
+# Delete:
+# kubectl delete -f 03-StorageClass.yaml
+#
+# Notes:
+# - StorageClasses enable Kubernetes to create Persistent
+#   Volumes automatically.
+# - Dynamic provisioning is the preferred approach for
+#   production environments.
+# - Different cloud providers use different provisioners.
+#
+# ==========================================================
+
+# API version.
+apiVersion: storage.k8s.io/v1
+
+# Kubernetes resource type.
+kind: StorageClass
+
+# ----------------------------------------------------------
+# Metadata
+# ----------------------------------------------------------
+metadata:
+
+  # StorageClass name.
+  name: standard-storage
+
+# ----------------------------------------------------------
+# Provisioner
+# ----------------------------------------------------------
+#
+# The provisioner determines which storage backend is used.
+#
+# Common examples:
+#
+# AWS:
+# ebs.csi.aws.com
+#
+# Azure:
+# disk.csi.azure.com
+#
+# Google Cloud:
+# pd.csi.storage.gke.io
+#
+# Local Development:
+# rancher.io/local-path
+#
+provisioner: ebs.csi.aws.com
+
+# ----------------------------------------------------------
+# Reclaim Policy
+# ----------------------------------------------------------
+#
+# Delete
+# Retain
+#
+# Delete removes the underlying storage after the
+# Persistent Volume Claim is deleted.
+#
+reclaimPolicy: Delete
+
+# ----------------------------------------------------------
+# Volume Binding Mode
+# ----------------------------------------------------------
+#
+# Immediate
+#
+# WaitForFirstConsumer
+#
+# WaitForFirstConsumer delays volume creation until a Pod
+# is scheduled. This helps Kubernetes choose storage in
+# the correct availability zone.
+#
+volumeBindingMode: WaitForFirstConsumer
+
+# ----------------------------------------------------------
+# Allow Volume Expansion
+# ----------------------------------------------------------
+#
+# Allows increasing PVC storage without recreating it.
+#
+allowVolumeExpansion: true
+
+# ----------------------------------------------------------
+# Storage Parameters
+# ----------------------------------------------------------
+#
+# These parameters are provider-specific.
+#
+parameters:
+
+  # AWS EBS volume type.
+  type: gp3
+
+  # Encrypted storage.
+  encrypted: "true"
+
+  # File system.
+  csi.storage.k8s.io/fstype: ext4
+
+# ==========================================================
+# Storage Architecture
+# ==========================================================
+#
+#                Pod
+#                 │
+#                 ▼
+# PersistentVolumeClaim
+#                 │
+#                 ▼
+#          StorageClass
+#                 │
+#                 ▼
+# CSI Driver
+#                 │
+#                 ▼
+# Automatically Creates
+# Persistent Volume
+#                 │
+#                 ▼
+# Physical Storage
+#
+# ==========================================================
+#
+# Dynamic Provisioning Flow
+#
+# Create PVC
+#      │
+#      ▼
+# PVC References StorageClass
+#      │
+#      ▼
+# StorageClass Calls CSI Driver
+#      │
+#      ▼
+# CSI Driver Creates Disk
+#      │
+#      ▼
+# Persistent Volume Created
+#      │
+#      ▼
+# PVC Bound
+#
+# ==========================================================
+#
+# Common Provisioners
+#
+# AWS
+#
+# ebs.csi.aws.com
+#
+#
+# Azure
+#
+# disk.csi.azure.com
+#
+#
+# Google Cloud
+#
+# pd.csi.storage.gke.io
+#
+#
+# OpenEBS
+#
+# openebs.io/local
+#
+#
+# Rancher Desktop
+#
+# rancher.io/local-path
+#
+# ==========================================================
+#
+# Useful Commands
+#
+# View StorageClasses
+# kubectl get storageclass
+#
+# Short Form
+# kubectl get sc
+#
+# Describe StorageClass
+# kubectl describe storageclass standard-storage
+#
+# View YAML
+# kubectl get storageclass standard-storage -o yaml
+#
+# View Default StorageClass
+# kubectl get storageclass
+#
+# ==========================================================
+#
+# Expected Output
+#
+# NAME
+# standard-storage
+#
+# PROVISIONER
+# ebs.csi.aws.com
+#
+# RECLAIMPOLICY
+# Delete
+#
+# VOLUMEBINDINGMODE
+# WaitForFirstConsumer
+#
+# ALLOWVOLUMEEXPANSION
+# true
+#
+# ==========================================================
+#
+# Common Mistakes
+#
+# ❌ CSI Driver is not installed.
+#
+# ❌ Incorrect provisioner name.
+#
+# ❌ PVC references the wrong StorageClass.
+#
+# ❌ Assuming StorageClass creates storage by itself.
+#
+# ❌ Forgetting cloud permissions for the CSI Driver.
+#
+# ==========================================================
+#
+# Best Practices
+#
+# ✓ Use dynamic provisioning whenever possible.
+#
+# ✓ Prefer CSI Drivers over in-tree storage plugins.
+#
+# ✓ Enable volume expansion.
+#
+# ✓ Use WaitForFirstConsumer for cloud environments.
+#
+# ✓ Encrypt storage volumes.
+#
+# ✓ Use separate StorageClasses for SSD and HDD workloads.
+#
+# ==========================================================
+#
+# Interview Tips
+#
+# ✓ A StorageClass defines how Persistent Volumes are
+#   dynamically provisioned.
+#
+# ✓ StorageClasses eliminate the need to manually create
+#   Persistent Volumes.
+#
+# ✓ Modern Kubernetes clusters use CSI Drivers for storage.
+#
+# ✓ A PersistentVolumeClaim requests storage from a
+#   StorageClass, which then provisions a Persistent Volume.
+#
+# ✓ Dynamic provisioning is the standard approach in
+#   production Kubernetes environments.
+#
+# ==========================================================

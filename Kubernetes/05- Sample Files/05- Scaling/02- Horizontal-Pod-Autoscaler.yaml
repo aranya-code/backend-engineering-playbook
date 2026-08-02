@@ -1,0 +1,290 @@
+# ==========================================================
+# Kubernetes Horizontal Pod Autoscaler (HPA) Example
+# ==========================================================
+#
+# Description:
+# Automatically scales the number of Pods in a Deployment
+# based on CPU utilization.
+#
+# Purpose:
+# - Learn Horizontal Pod Autoscaler (HPA)
+# - Automatically scale applications
+# - Improve application availability
+# - Optimize resource utilization
+# - Build production-ready deployments
+#
+# Prerequisites:
+# - Kubernetes cluster
+# - Metrics Server installed
+# - Deployment already created
+# - Deployment has CPU Requests configured
+#
+# Deploy:
+# kubectl apply -f 02-Horizontal-Pod-Autoscaler.yaml
+#
+# Verify:
+# kubectl get hpa
+# kubectl describe hpa backend-api-hpa
+#
+# Delete:
+# kubectl delete -f 02-Horizontal-Pod-Autoscaler.yaml
+#
+# Notes:
+# - HPA requires Metrics Server.
+# - CPU Requests MUST be configured.
+# - HPA periodically checks resource utilization.
+#
+# ==========================================================
+
+# API version.
+apiVersion: autoscaling/v2
+
+# Kubernetes resource type.
+kind: HorizontalPodAutoscaler
+
+# ----------------------------------------------------------
+# Metadata
+# ----------------------------------------------------------
+metadata:
+
+  # HPA name.
+  name: backend-api-hpa
+
+  labels:
+
+    app: backend-api
+
+    environment: production
+
+# ----------------------------------------------------------
+# HPA Specification
+# ----------------------------------------------------------
+spec:
+
+  # --------------------------------------------------------
+  # Target Resource
+  # --------------------------------------------------------
+  #
+  # Deployment to scale.
+  #
+  scaleTargetRef:
+
+    apiVersion: apps/v1
+
+    kind: Deployment
+
+    name: backend-api
+
+  # --------------------------------------------------------
+  # Replica Limits
+  # --------------------------------------------------------
+  #
+  # Minimum number of Pods.
+  #
+  minReplicas: 2
+
+  #
+  # Maximum number of Pods.
+  #
+  maxReplicas: 10
+
+  # --------------------------------------------------------
+  # Scaling Metrics
+  # --------------------------------------------------------
+  #
+  # Scale based on average CPU utilization.
+  #
+  metrics:
+
+    - type: Resource
+
+      resource:
+
+        name: cpu
+
+        target:
+
+          type: Utilization
+
+          # Target CPU utilization.
+          averageUtilization: 70
+
+# ==========================================================
+# Autoscaling Flow
+# ==========================================================
+#
+# Client Requests
+#         │
+#         ▼
+#    Deployment
+#         │
+#         ▼
+# Metrics Server
+#         │
+#         ▼
+# Horizontal Pod Autoscaler
+#         │
+#         ▼
+# Scale Up / Scale Down
+#
+# ==========================================================
+#
+# Example
+#
+# Current Pods
+#
+# 2
+#
+# CPU Usage
+#
+# 90%
+#
+# Target
+#
+# 70%
+#
+# HPA Action
+#
+# Scale to 3 Pods
+#
+# ==========================================================
+#
+# Scale Down Example
+#
+# Current Pods
+#
+# 6
+#
+# CPU Usage
+#
+# 15%
+#
+# HPA Action
+#
+# Reduce Replica Count
+#
+# ==========================================================
+#
+# Requirements
+#
+# ✓ Metrics Server Installed
+#
+# ✓ CPU Requests Configured
+#
+# ✓ Deployment Exists
+#
+# ==========================================================
+#
+# Useful Commands
+#
+# View HPA
+# kubectl get hpa
+#
+# Describe HPA
+# kubectl describe hpa backend-api-hpa
+#
+# Watch Scaling
+# kubectl get hpa -w
+#
+# View Deployment
+# kubectl get deployment
+#
+# View Resource Usage
+# kubectl top pod
+#
+# View Node Usage
+# kubectl top node
+#
+# ==========================================================
+#
+# Expected Output
+#
+# NAME
+# backend-api-hpa
+#
+# REFERENCE
+# Deployment/backend-api
+#
+# TARGETS
+# 45%/70%
+#
+# MINPODS
+# 2
+#
+# MAXPODS
+# 10
+#
+# REPLICAS
+# 2
+#
+# ==========================================================
+#
+# Common Mistakes
+#
+# ❌ Metrics Server is not installed.
+#
+# ❌ CPU Requests are missing.
+#
+# ❌ Deployment name is incorrect.
+#
+# ❌ Maximum replicas set too low.
+#
+# ❌ Expecting instant scaling.
+#
+# ==========================================================
+#
+# Best Practices
+#
+# ✓ Configure CPU Requests before enabling HPA.
+#
+# ✓ Choose realistic utilization targets.
+#
+# ✓ Combine HPA with Resource Requests and Limits.
+#
+# ✓ Monitor scaling events.
+#
+# ✓ Set sensible minimum and maximum replica counts.
+#
+# ✓ Load test applications before production deployment.
+#
+# ==========================================================
+#
+# Production Architecture
+#
+# Users
+#      │
+#      ▼
+# Load Balancer
+#      │
+#      ▼
+# Deployment
+#      │
+#      ▼
+# Horizontal Pod Autoscaler
+#      │
+#      ▼
+# 2 → 4 → 8 → 10 Pods
+#
+# Scaling happens automatically based on CPU utilization.
+#
+# ==========================================================
+#
+# Interview Tips
+#
+# ✓ HPA automatically adjusts the number of Pods based on
+#   resource utilization or custom metrics.
+#
+# ✓ HPA scales Deployments, StatefulSets, and ReplicaSets—
+#   it does not scale individual Pods.
+#
+# ✓ CPU Requests are required because HPA calculates
+#   utilization as a percentage of the requested CPU.
+#
+# ✓ Metrics Server provides the CPU and memory metrics used
+#   by HPA.
+#
+# ✓ HPA is commonly combined with the Cluster Autoscaler,
+#   where HPA adds Pods and the Cluster Autoscaler adds
+#   worker nodes if the cluster runs out of capacity.
+#
+# ==========================================================

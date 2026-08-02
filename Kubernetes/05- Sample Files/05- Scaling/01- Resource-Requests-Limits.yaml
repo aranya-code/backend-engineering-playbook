@@ -1,0 +1,343 @@
+# ==========================================================
+# Kubernetes Resource Requests & Limits Example
+# ==========================================================
+#
+# Description:
+# Deploys an application with CPU and Memory Requests
+# and Limits configured.
+#
+# Purpose:
+# - Learn Resource Requests
+# - Learn Resource Limits
+# - Understand Kubernetes Scheduling
+# - Prevent resource starvation
+# - Build production-ready deployments
+#
+# Prerequisites:
+# - Kubernetes cluster
+# - kubectl configured
+#
+# Deploy:
+# kubectl apply -f 01-Resource-Requests-Limits.yaml
+#
+# Verify:
+# kubectl get pods
+# kubectl describe pod <pod-name>
+#
+# Delete:
+# kubectl delete -f 01-Resource-Requests-Limits.yaml
+#
+# Notes:
+# - Requests determine scheduling.
+# - Limits prevent excessive resource usage.
+# - Every production workload should define Requests
+#   and Limits.
+#
+# ==========================================================
+
+# Kubernetes Deployment API.
+apiVersion: apps/v1
+
+# Resource type.
+kind: Deployment
+
+# ----------------------------------------------------------
+# Metadata
+# ----------------------------------------------------------
+metadata:
+
+  # Deployment name.
+  name: resource-demo
+
+  labels:
+
+    app: resource-demo
+
+    environment: development
+
+# ----------------------------------------------------------
+# Deployment Specification
+# ----------------------------------------------------------
+spec:
+
+  # Number of replicas.
+  replicas: 2
+
+  selector:
+
+    matchLabels:
+
+      app: resource-demo
+
+  # --------------------------------------------------------
+  # Pod Template
+  # --------------------------------------------------------
+  template:
+
+    metadata:
+
+      labels:
+
+        app: resource-demo
+
+    spec:
+
+      containers:
+
+        - name: nginx
+
+          image: nginx:latest
+
+          imagePullPolicy: IfNotPresent
+
+          ports:
+
+            - containerPort: 80
+
+          # --------------------------------------------------
+          # Resource Requests & Limits
+          # --------------------------------------------------
+          #
+          # Requests
+          #
+          # Minimum resources guaranteed.
+          #
+          # Limits
+          #
+          # Maximum resources allowed.
+          #
+          resources:
+
+            requests:
+
+              # 0.1 CPU Core
+              cpu: "100m"
+
+              # 128 MB Memory
+              memory: "128Mi"
+
+            limits:
+
+              # 0.5 CPU Core
+              cpu: "500m"
+
+              # 512 MB Memory
+              memory: "512Mi"
+
+          # --------------------------------------------------
+          # Readiness Probe
+          # --------------------------------------------------
+          readinessProbe:
+
+            httpGet:
+
+              path: /
+
+              port: 80
+
+            initialDelaySeconds: 5
+
+            periodSeconds: 5
+
+          # --------------------------------------------------
+          # Liveness Probe
+          # --------------------------------------------------
+          livenessProbe:
+
+            httpGet:
+
+              path: /
+
+              port: 80
+
+            initialDelaySeconds: 15
+
+            periodSeconds: 10
+
+# ==========================================================
+# Scheduling Flow
+# ==========================================================
+#
+# Deployment
+#      │
+#      ▼
+# Scheduler
+#      │
+#      ▼
+# Finds a Node
+# with enough Requests
+#      │
+#      ▼
+# Pod Scheduled
+#
+# ==========================================================
+#
+# Resource Requests
+#
+# CPU
+#
+# 100m
+#
+# Memory
+#
+# 128Mi
+#
+#
+# Guaranteed Resources
+#
+# ==========================================================
+#
+# Resource Limits
+#
+# CPU
+#
+# 500m
+#
+# Memory
+#
+# 512Mi
+#
+#
+# Maximum Allowed Resources
+#
+# ==========================================================
+#
+# Request vs Limit
+#
+# Request
+#
+# ✓ Used by Scheduler
+#
+# ✓ Guaranteed
+#
+# ✓ Minimum Resources
+#
+#
+# Limit
+#
+# ✓ Maximum Usage
+#
+# ✓ Prevents Resource Abuse
+#
+# ✓ Enforced by Kubernetes
+#
+# ==========================================================
+#
+# CPU Units
+#
+# 1000m = 1 CPU Core
+#
+# 500m = 0.5 CPU
+#
+# 250m = 0.25 CPU
+#
+# 100m = 0.1 CPU
+#
+# ==========================================================
+#
+# Memory Units
+#
+# Mi = Mebibytes
+#
+# Gi = Gibibytes
+#
+# Examples
+#
+# 128Mi
+#
+# 256Mi
+#
+# 512Mi
+#
+# 1Gi
+#
+# ==========================================================
+#
+# Useful Commands
+#
+# View Deployment
+# kubectl get deployment
+#
+# View Pods
+# kubectl get pods
+#
+# Describe Pod
+# kubectl describe pod <pod-name>
+#
+# View Resource Usage
+# kubectl top pod
+#
+# View Node Usage
+# kubectl top node
+#
+# ==========================================================
+#
+# Expected Output
+#
+# Requests
+#
+# cpu:
+# 100m
+#
+# memory:
+# 128Mi
+#
+#
+# Limits
+#
+# cpu:
+# 500m
+#
+# memory:
+# 512Mi
+#
+# ==========================================================
+#
+# Common Mistakes
+#
+# ❌ No Requests defined.
+#
+# ❌ No Limits defined.
+#
+# ❌ Request larger than Limit.
+#
+# ❌ Setting unrealistically low memory limits causing
+#    OOMKilled Pods.
+#
+# ❌ Overcommitting cluster resources.
+#
+# ==========================================================
+#
+# Best Practices
+#
+# ✓ Define Requests and Limits for every container.
+#
+# ✓ Use realistic values based on monitoring.
+#
+# ✓ Monitor CPU and Memory usage regularly.
+#
+# ✓ Avoid extremely high Limits.
+#
+# ✓ Review resource allocation as workloads evolve.
+#
+# ✓ Use Horizontal Pod Autoscaler with Requests for
+#   efficient scaling.
+#
+# ==========================================================
+#
+# Interview Tips
+#
+# ✓ Requests determine where a Pod can be scheduled.
+#
+# ✓ Limits define the maximum CPU and Memory a container
+#   may consume.
+#
+# ✓ CPU can be throttled when a container exceeds its limit,
+#   while exceeding a memory limit typically causes the
+#   container to be terminated (OOMKilled).
+#
+# ✓ Properly configured Requests and Limits improve cluster
+#   stability, resource utilization, and scheduling
+#   efficiency.
+#
+# ==========================================================

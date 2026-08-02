@@ -1,0 +1,279 @@
+# ==========================================================
+# Kubernetes NetworkPolicy Example
+# ==========================================================
+#
+# Description:
+# Creates a NetworkPolicy that restricts network traffic
+# to backend Pods.
+#
+# Purpose:
+# - Learn how Network Policies work
+# - Control Pod-to-Pod communication
+# - Improve application security
+# - Implement Zero Trust networking
+#
+# Prerequisites:
+# - Kubernetes cluster
+# - kubectl configured
+# - A CNI plugin that supports NetworkPolicies
+#   (Calico, Cilium, Weave Net, etc.)
+#
+# Deploy:
+# kubectl apply -f 03-NetworkPolicy.yaml
+#
+# Verify:
+# kubectl get networkpolicy
+# kubectl describe networkpolicy backend-network-policy
+#
+# Delete:
+# kubectl delete -f 03-NetworkPolicy.yaml
+#
+# Notes:
+# - NetworkPolicies do NOT work unless your CNI plugin
+#   supports them.
+# - Once a Pod is selected by a NetworkPolicy, all traffic
+#   not explicitly allowed is denied.
+# - NetworkPolicies control traffic between Pods.
+#
+# ==========================================================
+
+# API version.
+apiVersion: networking.k8s.io/v1
+
+# Kubernetes resource type.
+kind: NetworkPolicy
+
+# ----------------------------------------------------------
+# Metadata
+# ----------------------------------------------------------
+metadata:
+
+  # NetworkPolicy name.
+  name: backend-network-policy
+
+  labels:
+
+    app: backend-api
+
+    environment: production
+
+# ----------------------------------------------------------
+# NetworkPolicy Specification
+# ----------------------------------------------------------
+spec:
+
+  # --------------------------------------------------------
+  # Pod Selector
+  # --------------------------------------------------------
+  #
+  # This policy applies ONLY to Pods with:
+  #
+  # app=backend-api
+  #
+  podSelector:
+
+    matchLabels:
+
+      app: backend-api
+
+  # --------------------------------------------------------
+  # Policy Types
+  # --------------------------------------------------------
+  #
+  # Ingress
+  # Egress
+  #
+  # This policy controls both incoming and outgoing traffic.
+  #
+  policyTypes:
+
+    - Ingress
+
+    - Egress
+
+  # --------------------------------------------------------
+  # Ingress Rules
+  # --------------------------------------------------------
+  #
+  # Allow frontend Pods to communicate with backend Pods.
+  #
+  ingress:
+
+    - from:
+
+        - podSelector:
+
+            matchLabels:
+
+              app: frontend
+
+      ports:
+
+        - protocol: TCP
+
+          port: 8000
+
+  # --------------------------------------------------------
+  # Egress Rules
+  # --------------------------------------------------------
+  #
+  # Allow backend Pods to communicate only with PostgreSQL.
+  #
+  egress:
+
+    - to:
+
+        - podSelector:
+
+            matchLabels:
+
+              app: postgres
+
+      ports:
+
+        - protocol: TCP
+
+          port: 5432
+
+# ==========================================================
+# Network Architecture
+# ==========================================================
+#
+#               Frontend Pod
+#                     │
+#          Allowed (TCP 8000)
+#                     │
+#                     ▼
+#              Backend Pod
+#                     │
+#      Allowed (TCP 5432)
+#                     │
+#                     ▼
+#              PostgreSQL Pod
+#
+#
+# Any other communication
+#
+#              DENIED
+#
+# ==========================================================
+#
+# Traffic Flow
+#
+# Frontend
+#      │
+#      ▼
+# Backend
+#      │
+#      ▼
+# PostgreSQL
+#
+#
+# Backend
+#      │
+#      ▼
+# Random Pod
+#
+# ✗ Blocked
+#
+# ==========================================================
+#
+# Useful Commands
+#
+# View Network Policies
+# kubectl get networkpolicy
+#
+# Short Form
+# kubectl get netpol
+#
+# Describe Network Policy
+# kubectl describe networkpolicy backend-network-policy
+#
+# View YAML
+# kubectl get netpol backend-network-policy -o yaml
+#
+# Test Connectivity
+# kubectl exec -it <pod-name> -- curl http://backend-api:8000
+#
+# ==========================================================
+#
+# Expected Output
+#
+# NAME
+# backend-network-policy
+#
+# POD-SELECTOR
+# app=backend-api
+#
+# POLICY-TYPES
+# Ingress,Egress
+#
+# ==========================================================
+#
+# Common Mistakes
+#
+# ❌ CNI plugin does not support NetworkPolicies.
+#
+# ❌ Incorrect Pod labels.
+#
+# ❌ Forgetting to allow DNS traffic.
+#
+# ❌ Assuming NetworkPolicies affect Services.
+#
+# ❌ Forgetting that traffic is denied unless explicitly
+#    allowed.
+#
+# ==========================================================
+#
+# Best Practices
+#
+# ✓ Apply least privilege networking.
+#
+# ✓ Allow only required communication.
+#
+# ✓ Separate frontend, backend, and database workloads.
+#
+# ✓ Test NetworkPolicies before production deployment.
+#
+# ✓ Combine NetworkPolicies with RBAC and Namespaces for
+#   defense in depth.
+#
+# ==========================================================
+#
+# Production Example
+#
+# Internet
+#      │
+#      ▼
+# Ingress Controller
+#      │
+#      ▼
+# Frontend Pods
+#      │
+#      ▼
+# Backend Pods
+#      │
+#      ▼
+# Database Pods
+#
+# Network Policies ensure that only the required
+# communication paths remain open.
+#
+# ==========================================================
+#
+# Interview Tips
+#
+# ✓ NetworkPolicies operate at Layer 3 and Layer 4 (IP and
+#   port level).
+#
+# ✓ They control Pod-to-Pod communication using labels.
+#
+# ✓ Both Ingress and Egress traffic can be restricted.
+#
+# ✓ Without a compatible CNI plugin, NetworkPolicies have
+#   no effect.
+#
+# ✓ NetworkPolicies are a fundamental security feature for
+#   production Kubernetes clusters.
+#
+# ==========================================================

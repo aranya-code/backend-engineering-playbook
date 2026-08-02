@@ -1,0 +1,335 @@
+# ==========================================================
+# Kubernetes Deployment with Persistent Volume Claim Example
+# ==========================================================
+#
+# Description:
+# Deploys an Nginx application that mounts persistent
+# storage using a Persistent Volume Claim (PVC).
+#
+# Purpose:
+# - Learn how Pods use persistent storage
+# - Understand volume mounting
+# - Learn how PVCs are attached to Pods
+# - Build stateful applications
+#
+# Prerequisites:
+# - Kubernetes cluster
+# - kubectl configured
+# - PersistentVolume created
+# - PersistentVolumeClaim created
+#
+# Create Persistent Volume:
+# kubectl apply -f 01-Persistent-Volume.yaml
+#
+# Create Persistent Volume Claim:
+# kubectl apply -f 02-Persistent-Volume-Claim.yaml
+#
+# Deploy:
+# kubectl apply -f 04-Deployment-With-PVC.yaml
+#
+# Verify:
+# kubectl get deployments
+# kubectl get pods
+# kubectl get pvc
+#
+# Delete:
+# kubectl delete -f 04-Deployment-With-PVC.yaml
+#
+# Notes:
+# - The PVC must already exist.
+# - Kubernetes automatically mounts the storage inside
+#   the container.
+# - Data survives Pod deletion and recreation.
+#
+# ==========================================================
+
+# Deployment API version.
+apiVersion: apps/v1
+
+# Kubernetes resource type.
+kind: Deployment
+
+# ----------------------------------------------------------
+# Metadata
+# ----------------------------------------------------------
+metadata:
+
+  # Deployment name.
+  name: nginx-storage
+
+  labels:
+
+    app: nginx
+
+    environment: development
+
+# ----------------------------------------------------------
+# Deployment Specification
+# ----------------------------------------------------------
+spec:
+
+  # Number of Pods.
+  replicas: 1
+
+  # Deployment selector.
+  selector:
+
+    matchLabels:
+
+      app: nginx
+
+  # --------------------------------------------------------
+  # Pod Template
+  # --------------------------------------------------------
+  template:
+
+    metadata:
+
+      labels:
+
+        app: nginx
+
+        tier: frontend
+
+    spec:
+
+      containers:
+
+        - name: nginx
+
+          image: nginx:latest
+
+          imagePullPolicy: IfNotPresent
+
+          ports:
+
+            - containerPort: 80
+
+          # --------------------------------------------------
+          # Volume Mount
+          # --------------------------------------------------
+          #
+          # The PVC is mounted inside the container.
+          #
+          volumeMounts:
+
+            - name: website-storage
+
+              # Directory inside the container.
+              mountPath: /usr/share/nginx/html
+
+          # --------------------------------------------------
+          # Resource Requests & Limits
+          # --------------------------------------------------
+          resources:
+
+            requests:
+
+              cpu: "100m"
+
+              memory: "128Mi"
+
+            limits:
+
+              cpu: "250m"
+
+              memory: "256Mi"
+
+          # --------------------------------------------------
+          # Readiness Probe
+          # --------------------------------------------------
+          readinessProbe:
+
+            httpGet:
+
+              path: /
+
+              port: 80
+
+            initialDelaySeconds: 5
+
+            periodSeconds: 5
+
+          # --------------------------------------------------
+          # Liveness Probe
+          # --------------------------------------------------
+          livenessProbe:
+
+            httpGet:
+
+              path: /
+
+              port: 80
+
+            initialDelaySeconds: 15
+
+            periodSeconds: 10
+
+      # ------------------------------------------------------
+      # Volumes
+      # ------------------------------------------------------
+      #
+      # Connect the Deployment to the PVC.
+      #
+      volumes:
+
+        - name: website-storage
+
+          persistentVolumeClaim:
+
+            claimName: backend-pvc
+
+# ==========================================================
+# Storage Architecture
+# ==========================================================
+#
+#                Deployment
+#                     │
+#                     ▼
+#                   Pod
+#                     │
+#                     ▼
+#              Volume Mount
+#                     │
+#                     ▼
+#        Persistent Volume Claim
+#                     │
+#                     ▼
+#          Persistent Volume
+#                     │
+#                     ▼
+#            Physical Storage
+#
+# ==========================================================
+#
+# Mount Path
+#
+# Container
+#
+# /usr/share/nginx/html
+#          │
+#          ▼
+# backend-pvc
+#          │
+#          ▼
+# Persistent Volume
+#
+# ==========================================================
+#
+# Data Persistence
+#
+# Pod Deleted
+#      │
+#      ▼
+# PVC Remains
+#      │
+#      ▼
+# PV Remains
+#      │
+#      ▼
+# Data Preserved
+#      │
+#      ▼
+# New Pod Created
+#      │
+#      ▼
+# Same Data Available
+#
+# ==========================================================
+#
+# Useful Commands
+#
+# View Deployments
+# kubectl get deployment
+#
+# View Pods
+# kubectl get pods
+#
+# View PVC
+# kubectl get pvc
+#
+# View PV
+# kubectl get pv
+#
+# Describe PVC
+# kubectl describe pvc backend-pvc
+#
+# Describe Pod
+# kubectl describe pod <pod-name>
+#
+# Verify Mounted Volume
+# kubectl exec -it <pod-name> -- df -h
+#
+# View Mounted Files
+# kubectl exec -it <pod-name> -- ls -la /usr/share/nginx/html
+#
+# ==========================================================
+#
+# Expected Output
+#
+# NAME
+# nginx-storage
+#
+# READY
+# 1/1
+#
+#
+# PVC
+#
+# NAME
+# backend-pvc
+#
+# STATUS
+# Bound
+#
+# ==========================================================
+#
+# Common Mistakes
+#
+# ❌ PVC does not exist.
+#
+# ❌ Incorrect claimName.
+#
+# ❌ Wrong mountPath.
+#
+# ❌ PVC remains in Pending state.
+#
+# ❌ AccessMode mismatch between PV and PVC.
+#
+# ❌ Expecting data to persist without using a PVC.
+#
+# ==========================================================
+#
+# Best Practices
+#
+# ✓ Mount storage through PVCs only.
+#
+# ✓ Use meaningful mount paths.
+#
+# ✓ Prefer StorageClasses for dynamic provisioning.
+#
+# ✓ Monitor storage usage.
+#
+# ✓ Backup persistent data regularly.
+#
+# ✓ Keep applications stateless whenever possible and
+#   persist only required data.
+#
+# ==========================================================
+#
+# Interview Tips
+#
+# ✓ Pods never mount Persistent Volumes directly.
+#
+# ✓ Pods mount Persistent Volume Claims.
+#
+# ✓ The PVC is automatically bound to a compatible
+#   Persistent Volume.
+#
+# ✓ Persistent storage survives Pod restarts,
+#   rescheduling, and Deployment updates.
+#
+# ✓ This pattern is commonly used for databases,
+#   uploaded files, logs, and other stateful workloads.
+#
+# ==========================================================

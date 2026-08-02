@@ -1,0 +1,263 @@
+# ==========================================================
+# Kubernetes Vertical Pod Autoscaler (VPA) Example
+# ==========================================================
+#
+# Description:
+# Automatically adjusts CPU and Memory Requests for Pods
+# based on actual resource usage.
+#
+# Purpose:
+# - Learn Vertical Pod Autoscaler (VPA)
+# - Optimize CPU and Memory allocation
+# - Reduce over-provisioning
+# - Improve cluster utilization
+#
+# Prerequisites:
+# - Kubernetes cluster
+# - VPA components installed
+# - Metrics Server installed
+# - Deployment already created
+#
+# Deploy:
+# kubectl apply -f 03-Vertical-Pod-Autoscaler.yaml
+#
+# Verify:
+# kubectl get vpa
+# kubectl describe vpa backend-api-vpa
+#
+# Delete:
+# kubectl delete -f 03-Vertical-Pod-Autoscaler.yaml
+#
+# Notes:
+# - VPA adjusts resource requests.
+# - VPA is commonly used for databases and
+#   long-running workloads.
+# - Avoid running VPA and HPA on CPU/Memory metrics for
+#   the same workload unless carefully configured.
+#
+# ==========================================================
+
+# API version.
+apiVersion: autoscaling.k8s.io/v1
+
+# Kubernetes resource type.
+kind: VerticalPodAutoscaler
+
+# ----------------------------------------------------------
+# Metadata
+# ----------------------------------------------------------
+metadata:
+
+  # VPA name.
+  name: backend-api-vpa
+
+  labels:
+
+    app: backend-api
+
+    environment: production
+
+# ----------------------------------------------------------
+# Specification
+# ----------------------------------------------------------
+spec:
+
+  # Target workload.
+  targetRef:
+
+    apiVersion: apps/v1
+
+    kind: Deployment
+
+    name: backend-api
+
+  # --------------------------------------------------------
+  # Update Policy
+  # --------------------------------------------------------
+  #
+  # Off
+  # Initial
+  # Auto
+  #
+  updatePolicy:
+
+    updateMode: Auto
+
+  # --------------------------------------------------------
+  # Resource Policy
+  # --------------------------------------------------------
+  #
+  # Prevent recommendations outside acceptable limits.
+  #
+  resourcePolicy:
+
+    containerPolicies:
+
+      - containerName: "*"
+
+        minAllowed:
+
+          cpu: "100m"
+
+          memory: "128Mi"
+
+        maxAllowed:
+
+          cpu: "2"
+
+          memory: "2Gi"
+
+        controlledResources:
+
+          - cpu
+
+          - memory
+
+# ==========================================================
+# Autoscaling Architecture
+# ==========================================================
+#
+#              Deployment
+#                   │
+#                   ▼
+#              Running Pods
+#                   │
+#                   ▼
+#           Metrics Server
+#                   │
+#                   ▼
+#        Vertical Pod Autoscaler
+#                   │
+#                   ▼
+#   Updates CPU & Memory Requests
+#
+# ==========================================================
+#
+# Example
+#
+# Initial Requests
+#
+# CPU
+# 100m
+#
+# Memory
+# 128Mi
+#
+#
+# Actual Usage
+#
+# CPU
+# 350m
+#
+# Memory
+# 400Mi
+#
+#
+# Recommendation
+#
+# CPU
+# 400m
+#
+# Memory
+# 512Mi
+#
+# ==========================================================
+#
+# Update Modes
+#
+# Off
+#
+# ✓ Generate recommendations only
+#
+#
+# Initial
+#
+# ✓ Apply recommendations only when Pods are created
+#
+#
+# Auto
+#
+# ✓ Automatically update Pods when needed
+#
+# ==========================================================
+#
+# Useful Commands
+#
+# View VPAs
+# kubectl get vpa
+#
+# Describe VPA
+# kubectl describe vpa backend-api-vpa
+#
+# View Recommendations
+# kubectl describe vpa backend-api-vpa
+#
+# View Pod Resources
+# kubectl describe pod <pod-name>
+#
+# View Resource Usage
+# kubectl top pod
+#
+# ==========================================================
+#
+# Common Mistakes
+#
+# ❌ VPA components are not installed.
+#
+# ❌ Metrics Server is unavailable.
+#
+# ❌ Running HPA and VPA together using CPU utilization
+#    without understanding their interaction.
+#
+# ❌ No resource requests defined.
+#
+# ==========================================================
+#
+# Best Practices
+#
+# ✓ Use VPA for stateful and long-running workloads.
+#
+# ✓ Use HPA for handling changing traffic levels.
+#
+# ✓ Review recommendations before enabling Auto mode.
+#
+# ✓ Define minimum and maximum resource boundaries.
+#
+# ✓ Monitor changes after automatic updates.
+#
+# ==========================================================
+#
+# HPA vs VPA
+#
+# Horizontal Pod Autoscaler
+#
+# ✓ Changes the number of Pods.
+#
+#
+# Vertical Pod Autoscaler
+#
+# ✓ Changes CPU and Memory Requests for Pods.
+#
+#
+# Cluster Autoscaler
+#
+# ✓ Changes the number of Kubernetes Nodes.
+#
+# ==========================================================
+#
+# Interview Tips
+#
+# ✓ VPA optimizes CPU and memory requests based on observed
+#   usage patterns.
+#
+# ✓ VPA improves resource efficiency by reducing over-
+#   provisioning and under-provisioning.
+#
+# ✓ HPA scales horizontally by changing replica counts,
+#   while VPA scales vertically by adjusting resources for
+#   each Pod.
+#
+# ✓ Cluster Autoscaler complements HPA and VPA by adding or
+#   removing worker nodes when cluster capacity changes.
+#
+# ==========================================================

@@ -1,0 +1,247 @@
+# ==========================================================
+# Kubernetes Persistent Volume Claim (PVC) Example
+# ==========================================================
+#
+# Description:
+# Creates a Persistent Volume Claim (PVC) that requests
+# persistent storage from the Kubernetes cluster.
+#
+# Purpose:
+# - Learn how Persistent Volume Claims work
+# - Request storage without knowing the underlying storage
+# - Understand PV-PVC binding
+# - Decouple applications from storage infrastructure
+#
+# Prerequisites:
+# - Kubernetes cluster
+# - kubectl configured
+# - Persistent Volume already created
+#
+# Create Persistent Volume:
+# kubectl apply -f 01-Persistent-Volume.yaml
+#
+# Deploy:
+# kubectl apply -f 02-Persistent-Volume-Claim.yaml
+#
+# Verify:
+# kubectl get pvc
+# kubectl describe pvc backend-pvc
+#
+# Delete:
+# kubectl delete -f 02-Persistent-Volume-Claim.yaml
+#
+# Notes:
+# - Applications use PVCs, NOT Persistent Volumes directly.
+# - Kubernetes automatically binds a matching PV.
+# - If no matching PV exists, the PVC remains Pending.
+#
+# ==========================================================
+
+# API version.
+apiVersion: v1
+
+# Kubernetes resource type.
+kind: PersistentVolumeClaim
+
+# ----------------------------------------------------------
+# Metadata
+# ----------------------------------------------------------
+metadata:
+
+  # PVC name.
+  name: backend-pvc
+
+  labels:
+
+    app: backend-api
+
+    environment: development
+
+# ----------------------------------------------------------
+# PVC Specification
+# ----------------------------------------------------------
+spec:
+
+  # --------------------------------------------------------
+  # Access Modes
+  # --------------------------------------------------------
+  #
+  # Must be compatible with the selected PV.
+  #
+  accessModes:
+
+    - ReadWriteOnce
+
+  # --------------------------------------------------------
+  # Storage Class
+  # --------------------------------------------------------
+  #
+  # Must match the PV StorageClass.
+  #
+  storageClassName: manual
+
+  # --------------------------------------------------------
+  # Requested Storage
+  # --------------------------------------------------------
+  #
+  # Kubernetes searches for a PV that satisfies:
+  #
+  # • Storage Size
+  # • Access Mode
+  # • StorageClass
+  #
+  resources:
+
+    requests:
+
+      storage: 5Gi
+
+# ==========================================================
+# PVC Binding Process
+# ==========================================================
+#
+# Application
+#      │
+#      ▼
+# PersistentVolumeClaim
+#      │
+#      ▼
+# Kubernetes
+#      │
+#      ▼
+# Finds Matching
+# Persistent Volume
+#      │
+#      ▼
+# Bound
+#
+# ==========================================================
+#
+# Binding Requirements
+#
+# PVC Request
+#
+# Storage:
+# 5Gi
+#
+# Access Mode:
+# ReadWriteOnce
+#
+# StorageClass:
+# manual
+#
+#
+# Matching PV
+#
+# Storage:
+# ≥ 5Gi
+#
+# Access Mode:
+# ReadWriteOnce
+#
+# StorageClass:
+# manual
+#
+# ==========================================================
+#
+# Expected Lifecycle
+#
+# Create PVC
+#      │
+#      ▼
+# Pending
+#      │
+#      ▼
+# Matching PV Found
+#      │
+#      ▼
+# Bound
+#      │
+#      ▼
+# Mounted by Pod
+#
+# ==========================================================
+#
+# Useful Commands
+#
+# View PVCs
+# kubectl get pvc
+#
+# View PVs
+# kubectl get pv
+#
+# Describe PVC
+# kubectl describe pvc backend-pvc
+#
+# View YAML
+# kubectl get pvc backend-pvc -o yaml
+#
+# Delete PVC
+# kubectl delete pvc backend-pvc
+#
+# ==========================================================
+#
+# Expected Output
+#
+# NAME
+# backend-pvc
+#
+# STATUS
+# Bound
+#
+# VOLUME
+# backend-pv
+#
+# CAPACITY
+# 5Gi
+#
+# ACCESS MODES
+# RWO
+#
+# STORAGECLASS
+# manual
+#
+# ==========================================================
+#
+# Common Mistakes
+#
+# ❌ No matching Persistent Volume exists.
+#
+# ❌ StorageClass names do not match.
+#
+# ❌ Requested storage exceeds PV capacity.
+#
+# ❌ Access Modes are incompatible.
+#
+# ❌ Assuming Pods should reference PVs directly.
+#
+# ==========================================================
+#
+# Best Practices
+#
+# ✓ Always use PVCs instead of directly referencing PVs.
+#
+# ✓ Request only the storage your application needs.
+#
+# ✓ Prefer dynamic provisioning using StorageClasses.
+#
+# ✓ Keep StorageClass names consistent.
+#
+# ✓ Monitor PVC usage and capacity.
+#
+# ==========================================================
+#
+# Interview Tips
+#
+# ✓ A PVC is a request for storage.
+#
+# ✓ A PV is the actual storage resource.
+#
+# ✓ Kubernetes automatically binds compatible PVs to PVCs.
+#
+# ✓ Pods mount PVCs—not Persistent Volumes directly.
+#
+# ✓ This abstraction allows storage to be changed without
+#   modifying application manifests.
+#
+# ==========================================================
