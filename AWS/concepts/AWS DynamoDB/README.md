@@ -104,11 +104,6 @@ This knowledge base contains **151 files** across **10 modules**, organized as a
                     │  09- Python SDK      │  Hands-on code
                     │  (Boto3 / aioboto3)  │
                     └──────────┬───────────┘
-                               │
-                    ┌──────────▼───────────┐
-                    │  10- Interview       │  Validate knowledge
-                    │  Questions           │
-                    └──────────────────────┘
 ```
 
 ---
@@ -323,26 +318,6 @@ Hands-on Boto3 and aioboto3 usage — from basics to production-grade repository
 | 16 | [DynamoDB Local](./09-%20Python%20SDK/16-%20Local%20Development%20with%20DynamoDB%20Local.md) | Local development setup |
 | 17 | [Production Best Practices](./09-%20Python%20SDK/17-%20Production%20Best%20Practices.md) | SDK configuration for production |
 | 18 | [Interview Questions](./09-%20Python%20SDK/18-%20Interview%20Questions.md) | Boto3-specific interview prep |
-
----
-
-### 10 — Interview Questions (11 files)
-
-Comprehensive interview preparation covering every DynamoDB topic.
-
-| # | File | Topic |
-|---|------|-------|
-| 01 | [DynamoDB Fundamentals](./10-%20Interview%20Questions/01-%20DynamoDB%20Fundamentals.md) | Core concepts and architecture |
-| 02 | [Data Modeling](./10-%20Interview%20Questions/02-%20Data%20Modeling.md) | Schema design questions |
-| 03 | [Indexes (GSI & LSI)](./10-%20Interview%20Questions/03-%20Indexes%20(GSI%20%26%20LSI).md) | Index design and trade-offs |
-| 04 | [Querying & Performance](./10-%20Interview%20Questions/04-%20Querying%20%26%20Performance.md) | Query optimization questions |
-| 05 | [Transactions & Consistency](./10-%20Interview%20Questions/05-%20Transactions%20%26%20Consistency.md) | ACID and consistency models |
-| 06 | [Streams, TTL & Advanced](./10-%20Interview%20Questions/06-%20Streams,%20TTL%20%26%20Advanced%20Features.md) | Advanced feature questions |
-| 07 | [Security & IAM](./10-%20Interview%20Questions/07-%20Security%20%26%20IAM.md) | Security scenario questions |
-| 08 | [Production Scenarios](./10-%20Interview%20Questions/08-%20Production%20Scenarios.md) | Real-world debugging scenarios |
-| 09 | [System Design Scenarios](./10-%20Interview%20Questions/09-%20System%20Design%20Scenarios.md) | Architecture design questions |
-| 10 | [Coding & Boto3](./10-%20Interview%20Questions/10-%20Coding%20%26%20Boto3%20Questions.md) | Hands-on coding questions |
-| 11 | [Mock Senior Interview](./10-%20Interview%20Questions/11-%20Mock%20Senior%20Backend%20Interview.md) | Full mock interview simulation |
 
 ---
 
