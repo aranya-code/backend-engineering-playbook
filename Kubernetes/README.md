@@ -39,7 +39,7 @@ Whether you're preparing for backend engineering interviews or deploying applica
 
 - 📖 [Concepts](01-%20Concepts/README.md)
 - 💻 [CLI](02-%20CLI/README.md)
-- 🎯 [Interview Questions](03-%20Interview%20Questions/README.md)
+- 🎯 [Interview Questions](03-%20InterView%20Questions/README.md)
 - 🛠️ [Troubleshooting](04-%20Troubleshooting/README.md)
 - 📄 [Sample Files](05-%20Sample%20Files/README.md)
 
