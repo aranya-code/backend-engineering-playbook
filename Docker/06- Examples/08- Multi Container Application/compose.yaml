@@ -1,0 +1,57 @@
+services:
+  # The main FastAPI backend service
+  api:
+    build: .
+    working_dir: /app
+    command: sh ../scripts/start_api.sh
+    expose: ["8000"]
+    env_file: [.env]
+    # Restart automatically if the container crashes
+    restart: unless-stopped
+    # Ensure Redis is completely healthy before starting the API
+    depends_on:
+      redis:
+        condition: service_healthy
+    # Check health by calling the health endpoint
+    healthcheck:
+      test: ["CMD","curl","-f","http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Background worker for handling asynchronous tasks
+  worker:
+    build: .
+    working_dir: /app
+    command: sh ../scripts/start_worker.sh
+    env_file: [.env]
+    restart: unless-stopped
+    depends_on:
+      redis:
+        condition: service_healthy
+
+  # In-memory data store for caching and Celery message brokering
+  redis:
+    image: redis:7.4-alpine
+    expose: ["6379"]
+    restart: unless-stopped
+    # Ping Redis to verify it is responsive
+    healthcheck:
+      test: ["CMD","redis-cli","ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Reverse proxy to route traffic to the API
+  nginx:
+    image: nginx:1.28-alpine
+    ports: ["80:80"]
+    restart: unless-stopped
+    # Ensure API is healthy before routing traffic
+    depends_on:
+      api:
+        condition: service_healthy
+    # Mount custom Nginx configurations
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro

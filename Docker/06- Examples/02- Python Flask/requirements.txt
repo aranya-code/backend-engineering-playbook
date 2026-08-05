@@ -1,0 +1,2 @@
+# Flask is the micro web framework used to build the API.
+flask==3.1

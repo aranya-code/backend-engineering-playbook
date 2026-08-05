@@ -1,0 +1,35 @@
+# docker-compose.yml defines our multi-container application
+services:
+  # The web application service
+  api:
+    build: .
+    restart: unless-stopped
+    # Map host port 8000 to container port 8000
+    ports:
+      - "8000:8000"
+    # Load environment variables from .env file
+    env_file:
+      - .env
+    # Mount local app directory for hot-reloading in development
+    volumes:
+      - ./app:/app
+    # Ensure postgres starts before the API
+    depends_on:
+      - postgres
+
+  # The database service
+  postgres:
+    image: postgres:16
+    restart: unless-stopped
+    # Load environment variables (used for POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB)
+    env_file:
+      - .env
+    ports:
+      - "5432:5432"
+    # Persist database data across container restarts
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+# Define named volumes for data persistence
+volumes:
+  postgres_data:

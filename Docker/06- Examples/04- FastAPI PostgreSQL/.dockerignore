@@ -1,0 +1,16 @@
+# ==========================================
+# .dockerignore
+# Specifies files and directories that Docker should
+# exclude when copying files into the container.
+# This keeps the image size small and secure.
+# ==========================================
+
+# Exclude python cache files
+__pycache__/
+*.pyc
+
+# Exclude git repository data
+.git
+
+# Exclude screenshots
+screenshots/

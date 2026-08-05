@@ -1,0 +1,17 @@
+services:
+  # The main API service
+  api:
+    # Build the image from the Dockerfile in the current directory
+    build: .
+    # Map port 8000 on the host to port 8000 in the container
+    ports:
+      - "8000:8000"
+    # Load environment variables from the .env file
+    env_file:
+      - .env
+    # Restart the container automatically if it crashes, unless explicitly stopped
+    restart: unless-stopped
+    # Define a healthcheck to monitor the service's health
+    healthcheck:
+      # Command to run to check health. We use curl to hit the /health endpoint.
+      test: ["CMD","curl","-f","http://localhost:8000/health"]

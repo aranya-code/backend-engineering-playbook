@@ -1,0 +1,32 @@
+# =============================================================================
+# .dockerignore
+# =============================================================================
+# Works exactly like .gitignore, but for Docker.
+# Listed files/folders are excluded from the "build context" — the set of
+# files sent to the Docker daemon when you run `docker build`.
+#
+# Why it matters:
+#   - Smaller build context  → faster builds
+#   - Prevents secrets (.env) from leaking into the image
+#   - Avoids bloating the image with unnecessary files
+# =============================================================================
+
+# Python bytecode — generated at runtime, never needed in the image
+__pycache__/
+*.pyc
+*.pyo
+
+# Log files — runtime artifacts, not source code
+*.log
+
+# Git metadata — not needed inside a container
+.git
+.gitignore
+
+# Documentation — useful on GitHub, not inside the image
+README.md
+
+
+# Environment files — may contain secrets; pass values via `docker run -e` instead
+.env
+.env.example

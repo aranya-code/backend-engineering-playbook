@@ -1,0 +1,16 @@
+# ------------------------------------------------------------------------------
+# .dockerignore
+# Specifies which files and directories should be excluded from the Docker build
+# context. This speeds up builds and prevents unnecessary or sensitive files
+# from ending up in the image.
+# ------------------------------------------------------------------------------
+
+# Ignore Python cache directories and compiled files
+__pycache__/
+*.pyc
+
+# Ignore version control files
+.git
+
+# Ignore documentation assets
+screenshots/

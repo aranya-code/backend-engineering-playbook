@@ -1,0 +1,6 @@
+# Web framework
+fastapi==0.116.1
+# ASGI server for handling asynchronous requests
+uvicorn==0.35.0
+# Process manager to run multiple Uvicorn workers in production
+gunicorn==23.0.0

@@ -1,0 +1,22 @@
+name: Continuous Deployment
+
+# Trigger this workflow when the CI workflow completes successfully
+on:
+  workflow_run:
+    workflows: ["Continuous Integration"]
+    types: [completed]
+
+jobs:
+  deploy:
+    # Only run the deployment if the CI workflow was a success
+    if: github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      # Check out the repository code
+      - uses: actions/checkout@v4
+      
+      # Build the Docker image
+      - run: docker build -t cicd-demo .
+      
+      # Run the deployment script
+      - run: chmod +x scripts/deploy.sh && ./scripts/deploy.sh

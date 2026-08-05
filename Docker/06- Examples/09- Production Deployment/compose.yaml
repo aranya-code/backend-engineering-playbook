@@ -1,0 +1,14 @@
+# This compose file is for DEVELOPMENT purposes.
+# It builds the image locally and mounts the app directory for live reloading.
+services:
+  api:
+    build: .
+    # Map host port 8000 to container port 8000
+    ports: ["8000:8000"]
+    # Load environment variables from .env file
+    env_file: [.env]
+    # Mount the local app directory so changes reflect immediately without rebuilding
+    volumes:
+      - ./app:/app
+    # Automatically restart the container if it crashes, unless explicitly stopped
+    restart: unless-stopped

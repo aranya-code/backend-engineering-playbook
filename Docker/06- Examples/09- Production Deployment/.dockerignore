@@ -1,0 +1,19 @@
+# ==============================================================================
+# .dockerignore
+# Specifies files and directories that should be excluded from the Docker build context.
+# This improves build performance and prevents sensitive files from entering the image.
+# ==============================================================================
+
+# Version control
+.git
+
+# Environment variable files (can contain secrets)
+.env
+.env.production
+
+# Python cache directories
+__pycache__/
+
+# Logs and SSL certificates
+logs/
+ssl/certificates/

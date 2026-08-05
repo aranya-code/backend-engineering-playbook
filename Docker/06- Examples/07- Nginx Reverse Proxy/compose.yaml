@@ -1,0 +1,31 @@
+services:
+  # The API service running the FastAPI application
+  api:
+    build: .
+    restart: unless-stopped
+    # Expose port to linked services, but NOT to the host (no host mapping)
+    expose:
+      - "8000"
+    # Healthcheck to verify the API is actually running
+    healthcheck:
+      test: ["CMD","curl","-f","http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # The Nginx reverse proxy service
+  nginx:
+    # Using the lightweight alpine version
+    image: nginx:1.28-alpine
+    restart: unless-stopped
+    # Map port 80 on the host to port 80 in the container
+    ports:
+      - "80:80"
+    # Mount local configuration files into the Nginx container (read-only)
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    # Wait for the API to be healthy before starting Nginx
+    depends_on:
+      api:
+        condition: service_healthy

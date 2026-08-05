@@ -1,0 +1,25 @@
+name: Continuous Integration
+
+# Trigger the workflow on pushes to the main branch
+on:
+  push:
+    branches: [main]
+
+jobs:
+  test:
+    # Run the job on a Linux runner
+    runs-on: ubuntu-latest
+    steps:
+      # Check out the repository code
+      - uses: actions/checkout@v4
+      
+      # Set up Python environment
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          
+      # Install project dependencies
+      - run: pip install -r requirements.txt
+      
+      # Run tests using pytest
+      - run: pytest

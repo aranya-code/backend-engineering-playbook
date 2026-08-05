@@ -1,0 +1,17 @@
+# Web framework for building APIs
+fastapi==0.116.1
+
+# ASGI server to run FastAPI
+uvicorn==0.35.0
+
+# WSGI HTTP Server for UNIX
+gunicorn==23.0.0
+
+# Database ORM
+sqlalchemy==2.0.43
+
+# PostgreSQL database adapter
+psycopg[binary]==3.2.9
+
+# Templating engine
+jinja2==3.1.6

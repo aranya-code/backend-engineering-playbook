@@ -1,0 +1,25 @@
+# This compose file is for PRODUCTION deployments.
+# It includes security settings, resource limits, and an Nginx reverse proxy.
+# Use it with: docker compose -f compose.yaml -f compose.prod.yaml up -d
+services:
+  api:
+    # We expose the port internally to other containers (like nginx), but NOT to the host.
+    expose: ["8000"]
+    # Load production environment variables
+    env_file: [.env.production]
+    # Security: Prevent the container from gaining new privileges
+    security_opt:
+      - no-new-privileges:true
+    # Resource constraints: Limit memory and CPU usage
+    mem_limit: 512m
+    cpus: 1.0
+  
+  # Nginx acts as a reverse proxy, handling incoming traffic and forwarding it to the API
+  nginx:
+    image: nginx:1.28-alpine
+    # Expose standard HTTP port to the host
+    ports: ["80:80"]
+    # Mount custom Nginx configuration files as read-only (ro)
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
