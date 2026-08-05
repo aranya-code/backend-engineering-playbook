@@ -47,7 +47,7 @@ Unlike many tutorials that simply explain directives, this guide focuses on **re
 | 02 | [Nginx Architecture](02-%20Nginx%20Architecture.md) | Master process, worker processes, event-driven architecture, and request handling |
 | 03 | [Configuration Contexts](03-%20Configuration%20Contexts.md) | Understanding Nginx contexts such as Main, Events, HTTP, Server, and Location |
 | 04 | [Directives](04-%20Directives.md) | Understanding Nginx directives, syntax, and configuration options |
-| 05 | [Request Processing](05-%20Request%20Processing.md) | How Nginx receives, processes, and responds to client requests |
+| 05 | [Request Processing](05-%20Request%20Processing%20Flow.md) | How Nginx receives, processes, and responds to client requests |
 | 06 | [Location Blocks](06-%20Location%20Blocks.md) | Location matching, prefixes, regular expressions, and request routing |
 | 07 | [Variables](07-%20Variables.md) | Built-in Nginx variables and their practical use cases |
 | 08 | [Directive Inheritance](08-%20Directive%20Inheritance.md) | How directives inherit values across configuration contexts |
