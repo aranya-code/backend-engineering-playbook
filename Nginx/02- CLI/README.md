@@ -8,7 +8,7 @@ A production-focused guide to Nginx command-line operations covering daily manag
 
 | # | Topic | Key Concepts |
 |---|-------|-------------|
-| 01 | [Essential Commands](./01-%20Essential%20Commands.md) | Start, stop, reload, test, version, process management, signal handling |
+| 01 | [Nginx Operations](./01-%20Nginx%20Operations.md) | Start, stop, reload, test, version, process management, signal handling |
 | 02 | [Configuration Management](./02-%20Configuration%20Management.md) | Config testing, hot reload, include patterns, diff workflows, rollback |
 | 03 | [Log Analysis](./03-%20Log%20Analysis.md) | Access/error log parsing, real-time monitoring, one-liners for traffic analysis |
 | 04 | [Performance Debugging](./04-%20Performance%20Debugging.md) | Connection analysis, worker tuning, stub_status, load testing with ab/wrk |
