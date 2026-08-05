@@ -1,166 +1,349 @@
-# 🐳 Docker Knowledge Base
+# Docker
 
-A structured personal knowledge base covering Docker from fundamentals to production-grade orchestration. Built as a hands-on study reference with concept deep-dives, CLI cheat sheets, a real-world Dockerfile, and documented troubleshooting war stories.
+## Overview
+
+Docker is one of the most important technologies in modern backend engineering. It enables developers to package applications and their dependencies into lightweight, portable containers that run consistently across development, testing, staging, and production environments.
+
+This playbook provides a comprehensive learning path from Docker fundamentals to production-ready deployments. It combines conceptual explanations, practical CLI usage, interview preparation, troubleshooting guides, hands-on projects, and production best practices into a single reference.
+
+Whether you're preparing for backend engineering interviews or deploying real-world applications, this Docker playbook will help you build a strong foundation.
 
 ---
 
-## 📁 Repository Structure
+## Quick Navigation
 
+| Section | Description |
+|---------|-------------|
+| [01- Concepts](./01-%20Concepts/) | Learn Docker fundamentals, architecture, images, containers, networking, storage, and best practices. |
+| [02- CLI](./02-%20CLI/) | Master everyday Docker commands, Dockerfile, Compose, networking, volumes, health checks, and secrets. |
+| [03- Interview](./03-%20Interview/) | Docker interview questions ranging from fundamentals to production scenarios. |
+| [04- Troubleshooting](./04-%20Troubleshooting/) | Diagnose and solve common Docker installation, networking, volume, build, and deployment issues. |
+| [05- Production](./05-%20Production/) | Learn production-ready Docker deployment, security, monitoring, scaling, backups, and architecture. |
+| [06- Examples](./06-%20Examples/) | Build complete Docker projects from Hello World to CI/CD deployment. |
+
+---
+
+# Learning Roadmap
+
+```text
+Docker Fundamentals
+
+        │
+
+        ▼
+
+Docker CLI
+
+        │
+
+        ▼
+
+Interview Preparation
+
+        │
+
+        ▼
+
+Troubleshooting
+
+        │
+
+        ▼
+
+Hands-on Projects
+
+        │
+
+        ▼
+
+Production Deployment
 ```
+
+---
+
+# Repository Structure
+
+```text
 Docker/
-├── concepts/               # In-depth concept notes
-│   ├── Docker-Basics.md
-│   ├── Dockerfile          # Production-grade Django Dockerfile
-│   ├── ENTRYPOINT-vs-CMD.md
-│   ├── Shell-vs-Exec-Form.md
-│   ├── Volumes-and-BindMounts.md
-│   ├── Docker_Healthchecks.md
-│   ├── Docker_Secrets.md
-│   ├── Routing_Mesh.md
-│   ├── Docker Compose/     # 10-part Compose series
-│   ├── Docker Swarm/       # 13-part Swarm series
-│   └── Docker Stacks/      # 5-part Stacks series
-├── cli/                    # Quick-reference command sheets
-│   ├── README.md
-│   ├── Docker Basics.md
-│   ├── Images and Containers.md
-│   ├── Networking.md
-│   ├── Volumes and Bind Mounts.md
-│   ├── Dockerfile.md
-│   ├── Docker Compose.md
-│   ├── Docker Swarm.md
-│   ├── Docker Secrets.md
-│   └── Docker Health Checks.md
-├── troubleshooting/
-│   ├── 01- Container Cannot Connect to Host PostgreSQL.md
-│   ├── 02- DRF Admin CSS Missing in Docker.md
-│   ├── 03- Container Exits Immediately After Docker Run.md
-│   ├── 04- Compose Volumes Must Be a Mapping Error.md
-│   └── 05- Swarm Overlay Network Initialization Failure.md
-└── images/                 # Screenshots and diagrams
+│
+├── 01- Concepts/
+│   └── README.md
+│
+├── 02- CLI/
+│   └── README.md
+│
+├── 03- Interview/
+│   └── README.md
+│
+├── 04- Troubleshooting/
+│   └── README.md
+│
+├── 05- Production/
+│   └── README.md
+│
+├── 06- Examples/
+│   └── README.md
+│
+└── README.md
 ```
 
 ---
 
-## 📚 Topics Covered
+# Learning Journey
 
-### Core Concepts
+## 01 — Concepts
 
-| Topic | Description |
-|-------|-------------|
-| [Docker Basics](concepts/Docker-Basics.md) | What Docker is, key benefits, Docker vs VMs, terminology, and workflow |
-| [ENTRYPOINT vs CMD](concepts/ENTRYPOINT-vs-CMD.md) | Detailed comparison, runtime behavior, override mechanics, and best practices |
-| [Shell Form vs Exec Form](concepts/Shell-vs-Exec-Form.md) | Signal handling, PID 1 behavior, process tree differences, production recommendations |
-| [Volumes & Bind Mounts](concepts/Volumes-and-BindMounts.md) | Persistence strategies, architecture differences, when to use each |
-| [Health Checks](concepts/Docker_Healthchecks.md) | Container health states, Dockerfile and Compose configuration, parameters |
-| [Secrets](concepts/Docker_Secrets.md) | Secure credential management in Swarm, Raft database storage, mount behavior |
-| [Routing Mesh](concepts/Routing_Mesh.md) | Swarm ingress load balancing, IPVS, cross-node traffic routing |
+Build a strong understanding of Docker before writing a single command.
 
----
+Topics include:
 
-### Docker Compose (10-part series)
-
-| # | Topic |
-|---|-------|
-| 01 | [Introduction](concepts/Docker%20Compose/01-%20Introduction.md) |
-| 02 | [Compose File Structure](concepts/Docker%20Compose/02-%20Compose%20File%20Structure.md) |
-| 03 | [Services](concepts/Docker%20Compose/03-%20Services.md) |
-| 04 | [Networks](concepts/Docker%20Compose/04-%20Networks.md) |
-| 05 | [Volumes](concepts/Docker%20Compose/05-%20Volumes.md) |
-| 06 | [Environment Variables](concepts/Docker%20Compose/06-%20Environment%20Variables.md) |
-| 07 | [Depends On](concepts/Docker%20Compose/07-%20Depends%20On.md) |
-| 08 | [Profiles](concepts/Docker%20Compose/08-%20Profiles.md) |
-| 09 | [Commands Cheat Sheet](concepts/Docker%20Compose/09-%20Commands%20Cheat%20Sheet.md) |
-| 10 | [Interview Questions](concepts/Docker%20Compose/10-%20Interview%20Questions.md) |
+- Docker Introduction
+- Docker Architecture
+- Docker Engine
+- Images
+- Containers
+- Dockerfile
+- Docker Compose
+- Docker Swarm
+- Networking
+- Volumes
+- Security
+- Logging
+- Best Practices
 
 ---
 
-### Docker Swarm (13-part series)
+## 02 — Docker CLI
 
-| # | Topic |
-|---|-------|
-| 01 | [Introduction](concepts/Docker%20Swarm/01-%20Introduction.md) |
-| 02 | [Swarm Architecture](concepts/Docker%20Swarm/02-%20Swarm%20Architecture.md) |
-| 03 | [Manager and Worker Nodes](concepts/Docker%20Swarm/03-%20Manager%20and%20Worker%20Nodes.md) |
-| 04 | [Swarm Initialization and Cluster Management](concepts/Docker%20Swarm/04-%20Swarm%20Initialization%20and%20Cluster%20Management.md) |
-| 05 | [Services and Tasks](concepts/Docker%20Swarm/05-%20Services%20and%20Tasks.md) |
-| 06 | [Service Scaling and Replication](concepts/Docker%20Swarm/06-%20Service%20Scaling%20and%20Replication.md) |
-| 07 | [Routing Mesh and Load Balancing](concepts/Docker%20Swarm/07-%20Routing%20Mesh%20and%20Load%20Balancing.md) |
-| 08 | [Overlay Networks](concepts/Docker%20Swarm/08-%20Overlay%20Networks.md) |
-| 09 | [Rolling Updates and Rollbacks](concepts/Docker%20Swarm/09-%20Rolling%20Updates%20and%20Rollbacks.md) |
-| 10 | [Docker Swarm Secrets](concepts/Docker%20Swarm/10-%20Docker%20Swarm%20Secrets.md) |
-| 11 | [High Availability and Raft](concepts/Docker%20Swarm/11-%20High%20Availability%20and%20Raft.md) |
-| 12 | [Swarm Commands Cheat Sheet](concepts/Docker%20Swarm/12-%20Swarm%20Commands%20Cheat%20Sheet.md) |
-| 13 | [Docker Swarm vs Kubernetes](concepts/Docker%20Swarm/13-%20Docker%20Swarm%20vs%20Kubernetes.md) |
+Learn the commands used every day by backend developers and DevOps engineers.
 
----
+Topics include:
 
-### Docker Stacks (5-part series)
-
-| # | Topic |
-|---|-------|
-| 01 | [Introduction](concepts/Docker%20Stacks/01-%20Introduction.md) |
-| 02 | [Stack Deploy](concepts/Docker%20Stacks/02-%20Stack%20Deploy.md) |
-| 03 | [Compose vs Stack](concepts/Docker%20Stacks/03-%20Compose%20vs%20Stack.md) |
-| 04 | [Production Deployment](concepts/Docker%20Stacks/04-%20Production%20Deployment.md) |
-| 05 | [Interview Questions](concepts/Docker%20Stacks/05-%20Interview%20Questions.md) |
+- Docker Commands
+- Images
+- Containers
+- Dockerfile
+- Volumes
+- Networking
+- Docker Compose
+- Health Checks
+- Docker Secrets
+- Docker Swarm
 
 ---
 
-### CLI Reference
+## 03 — Interview
 
-Quick-reference command sheets organized by topic:
+Prepare for backend and DevOps interviews with carefully organized interview questions.
 
-- [Docker Basics](cli/Docker%20Basics.md) — version, login, prune
-- [Images & Containers](cli/Images%20and%20Containers.md) — pull, run, exec, inspect, stats
-- [Networking](cli/Networking.md) — create, connect, inspect networks
-- [Volumes & Bind Mounts](cli/Volumes%20and%20Bind%20Mounts.md) — volume create, mount syntax
-- [Dockerfile](cli/Dockerfile.md) — build commands, Django-specific env vars
-- [Docker Compose](cli/Docker%20Compose.md) — up, down
-- [Docker Swarm](cli/Docker%20Swarm.md) — init, service, stack commands
-- [Docker Secrets](cli/Docker%20Secrets.md) — create, inspect, mount
-- [Docker Health Checks](cli/Docker%20Health%20Checks.md) — run, inspect, Dockerfile syntax
+Topics include:
 
----
-
-### Troubleshooting
-
-Real problems encountered and solved, with screenshots:
-
-| # | Problem | Fix |
-|---|---------|-----|
-| 1 | [Container cannot connect to host PostgreSQL](troubleshooting/01-%20Container%20Cannot%20Connect%20to%20Host%20PostgreSQL.md) | Use `host.docker.internal` or containerize the DB |
-| 2 | [DRF/Admin CSS missing in Docker](troubleshooting/02-%20DRF%20Admin%20CSS%20Missing%20in%20Docker.md) | Run `collectstatic` before `runserver` |
-| 3 | [Ubuntu container exits immediately after `docker run -d`](troubleshooting/03-%20Container%20Exits%20Immediately%20After%20Docker%20Run.md) | Use `-it` or `-dit` with a foreground process |
-| 4 | [`volumes must be a mapping` error in Compose](troubleshooting/04-%20Compose%20Volumes%20Must%20Be%20a%20Mapping%20Error.md) | Remove hyphens from top-level volume declarations |
-| 5 | [Overlay network sandbox initialization failure in Swarm](troubleshooting/05-%20Swarm%20Overlay%20Network%20Initialization%20Failure.md) | Remove service → remove network → recreate network → redeploy |
+- Fundamentals
+- Images
+- Containers
+- Networking
+- Docker Compose
+- Dockerfile
+- Production
+- Architecture
+- Scenario-based Questions
+- Rapid Fire Questions
 
 ---
 
-## 🐍 Production Dockerfile
+## 04 — Troubleshooting
 
-A production-ready `Dockerfile` for Django applications is included at [`concepts/Dockerfile`](concepts/Dockerfile).
+Learn to diagnose and fix common Docker problems.
 
-**Key practices applied:**
+Topics include:
 
-- `python:3.12-slim` base image (avoids Alpine C-extension build issues)
-- `PYTHONDONTWRITEBYTECODE` and `PYTHONUNBUFFERED` environment flags
-- Non-root user (`django`) for security
-- Layer-cache optimization (requirements copied before application code)
-- `--no-cache-dir` pip install to keep image size small
-- `collectstatic` chained with server startup command
-- `EXPOSE 8000` with a note to swap `runserver` for Gunicorn in production
-
----
-
-## 🎯 Purpose
-
-This repository is a personal Docker study reference built to:
-
-- Consolidate learning into searchable, structured notes
-- Prepare for backend engineering interviews (concept explanations + interview Q&A included)
-- Document real-world issues and fixes encountered during hands-on practice
+- Installation Issues
+- Build Errors
+- Container Startup Problems
+- Networking Issues
+- Volume Problems
+- Docker Compose Errors
+- Performance Problems
+- Production Failures
 
 ---
 
-*Created by Aranya Majumdar*
+## 05 — Production
+
+Learn how Docker is used in real production environments.
+
+Topics include:
+
+- Production Dockerfiles
+- Docker Compose
+- Security
+- Health Checks
+- Monitoring
+- Logging
+- Backups
+- Scaling
+- Persistent Storage
+- Zero-Downtime Deployment
+- Production Architecture
+
+---
+
+## 06 — Examples
+
+Apply everything you've learned through practical projects.
+
+Projects include:
+
+- Hello World Container
+- Python Flask
+- Django + PostgreSQL
+- FastAPI + PostgreSQL
+- Django + Redis + Celery
+- FastAPI + Redis
+- Nginx Reverse Proxy
+- Multi-Container Application
+- Production Deployment
+- CI/CD Deployment
+
+---
+
+# Skills You Will Gain
+
+After completing this playbook, you will be able to:
+
+- Understand Docker architecture
+- Build efficient Docker images
+- Write production-ready Dockerfiles
+- Use Docker Compose effectively
+- Manage Docker networking
+- Work with Docker volumes
+- Troubleshoot common Docker issues
+- Build multi-container applications
+- Deploy Docker applications to production
+- Secure Docker environments
+- Configure monitoring and logging
+- Design scalable Docker architectures
+- Prepare confidently for Docker interviews
+
+---
+
+# Suggested Learning Order
+
+```text
+01- Concepts
+
+↓
+
+02- CLI
+
+↓
+
+03- Interview
+
+↓
+
+04- Troubleshooting
+
+↓
+
+06- Examples
+
+↓
+
+05- Production
+```
+
+> **Why are Examples before Production?**  
+> Build practical experience first, then learn how those same applications are hardened, monitored, secured, and operated in real production environments.
+
+---
+
+# Who Is This For?
+
+This playbook is designed for:
+
+- Backend Developers
+- Python Developers
+- Django Developers
+- FastAPI Developers
+- DevOps Engineers
+- Software Engineers
+- Students
+- Interview Candidates
+- Anyone learning Docker from beginner to advanced
+
+---
+
+# Prerequisites
+
+Before starting, you should have:
+
+- Basic command-line knowledge
+- Basic understanding of operating systems
+- Familiarity with at least one programming language (Python recommended)
+- Basic knowledge of web applications
+
+No prior Docker experience is required.
+
+---
+
+# What Makes This Playbook Different?
+
+This repository combines:
+
+- Comprehensive theory
+- Practical CLI commands
+- Real-world troubleshooting
+- Hands-on projects
+- Production deployment guidance
+- Interview preparation
+
+Instead of treating these topics separately, it connects them into a single learning path from beginner concepts to production-ready Docker usage.
+
+---
+
+# Learning Outcome
+
+By the end of this playbook, you will be able to:
+
+```text
+Write Dockerfiles
+
+↓
+
+Build Images
+
+↓
+
+Run Containers
+
+↓
+
+Create Multi-Container Applications
+
+↓
+
+Debug Docker Issues
+
+↓
+
+Deploy to Production
+
+↓
+
+Monitor & Secure Applications
+
+↓
+
+Scale Containerized Systems
+```
+
+---
+
+# Key Takeaways
+
+- Docker provides a consistent, portable way to package and deploy applications.
+- Mastering Docker requires both conceptual understanding and hands-on practice.
+- Production-ready Docker deployments depend on security, monitoring, logging, backups, and automation—not just containers.
+- The examples bridge theory and real-world implementation through progressively complex projects.
+- Completing this playbook provides a solid foundation for backend engineering, DevOps workflows, Kubernetes, and cloud-native application deployment.

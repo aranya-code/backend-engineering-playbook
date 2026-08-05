@@ -1,0 +1,11 @@
+# ------------------------------------------------------------------------------
+# .gitignore
+# Specifies intentionally untracked files that Git should ignore.
+# ------------------------------------------------------------------------------
+
+# Ignore environment variables file (which may contain secrets)
+.env
+
+# Ignore Python cache directories and compiled files
+__pycache__/
+*.pyc

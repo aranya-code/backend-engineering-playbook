@@ -1,0 +1,16 @@
+# =============================================================================
+# .gitignore
+# =============================================================================
+# Files and directories that should NOT be committed to version control.
+# =============================================================================
+
+# Environment files — may contain secrets (API keys, passwords)
+.env
+
+# Python bytecode — auto-generated, platform-specific
+__pycache__/
+*.pyc
+
+# IDE / editor configuration
+.vscode/
+.idea/

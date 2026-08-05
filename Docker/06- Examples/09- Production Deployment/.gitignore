@@ -1,0 +1,14 @@
+# ==============================================================================
+# .gitignore
+# Specifies intentionally untracked files to ignore in Git.
+# ==============================================================================
+
+# Environment variable files (prevent committing secrets to the repository)
+.env
+.env.production
+
+# Ignore all logs
+logs/*
+
+# Ignore actual SSL certificates, but keep the directory structure if needed
+ssl/certificates/*
