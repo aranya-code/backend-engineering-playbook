@@ -61,10 +61,8 @@ Whether you're preparing for AWS certifications, backend interviews, or designin
 | [29 - Lambda Cost Optimization](./29-%20Lambda%20Cost%20Optimization.md) | Reduce Lambda costs through memory tuning, execution optimization, batching, monitoring, and architectural improvements. |
 | [30 - Lambda@Edge and CloudFront Functions](./30-%20Lambda@Edge%20and%20CloudFront%20Functions.md) | Compare edge computing services, request processing, caching, routing, and global content delivery. |
 | [31 - Best Practices](./31-%20Best%20Practices.md) | Learn production-ready engineering practices for building secure, scalable, reliable, and maintainable Lambda applications. |
-| [32 - Common Failures and Troubleshooting](./32-%20Common%20Failures%20and%20Troubleshooting.md) | Diagnose timeouts, throttling, networking, permissions, deployment issues, and production incidents. |
-| [33 - Interview Questions](./33-%20Interview%20Questions.md) | Review beginner to senior-level AWS Lambda interview questions with concise explanations and architectural discussions. |
-| [34 - Production Scenarios](./34-%20Production%20Scenarios.md) | Work through real-world production incidents, troubleshooting methodologies, and enterprise serverless case studies. |
-| [35 - Cheat Sheet](./35-%20Cheat%20Sheet.md) | Quick reference covering Lambda limits, CLI concepts, best practices, troubleshooting, and interview revision. |
+| [32 - Production Scenarios](./32-%20Production%20Scenarios.md) | Work through real-world production incidents, troubleshooting methodologies, and enterprise serverless case studies. |
+| [33 - Cheat Sheet](./33-%20Cheat%20Sheet.md) | Quick reference covering Lambda limits, CLI concepts, best practices, troubleshooting, and interview revision. |
 
 ---
 
