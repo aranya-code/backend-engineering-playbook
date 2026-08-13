@@ -1,162 +1,138 @@
 # AWS CloudFormation
 
-A deep-dive study guide into **AWS CloudFormation** — AWS's Infrastructure as Code (IaC) service for modeling, provisioning, and managing AWS resources using declarative YAML or JSON templates.
+## Overview
+
+AWS CloudFormation is Amazon's Infrastructure as Code (IaC) service that enables modeling, provisioning, and managing AWS resources through declarative templates. This folder provides a structured deep-dive into CloudFormation concepts, from foundational topics to advanced features.
+
+The documentation is organized sequentially to build knowledge progressively, covering template anatomy, resource management, stack operations, and extension mechanisms.
 
 ---
 
-## 📚 Table of Contents
+## Folder Structure
 
-- [What is CloudFormation?](#what-is-cloudformation)
-- [Topics Covered](#topics-covered)
-- [Module Structure](#module-structure)
-- [Key Concepts at a Glance](#key-concepts-at-a-glance)
-- [Architecture Overview](#architecture-overview)
-- [Template Anatomy](#template-anatomy)
-- [Navigation](#navigation)
-
----
-
-## What is CloudFormation?
-
-AWS CloudFormation is an **Infrastructure as Code (IaC)** service that allows you to model, provision, and manage AWS resources using code instead of manual console configuration.
-
-You define your infrastructure in a **template file** (YAML or JSON), and CloudFormation automatically creates, updates, and deletes resources as a single unit called a **Stack** — enabling version-controlled, repeatable, and automated infrastructure deployments.
-
----
-
-## Topics Covered
-
-| # | Topic | Focus Area |
-|---|-------|------------|
-| 01 | [Introduction](./01-%20Introduction.md) | What CloudFormation is, IaC concepts, benefits, lifecycle |
-| 02 | [CloudFormation Templates](./02-%20CloudFormation%20Templates.md) | Template structure, sections, YAML vs JSON |
-| 03 | [Resources](./03-%20Resources.md) | Defining AWS resources, resource types, dependencies |
-| 04 | [Parameters](./04-%20Parameters.md) | User inputs, types, constraints, default values |
-| 05 | [Pseudo Parameters](./05-%20Pseudo%20Parameters.md) | AWS-provided runtime values (`AWS::Region`, `AWS::StackName`, etc.) |
-| 06 | [Mappings](./06-%20Mappings.md) | Static lookup tables for region/environment-based values |
-| 07 | [Conditions](./07-%20Conditions.md) | Conditional resource creation and configuration |
-| 08 | [Intrinsic Functions](./08-%20Intrinsic%20Functions.md) | `!Ref`, `!Sub`, `!GetAtt`, `!Join`, `!Select`, `!If`, and more |
-| 09 | [Outputs and Cross Stack References](./09-%20Outputs%20and%20Cross%20Stack%20References.md) | Exporting values and sharing across stacks |
-| 10 | [Stack Lifecycle](./10-%20Stack%20Lifecycle.md) | Create, update, delete operations and state management |
-| 11 | [Change Sets](./11-%20Change%20Sets.md) | Previewing stack changes before applying them |
-| 12 | [Rollbacks](./12-%20Rollbacks.md) | Automatic and manual rollback behavior |
-| 13 | [Deletion Policies](./13-%20Deletion%20Policies.md) | `Retain`, `Snapshot`, `Delete` — controlling resource cleanup |
-| 14 | [CloudFormation Service Role](./14-%20CloudFormation%20Service%20Role.md) | IAM roles for CloudFormation stack operations |
-| 15 | [Capabilities](./15-%20Capabilities.md) | `CAPABILITY_IAM`, `CAPABILITY_NAMED_IAM`, `CAPABILITY_AUTO_EXPAND` |
-| 16 | [Custom Resources](./16-%20Custom%20Resources.md) | Extending CloudFormation with Lambda-backed custom logic |
-| 17 | [Best Practices](./17-%20Best%20Practices.md) | Production guidelines, template design, and operational patterns |
-| 18 | [Common Interview Questions](./18-%20Common%20Interview%20Questions.md) | Interview prep with detailed answers |
-
----
-
-## Module Structure
-
-This module is organized into progressive learning sections:
-
-```
+```text
 AWS CloudFormation/
-│
-├── Fundamentals (01–02)
-│   └── Introduction, Template Structure
-│
-├── Template Sections Deep-Dive (03–09)
-│   └── Resources, Parameters, Pseudo Parameters,
-│       Mappings, Conditions, Intrinsic Functions,
-│       Outputs & Cross Stack References
-│
-├── Stack Operations (10–12)
-│   └── Stack Lifecycle, Change Sets, Rollbacks
-│
-├── Advanced Features (13–16)
-│   └── Deletion Policies, Service Roles,
-│       Capabilities, Custom Resources
-│
-└── Production & Interview Prep (17–18)
-    └── Best Practices, Interview Questions
+├── 01- Introduction.md
+├── 02- CloudFormation Templates.md
+├── 03- Resources.md
+├── 04- Parameters.md
+├── 05- Pseudo Parameters.md
+├── 06- Mappings.md
+├── 07- Conditions.md
+├── 08- Intrinsic Functions.md
+├── 09- Outputs and Cross Stack References.md
+├── 10- Deletion Policies.md
+├── 11- Capabilities.md
+├── 12- Custom Resources.md
+└── README.md
 ```
 
 ---
 
-## Key Concepts at a Glance
+## Quick Navigation
 
-| Concept | Description |
-|---------|-------------|
-| **Template** | A YAML or JSON file that declares infrastructure (the blueprint) |
-| **Stack** | A running collection of AWS resources managed as a single unit |
-| **Resources** | The only required section — defines AWS services to create |
-| **Parameters** | User-supplied inputs that make templates reusable |
-| **Pseudo Parameters** | AWS-provided values like `AWS::Region` and `AWS::AccountId` |
-| **Mappings** | Static key-value lookup tables (e.g., AMI IDs per region) |
-| **Conditions** | Logic to conditionally create or configure resources |
-| **Intrinsic Functions** | Built-in functions (`!Ref`, `!Sub`, `!GetAtt`, `!Join`, etc.) |
-| **Outputs** | Values exported from a stack for cross-stack references |
-| **Change Sets** | Preview of proposed changes before updating a stack |
-| **Rollback** | Automatic revert to the previous state on failure |
-| **Deletion Policy** | Controls what happens to a resource when the stack is deleted |
-| **Custom Resources** | Lambda-backed extensions for unsupported or custom provisioning |
-
----
-
-## Architecture Overview
-
-```
-  Developer / CI-CD Pipeline
-              │
-              ▼
-   ┌─────────────────────┐
-   │  CloudFormation      │
-   │  Template (YAML/JSON)│
-   └──────────┬──────────┘
-              │
-              ▼
-   ┌─────────────────────┐
-   │  CloudFormation      │
-   │  Service             │
-   │                      │
-   │  ┌── Change Set ──┐  │
-   │  │  (Preview)     │  │
-   │  └────────────────┘  │
-   └──────────┬──────────┘
-              │
-              ▼
-   ┌─────────────────────┐
-   │  Stack               │
-   │                      │
-   │  ├── VPC             │
-   │  ├── EC2             │
-   │  ├── RDS             │
-   │  ├── IAM Roles       │
-   │  └── S3 Buckets      │
-   └─────────────────────┘
-```
+| #  | Topic                   | Coverage                                   |
+| -- | ----------------------- | ------------------------------------------ |
+| 01 | [Introduction](01-%20Introduction.md) | Fundamentals of CloudFormation, IaC concepts, benefits, and lifecycle. |
+| 02 | [CloudFormation Templates](02-%20CloudFormation%20Templates.md) | Template structure, sections, YAML vs JSON, and syntax basics. |
+| 03 | [Resources](03-%20Resources.md) | Defining AWS resources, resource types, properties, and dependencies. |
+| 04 | [Parameters](04-%20Parameters.md) | User inputs, types, constraints, default values, and dynamic template behavior. |
+| 05 | [Pseudo Parameters](05-%20Pseudo%20Parameters.md) | AWS-provided runtime values like region, account ID, and stack name. |
+| 06 | [Mappings](06-%20Mappings.md) | Static lookup tables for region/environment-specific values (e.g., AMIs). |
+| 07 | [Conditions](07-%20Conditions.md) | Conditional logic for resource creation and configuration based on parameters. |
+| 08 | [Intrinsic Functions](08-%20Intrinsic%20Functions.md) | Built-in functions (!Ref, !Sub, !GetAtt, !Join, !Select, !If, etc.) for template manipulation. |
+| 09 | [Outputs and Cross Stack References](09-%20Outputs%20and%20Cross%20Stack%20References.md) | Exporting stack values and importing them in other stacks for modularity. |
+| 10 | [Deletion Policies](10-%20Deletion%20Policies.md) | Controlling resource behavior during stack deletion (Retain, Snapshot, Delete). |
+| 11 | [Capabilities](11-%20Capabilities.md) | Security acknowledgments required for IAM resources, macros, and transforms. |
+| 12 | [Custom Resources](12-%20Custom%20Resources.md) | Extending CloudFormation with Lambda-backed logic for custom provisioning. |
 
 ---
 
-## Template Anatomy
+## Learning Path
 
-A CloudFormation template can contain these sections:
-
-```yaml
-AWSTemplateFormatVersion: "2010-09-09"
-Description: "Template description"
-
-Parameters:       # User inputs
-Mappings:         # Static lookup tables
-Conditions:       # Conditional logic
-Resources:        # AWS resources (REQUIRED)
-Outputs:          # Exported values
+```text
+Introduction
+   │
+    ▼
+CloudFormation Templates
+   │
+    ▼
+Resources
+   │
+    ▼
+Parameters
+   │
+    ▼
+Pseudo Parameters
+   │
+    ▼
+Mappings
+   │
+    ▼
+Conditions
+   │
+    ▼
+Intrinsic Functions
+   │
+    ▼
+Outputs and Cross Stack References
+   │
+    ▼
+Deletion Policies
+   │
+    ▼
+Capabilities
+   │
+    ▼
+Custom Resources
 ```
 
-> **Note:** Only the `Resources` section is mandatory.
+---
+
+## Key Areas
+
+### Fundamentals
+
+Introduction and template basics establish what CloudFormation is and how to write templates.
+
+### Template Configuration
+
+Parameters, pseudo parameters, mappings, and conditions enable dynamic and reusable templates.
+
+### Resource Management
+
+Defining AWS resources, intrinsic functions, and outputs covers core provisioning and referencing.
+
+### Advanced Controls
+
+Deletion policies, capabilities, and custom resources provide safety, security, and extensibility.
 
 ---
 
-## Navigation
+## Recommended Study Order
 
-| Direction | Link |
-|-----------|------|
-| ⬆️ Parent | [AWS Concepts](../README.md) |
+Follow the files in numerical order. Each topic should build on the concepts introduced previously.
+
+```text
+01 → Introduction
+02 → CloudFormation Templates
+03 → Resources
+04 → Parameters
+05 → Pseudo Parameters
+06 → Mappings
+07 → Conditions
+08 → Intrinsic Functions
+09 → Outputs and Cross Stack References
+10 → Deletion Policies
+11 → Capabilities
+12 → Custom Resources
+```
 
 ---
 
-> **Part of the [Backend Engineering Playbook](../../../) — a structured learning resource for backend engineers.**
+## Key Takeaways
+
+* CloudFormation enables repeatable, version-controlled infrastructure deployments.
+* Templates consist of sections like Resources, Parameters, and Outputs, with intrinsic functions for dynamic behavior.
+* Deletion policies and capabilities provide critical safeguards for production environments.
+* Custom resources extend CloudFormation to support any AWS or third-party service via Lambda.
