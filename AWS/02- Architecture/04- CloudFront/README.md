@@ -16,17 +16,17 @@ The architecture documentation is organized into the following areas:
 - Real-world architectures
 - Architecture decision matrix
 
-## Architecture Documentation
+## Quick Navigation
 
-| File | Focus |
-|---|---|
-| [01- CloudFront Architecture.md](./01-%20CloudFront%20Architecture.md) | Core CloudFront architecture, major components, request flow, edge delivery, and the relationship between CloudFront and backend infrastructure |
-| [02- Origin Architecture.md](./02-%20Origin%20Architecture.md) | Origin types, origin connectivity, S3 and HTTP origins, origin security, origin capacity, and application integration |
-| [03- Multi-Origin Architecture.md](./03-%20Multi-Origin%20Architecture.md) | Routing different request paths to different origins and designing CloudFront distributions around multiple workloads |
-| [04- Origin Groups and Failover.md](./04-%20Origin%20Groups%20and%20Failover.md) | Primary/secondary origins, failover behavior, failure conditions, reliability considerations, and operational testing |
-| [05- High Availability and Multi-Region Architecture.md](./05-%20High%20Availability%20and%20Multi-Region%20Architecture.md) | Regional resilience, multi-region origins, disaster recovery, traffic routing, availability requirements, and architectural trade-offs |
-| [06- Real-World Architectures.md](./06-%20Real-World%20Architectures.md) | Production-oriented CloudFront architectures for static applications, APIs, microservices, Kubernetes, and hybrid workloads |
-| [07- Architecture Decision Matrix.md](./07-%20Architecture%20Decision%20Matrix.md) | Architecture selection criteria, trade-offs, workload patterns, availability requirements, and practical design decisions |
+| # | Topic | Coverage |
+|---|---|---|
+| 01 | [CloudFront Architecture](01-%20CloudFront%20Architecture.md) | Core CloudFront architecture, major components, request flow, edge delivery, and the relationship between CloudFront and backend infrastructure. |
+| 02 | [Origin Architecture](02-%20Origin%20Architecture.md) | Origin types, origin connectivity, S3 and HTTP origins, origin security, origin capacity, and application integration. |
+| 03 | [Multi-Origin Architecture](03-%20Multi-Origin%20Architecture.md) | Routing different request paths to different origins and designing CloudFront distributions around multiple workloads. |
+| 04 | [Origin Groups and Failover](04-%20Origin%20Groups%20and%20Failover.md) | Primary/secondary origins, failover behavior, failure conditions, reliability considerations, and operational testing. |
+| 05 | [High Availability and Multi-Region Architecture](05-%20High%20Availability%20and%20Multi-Region%20Architecture.md) | Regional resilience, multi-region origins, disaster recovery, traffic routing, availability requirements, and architectural trade-offs. |
+| 06 | [Real-World Architectures](06-%20Real-World%20Architectures.md) | Production-oriented CloudFront architectures for static applications, APIs, microservices, Kubernetes, and hybrid workloads. |
+| 07 | [Architecture Decision Matrix](07-%20Architecture%20Decision%20Matrix.md) | Architecture selection criteria, trade-offs, workload patterns, availability requirements, and practical design decisions. |
 
 ## Architecture Map
 

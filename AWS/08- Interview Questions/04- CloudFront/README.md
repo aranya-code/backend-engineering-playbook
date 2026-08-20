@@ -34,24 +34,24 @@ Rapid-Fire Revision
 Interview Traps
 ```
 
-## Interview Question Navigation
+## Quick Navigation
 
-| File | Focus |
-|---|---|
-| [01- Core CloudFront Questions.md](./01-%20Core%20CloudFront%20Questions.md) | Fundamental CloudFront concepts, distributions, origins, behaviors, edge locations, request flow, and core terminology |
-| [02- Core CloudFront Questions.md](./02-%20Core%20CloudFront%20Questions.md) | Core interview questions covering CloudFront architecture, request processing, origins, behaviors, and fundamental operational concepts |
-| [03- Caching and Policy Questions.md](./03-%20Caching%20and%20Policy%20Questions.md) | Cache behavior, cache keys, cache policies, origin request policies, TTLs, invalidation, headers, cookies, and query strings |
-| [04- Security Questions.md](./04-%20Security%20Questions.md) | CloudFront security, TLS, AWS WAF, private origins, S3 Origin Access Control, geographic restrictions, and origin protection |
-| [05- Signed URL and Cookie Questions.md](./05-%20Signed%20URL%20and%20Cookie%20Questions.md) | Signed URLs, signed cookies, private content, trusted access, expiration, authorization boundaries, and secure distribution patterns |
-| [06- Edge Computing Questions.md](./06-%20Edge%20Computing%20Questions.md) | CloudFront Functions, Lambda@Edge, edge request processing, transformations, routing, and edge-computing trade-offs |
-| [07- Monitoring Questions.md](./07-%20Monitoring%20Questions.md) | CloudFront metrics, logs, cache hit ratio, latency, 4xx/5xx errors, origin health, observability, and operational monitoring |
-| [08- Scenario Based Questions.md](./08-%20Scenario%20Based%20Questions.md) | Production scenarios involving performance, caching, security, availability, origin failures, deployments, and traffic patterns |
-| [09- Troubleshooting Questions.md](./09-%20Troubleshooting%20Questions.md) | Systematic troubleshooting of 4xx/5xx errors, cache issues, origin connectivity, S3 access, DNS, TLS, and configuration problems |
-| [10- Architecture Questions.md](./10-%20Architecture%20Questions.md) | CloudFront architecture design, origin patterns, static and dynamic content, APIs, multi-region systems, security, scalability, and HA |
-| [11- Senior Level Questions.md](./11-%20Senior%20Level%20Questions.md) | Senior backend engineering questions covering trade-offs, production design, performance, reliability, security, and operational decisions |
-| [12- Architect Level Questions.md](./12-%20Architect%20Level%20Questions.md) | Advanced system architecture, global delivery, multi-region strategies, failure domains, security boundaries, cost, and design trade-offs |
-| [13- Rapid-Fire Questions.md](./13-%20Rapid-Fire%20Questions.md) | Short-form questions and answers for fast interview revision and last-minute preparation |
-| [14- Common Interview Traps.md](./14-%20Common%20Interview%20Traps.md) | Common misconceptions, misleading assumptions, configuration traps, security mistakes, caching mistakes, and interview pitfalls |
+| # | Topic | Coverage |
+|---|---|---|
+| 01 | [Beginner Level Questions](01-%20Beginner%20Level%20Questions.md) | Fundamental CloudFront concepts, distributions, origins, behaviors, edge locations, request flow, and core terminology. |
+| 02 | [Core CloudFront Questions](02-%20Core%20CloudFront%20Questions.md) | Core interview questions covering CloudFront architecture, request processing, origins, behaviors, and fundamental operational concepts. |
+| 03 | [Caching and Policy Questions](03-%20Caching%20and%20Policy%20Questions.md) | Cache behavior, cache keys, cache policies, origin request policies, TTLs, invalidation, headers, cookies, and query strings. |
+| 04 | [Security Questions](04-%20Security%20Questions.md) | CloudFront security, TLS, AWS WAF, private origins, S3 Origin Access Control, geographic restrictions, and origin protection. |
+| 05 | [Signed URL and Cookie Questions](05-%20Signed%20URL%20and%20Cookie%20Questions.md) | Signed URLs, signed cookies, private content, trusted access, expiration, authorization boundaries, and secure distribution patterns. |
+| 06 | [Edge Computing Questions](06-%20Edge%20Computing%20Questions.md) | CloudFront Functions, Lambda@Edge, edge request processing, transformations, routing, and edge-computing trade-offs. |
+| 07 | [Monitoring Questions](07-%20Monitoring%20Questions.md) | CloudFront metrics, logs, cache hit ratio, latency, 4xx/5xx errors, origin health, observability, and operational monitoring. |
+| 08 | [Scenario Based Questions](08-%20Scenario%20Based%20Questions.md) | Production scenarios involving performance, caching, security, availability, origin failures, deployments, and traffic patterns. |
+| 09 | [Troubleshooting Questions](09-%20Troubleshooting%20Questions.md) | Systematic troubleshooting of 4xx/5xx errors, cache issues, origin connectivity, S3 access, DNS, TLS, and configuration problems. |
+| 10 | [Architecture Questions](10-%20Architecture%20Questions.md) | CloudFront architecture design, origin patterns, static and dynamic content, APIs, multi-region systems, security, scalability, and HA. |
+| 11 | [Senior Level Questions](11-%20Senior%20Level%20Questions.md) | Senior backend engineering questions covering trade-offs, production design, performance, reliability, security, and operational decisions. |
+| 12 | [Architect Level Questions](12-%20Architect%20Level%20Questions.md) | Advanced system architecture, global delivery, multi-region strategies, failure domains, security boundaries, cost, and design trade-offs. |
+| 13 | [Rapid-Fire Questions](13-%20Rapid-Fire%20Questions.md) | Short-form questions and answers for fast interview revision and last-minute preparation. |
+| 14 | [Common Interview Traps](14-%20Common%20Interview%20Traps.md) | Common misconceptions, misleading assumptions, configuration traps, security mistakes, caching mistakes, and interview pitfalls. |
 
 ## Recommended Study Order
 

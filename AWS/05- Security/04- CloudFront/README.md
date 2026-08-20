@@ -37,17 +37,17 @@ The material covers:
 
 ## Quick Navigation
 
-| Document | Focus |
-|---|---|
-| [01- Security Overview](./01-%20Security%20Overview.md) | CloudFront security model, security boundaries, defense in depth, and the major security controls |
-| [02- HTTPS and TLS](./02-%20HTTPS%20and%20TLS.md) | Viewer HTTPS, TLS policies, certificates, and CloudFront-to-origin encryption |
-| [03- AWS Shield and DDoS Protection](./03-%20AWS%20Shield%20and%20DDoS%20Protection.md) | DDoS protection, Shield, traffic absorption, and resilient edge architecture |
-| [04- AWS WAF and Request Filtering](./04-%20AWS%20WAF%20and%20Request%20Filtering.md) | Web ACLs, managed rules, rate limiting, request inspection, and blocking strategies |
-| [05- Origin Access Control](./05-%20Origin%20Access%20Control.md) | Protecting S3 origins and preventing direct origin access through OAC |
-| [06- Geo Restrictions](./06-%20Geo%20Restrictions.md) | Country-level content restrictions and geographic access control |
-| [07- Field-Level Encryption](./07-%20Field-Level%20Encryption.md) | Protecting sensitive request fields as traffic passes through CloudFront |
-| [08- Signed URLs and Signed Cookies](./08-%20Signed%20URLs%20and%20Signed%20Cookies.md) | Private content authorization, temporary access, and signing workflows |
-| [09- Security Best Practices](./09-%20Security%20Best%20Practices.md) | Production hardening, cache security, IAM, monitoring, origin protection, and security review |
+| # | Topic | Coverage |
+|---|---|---|
+| 01 | [Security Overview](01-%20Security%20Overview.md) | CloudFront security model, security boundaries, defense in depth, and the major security controls. |
+| 02 | [HTTPS and TLS](02-%20HTTPS%20and%20TLS.md) | Viewer HTTPS, TLS policies, certificates, and CloudFront-to-origin encryption. |
+| 03 | [AWS Shield and DDoS Protection](03-%20AWS%20Shield%20and%20DDoS%20Protection.md) | DDoS protection, Shield, traffic absorption, and resilient edge architecture. |
+| 04 | [AWS WAF and Request Filtering](04-%20AWS%20WAF%20and%20Request%20Filtering.md) | Web ACLs, managed rules, rate limiting, request inspection, and blocking strategies. |
+| 05 | [Origin Access Control](05-%20Origin%20Access%20Control.md) | Protecting S3 origins and preventing direct origin access through OAC. |
+| 06 | [Geo Restrictions](06-%20Geo%20Restrictions.md) | Country-level content restrictions and geographic access control. |
+| 07 | [Field-Level Encryption](07-%20Field-Level%20Encryption.md) | Protecting sensitive request fields as traffic passes through CloudFront. |
+| 08 | [Signed URLs and Signed Cookies](08-%20Signed%20URLs%20and%20Signed%20Cookies.md) | Private content authorization, temporary access, and signing workflows. |
+| 09 | [Security Best Practices](09-%20Security%20Best%20Practices.md) | Production hardening, cache security, IAM, monitoring, origin protection, and security review. |
 
 ## Recommended Reading Order
 

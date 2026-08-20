@@ -64,16 +64,16 @@ CloudFront
 
 ## Quick Navigation
 
-| Document | Focus |
-|---|---|
-| [01- Monitoring and Observability](./01-%20Monitoring%20and%20Observability.md) | CloudFront observability strategy, operational signals, metrics, logs, and request-path visibility |
-| [02- CloudFront Metrics](./02-%20CloudFront%20Metrics.md) | Important CloudFront metrics, their meanings, relationships, and operational interpretation |
-| [03- Access Logs and Real-Time Logs](./03-%20Access%20Logs%20and%20Real-Time%20Logs.md) | Standard access logs, real-time logs, request analysis, retention, and diagnostic usage |
-| [04- CloudWatch Dashboards and Alarms](./04-%20CloudWatch%20Dashboards%20and%20Alarms.md) | CloudWatch dashboards, alarms, alert design, thresholds, and production monitoring |
-| [05- Performance Optimization](./05-%20Performance%20Optimization.md) | Cache behavior, origin load, latency, cache efficiency, and performance optimization |
-| [06- Cost Optimization](./06-%20Cost%20Optimization.md) | CloudFront cost drivers, caching efficiency, invalidations, logging, and origin-cost reduction |
-| [07- Availability and Reliability](./07-%20Availability%20and%20Reliability.md) | High availability, origin resilience, failure isolation, failover, and recovery |
-| [08- Operational Best Practices](./08-%20Operational%20Best%20Practices.md) | Production operating model, change management, security, runbooks, deployment, and operational discipline |
+| # | Topic | Coverage |
+|---|---|---|
+| 01 | [Monitoring and Observability](01-%20Monitoring%20and%20Observability.md) | CloudFront observability strategy, operational signals, metrics, logs, and request-path visibility. |
+| 02 | [CloudFront Metrics](02-%20CloudFront%20Metrics.md) | Important CloudFront metrics, their meanings, relationships, and operational interpretation. |
+| 03 | [Access Logs and Real-Time Logs](03-%20Access%20Logs%20and%20Real-Time%20Logs.md) | Standard access logs, real-time logs, request analysis, retention, and diagnostic usage. |
+| 04 | [CloudWatch Dashboards and Alarms](04-%20CloudWatch%20Dashboards%20and%20Alarms.md) | CloudWatch dashboards, alarms, alert design, thresholds, and production monitoring. |
+| 05 | [Performance Optimization](05-%20Performance%20Optimization.md) | Cache behavior, origin load, latency, cache efficiency, and performance optimization. |
+| 06 | [Cost Optimization](06-%20Cost%20Optimization.md) | CloudFront cost drivers, caching efficiency, invalidations, logging, and origin-cost reduction. |
+| 07 | [Availability and Reliability](07-%20Availability%20and%20Reliability.md) | High availability, origin resilience, failure isolation, failover, and recovery. |
+| 08 | [Operational Best Practices](08-%20Operational%20Best%20Practices.md) | Production operating model, change management, security, runbooks, deployment, and operational discipline. |
 
 ---
 

@@ -1,30 +1,30 @@
-# README.md
-
-## Overview
-
-This section contains production-oriented AWS CLI workflows for managing, inspecting, troubleshooting, and operating Amazon CloudFront distributions.
-
-The commands are organized around practical operational tasks rather than individual AWS API operations. The goal is to make CloudFront administration reproducible through the CLI and suitable for local development, incident response, CI/CD pipelines, and production operations.
-
-## Quick Navigation
-
-| File | Description |
-|---|---|
-| [01- CloudFront CLI Commands.md](./01-%20CloudFront%20CLI%20Commands.md) | Core CloudFront CLI commands, distribution inspection, origins, behaviors, policies, and common operations |
-| [02- Distribution Management.md](./02-%20Distribution%20Management.md) | Distribution creation, inspection, configuration updates, deployment status, and lifecycle management |
-| [03- Cache Invalidation Commands.md](./03-%20Cache%20Invalidation%20Commands.md) | Creating, inspecting, waiting for, and operationally managing CloudFront cache invalidations |
-| [04- Monitoring and Inspection Commands.md](./04-%20Monitoring%20and%20Inspection%20Commands.md) | Distribution health, CloudWatch metrics, cache behavior, origins, WAF, TLS, and troubleshooting commands |
-| [05- Operational CLI Workflows.md](./05-%20Operational%20CLI%20Workflows.md) | End-to-end production workflows for deployment, validation, incident response, rollback, and operational automation |
-
-## Command Coverage
-
-The CLI material covers the main operational layers of CloudFront:
-
-```text
-CloudFront CLI
-│
-├── Distribution Management
-│   ├── Inspect distributions
+# README.md
+
+## Overview
+
+This section contains production-oriented AWS CLI workflows for managing, inspecting, troubleshooting, and operating Amazon CloudFront distributions.
+
+The commands are organized around practical operational tasks rather than individual AWS API operations. The goal is to make CloudFront administration reproducible through the CLI and suitable for local development, incident response, CI/CD pipelines, and production operations.
+
+## Quick Navigation
+
+| # | Topic | Coverage |
+|---|---|---|
+| 01 | [CloudFront CLI Commands](01-%20CloudFront%20CLI%20Commands.md) | Core CloudFront CLI commands, distribution inspection, origins, behaviors, policies, and common operations. |
+| 02 | [Distribution Management](02-%20Distribution%20Management.md) | Distribution creation, inspection, configuration updates, deployment status, and lifecycle management. |
+| 03 | [Cache Invalidation Commands](03-%20Cache%20Invalidation%20Commands.md) | Creating, inspecting, waiting for, and operationally managing CloudFront cache invalidations. |
+| 04 | [Monitoring and Inspection Commands](04-%20Monitoring%20and%20Inspection%20Commands.md) | Distribution health, CloudWatch metrics, cache behavior, origins, WAF, TLS, and troubleshooting commands. |
+| 05 | [Operational CLI Workflows](05-%20Operational%20CLI%20Workflows.md) | End-to-end production workflows for deployment, validation, incident response, rollback, and operational automation. |
+
+## Command Coverage
+
+The CLI material covers the main operational layers of CloudFront:
+
+```text
+CloudFront CLI
+│
+├── Distribution Management
+│   ├── Inspect distributions
 │   ├── Retrieve configuration
 │   ├── Update configuration
 │   └── Monitor deployment state

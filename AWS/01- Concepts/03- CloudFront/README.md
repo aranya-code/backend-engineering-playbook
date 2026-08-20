@@ -32,18 +32,18 @@ CloudFront/
 
 ## Quick Navigation
 
-| #  | Topic                                | Coverage                                                                              |
-| -- | ------------------------------------ | ------------------------------------------------------------------------------------- |
-| 01 | [Introduction](01-%20Introduction.md) | CDN fundamentals, why CloudFront exists, supported content types and origins.         |
-| 02 | [Global Infrastructure and Components](02-%20Global%20Infrastructure%20and%20Components.md) | Edge Locations, Regional Edge Caches, Points of Presence, Origin Shield.              |
-| 03 | [Origins](03-%20Origins.md)          | S3 buckets, custom HTTP origins, VPC origins, OAC, origin groups, and failover.       |
-| 04 | [Distributions and Cache Behaviors](04-%20Distributions%20and%20Cache%20Behaviors.md) | Distribution configuration, path-based routing, and per-behavior policies.            |
-| 05 | [Request Lifecycle](05-%20Request%20Lifecycle.md) | End-to-end request flow through edge, cache evaluation, and origin infrastructure.    |
-| 06 | [Caching](06-%20Caching.md)          | Cache hit/miss mechanics, TTL controls, cache hit ratio optimization.                 |
-| 07 | [Cache Keys and Policies](07-%20Cache%20Keys%20and%20Policies.md) | Cache key construction, cache policies vs. origin request policies, fragmentation.    |
-| 08 | [Cache Invalidation and Versioning](08-%20Cache%20Invalidation%20and%20Versioning.md) | Invalidation vs. URL versioning, content-hashed immutable assets.                     |
-| 09 | [Security](09-%20Security.md)        | HTTPS/TLS, AWS Shield, WAF, OAC, Geo Restrictions, Signed URLs/Cookies.              |
-| 10 | [Edge Computing](10-%20Edge%20Computing.md) | CloudFront Functions, Lambda@Edge, event triggers, and execution limits.              |
+| # | Topic | Coverage |
+|---|---|---|
+| 01 | [Introduction](01-%20Introduction.md) | CDN fundamentals, why CloudFront exists, supported content types and origins. |
+| 02 | [Global Infrastructure and Components](02-%20Global%20Infrastructure%20and%20Components.md) | Edge Locations, Regional Edge Caches, Points of Presence, Origin Shield. |
+| 03 | [Origins](03-%20Origins.md) | S3 buckets, custom HTTP origins, VPC origins, OAC, origin groups, and failover. |
+| 04 | [Distributions and Cache Behaviors](04-%20Distributions%20and%20Cache%20Behaviors.md) | Distribution configuration, path-based routing, and per-behavior policies. |
+| 05 | [Request Lifecycle](05-%20Request%20Lifecycle.md) | End-to-end request flow through edge, cache evaluation, and origin infrastructure. |
+| 06 | [Caching](06-%20Caching.md) | Cache hit/miss mechanics, TTL controls, cache hit ratio optimization. |
+| 07 | [Cache Keys and Policies](07-%20Cache%20Keys%20and%20Policies.md) | Cache key construction, cache policies vs. origin request policies, fragmentation. |
+| 08 | [Cache Invalidation and Versioning](08-%20Cache%20Invalidation%20and%20Versioning.md) | Invalidation vs. URL versioning, content-hashed immutable assets. |
+| 09 | [Security](09-%20Security.md) | HTTPS/TLS, AWS Shield, WAF, OAC, Geo Restrictions, Signed URLs/Cookies. |
+| 10 | [Edge Computing](10-%20Edge%20Computing.md) | CloudFront Functions, Lambda@Edge, event triggers, and execution limits. |
 
 ---
 

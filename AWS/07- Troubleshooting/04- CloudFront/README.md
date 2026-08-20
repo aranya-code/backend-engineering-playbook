@@ -28,21 +28,25 @@ CloudFront incidents should be investigated as **distributed request-path proble
 
 ---
 
-## Troubleshooting Guides
+## Quick Navigation
 
-| File | Topic | Primary Focus |
+| # | Topic | Coverage |
 |---|---|---|
-| [05- 503 Service Unavailable Errors](./05-%20503%20Service%20Unavailable%20Errors.md) | 503 Errors | Origin availability, capacity, and upstream failures |
-| [06- 504 Gateway Timeout Errors](./06-%20504%20Gateway%20Timeout%20Errors.md) | 504 Errors | Origin latency, timeouts, and slow dependencies |
-| [07- High Latency Issues](./07-%20High%20Latency%20Issues.md) | High Latency | Cache performance, origin latency, networking, and backend bottlenecks |
-| [08- Low Cache Hit Ratio](./08-%20Low%20Cache%20Hit%20Ratio.md) | Cache Efficiency | Cache keys, TTLs, query strings, headers, cookies, and origin load |
-| [09- Origin Overload](./09-%20Origin%20Overload.md) | Origin Overload | Cache misses, traffic amplification, scaling, and backend capacity |
-| [10- Signed URL Issues](./10-%20Signed%20URL%20Issues.md) | Signed URLs | Signature validation, expiration, policies, and resource matching |
-| [11- Signed Cookie Issues](./11-%20Signed%20Cookie%20Issues.md) | Signed Cookies | Cookie policies, resource scope, authentication, and authorization |
-| [12- TLS and SSL Errors](./12-%20TLS%20and%20SSL%20Errors.md) | TLS / SSL | Viewer certificates, origin TLS, certificates, and handshakes |
-| [13- WAF and Access Control Issues](./13-%20WAF%20and%20Access%20Control%20Issues.md) | WAF / Access Control | WAF rules, restrictions, authorization, and 403 responses |
-| [14- Log Analysis and Diagnostic Workflow](./14-%20Log%20Analysis%20and%20Diagnostic%20Workflow.md) | Diagnostics | Logs, metrics, correlation, request tracing, and incident workflow |
-| [15- Real-World Troubleshooting Scenarios](./15-%20Real-World%20Troubleshooting%20Scenarios.md) | Real-World Scenarios | Production incidents and end-to-end troubleshooting |
+| 01 | [Troubleshooting Methodology](01-%20Troubleshooting%20Methodology.md) | Systematic CloudFront troubleshooting approach and request-path diagnosis. |
+| 02 | [403 Forbidden Errors](02-%20403%20Forbidden%20Errors.md) | WAF blocks, signed access failures, restrictions, and authorization issues. |
+| 03 | [404 Not Found Errors](03-%20404%20Not%20Found%20Errors.md) | Cache behavior routing, origin path, resource resolution, and missing content. |
+| 04 | [502 Bad Gateway Errors](04-%20502%20Bad%20Gateway%20Errors.md) | Origin connectivity, TLS handshake, ALB, and backend reachability failures. |
+| 05 | [503 Service Unavailable Errors](05-%20503%20Service%20Unavailable%20Errors.md) | Origin availability, capacity, and upstream failures. |
+| 06 | [504 Gateway Timeout Errors](06-%20504%20Gateway%20Timeout%20Errors.md) | Origin latency, timeouts, and slow dependencies. |
+| 07 | [High Latency Issues](07-%20High%20Latency%20Issues.md) | Cache performance, origin latency, networking, and backend bottlenecks. |
+| 08 | [Low Cache Hit Ratio](08-%20Low%20Cache%20Hit%20Ratio.md) | Cache keys, TTLs, query strings, headers, cookies, and origin load. |
+| 09 | [Origin Overload](09-%20Origin%20Overload.md) | Cache misses, traffic amplification, scaling, and backend capacity. |
+| 10 | [Signed URL Issues](10-%20Signed%20URL%20Issues.md) | Signature validation, expiration, policies, and resource matching. |
+| 11 | [Signed Cookie Issues](11-%20Signed%20Cookie%20Issues.md) | Cookie policies, resource scope, authentication, and authorization. |
+| 12 | [TLS and SSL Errors](12-%20TLS%20and%20SSL%20Errors.md) | Viewer certificates, origin TLS, certificates, and handshakes. |
+| 13 | [WAF and Access Control Issues](13-%20WAF%20and%20Access%20Control%20Issues.md) | WAF rules, restrictions, authorization, and 403 responses. |
+| 14 | [Log Analysis and Diagnostic Workflow](14-%20Log%20Analysis%20and%20Diagnostic%20Workflow.md) | Logs, metrics, correlation, request tracing, and incident workflow. |
+| 15 | [Real-World Troubleshooting Scenarios](15-%20Real-World%20Troubleshooting%20Scenarios.md) | Production incidents and end-to-end troubleshooting. |
 
 ---
 
