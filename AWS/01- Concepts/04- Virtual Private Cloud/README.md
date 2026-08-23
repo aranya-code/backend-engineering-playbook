@@ -49,21 +49,21 @@ VPC
 
 ---
 
-## Navigation
+## Quick Navigation
 
-| File | Topic | Purpose |
+| # | Topic | Coverage |
 |---|---|---|
-| [01- Introduction to Amazon VPC](./01-%20Introduction%20to%20Amazon%20VPC.md) | Amazon VPC fundamentals | Understand the VPC as the foundational AWS networking boundary |
-| [02- VPC Components](./02-%20VPC%20Components.md) | VPC architecture | Understand the major components that make up a VPC |
-| [03- VPC CIDR Blocks and IP Addressing](./03-%20VPC%20CIDR%20Blocks%20and%20IP%20Addressing.md) | CIDR and IP addressing | Design VPC address spaces and reason about IP allocation |
-| [04- Subnets](./04-%20Subnets.md) | Subnet architecture | Understand subnet boundaries, AZ placement, and IP allocation |
-| [05- Public and Private Subnets](./05-%20Public%20and%20Private%20Subnets.md) | Public/private networking | Understand how subnet routing determines internet accessibility |
-| [06- Route Tables and Routing](./06-%20Route%20Tables%20and%20Routing.md) | Routing | Understand how AWS determines the next hop for network traffic |
-| [07- Internet Gateway](./07-%20Internet%20Gateway.md) | Internet connectivity | Understand public subnet internet access and IGW routing |
-| [08- NAT Gateway](./08-%20NAT%20Gateway.md) | Private egress | Understand how private workloads reach public destinations without accepting inbound connections |
-| [09- VPC Endpoints](./09-%20VPC%20Endpoints.md) | Private AWS service access | Understand the VPC endpoint model and private AWS service connectivity |
-| [10- Gateway Endpoints](./10-%20Gateway%20Endpoints.md) | Gateway endpoints | Understand private S3 and DynamoDB connectivity through route tables |
-| [11- Interface Endpoints and AWS PrivateLink](./11-%20Interface%20Endpoints%20and%20AWS%20PrivateLink.md) | Interface endpoints and PrivateLink | Understand ENI-based private service connectivity and service-level network exposure |
+| 01 | [Introduction to Amazon VPC](01-%20Introduction%20to%20Amazon%20VPC.md) | Amazon VPC fundamentals and the foundational AWS networking boundary. |
+| 02 | [VPC Components](02-%20VPC%20Components.md) | Major components that make up a VPC and VPC architecture. |
+| 03 | [VPC CIDR Blocks and IP Addressing](03-%20VPC%20CIDR%20Blocks%20and%20IP%20Addressing.md) | VPC address space design, CIDR blocks, and IP allocation. |
+| 04 | [Subnets](04-%20Subnets.md) | Subnet boundaries, Availability Zone placement, and IP allocation. |
+| 05 | [Public and Private Subnets](05-%20Public%20and%20Private%20Subnets.md) | How subnet routing determines internet accessibility. |
+| 06 | [Route Tables and Routing](06-%20Route%20Tables%20and%20Routing.md) | How AWS determines the next hop for network traffic. |
+| 07 | [Internet Gateway](07-%20Internet%20Gateway.md) | Public subnet internet access and IGW routing. |
+| 08 | [NAT Gateway](08-%20NAT%20Gateway.md) | Private workload egress without accepting inbound connections. |
+| 09 | [VPC Endpoints](09-%20VPC%20Endpoints.md) | VPC endpoint model and private AWS service connectivity. |
+| 10 | [Gateway Endpoints](10-%20Gateway%20Endpoints.md) | Private S3 and DynamoDB connectivity through route tables. |
+| 11 | [Interface Endpoints and AWS PrivateLink](11-%20Interface%20Endpoints%20and%20AWS%20PrivateLink.md) | ENI-based private service connectivity and service-level network exposure. |
 
 ---
 

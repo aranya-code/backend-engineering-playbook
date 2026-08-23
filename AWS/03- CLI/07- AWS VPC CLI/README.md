@@ -6,15 +6,15 @@
 
 ## Quick Navigation
 
-| Chapter | Topic |
-|----------|-------|
-| [01 - Introduction to VPC CLI](./01-%20Introduction%20to%20VPC%20CLI.md) | Learn Amazon VPC architecture, networking fundamentals, CIDR blocks, subnets, and AWS CLI basics |
-| [02 - VPCs, CIDR Blocks & Subnets](./02-%20VPCs,%20CIDR%20Blocks%20%26%20Subnets.md) | Create VPCs, plan CIDR ranges, configure IPv4/IPv6, design public and private subnets |
-| [03 - Route Tables, Internet Gateway & NAT Gateway](./03-%20Route%20Tables,%20Internet%20Gateway%20%26%20NAT%20Gateway.md) | Configure routing, Internet Gateway, NAT Gateway, Elastic IPs, and internet connectivity |
-| [04 - Security Groups & Network ACLs](./04-%20Security%20Groups%20%26%20Network%20ACLs.md) | Secure VPC resources using Security Groups, Network ACLs, inbound/outbound rules, and firewall best practices |
-| [05 - VPC Peering, Endpoints & PrivateLink](./05-%20VPC%20Peering,%20Endpoints%20%26%20PrivateLink.md) | Connect VPCs privately using Peering, Gateway Endpoints, Interface Endpoints, and AWS PrivateLink |
-| [06 - Troubleshooting & Best Practices](./06-%20Troubleshooting%20%26%20Best%20Practices.md) | Troubleshoot networking, routing, gateways, security, DNS, connectivity, and production networking issues |
-| [07 - Cheat Sheet & Interview Guide](./07-%20Cheat%20Sheet%20%26%20Interview%20Guide.md) | Frequently used VPC CLI commands, troubleshooting reference, interview questions, and operational workflows |
+| # | Topic | Coverage |
+|---|---|---|
+| 01 | [Introduction to VPC CLI](01-%20Introduction%20to%20VPC%20CLI.md) | Amazon VPC architecture, networking fundamentals, CIDR blocks, subnets, and AWS CLI basics. |
+| 02 | [VPCs, CIDR Blocks & Subnets](02-%20VPCs,%20CIDR%20Blocks%20%26%20Subnets.md) | Create VPCs, plan CIDR ranges, configure IPv4/IPv6, design public and private subnets. |
+| 03 | [Route Tables, Internet Gateway & NAT Gateway](03-%20Route%20Tables,%20Internet%20Gateway%20%26%20NAT%20Gateway.md) | Configure routing, Internet Gateway, NAT Gateway, Elastic IPs, and internet connectivity. |
+| 04 | [Security Groups & Network ACLs](04-%20Security%20Groups%20%26%20Network%20ACLs.md) | Secure VPC resources using Security Groups, Network ACLs, inbound/outbound rules, and firewall best practices. |
+| 05 | [VPC Peering, Endpoints & PrivateLink](05-%20VPC%20Peering,%20Endpoints%20%26%20PrivateLink.md) | Connect VPCs privately using Peering, Gateway Endpoints, Interface Endpoints, and AWS PrivateLink. |
+| 06 | [Troubleshooting & Best Practices](06-%20Troubleshooting%20%26%20Best%20Practices.md) | Troubleshoot networking, routing, gateways, security, DNS, connectivity, and production issues. |
+| 07 | [Cheat Sheet & Interview Guide](07-%20Cheat%20Sheet%20%26%20Interview%20Guide.md) | Frequently used VPC CLI commands, troubleshooting reference, interview questions, and operational workflows. |
 
 ---
 

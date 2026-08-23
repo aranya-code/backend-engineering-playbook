@@ -23,24 +23,24 @@ The documentation progresses from individual VPC components to complete producti
 
 ---
 
-## Architecture Roadmap
+## Quick Navigation
 
-| File | Topic | Primary Focus |
+| # | Topic | Coverage |
 |---|---|---|
-| [01- VPC.md](./01-%20VPC.md) | VPC | VPC fundamentals, CIDR, routing, and isolation |
-| [02- Subnets.md](./02-%20Subnets.md) | Subnets | Public, private, and subnet-level network segmentation |
-| [03- Multi-AZ VPC Architecture.md](./03-%20Multi-AZ%20VPC%20Architecture.md) | Multi-AZ VPC Architecture | Availability Zones, redundancy, and failure domains |
-| [04- Three-Tier VPC Architecture.md](./04-%20Three-Tier%20VPC%20Architecture.md) | Three-Tier VPC Architecture | Public, application, and data tiers |
-| [05- Private-Only VPC Architecture.md](./05-%20Private-Only%20VPC%20Architecture.md) | Private-Only VPC Architecture | Designing VPCs without directly exposed workloads |
-| [06- Multi-Account VPC Architecture.md](./06-%20Multi-Account%20VPC%20Architecture.md) | Multi-Account VPC Architecture | AWS Organizations, account isolation, and shared networking |
-| [07- VPC Peering.md](./07-%20VPC%20Peering.md) | VPC Peering | Direct private connectivity between VPCs |
-| [08- Transit Gateway Architecture.md](./08-%20Transit%20Gateway%20Architecture.md) | Transit Gateway Architecture | Centralized connectivity between VPCs and networks |
-| [09- Hybrid Connectivity Architecture.md](./09-%20Hybrid%20Connectivity%20Architecture.md) | Hybrid Connectivity Architecture | AWS-to-corporate and on-premises connectivity |
-| [10- Site-to-Site VPN.md](./10-%20Site-to-Site%20VPN.md) | Site-to-Site VPN | IPsec-based connectivity between AWS and external networks |
-| [11- AWS Direct Connect.md](./11-%20AWS%20Direct%20Connect.md) | AWS Direct Connect | Dedicated private connectivity to AWS |
-| [12- Direct Connect and VPN High Availability.md](./12-%20Direct%20Connect%20and%20VPN%20High%20Availability.md) | Direct Connect and VPN High Availability | Redundant hybrid network paths |
-| [13- Direct Connect and VPN Encryption.md](./13-%20Direct%20Connect%20and%20VPN%20Encryption.md) | Direct Connect and VPN Encryption | Encryption models and security considerations |
-| [14- Production VPC Design.md](./14-%20Production%20VPC%20Design.md) | Production VPC Design | End-to-end production network architecture |
+| 01 | [VPC Network Architecture](01-%20VPC.md) | VPC fundamentals, CIDR, routing, and isolation. |
+| 02 | [Subnets](02-%20Subnets.md) | Public, private, and subnet-level network segmentation. |
+| 03 | [Multi-AZ VPC Architecture](03-%20Multi-AZ%20VPC%20Architecture.md) | Availability Zones, redundancy, and failure domains. |
+| 04 | [Three-Tier VPC Architecture](04-%20Three-Tier%20VPC%20Architecture.md) | Public, application, and data tiers. |
+| 05 | [Private-Only VPC Architecture](05-%20Private-Only%20VPC%20Architecture.md) | Designing VPCs without directly exposed workloads. |
+| 06 | [Multi-Account VPC Architecture](06-%20Multi-Account%20VPC%20Architecture.md) | AWS Organizations, account isolation, and shared networking. |
+| 07 | [VPC Peering](07-%20VPC%20Peering.md) | Direct private connectivity between VPCs. |
+| 08 | [Transit Gateway Architecture](08-%20Transit%20Gateway%20Architecture.md) | Centralized connectivity between VPCs and networks. |
+| 09 | [Hybrid Connectivity Architecture](09-%20Hybrid%20Connectivity%20Architecture.md) | AWS-to-corporate and on-premises connectivity. |
+| 10 | [Site-to-Site VPN](10-%20Site-to-Site%20VPN.md) | IPsec-based connectivity between AWS and external networks. |
+| 11 | [AWS Direct Connect](11-%20AWS%20Direct%20Connect.md) | Dedicated private connectivity to AWS. |
+| 12 | [Direct Connect and VPN High Availability](12-%20Direct%20Connect%20and%20VPN%20High%20Availability.md) | Redundant hybrid network paths. |
+| 13 | [Direct Connect and VPN Encryption](13-%20Direct%20Connect%20and%20VPN%20Encryption.md) | Encryption models and security considerations. |
+| 14 | [Production VPC Design](14-%20Production%20VPC%20Design.md) | End-to-end production network architecture. |
 
 ---
 

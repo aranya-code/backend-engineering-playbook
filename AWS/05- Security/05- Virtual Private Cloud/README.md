@@ -33,19 +33,19 @@ VPC Security
           +-- VPC Security Best Practices
 ```
 
-## Topics
+## Quick Navigation
 
-| File | Topic | Primary Focus |
+| # | Topic | Coverage |
 |---|---|---|
-| [01- VPC Security Overview](./01-%20VPC%20Security%20Overview.md) | VPC Security Overview | Security architecture, segmentation, least privilege, defense in depth, and production VPC security |
-| [02- Security Groups](./02-%20Security%20Groups.md) | Security Groups | Stateful workload-level network access control |
-| [03- Security Group Rules and Chaining](./03-%20Security%20Group%20Rules%20and%20Chaining.md) | Security Group Rules and Chaining | Rule design, Security Group references, service-to-service authorization, and chaining |
-| [04- Network ACLs](./04-%20Network%20ACLs.md) | Network ACLs | Stateless subnet-level filtering, rule ordering, and NACL design |
-| [05- Ephemeral Ports and Network ACLs](./05-%20Ephemeral%20Ports%20and%20Network%20ACLs.md) | Ephemeral Ports and NACLs | Return traffic, ephemeral ports, stateless filtering, and troubleshooting |
-| [06- Security Groups vs Network ACLs](./06-%20Security%20Groups%20vs%20Network%20ACLs.md) | Security Groups vs NACLs | Architectural differences, appropriate use cases, and layered network security |
-| [07- VPC Endpoint Policies](./07-%20VPC%20Endpoint%20Policies.md) | VPC Endpoint Policies | Restricting access to AWS services through VPC endpoints |
-| [08- VPC Flow Logs and Security Analysis](./08-%20VPC%20Flow%20Logs%20and%20Security%20Analysis.md) | VPC Flow Logs | Network visibility, traffic analysis, investigation, and security monitoring |
-| [09- VPC Security Best Practices](./09-%20VPC%20Security%20Best%20Practices.md) | VPC Security Best Practices | Production hardening, observability, IAM, encryption, egress, IaC, and operational security |
+| 01 | [VPC Security Overview](01-%20VPC%20Security%20Overview.md) | Security architecture, segmentation, least privilege, defense in depth, and production VPC security. |
+| 02 | [Security Groups](02-%20Security%20Groups.md) | Stateful workload-level network access control. |
+| 03 | [Security Group Rules and Chaining](03-%20Security%20Group%20Rules%20and%20Chaining.md) | Rule design, Security Group references, service-to-service authorization, and chaining. |
+| 04 | [Network ACLs](04-%20Network%20ACLs.md) | Stateless subnet-level filtering, rule ordering, and NACL design. |
+| 05 | [Ephemeral Ports and Network ACLs](05-%20Ephemeral%20Ports%20and%20Network%20ACLs.md) | Return traffic, ephemeral ports, stateless filtering, and troubleshooting. |
+| 06 | [Security Groups vs Network ACLs](06-%20Security%20Groups%20vs%20Network%20ACLs.md) | Architectural differences, appropriate use cases, and layered network security. |
+| 07 | [VPC Endpoint Policies](07-%20VPC%20Endpoint%20Policies.md) | Restricting access to AWS services through VPC endpoints. |
+| 08 | [VPC Flow Logs and Security Analysis](08-%20VPC%20Flow%20Logs%20and%20Security%20Analysis.md) | Network visibility, traffic analysis, investigation, and security monitoring. |
+| 09 | [VPC Security Best Practices](09-%20VPC%20Security%20Best%20Practices.md) | Production hardening, observability, IAM, encryption, egress, IaC, and operational security. |
 
 ## Recommended Reading Order
 

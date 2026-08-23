@@ -8,17 +8,17 @@ The focus is on operating VPC infrastructure after the foundational network arch
 
 The material is intended to bridge the gap between understanding VPC components and operating a production network reliably at scale.
 
-## Documentation Map
+## Quick Navigation
 
-| File | Topic | Primary Focus |
+| # | Topic | Coverage |
 |---|---|---|
-| [01- VPC Flow Logs.md](./01-%20VPC%20Flow%20Logs.md) | VPC Flow Logs | Capturing and interpreting VPC network traffic metadata |
-| [02- Flow Log Analysis with Athena.md](./02-%20Flow%20Log%20Analysis%20with%20Athena.md) | Flow Log Analysis with Athena | Querying and analyzing flow logs using Amazon Athena |
-| [03- VPC Monitoring and Auditing.md](./03-%20VPC%20Monitoring%20and%20Auditing.md) | VPC Monitoring and Auditing | Operational visibility, metrics, auditing, and detection |
-| [04- VPC Cost Optimization.md](./04-%20VPC%20Cost%20Optimization.md) | VPC Cost Optimization | Identifying and reducing unnecessary networking costs |
-| [05- NAT Gateway Cost Optimization.md](./05-%20NAT%20Gateway%20Cost%20Optimization.md) | NAT Gateway Cost Optimization | Reducing NAT Gateway processing and cross-AZ costs |
-| [06- Operational Best Practices.md](./06-%20Operational%20Best%20Practices.md) | Operational Best Practices | Production operating principles and reliability practices |
-| [07- Service Limits and Design Considerations.md](./07-%20Service%20Limits%20and%20Design%20Considerations.md) | Service Limits and Design Considerations | VPC quotas, capacity planning, and architectural constraints |
+| 01 | [VPC Flow Logs](01-%20VPC%20Flow%20Logs.md) | Capturing and interpreting VPC network traffic metadata. |
+| 02 | [Flow Log Analysis with Athena](02-%20Flow%20Log%20Analysis%20with%20Athena.md) | Querying and analyzing flow logs using Amazon Athena. |
+| 03 | [VPC Monitoring and Auditing](03-%20VPC%20Monitoring%20and%20Auditing.md) | Operational visibility, metrics, auditing, and detection. |
+| 04 | [VPC Cost Optimization](04-%20VPC%20Cost%20Optimization.md) | Identifying and reducing unnecessary networking costs. |
+| 05 | [NAT Gateway Cost Optimization](05-%20NAT%20Gateway%20Cost%20Optimization.md) | Reducing NAT Gateway processing and cross-AZ costs. |
+| 06 | [Operational Best Practices](06-%20Operational%20Best%20Practices.md) | Production operating principles and reliability practices. |
+| 07 | [Service Limits and Design Considerations](07-%20Service%20Limits%20and%20Design%20Considerations.md) | VPC quotas, capacity planning, and architectural constraints. |
 
 ## Operational VPC Lifecycle
 
