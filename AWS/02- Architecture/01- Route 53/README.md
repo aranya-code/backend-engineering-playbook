@@ -98,31 +98,6 @@ Route 53/
 
 ## Documentation Navigation
 
-### Concepts
-
-| File | Focus |
-|---|---|
-| [01- Route 53 Fundamentals](01-%20Route%2053%20Fundamentals.md) | Core Route 53 concepts and DNS architecture |
-| [02- Hosted Zones](02-%20Hosted%20Zones.md) | Public and private hosted zones |
-| [03- DNS Records](03-%20DNS%20Records.md) | DNS record structure and management |
-| [04- Record Types](04-%20Record%20Types.md) | A, AAAA, CNAME, MX, TXT, NS, SOA and other records |
-| [05- Alias Records](05-%20Alias%20Records.md) | AWS-native DNS aliasing |
-| [06- Routing Policies](06-%20Routing%20Policies.md) | How Route 53 chooses DNS answers |
-| [07- Simple Routing](07-%20Simple%20Routing.md) | Basic DNS routing |
-| [08- Weighted Routing](08-%20Weighted%20Routing.md) | Traffic splitting and deployment strategies |
-| [09- Latency-Based Routing](09-%20Latency-Based%20Routing.md) | Regional latency-aware routing |
-| [10- Failover Routing](10-%20Failover%20Routing.md) | Primary/secondary DNS failover |
-| [11- Geolocation Routing](11-%20Geolocation%20Routing.md) | Geographic traffic routing |
-| [12- Health Checks](12-%20Health%20Checks.md) | Endpoint health evaluation |
-| [13- Domain Registration](13-%20Domain%20Registration.md) | Domain registration and lifecycle |
-| [14- Route 53 Resolver](14-%20Route%2053%20Resolver.md) | AWS and hybrid DNS resolution |
-| [15- TTL and DNS Caching](15-%20TTL%20and%20DNS%20Caching.md) | DNS caching and propagation behavior |
-| [16- Route 53 with S3](16-%20Route%2053%20with%20S3.md) | Static website architecture |
-| [17- Route 53 with CloudFront](17-%20Route%2053%20with%20CloudFront.md) | CDN-backed architectures |
-| [18- Route 53 with ELB and ALB](18-%20Route%2053%20with%20ELB%20and%20ALB.md) | Load-balanced backend systems |
-| [19- Route 53 with API Gateway and Lambda](19-%20Route%2053%20with%20API%20Gateway%20and%20Lambda.md) | Serverless API architecture |
-| [20- Advantages and Limitations](20-%20Advantages%20and%20Limitations.md) | Engineering trade-offs and limitations |
-
 ### Architecture
 
 | File | Focus |
