@@ -6,15 +6,15 @@
 
 ## Quick Navigation
 
-| Chapter | Topic |
-|----------|-------|
-| [01 - Introduction to ECS CLI](./01-%20Introduction%20to%20ECS%20CLI.md) | Learn Amazon ECS architecture, containers, clusters, launch types, and AWS CLI fundamentals |
-| [02 - Clusters, Task Definitions & Services](./02-%20Clusters,%20Task%20Definitions%20%26%20Services.md) | Create clusters, register Task Definitions, run Tasks, create Services, and manage deployments |
-| [03 - Fargate, EC2 Launch Types & Networking](./03-%20Fargate,%20EC2%20Launch%20Types%20%26%20Networking.md) | Understand AWS Fargate, EC2 launch types, networking modes, ENIs, IAM roles, and Capacity Providers |
-| [04 - Deployments, Auto Scaling & Load Balancing](./04-%20Deployments,%20Auto%20Scaling%20%26%20Load%20Balancing.md) | Configure rolling deployments, Blue/Green deployments, Auto Scaling, and ALB integration |
-| [05 - Logging, Monitoring & Service Discovery](./05-%20Logging,%20Monitoring%20%26%20Service%20Discovery.md) | Configure CloudWatch Logs, Container Insights, Cloud Map, AWS X-Ray, ECS Exec, and monitoring |
-| [06 - Troubleshooting & Best Practices](./06-%20Troubleshooting%20%26%20Best%20Practices.md) | Troubleshoot ECS deployments, networking, IAM, ECR, Load Balancers, and production issues |
-| [07 - Cheat Sheet & Interview Guide](./07-%20Cheat%20Sheet%20%26%20Interview%20Guide.md) | Frequently used ECS CLI commands, troubleshooting reference, interview questions, and operational workflows |
+| # | Topic | Coverage |
+|---|---|---|
+| 01 | [Introduction to ECS CLI](01-%20Introduction%20to%20ECS%20CLI.md) | Getting started with the ECS CLI. |
+| 02 | [Clusters, Task Definitions & Services](02-%20Clusters,%20Task%20Definitions%20%26%20Services.md) | Managing core ECS resources via CLI. |
+| 03 | [Fargate, EC2 Launch Types & Networking](03-%20Fargate,%20EC2%20Launch%20Types%20%26%20Networking.md) | CLI commands for launch types and networking. |
+| 04 | [Deployments, Auto Scaling & Load Balancing](04-%20Deployments,%20Auto%20Scaling%20%26%20Load%20Balancing.md) | Scaling and deploying via CLI. |
+| 05 | [Logging, Monitoring & Service Discovery](05-%20Logging,%20Monitoring%20%26%20Service%20Discovery.md) | Observability and discovery CLI commands. |
+| 06 | [Troubleshooting & Best Practices](06-%20Troubleshooting%20%26%20Best%20Practices.md) | Diagnosing issues and applying best practices. |
+| 07 | [Cheat Sheet & Interview Guide](07-%20Cheat%20Sheet%20%26%20Interview%20Guide.md) | Quick reference for ECS CLI commands. |
 
 ---
 
