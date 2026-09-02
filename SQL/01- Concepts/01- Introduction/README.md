@@ -10,6 +10,17 @@ This section provides the conceptual foundation required before moving into quer
 
 ---
 
+## Navigation
+
+- [01- What Is SQL](./01-%20What%20Is%20SQL.md) — What SQL is and what problem it solves
+- [02- SQL and Relational Databases](./02-%20SQL%20and%20Relational%20Databases.md) — How SQL relates to the relational model
+- [03- SQL Standards and Database Dialects](./03-%20SQL%20Standards%20and%20Database%20Dialects.md) — Standard SQL versus database-specific implementations
+- [04- SQL Execution Model](./04-%20SQL%20Execution%20Model.md) — What the database does when it receives and executes SQL
+- [05- SQL for Backend Engineers](./05-%20SQL%20for%20Backend%20Engineers.md) — How SQL fits into real backend systems
+- [06- SQL Learning Strategy](./06-%20SQL%20Learning%20Strategy.md) — How to learn and practice SQL for backend engineering
+
+---
+
 ## What This Section Covers
 
 The introduction is organized around five complementary areas:
@@ -29,17 +40,6 @@ Learning Strategy
 ```
 
 Each document answers a different question:
-
-## Navigation
-
-- [01- What Is SQL](./01-%20What%20Is%20SQL.md) — What SQL is and what problem it solves
-- [02- SQL and Relational Databases](./02-%20SQL%20and%20Relational%20Databases.md) — How SQL relates to the relational model
-- [03- SQL Standards and Database Dialects](./03-%20SQL%20Standards%20and%20Database%20Dialects.md) — Standard SQL versus database-specific implementations
-- [04- SQL Execution Model](./04-%20SQL%20Execution%20Model.md) — What the database does when it receives and executes SQL
-- [05- SQL for Backend Engineers](./05-%20SQL%20for%20Backend%20Engineers.md) — How SQL fits into real backend systems
-- [06- SQL Learning Strategy](./06-%20SQL%20Learning%20Strategy.md) — How to learn and practice SQL for backend engineering
-
----
 
 ## Learning Sequence
 
