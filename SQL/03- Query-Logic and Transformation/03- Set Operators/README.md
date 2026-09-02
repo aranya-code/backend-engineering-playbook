@@ -24,6 +24,21 @@ Set operators are particularly useful for:
 
 The central distinction is between **combining populations** and **relating rows**. Set operators work on result sets; `JOIN` works primarily on relationships between rows.
 
+## Navigation
+
+- [01- Set Operators Introduction](./01-%20Set%20Operators%20Introduction.md)
+- [02- UNION](./02-%20UNION.md)
+- [03- UNION ALL](./03-%20UNION%20ALL.md)
+- [04- INTERSECT](./04-%20INTERSECT.md)
+- [05- EXCEPT](./05-%20EXCEPT.md)
+- [06- Set Operator Rules](./06-%20Set%20Operator%20Rules.md)
+- [07- Column Compatibility Rules](./07-%20Column%20Compatibility%20Rules.md)
+- [08- UNION vs UNION ALL](./08-%20UNION%20vs%20UNION%20ALL.md)
+- [09- Set Operators vs JOINs](./09-%20Set%20Operators%20vs%20JOINs.md)
+- [10- Set Operators vs Subqueries](./10-%20Set%20Operators%20vs%20Subqueries.md)
+- [11- When to Choose Each Set Operator](./11-%20When%20to%20Choose%20Each%20Set%20Operator.md)
+- [12- Common Set Operator Mistakes](./12-%20Common%20Set%20Operator%20Mistakes.md)
+
 ## Set Operator Model
 
 A set operation can be viewed as operating on two result sets:
@@ -514,21 +529,6 @@ flowchart TD
 ```
 
 The progression moves from syntax and semantics to **query design, correctness, performance, security, and production usage**.
-
-## Navigation
-
-- [01- Set Operators Introduction](./01-%20Set%20Operators%20Introduction.md)
-- [02- UNION](./02-%20UNION.md)
-- [03- UNION ALL](./03-%20UNION%20ALL.md)
-- [04- INTERSECT](./04-%20INTERSECT.md)
-- [05- EXCEPT](./05-%20EXCEPT.md)
-- [06- Set Operator Rules](./06-%20Set%20Operator%20Rules.md)
-- [07- Column Compatibility Rules](./07-%20Column%20Compatibility%20Rules.md)
-- [08- UNION vs UNION ALL](./08-%20UNION%20vs%20UNION%20ALL.md)
-- [09- Set Operators vs JOINs](./09-%20Set%20Operators%20vs%20JOINs.md)
-- [10- Set Operators vs Subqueries](./10-%20Set%20Operators%20vs%20Subqueries.md)
-- [11- When to Choose Each Set Operator](./11-%20When%20to%20Choose%20Each%20Set%20Operator.md)
-- [12- Common Set Operator Mistakes](./12-%20Common%20Set%20Operator%20Mistakes.md)
 
 ---
 
