@@ -19,6 +19,25 @@ A key engineering principle throughout this section is:
 
 > **An aggregate query is only correct when its input population, row grain, grouping grain, NULL behavior, and join cardinality are correct.**
 
+## Navigation
+
+- [01- Aggregate Functions Introduction](./01-%20Aggregate%20Functions%20Introduction.md) — Establishes the aggregation model, common functions, and core SQL patterns
+- [02- COUNT](./02-%20COUNT.md) — Row counting, NULL behavior, and practical counting patterns
+- [03- SUM](./03-%20SUM.md) — Totals, numeric aggregation, NULL behavior, and production considerations
+- [04- AVG](./04-%20AVG.md) — Averages, NULL semantics, numeric precision, and common averaging mistakes
+- [05- MIN and MAX](./05-%20MIN%20and%20MAX.md) — Boundary-value aggregation and finding a value versus its associated row
+- [06- COUNT vs COUNT Column vs COUNT Star](./06-%20COUNT%20vs%20COUNT%20Column%20vs%20COUNT%20Star.md) — Semantic and NULL-handling differences between counting rows and values
+- [07- Aggregates and NULL](./07-%20Aggregates%20and%20NULL.md) — How aggregate functions treat missing values and how COALESCE changes result semantics
+- [08- GROUP BY](./08-%20GROUP%20BY.md) — Grouping, result grain, and aggregation by dimensions
+- [09- GROUP BY Multiple Columns](./09-%20GROUP%20BY%20Multiple%20Columns.md) — Composite grouping dimensions and how grouping changes result grain
+- [10- HAVING](./10-%20HAVING.md) — Filtering aggregated groups and its relationship to WHERE
+- [11- WHERE vs HAVING](./11-%20WHERE%20vs%20HAVING.md) — Practical comparison of row-level and group-level filtering
+- [12- Aggregation Execution Logic](./12-%20Aggregation%20Execution%20Logic.md) — Logical query processing and how databases execute aggregation workloads
+- [13- Aggregation Rules](./13-%20Aggregation%20Rules.md) — Rules governing grouping, selected columns, aggregate expressions, and grouped results
+- [14- Choosing the Right Aggregate](./14-%20Choosing%20the%20Right%20Aggregate.md) — Selecting the appropriate aggregate based on the metric being calculated
+- [15- Common Aggregation Patterns](./15-%20Common%20Aggregation%20Patterns.md) — Reusable production patterns for reporting, metrics, and backend workloads
+- [16- Common Aggregation Mistakes](./16-%20Common%20Aggregation%20Mistakes.md) — Incorrect grain, join multiplication, NULL handling, averaging errors, and production pitfalls
+
 ## Aggregation Mental Model
 
 A typical aggregation query follows this logical flow:
@@ -52,25 +71,6 @@ This query answers:
 > Which customers have at least 10 paid orders, and what is their total paid-order revenue?
 
 The important distinction is that `WHERE` filters **input rows**, while `HAVING` filters **groups produced by aggregation**.
-
-## Navigation
-
-- [01- Aggregate Functions Introduction](./01-%20Aggregate%20Functions%20Introduction.md) — Establishes the aggregation model, common functions, and core SQL patterns
-- [02- COUNT](./02-%20COUNT.md) — Row counting, NULL behavior, and practical counting patterns
-- [03- SUM](./03-%20SUM.md) — Totals, numeric aggregation, NULL behavior, and production considerations
-- [04- AVG](./04-%20AVG.md) — Averages, NULL semantics, numeric precision, and common averaging mistakes
-- [05- MIN and MAX](./05-%20MIN%20and%20MAX.md) — Boundary-value aggregation and finding a value versus its associated row
-- [06- COUNT vs COUNT Column vs COUNT Star](./06-%20COUNT%20vs%20COUNT%20Column%20vs%20COUNT%20Star.md) — Semantic and NULL-handling differences between counting rows and values
-- [07- Aggregates and NULL](./07-%20Aggregates%20and%20NULL.md) — How aggregate functions treat missing values and how COALESCE changes result semantics
-- [08- GROUP BY](./08-%20GROUP%20BY.md) — Grouping, result grain, and aggregation by dimensions
-- [09- GROUP BY Multiple Columns](./09-%20GROUP%20BY%20Multiple%20Columns.md) — Composite grouping dimensions and how grouping changes result grain
-- [10- HAVING](./10-%20HAVING.md) — Filtering aggregated groups and its relationship to WHERE
-- [11- WHERE vs HAVING](./11-%20WHERE%20vs%20HAVING.md) — Practical comparison of row-level and group-level filtering
-- [12- Aggregation Execution Logic](./12-%20Aggregation%20Execution%20Logic.md) — Logical query processing and how databases execute aggregation workloads
-- [13- Aggregation Rules](./13-%20Aggregation%20Rules.md) — Rules governing grouping, selected columns, aggregate expressions, and grouped results
-- [14- Choosing the Right Aggregate](./14-%20Choosing%20the%20Right%20Aggregate.md) — Selecting the appropriate aggregate based on the metric being calculated
-- [15- Common Aggregation Patterns](./15-%20Common%20Aggregation%20Patterns.md) — Reusable production patterns for reporting, metrics, and backend workloads
-- [16- Common Aggregation Mistakes](./16-%20Common%20Aggregation%20Mistakes.md) — Incorrect grain, join multiplication, NULL handling, averaging errors, and production pitfalls
 
 ## Aggregate Function Reference
 

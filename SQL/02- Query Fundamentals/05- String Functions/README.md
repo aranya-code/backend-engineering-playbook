@@ -18,6 +18,22 @@ String processing is useful at the query layer, but it should be applied deliber
 
 This section focuses primarily on **PostgreSQL-style SQL**, while highlighting behavior that can differ between database engines.
 
+## Navigation
+
+- [01- String Functions Introduction](./01-%20String%20Functions%20Introduction.md) — Role of SQL string functions, common categories, and database-specific behavior
+- [02- CONCAT and Concatenation](./02-%20CONCAT%20and%20Concatenation.md) — CONCAT(), concatenation operators, separators, and nullable values
+- [03- LENGTH and Character Functions](./03-%20LENGTH%20and%20Character%20Functions.md) — String-length operations, character versus byte length, and data-quality use cases
+- [04- UPPER and LOWER](./04-%20UPPER%20and%20LOWER.md) — Case conversion, normalization, and case-sensitive versus case-insensitive behavior
+- [05- TRIM and Whitespace Functions](./05-%20TRIM%20and%20Whitespace%20Functions.md) — Whitespace cleanup, leading and trailing characters, and normalization strategies
+- [06- SUBSTRING](./06-%20SUBSTRING.md) — Substring extraction and parsing structured identifiers and legacy data
+- [07- REPLACE](./07-%20REPLACE.md) — Literal string replacement, transformation of stored values, and cleanup workflows
+- [08- String Searching and Pattern Matching](./08-%20String%20Searching%20and%20Pattern%20Matching.md) — LIKE, ILIKE, wildcard patterns, and indexing implications
+- [09- String Splitting and Aggregation](./09-%20String%20Splitting%20and%20Aggregation.md) — Splitting delimited strings and aggregating multiple rows into a single string
+- [10- String Function NULL Behavior](./10-%20String%20Function%20NULL%20Behavior.md) — How NULL propagates through string expressions
+- [11- Choosing the Right String Function](./11-%20Choosing%20the%20Right%20String%20Function.md) — Selecting the simplest correct function based on transformation and performance needs
+- [12- Common String Processing Patterns](./12-%20Common%20String%20Processing%20Patterns.md) — Reusable production patterns for normalization, formatting, searching, and parsing
+- [13- Common String Function Mistakes](./13-%20Common%20String%20Function%20Mistakes.md) — Common errors, performance pitfalls, NULL mistakes, and indexing issues
+
 ## String Function Reference
 
 | Function / Pattern | Primary Purpose | Typical Backend Use |
@@ -35,22 +51,6 @@ This section focuses primarily on **PostgreSQL-style SQL**, while highlighting b
 | String splitting functions | Convert delimited text into parts | ETL and legacy-data processing |
 | String aggregation functions | Combine multiple rows into a string | Reporting and API-oriented output |
 | `NULLIF()` / `COALESCE()` | Control nullable string behavior | Safe normalization and fallback handling |
-
-## Navigation
-
-- [01- String Functions Introduction](./01-%20String%20Functions%20Introduction.md) — Role of SQL string functions, common categories, and database-specific behavior
-- [02- CONCAT and Concatenation](./02-%20CONCAT%20and%20Concatenation.md) — CONCAT(), concatenation operators, separators, and nullable values
-- [03- LENGTH and Character Functions](./03-%20LENGTH%20and%20Character%20Functions.md) — String-length operations, character versus byte length, and data-quality use cases
-- [04- UPPER and LOWER](./04-%20UPPER%20and%20LOWER.md) — Case conversion, normalization, and case-sensitive versus case-insensitive behavior
-- [05- TRIM and Whitespace Functions](./05-%20TRIM%20and%20Whitespace%20Functions.md) — Whitespace cleanup, leading and trailing characters, and normalization strategies
-- [06- SUBSTRING](./06-%20SUBSTRING.md) — Substring extraction and parsing structured identifiers and legacy data
-- [07- REPLACE](./07-%20REPLACE.md) — Literal string replacement, transformation of stored values, and cleanup workflows
-- [08- String Searching and Pattern Matching](./08-%20String%20Searching%20and%20Pattern%20Matching.md) — LIKE, ILIKE, wildcard patterns, and indexing implications
-- [09- String Splitting and Aggregation](./09-%20String%20Splitting%20and%20Aggregation.md) — Splitting delimited strings and aggregating multiple rows into a single string
-- [10- String Function NULL Behavior](./10-%20String%20Function%20NULL%20Behavior.md) — How NULL propagates through string expressions
-- [11- Choosing the Right String Function](./11-%20Choosing%20the%20Right%20String%20Function.md) — Selecting the simplest correct function based on transformation and performance needs
-- [12- Common String Processing Patterns](./12-%20Common%20String%20Processing%20Patterns.md) — Reusable production patterns for normalization, formatting, searching, and parsing
-- [13- Common String Function Mistakes](./13-%20Common%20String%20Function%20Mistakes.md) — Common errors, performance pitfalls, NULL mistakes, and indexing issues
 
 ## How to Use This Section
 

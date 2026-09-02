@@ -17,6 +17,17 @@ This section focuses on both operator syntax and engineering judgment. Correct o
 
 The goal is not to memorize every operator, but to understand **which operator expresses the required business condition and what database behavior follows from that choice**.
 
+## Navigation
+
+- [01- Arithmetic Operators](./01-%20Arithmetic%20Operators.md)
+- [02- Comparison Operators](./02-%20Comparison%20Operators.md)
+- [03- Logical Operators](./03-%20Logical%20Operators.md)
+- [04- Bitwise Operators](./04-%20Bitwise%20Operators.md)
+- [05- String Operators](./05-%20String%20Operators.md)
+- [06- Operator Precedence](./06-%20Operator%20Precedence.md)
+- [07- Operator Selection Rules](./07-%20Operator%20Selection%20Rules.md)
+- [08- Common Operator Mistakes](./08-%20Common%20Operator%20Mistakes.md)
+
 ## Operator Categories
 
 | Category | Operators / Constructs | Primary Use |
@@ -740,19 +751,6 @@ IS NOT NULL
 ### Indexes
 
 An operator being logically valid does not mean the query is efficient. Validate important predicates using the actual execution plan and representative data.
-
-## Navigation
-
-- [01- Arithmetic Operators](./01-%20Arithmetic%20Operators.md)
-- [02- Comparison Operators](./02-%20Comparison%20Operators.md)
-- [03- Logical Operators](./03-%20Logical%20Operators.md)
-- [04- Bitwise Operators](./04-%20Bitwise%20Operators.md)
-- [05- String Operators](./05-%20String%20Operators.md)
-- [06- Operator Precedence](./06-%20Operator%20Precedence.md)
-- [07- Operator Selection Rules](./07-%20Operator%20Selection%20Rules.md)
-- [08- Common Operator Mistakes](./08-%20Common%20Operator%20Mistakes.md)
-
----
 
 ## Key Takeaways
 
