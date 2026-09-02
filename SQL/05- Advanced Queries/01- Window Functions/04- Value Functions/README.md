@@ -17,6 +17,21 @@ These functions are particularly useful for backend systems that process ordered
 
 Unlike `GROUP BY`, window functions do not collapse rows. Each source row remains available while additional contextual values are calculated.
 
+## Navigation
+
+- [01- Value Functions Introduction](./01-%20Value%20Functions%20Introduction.md) — Value-function fundamentals and mental model
+- [02- LAG](./02-%20LAG.md) — Previous-row access
+- [03- LEAD](./03-%20LEAD.md) — Next-row access
+- [04- FIRST_VALUE](./04-%20FIRST_VALUE.md) — First ordered value
+- [05- LAST_VALUE](./05-%20LAST_VALUE.md) — Last ordered value and frame semantics
+- [06- Previous and Next Row Analysis](./06-%20Previous%20and%20Next%20Row%20Analysis.md) — Combining previous and next row context
+- [07- Change Detection](./07-%20Change%20Detection.md) — Detecting state and value changes
+- [08- Gap Analysis](./08-%20Gap%20Analysis.md) — Measuring gaps between ordered events
+- [09- LAG vs LEAD](./09-%20LAG%20vs%20LEAD.md) — Choosing previous vs next row analysis
+- [10- Value Function Selection Rules](./10-%20Value%20Function%20Selection%20Rules.md) — Systematic function selection
+- [11- Practical Value Function Patterns](./11-%20Practical%20Value%20Function%20Patterns.md) — Production-oriented query patterns
+- [12- Common Value Function Mistakes](./12-%20Common%20Value%20Function%20Mistakes.md) — Debugging, pitfalls, and interview traps
+
 ## Why Value Functions Matter
 
 Many backend queries need to answer questions involving relationships between adjacent or boundary rows:
@@ -619,21 +634,6 @@ Value functions are particularly effective for:
 - SLA calculations.
 
 They are less appropriate when the workload is fundamentally analytical at massive scale and should be executed in a dedicated warehouse or analytical system.
-
-## Navigation
-
-- [01- Value Functions Introduction](./01-%20Value%20Functions%20Introduction.md) — Value-function fundamentals and mental model
-- [02- LAG](./02-%20LAG.md) — Previous-row access
-- [03- LEAD](./03-%20LEAD.md) — Next-row access
-- [04- FIRST_VALUE](./04-%20FIRST_VALUE.md) — First ordered value
-- [05- LAST_VALUE](./05-%20LAST_VALUE.md) — Last ordered value and frame semantics
-- [06- Previous and Next Row Analysis](./06-%20Previous%20and%20Next%20Row%20Analysis.md) — Combining previous and next row context
-- [07- Change Detection](./07-%20Change%20Detection.md) — Detecting state and value changes
-- [08- Gap Analysis](./08-%20Gap%20Analysis.md) — Measuring gaps between ordered events
-- [09- LAG vs LEAD](./09-%20LAG%20vs%20LEAD.md) — Choosing previous vs next row analysis
-- [10- Value Function Selection Rules](./10-%20Value%20Function%20Selection%20Rules.md) — Systematic function selection
-- [11- Practical Value Function Patterns](./11-%20Practical%20Value%20Function%20Patterns.md) — Production-oriented query patterns
-- [12- Common Value Function Mistakes](./12-%20Common%20Value%20Function%20Mistakes.md) — Debugging, pitfalls, and interview traps
 
 ## Key Takeaways
 

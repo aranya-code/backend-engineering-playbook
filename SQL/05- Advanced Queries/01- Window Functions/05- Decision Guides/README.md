@@ -8,6 +8,18 @@ The **Decision Guides** section focuses on choosing the right SQL technique for 
 
 This folder provides practical decision rules for selecting between common SQL approaches and for understanding the performance and correctness trade-offs involved.
 
+## Navigation
+
+### Value Functions
+
+- [Previous and Next Row Analysis](../04-%20Value%20Functions/06-%20Previous%20and%20Next%20Row%20Analysis.md)
+- [Change Detection](../04-%20Value%20Functions/07-%20Change%20Detection.md)
+- [Gap Analysis](../04-%20Value%20Functions/08-%20Gap%20Analysis.md)
+- [LAG vs LEAD](../04-%20Value%20Functions/09-%20LAG%20vs%20LEAD.md)
+- [Value Function Selection Rules](../04-%20Value%20Functions/10-%20Value%20Function%20Selection%20Rules.md)
+- [Practical Value Function Patterns](../04-%20Value%20Functions/11-%20Practical%20Value%20Function%20Patterns.md)
+- [Common Value Function Mistakes](../04-%20Value%20Functions/12-%20Common%20Value%20Function%20Mistakes.md)
+
 ## Decision Guides
 
 | Document | Focus |
@@ -278,18 +290,6 @@ When facing an analytical SQL requirement:
 7. Make ordering deterministic when business correctness depends on it.
 8. Validate the query with realistic data and `EXPLAIN (ANALYZE, BUFFERS)`.
 9. Reconsider the architecture if the workload is analytical, large, and repeatedly executed against an OLTP database.
-
-## Navigation
-
-### Value Functions
-
-- [Previous and Next Row Analysis](../04-%20Value%20Functions/06-%20Previous%20and%20Next%20Row%20Analysis.md)
-- [Change Detection](../04-%20Value%20Functions/07-%20Change%20Detection.md)
-- [Gap Analysis](../04-%20Value%20Functions/08-%20Gap%20Analysis.md)
-- [LAG vs LEAD](../04-%20Value%20Functions/09-%20LAG%20vs%20LEAD.md)
-- [Value Function Selection Rules](../04-%20Value%20Functions/10-%20Value%20Function%20Selection%20Rules.md)
-- [Practical Value Function Patterns](../04-%20Value%20Functions/11-%20Practical%20Value%20Function%20Patterns.md)
-- [Common Value Function Mistakes](../04-%20Value%20Functions/12-%20Common%20Value%20Function%20Mistakes.md)
 
 ## Key Takeaways
 
