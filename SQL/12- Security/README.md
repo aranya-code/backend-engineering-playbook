@@ -36,29 +36,32 @@ The examples and architecture patterns are primarily applicable to PostgreSQL-ba
 
 ## Navigation
 
-- [01- SQL Security Fundamentals](./01-%20SQL%20Security%20Fundamentals.md) — Database security model and threat boundaries
-- [02- Authentication vs Authorization](./02-%20Authentication%20vs%20Authorization.md) — Identity vs permission in database access
-- [03- Database Users and Roles](./03-%20Database%20Users%20and%20Roles.md) — PostgreSQL roles and identities
-- [04- Privileges and Permissions](./04-%20Privileges%20and%20Permissions.md) — Database, schema, and object privileges
-- [05- GRANT and REVOKE](./05-%20GRANT%20and%20REVOKE.md) — Managing PostgreSQL permissions
-- [06- Least Privilege](./06-%20Least%20Privilege.md) — Minimizing database access surface
-- [07- Application Database Users](./07-%20Application%20Database%20Users.md) — Runtime service identities and connection accounts
-- [08- Read Only Database Users](./08-%20Read%20Only%20Database%20Users.md) — Reporting and read-only access patterns
-- [09- SQL Injection](./09-%20SQL%20Injection.md) — Injection vulnerabilities and prevention techniques
-- [10- Parameterized Queries](./10-%20Parameterized%20Queries.md) — Safe SQL value binding
-- [11- Prepared Statements](./11-%20Prepared%20Statements.md) — Prepared execution and plan reuse
-- [12- Dynamic SQL Security](./12-%20Dynamic%20SQL%20Security.md) — Secure dynamic SQL and identifier handling
-- [13- Row Level Security](./13-%20Row%20Level%20Security.md) — Database-enforced row isolation
-- [14- Sensitive Data Protection](./14-%20Sensitive%20Data%20Protection.md) — Protecting sensitive database information
-- [15- Encryption at Rest](./15-%20Encryption%20at%20Rest.md) — Storage and backup encryption
-- [16- Encryption in Transit](./16-%20Encryption%20in%20Transit.md) — TLS and secure database communication
-- [17- Secrets and Credential Management](./17-%20Secrets%20and%20Credential%20Management.md) — Database credentials and secret lifecycle
-- [18- Database Auditing](./18-%20Database%20Auditing.md) — Security events and accountability logging
-- [19- Database Security Logging](./19-%20Database%20Security%20Logging.md) — Security-focused database logging
-- [20- Backup and Recovery Security](./20-%20Backup%20and%20Recovery%20Security.md) — Protecting backups and recovery paths
-- [21- Security Rules and Best Practices](./21-%20Security%20Rules%20and%20Best%20Practices.md) — Production security rules and guidelines
-- [22- Choosing the Right Database Permission Model](./22-%20Choosing%20the%20Right%20Database%20Permission%20Model.md) — Selecting an appropriate authorization model
-- [23- Common SQL Security Mistakes](./23-%20Common%20SQL%20Security%20Mistakes.md) — Common implementation and operational security failures
+| # | Section | Layer | Description |
+|---|---|---|---|
+| 01 | [Security](./README.md) | Production Engineering | Roles, privileges, SQL injection, encryption, auditing, and credential management |
+| 02 | [01- SQL Security Fundamentals](./01-%20SQL%20Security%20Fundamentals.md) | Production Engineering | Database security model and threat boundaries |
+| 03 | [02- Authentication vs Authorization](./02-%20Authentication%20vs%20Authorization.md) | Production Engineering | Identity vs permission in database access |
+| 04 | [03- Database Users and Roles](./03-%20Database%20Users%20and%20Roles.md) | Production Engineering | PostgreSQL roles and identities |
+| 05 | [04- Privileges and Permissions](./04-%20Privileges%20and%20Permissions.md) | Production Engineering | Database, schema, and object privileges |
+| 06 | [05- GRANT and REVOKE](./05-%20GRANT%20and%20REVOKE.md) | Production Engineering | Managing PostgreSQL permissions |
+| 07 | [06- Least Privilege](./06-%20Least%20Privilege.md) | Production Engineering | Minimizing database access surface |
+| 08 | [07- Application Database Users](./07-%20Application%20Database%20Users.md) | Production Engineering | Runtime service identities and connection accounts |
+| 09 | [08- Read Only Database Users](./08-%20Read%20Only%20Database%20Users.md) | Production Engineering | Reporting and read-only access patterns |
+| 10 | [09- SQL Injection](./09-%20SQL%20Injection.md) | Production Engineering | Injection vulnerabilities and prevention techniques |
+| 11 | [10- Parameterized Queries](./10-%20Parameterized%20Queries.md) | Production Engineering | Safe SQL value binding |
+| 12 | [11- Prepared Statements](./11-%20Prepared%20Statements.md) | Production Engineering | Prepared execution and plan reuse |
+| 13 | [12- Dynamic SQL Security](./12-%20Dynamic%20SQL%20Security.md) | Production Engineering | Secure dynamic SQL and identifier handling |
+| 14 | [13- Row Level Security](./13-%20Row%20Level%20Security.md) | Production Engineering | Database-enforced row isolation |
+| 15 | [14- Sensitive Data Protection](./14-%20Sensitive%20Data%20Protection.md) | Production Engineering | Protecting sensitive database information |
+| 16 | [15- Encryption at Rest](./15-%20Encryption%20at%20Rest.md) | Production Engineering | Storage and backup encryption |
+| 17 | [16- Encryption in Transit](./16-%20Encryption%20in%20Transit.md) | Production Engineering | TLS and secure database communication |
+| 18 | [17- Secrets and Credential Management](./17-%20Secrets%20and%20Credential%20Management.md) | Production Engineering | Database credentials and secret lifecycle |
+| 19 | [18- Database Auditing](./18-%20Database%20Auditing.md) | Production Engineering | Security events and accountability logging |
+| 20 | [19- Database Security Logging](./19-%20Database%20Security%20Logging.md) | Production Engineering | Security-focused database logging |
+| 21 | [20- Backup and Recovery Security](./20-%20Backup%20and%20Recovery%20Security.md) | Production Engineering | Protecting backups and recovery paths |
+| 22 | [21- Security Rules and Best Practices](./21-%20Security%20Rules%20and%20Best%20Practices.md) | Production Engineering | Production security rules and guidelines |
+| 23 | [22- Choosing the Right Database Permission Model](./22-%20Choosing%20the%20Right%20Database%20Permission%20Model.md) | Production Engineering | Selecting an appropriate authorization model |
+| 24 | [23- Common SQL Security Mistakes](./23-%20Common%20SQL%20Security%20Mistakes.md) | Production Engineering | Common implementation and operational security failures |
 
 ---
 
