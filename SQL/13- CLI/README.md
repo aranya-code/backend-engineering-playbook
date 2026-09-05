@@ -45,20 +45,23 @@ A senior backend engineer should be able to move comfortably between an ORM, raw
 
 ## Navigation
 
-- [01- SQL CLI Fundamentals](./01-%20SQL%20CLI%20Fundamentals.md) — PostgreSQL CLI fundamentals and psql workflow
-- [02- PostgreSQL psql Fundamentals](./02-%20PostgreSQL%20psql%20Fundamentals.md) — PostgreSQL-specific psql behavior and configuration
-- [03- Connecting to a Database](./03-%20Connecting%20to%20a%20Database.md) — Database connection lifecycle and troubleshooting
-- [04- Inspecting Databases and Schemas](./04-%20Inspecting%20Databases%20and%20Schemas.md) — Database, schema, object, and catalog inspection
-- [05- Inspecting Tables and Columns](./05-%20Inspecting%20Tables%20and%20Columns.md) — Table structure, columns, constraints, indexes, and metadata
-- [06- Running SQL Queries from CLI](./06-%20Running%20SQL%20Queries%20from%20CLI.md) — Executing SQL interactively and from scripts
-- [07- Importing and Exporting Data](./07-%20Importing%20and%20Exporting%20Data.md) — COPY, \copy, CSV, dumps, and data movement
-- [08- Transactions from CLI](./08-%20Transactions%20from%20CLI.md) — Transactions, isolation, savepoints, locks, and CLI safety
-- [09- EXPLAIN and Query Diagnostics](./09-%20EXPLAIN%20and%20Query%20Diagnostics.md) — Query plans, execution analysis, buffers, and performance
-- [10- PostgreSQL Administrative Commands](./10-%20PostgreSQL%20Administrative%20Commands.md) — PostgreSQL administrative and operational commands
-- [11- MySQL CLI Equivalents](./11-%20MySQL%20CLI%20Equivalents.md) — Mapping common MySQL CLI workflows to PostgreSQL
-- [12- CLI Querying and Filtering](./12-%20CLI%20Querying%20and%20Filtering.md) — Filtering, joins, aggregation, pagination, and practical querying
-- [13- CLI Output Formatting](./13-%20CLI%20Output%20Formatting.md) — Human-readable, CSV, JSON, and automation-friendly output
-- [14- Practical SQL CLI Workflows](./14-%20Practical%20SQL%20CLI%20Workflows.md) — Production diagnostics, migrations, incidents, and operational workflows
+| # | Section | Layer | Description |
+|---|---|---|---|
+| 01 | [CLI](./README.md) | Production Engineering | PostgreSQL psql CLI, database inspection, diagnostics, and operational workflows |
+| 02 | [01- SQL CLI Fundamentals](./01-%20SQL%20CLI%20Fundamentals.md) | Production Engineering | PostgreSQL CLI fundamentals and psql workflow |
+| 03 | [02- PostgreSQL psql Fundamentals](./02-%20PostgreSQL%20psql%20Fundamentals.md) | Production Engineering | PostgreSQL-specific psql behavior and configuration |
+| 04 | [03- Connecting to a Database](./03-%20Connecting%20to%20a%20Database.md) | Production Engineering | Database connection lifecycle and troubleshooting |
+| 05 | [04- Inspecting Databases and Schemas](./04-%20Inspecting%20Databases%20and%20Schemas.md) | Production Engineering | Database, schema, object, and catalog inspection |
+| 06 | [05- Inspecting Tables and Columns](./05-%20Inspecting%20Tables%20and%20Columns.md) | Production Engineering | Table structure, columns, constraints, indexes, and metadata |
+| 07 | [06- Running SQL Queries from CLI](./06-%20Running%20SQL%20Queries%20from%20CLI.md) | Production Engineering | Executing SQL interactively and from scripts |
+| 08 | [07- Importing and Exporting Data](./07-%20Importing%20and%20Exporting%20Data.md) | Production Engineering | COPY, \copy, CSV, dumps, and data movement |
+| 09 | [08- Transactions from CLI](./08-%20Transactions%20from%20CLI.md) | Production Engineering | Transactions, isolation, savepoints, locks, and CLI safety |
+| 10 | [09- EXPLAIN and Query Diagnostics](./09-%20EXPLAIN%20and%20Query%20Diagnostics.md) | Production Engineering | Query plans, execution analysis, buffers, and performance |
+| 11 | [10- PostgreSQL Administrative Commands](./10-%20PostgreSQL%20Administrative%20Commands.md) | Production Engineering | PostgreSQL administrative and operational commands |
+| 12 | [11- MySQL CLI Equivalents](./11-%20MySQL%20CLI%20Equivalents.md) | Production Engineering | Mapping common MySQL CLI workflows to PostgreSQL |
+| 13 | [12- CLI Querying and Filtering](./12-%20CLI%20Querying%20and%20Filtering.md) | Production Engineering | Filtering, joins, aggregation, pagination, and practical querying |
+| 14 | [13- CLI Output Formatting](./13-%20CLI%20Output%20Formatting.md) | Production Engineering | Human-readable, CSV, JSON, and automation-friendly output |
+| 15 | [14- Practical SQL CLI Workflows](./14-%20Practical%20SQL%20CLI%20Workflows.md) | Production Engineering | Production diagnostics, migrations, incidents, and operational workflows |
 
 ---
 
