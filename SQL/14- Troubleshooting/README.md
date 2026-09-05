@@ -46,34 +46,37 @@ A production database problem is rarely isolated to SQL. Connection pools, appli
 
 ## Navigation
 
-- [01- SQL Troubleshooting Methodology](./01-%20SQL%20Troubleshooting%20Methodology.md) — Structured approach to diagnosing SQL and database problems
-- [02- Query Returns No Rows](./02-%20Query%20Returns%20No%20Rows.md) — Diagnose queries that unexpectedly return zero rows
-- [03- Query Returns Too Many Rows](./03-%20Query%20Returns%20Too%20Many%20Rows.md) — Diagnose unexpected cardinality and join multiplication
-- [04- Duplicate Rows After JOIN](./04-%20Duplicate%20Rows%20After%20JOIN.md) — Diagnose duplicate rows caused by join semantics
-- [05- Incorrect JOIN Results](./05-%20Incorrect%20JOIN%20Results.md) — Diagnose incorrect join semantics and cardinality
-- [06- NULL Related Query Problems](./06-%20NULL%20Related%20Query%20Problems.md) — Diagnose NULL semantics and three-valued logic issues
-- [07- Aggregation and GROUP BY Problems](./07-%20Aggregation%20and%20GROUP%20BY%20Problems.md) — Diagnose incorrect aggregates and grouping behavior
-- [08- Subquery Problems](./08-%20Subquery%20Problems.md) — Diagnose incorrect or inefficient subqueries
-- [09- CTE Problems](./09-%20CTE%20Problems.md) — Diagnose CTE behavior, materialization, and performance
-- [10- Window Function Problems](./10-%20Window%20Function%20Problems.md) — Diagnose incorrect window calculations
-- [11- Date and Time Query Problems](./11-%20Date%20and%20Time%20Query%20Problems.md) — Diagnose timestamp, timezone, and boundary issues
-- [12- Type Conversion Problems](./12-%20Type%20Conversion%20Problems.md) — Diagnose casts, implicit conversions, and type mismatches
-- [13- Constraint Violations](./13-%20Constraint%20Violations.md) — Diagnose and resolve constraint violation errors
-- [14- Transaction Failures](./14-%20Transaction%20Failures.md) — Diagnose transaction errors and retryable failures
-- [15- Deadlocks](./15-%20Deadlocks.md) — Diagnose cyclic lock dependencies
-- [16- Lock Contention](./16-%20Lock%20Contention.md) — Diagnose blocked transactions and hot resources
-- [17- Slow Query Troubleshooting](./17-%20Slow%20Query%20Troubleshooting.md) — Diagnose query latency and workload problems
-- [18- Execution Plan Troubleshooting](./18-%20Execution%20Plan%20Troubleshooting.md) — Read and troubleshoot PostgreSQL execution plans
-- [19- Missing Index Troubleshooting](./19-%20Missing%20Index%20Troubleshooting.md) — Determine whether an index is actually required
-- [20- Incorrect Index Troubleshooting](./20-%20Incorrect%20Index%20Troubleshooting.md) — Diagnose poorly designed or ineffective indexes
-- [21- High Database CPU Troubleshooting](./21-%20High%20Database%20CPU%20Troubleshooting.md) — Diagnose database CPU saturation
-- [22- High Database Memory Troubleshooting](./22-%20High%20Database%20Memory%20Troubleshooting.md) — Diagnose PostgreSQL and system memory pressure
-- [23- Connection Pool Problems](./23-%20Connection%20Pool%20Problems.md) — Diagnose pool exhaustion and connection lifecycle issues
-- [24- Too Many Database Connections](./24-%20Too%20Many%20Database%20Connections.md) — Diagnose connection limit and exhaustion problems
-- [25- Timeout Troubleshooting](./25-%20Timeout%20Troubleshooting.md) — Diagnose database, pool, lock, and request timeouts
-- [26- Production Database Incident Workflow](./26-%20Production%20Database%20Incident%20Workflow.md) — Execute a structured production database incident response
-- [27- SQL Diagnostic Queries](./27-%20SQL%20Diagnostic%20Queries.md) — Practical PostgreSQL diagnostic query reference
-- [28- Troubleshooting Decision Tree](./28-%20Troubleshooting%20Decision%20Tree.md) — Navigate SQL troubleshooting systematically
+| # | Section | Layer | Description |
+|---|---|---|---|
+| 01 | [Troubleshooting](./README.md) | Production Engineering | Diagnosing query problems, slow queries, locks, timeouts, and production incidents |
+| 02 | [01- SQL Troubleshooting Methodology](./01-%20SQL%20Troubleshooting%20Methodology.md) | Production Engineering | Structured approach to diagnosing SQL and database problems |
+| 03 | [02- Query Returns No Rows](./02-%20Query%20Returns%20No%20Rows.md) | Production Engineering | Diagnose queries that unexpectedly return zero rows |
+| 04 | [03- Query Returns Too Many Rows](./03-%20Query%20Returns%20Too%20Many%20Rows.md) | Production Engineering | Diagnose unexpected cardinality and join multiplication |
+| 05 | [04- Duplicate Rows After JOIN](./04-%20Duplicate%20Rows%20After%20JOIN.md) | Production Engineering | Diagnose duplicate rows caused by join semantics |
+| 06 | [05- Incorrect JOIN Results](./05-%20Incorrect%20JOIN%20Results.md) | Production Engineering | Diagnose incorrect join semantics and cardinality |
+| 07 | [06- NULL Related Query Problems](./06-%20NULL%20Related%20Query%20Problems.md) | Production Engineering | Diagnose NULL semantics and three-valued logic issues |
+| 08 | [07- Aggregation and GROUP BY Problems](./07-%20Aggregation%20and%20GROUP%20BY%20Problems.md) | Production Engineering | Diagnose incorrect aggregates and grouping behavior |
+| 09 | [08- Subquery Problems](./08-%20Subquery%20Problems.md) | Production Engineering | Diagnose incorrect or inefficient subqueries |
+| 10 | [09- CTE Problems](./09-%20CTE%20Problems.md) | Production Engineering | Diagnose CTE behavior, materialization, and performance |
+| 11 | [10- Window Function Problems](./10-%20Window%20Function%20Problems.md) | Production Engineering | Diagnose incorrect window calculations |
+| 12 | [11- Date and Time Query Problems](./11-%20Date%20and%20Time%20Query%20Problems.md) | Production Engineering | Diagnose timestamp, timezone, and boundary issues |
+| 13 | [12- Type Conversion Problems](./12-%20Type%20Conversion%20Problems.md) | Production Engineering | Diagnose casts, implicit conversions, and type mismatches |
+| 14 | [13- Constraint Violations](./13-%20Constraint%20Violations.md) | Production Engineering | Diagnose and resolve constraint violation errors |
+| 15 | [14- Transaction Failures](./14-%20Transaction%20Failures.md) | Production Engineering | Diagnose transaction errors and retryable failures |
+| 16 | [15- Deadlocks](./15-%20Deadlocks.md) | Production Engineering | Diagnose cyclic lock dependencies |
+| 17 | [16- Lock Contention](./16-%20Lock%20Contention.md) | Production Engineering | Diagnose blocked transactions and hot resources |
+| 18 | [17- Slow Query Troubleshooting](./17-%20Slow%20Query%20Troubleshooting.md) | Production Engineering | Diagnose query latency and workload problems |
+| 19 | [18- Execution Plan Troubleshooting](./18-%20Execution%20Plan%20Troubleshooting.md) | Production Engineering | Read and troubleshoot PostgreSQL execution plans |
+| 20 | [19- Missing Index Troubleshooting](./19-%20Missing%20Index%20Troubleshooting.md) | Production Engineering | Determine whether an index is actually required |
+| 21 | [20- Incorrect Index Troubleshooting](./20-%20Incorrect%20Index%20Troubleshooting.md) | Production Engineering | Diagnose poorly designed or ineffective indexes |
+| 22 | [21- High Database CPU Troubleshooting](./21-%20High%20Database%20CPU%20Troubleshooting.md) | Production Engineering | Diagnose database CPU saturation |
+| 23 | [22- High Database Memory Troubleshooting](./22-%20High%20Database%20Memory%20Troubleshooting.md) | Production Engineering | Diagnose PostgreSQL and system memory pressure |
+| 24 | [23- Connection Pool Problems](./23-%20Connection%20Pool%20Problems.md) | Production Engineering | Diagnose pool exhaustion and connection lifecycle issues |
+| 25 | [24- Too Many Database Connections](./24-%20Too%20Many%20Database%20Connections.md) | Production Engineering | Diagnose connection limit and exhaustion problems |
+| 26 | [25- Timeout Troubleshooting](./25-%20Timeout%20Troubleshooting.md) | Production Engineering | Diagnose database, pool, lock, and request timeouts |
+| 27 | [26- Production Database Incident Workflow](./26-%20Production%20Database%20Incident%20Workflow.md) | Production Engineering | Execute a structured production database incident response |
+| 28 | [27- SQL Diagnostic Queries](./27-%20SQL%20Diagnostic%20Queries.md) | Production Engineering | Practical PostgreSQL diagnostic query reference |
+| 29 | [28- Troubleshooting Decision Tree](./28-%20Troubleshooting%20Decision%20Tree.md) | Production Engineering | Navigate SQL troubleshooting systematically |
 
 ---
 
