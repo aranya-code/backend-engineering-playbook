@@ -1,4 +1,4 @@
-﻿# Performance and Optimization
+# Performance and Optimization
 
 ## Overview
 
@@ -10,9 +10,12 @@ The topics here range from index design and query execution to table partitionin
 
 ## Navigation
 
-- [01- Indexes](./01-%20Indexes/README.md) — Index types, design, workload-driven strategy, maintenance, and anti-patterns
-- [02- Query Execution and Optimization](./02-%20Query%20Execution%20and%20Optimization/README.md) — Execution plans, SARGability, predicate pushdown, and optimization decision guides
-- [03- Partitioning](./03-%20Partitioning/README.md) — Table partitioning strategies, partition pruning, and lifecycle management
+| # | Section | Layer | Description |
+|---|---|---|---|
+| 01 | [Performance and Optimization](./README.md) | Performance and Reliability | Indexes, query execution, execution plans, and table partitioning |
+| 02 | [01- Indexes](./01-%20Indexes/README.md) | Performance and Reliability | Index types, design, workload-driven strategy, maintenance, and anti-patterns |
+| 03 | [02- Query Execution and Optimization](./02-%20Query%20Execution%20and%20Optimization/README.md) | Performance and Reliability | Execution plans, SARGability, predicate pushdown, and optimization decision guides |
+| 04 | [03- Partitioning](./03-%20Partitioning/README.md) | Performance and Reliability | Table partitioning strategies, partition pruning, and lifecycle management |
 
 ---
 

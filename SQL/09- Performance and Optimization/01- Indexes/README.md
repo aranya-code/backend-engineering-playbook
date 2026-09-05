@@ -10,43 +10,45 @@ The material progresses from index fundamentals to workload-driven design, opera
 
 ## Navigation
 
-- [01- Index Fundamentals](./01-%20Index%20Fundamentals.md) — What indexes are and how they work
-- [02- B-Tree Indexes](./02-%20B-Tree%20Indexes.md) — General-purpose indexing structure
-- [03- Hash Indexes](./03-%20Hash%20Indexes.md) — Equality-oriented access paths
-- [04- Composite Indexes](./04-%20Composite%20Indexes.md) — Multi-column access paths
-- [05- Index Column Order](./05-%20Index%20Column%20Order.md) — Designing composite index column ordering
-- [06- Covering Indexes](./06-%20Covering%20Indexes.md) — Reducing table access with covering indexes
-- [07- Partial Indexes](./07-%20Partial%20Indexes.md) — Indexing selected row subsets
-- [08- Expression Indexes](./08-%20Expression%20Indexes.md) — Indexing computed expressions
-- [09- Unique Indexes](./09-%20Unique%20Indexes.md) — Uniqueness enforcement and lookup performance
-- [10- Primary Key Indexes](./10-%20Primary%20Key%20Indexes.md) — Primary-key access paths
-- [11- Foreign Key Indexing](./11-%20Foreign%20Key%20Indexing.md) — Join and referential workload indexing
-- [12- Indexes and ORDER BY](./12-%20Indexes%20and%20ORDER%20BY.md) — Avoiding expensive sorts with indexes
-- [13- Indexes and JOINs](./13-%20Indexes%20and%20JOINs.md) — Join access paths
-- [14- Indexes and GROUP BY](./14-%20Indexes%20and%20GROUP%20BY.md) — Grouping-related index access
-- [15- Indexes and DISTINCT](./15-%20Indexes%20and%20DISTINCT.md) — Duplicate elimination with indexes
-- [16- Indexes and LIKE](./16-%20Indexes%20and%20LIKE.md) — String-search and pattern-matching workloads
-- [17- Indexes and NULL Values](./17-%20Indexes%20and%20NULL%20Values.md) — NULL-aware indexing behavior
-- [18- Indexes and Functions](./18-%20Indexes%20and%20Functions.md) — Function-based predicates and index usability
-- [19- Indexes and OR Conditions](./19-%20Indexes%20and%20OR%20Conditions.md) — Multiple predicate access paths
-- [20- Indexes and Range Queries](./20-%20Indexes%20and%20Range%20Queries.md) — Time and numeric range indexing
-- [21- Index Selectivity](./21-%20Index%20Selectivity.md) — Measuring filtering effectiveness
-- [22- Cardinality and Index Design](./22-%20Cardinality%20and%20Index%20Design.md) — Data distribution and index design decisions
-- [23- Read Performance vs Write Performance](./23-%20Read%20Performance%20vs%20Write%20Performance.md) — Index cost trade-off analysis
-- [24- Index Storage Cost](./24-%20Index%20Storage%20Cost.md) — Disk, memory, and operational cost of indexes
-- [25- Indexing Strategy](./25-%20Indexing%20Strategy.md) — Workload-driven index design approach
-- [26- Usage Pattern Based Indexing](./26-%20Usage%20Pattern%20Based%20Indexing.md) — Designing indexes around actual queries
-- [27- Scenario Based Indexing](./27-%20Scenario%20Based%20Indexing.md) — Practical indexing decisions by scenario
-- [28- Identifying Missing Indexes](./28-%20Identifying%20Missing%20Indexes.md) — Finding inefficient access paths
-- [29- Identifying Duplicate Indexes](./29-%20Identifying%20Duplicate%20Indexes.md) — Removing redundant indexes
-- [30- Index Usage Monitoring](./30-%20Index%20Usage%20Monitoring.md) — Measuring index utilization in production
-- [31- Index Statistics](./31-%20Index%20Statistics.md) — Planner and usage statistics
-- [32- Index Maintenance](./32-%20Index%20Maintenance.md) — Keeping indexes operational
-- [33- Index Fragmentation](./33-%20Index%20Fragmentation.md) — Bloat and storage behavior
-- [34- Choosing the Right Index](./34-%20Choosing%20the%20Right%20Index.md) — Matching index types to workloads
-- [35- When Not to Create an Index](./35-%20When%20Not%20to%20Create%20an%20Index.md) — Recognizing unnecessary indexes
-- [36- Index Anti-Patterns](./36-%20Index%20Anti-Patterns.md) — Common indexing failures and mistakes
-- [37- Index Decision Checklist](./37-%20Index%20Decision%20Checklist.md) — Production index review checklist
+| # | File | Description |
+|---|---|---|
+| 01 | [01- Index Fundamentals](./01-%20Index%20Fundamentals.md) | What indexes are and how they work |
+| 02 | [02- B-Tree Indexes](./02-%20B-Tree%20Indexes.md) | General-purpose indexing structure |
+| 03 | [03- Hash Indexes](./03-%20Hash%20Indexes.md) | Equality-oriented access paths |
+| 04 | [04- Composite Indexes](./04-%20Composite%20Indexes.md) | Multi-column access paths |
+| 05 | [05- Index Column Order](./05-%20Index%20Column%20Order.md) | Designing composite index column ordering |
+| 06 | [06- Covering Indexes](./06-%20Covering%20Indexes.md) | Reducing table access with covering indexes |
+| 07 | [07- Partial Indexes](./07-%20Partial%20Indexes.md) | Indexing selected row subsets |
+| 08 | [08- Expression Indexes](./08-%20Expression%20Indexes.md) | Indexing computed expressions |
+| 09 | [09- Unique Indexes](./09-%20Unique%20Indexes.md) | Uniqueness enforcement and lookup performance |
+| 10 | [10- Primary Key Indexes](./10-%20Primary%20Key%20Indexes.md) | Primary-key access paths |
+| 11 | [11- Foreign Key Indexing](./11-%20Foreign%20Key%20Indexing.md) | Join and referential workload indexing |
+| 12 | [12- Indexes and ORDER BY](./12-%20Indexes%20and%20ORDER%20BY.md) | Avoiding expensive sorts with indexes |
+| 13 | [13- Indexes and JOINs](./13-%20Indexes%20and%20JOINs.md) | Join access paths |
+| 14 | [14- Indexes and GROUP BY](./14-%20Indexes%20and%20GROUP%20BY.md) | Grouping-related index access |
+| 15 | [15- Indexes and DISTINCT](./15-%20Indexes%20and%20DISTINCT.md) | Duplicate elimination with indexes |
+| 16 | [16- Indexes and LIKE](./16-%20Indexes%20and%20LIKE.md) | String-search and pattern-matching workloads |
+| 17 | [17- Indexes and NULL Values](./17-%20Indexes%20and%20NULL%20Values.md) | NULL-aware indexing behavior |
+| 18 | [18- Indexes and Functions](./18-%20Indexes%20and%20Functions.md) | Function-based predicates and index usability |
+| 19 | [19- Indexes and OR Conditions](./19-%20Indexes%20and%20OR%20Conditions.md) | Multiple predicate access paths |
+| 20 | [20- Indexes and Range Queries](./20-%20Indexes%20and%20Range%20Queries.md) | Time and numeric range indexing |
+| 21 | [21- Index Selectivity](./21-%20Index%20Selectivity.md) | Measuring filtering effectiveness |
+| 22 | [22- Cardinality and Index Design](./22-%20Cardinality%20and%20Index%20Design.md) | Data distribution and index design decisions |
+| 23 | [23- Read Performance vs Write Performance](./23-%20Read%20Performance%20vs%20Write%20Performance.md) | Index cost trade-off analysis |
+| 24 | [24- Index Storage Cost](./24-%20Index%20Storage%20Cost.md) | Disk, memory, and operational cost of indexes |
+| 25 | [25- Indexing Strategy](./25-%20Indexing%20Strategy.md) | Workload-driven index design approach |
+| 26 | [26- Usage Pattern Based Indexing](./26-%20Usage%20Pattern%20Based%20Indexing.md) | Designing indexes around actual queries |
+| 27 | [27- Scenario Based Indexing](./27-%20Scenario%20Based%20Indexing.md) | Practical indexing decisions by scenario |
+| 28 | [28- Identifying Missing Indexes](./28-%20Identifying%20Missing%20Indexes.md) | Finding inefficient access paths |
+| 29 | [29- Identifying Duplicate Indexes](./29-%20Identifying%20Duplicate%20Indexes.md) | Removing redundant indexes |
+| 30 | [30- Index Usage Monitoring](./30-%20Index%20Usage%20Monitoring.md) | Measuring index utilization in production |
+| 31 | [31- Index Statistics](./31-%20Index%20Statistics.md) | Planner and usage statistics |
+| 32 | [32- Index Maintenance](./32-%20Index%20Maintenance.md) | Keeping indexes operational |
+| 33 | [33- Index Fragmentation](./33-%20Index%20Fragmentation.md) | Bloat and storage behavior |
+| 34 | [34- Choosing the Right Index](./34-%20Choosing%20the%20Right%20Index.md) | Matching index types to workloads |
+| 35 | [35- When Not to Create an Index](./35-%20When%20Not%20to%20Create%20an%20Index.md) | Recognizing unnecessary indexes |
+| 36 | [36- Index Anti-Patterns](./36-%20Index%20Anti-Patterns.md) | Common indexing failures and mistakes |
+| 37 | [37- Index Decision Checklist](./37-%20Index%20Decision%20Checklist.md) | Production index review checklist |
 
 ## Indexes in the Backend Request Path
 

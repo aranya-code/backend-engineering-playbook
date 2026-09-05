@@ -12,24 +12,26 @@ This section builds partitioning knowledge from fundamentals through production 
 
 ## Navigation
 
-- [01- Partitioning Introduction](./01-%20Partitioning%20Introduction.md) — Partitioning fundamentals, architecture, and core terminology
-- [02- Why Partition Tables](./02-%20Why%20Partition%20Tables.md) — Reasons to partition and the problems it can solve
-- [03- Partitioning vs Sharding](./03-%20Partitioning%20vs%20Sharding.md) — Differences between database partitioning and sharding
-- [04- Range Partitioning](./04-%20Range%20Partitioning.md) — Range-based partition design and implementation
-- [05- List Partitioning](./05-%20List%20Partitioning.md) — List-based partition design and suitable workloads
-- [06- Hash Partitioning](./06-%20Hash%20Partitioning.md) — Hash-based distribution and workload considerations
-- [07- Composite Partitioning](./07-%20Composite%20Partitioning.md) — Multi-level partitioning strategies
-- [08- Partition Keys](./08-%20Partition%20Keys.md) — Selecting effective partition keys
-- [09- Partition Pruning](./09-%20Partition%20Pruning.md) — How pruning reduces unnecessary partition scans
-- [10- Partition Maintenance](./10-%20Partition%20Maintenance.md) — Creation, indexing, retention, and lifecycle automation
-- [11- Partitioning Large Tables](./11-%20Partitioning%20Large%20Tables.md) — Designing and migrating very large tables
-- [12- Partitioning by Date](./12-%20Partitioning%20by%20Date.md) — Time-based partitioning patterns
-- [13- Partitioning by Tenant](./13-%20Partitioning%20by%20Tenant.md) — Multi-tenant partitioning strategies
-- [14- Choosing a Partition Strategy](./14-%20Choosing%20a%20Partition%20Strategy.md) — Framework for selecting a partitioning approach
-- [15- When to Partition](./15-%20When%20to%20Partition.md) — Conditions that justify partitioning
-- [16- When Not to Partition](./16-%20When%20Not%20to%20Partition.md) — Cases where partitioning adds unnecessary complexity
-- [17- Partitioning Tradeoffs](./17-%20Partitioning%20Tradeoffs.md) — Performance, scalability, and operational tradeoffs
-- [18- Common Partitioning Mistakes](./18-%20Common%20Partitioning%20Mistakes.md) — Common design and production failures
+| # | File | Description |
+|---|---|---|
+| 01 | [01- Partitioning Introduction](./01-%20Partitioning%20Introduction.md) | Partitioning fundamentals, architecture, and core terminology |
+| 02 | [02- Why Partition Tables](./02-%20Why%20Partition%20Tables.md) | Reasons to partition and the problems it can solve |
+| 03 | [03- Partitioning vs Sharding](./03-%20Partitioning%20vs%20Sharding.md) | Differences between database partitioning and sharding |
+| 04 | [04- Range Partitioning](./04-%20Range%20Partitioning.md) | Range-based partition design and implementation |
+| 05 | [05- List Partitioning](./05-%20List%20Partitioning.md) | List-based partition design and suitable workloads |
+| 06 | [06- Hash Partitioning](./06-%20Hash%20Partitioning.md) | Hash-based distribution and workload considerations |
+| 07 | [07- Composite Partitioning](./07-%20Composite%20Partitioning.md) | Multi-level partitioning strategies |
+| 08 | [08- Partition Keys](./08-%20Partition%20Keys.md) | Selecting effective partition keys |
+| 09 | [09- Partition Pruning](./09-%20Partition%20Pruning.md) | How pruning reduces unnecessary partition scans |
+| 10 | [10- Partition Maintenance](./10-%20Partition%20Maintenance.md) | Creation, indexing, retention, and lifecycle automation |
+| 11 | [11- Partitioning Large Tables](./11-%20Partitioning%20Large%20Tables.md) | Designing and migrating very large tables |
+| 12 | [12- Partitioning by Date](./12-%20Partitioning%20by%20Date.md) | Time-based partitioning patterns |
+| 13 | [13- Partitioning by Tenant](./13-%20Partitioning%20by%20Tenant.md) | Multi-tenant partitioning strategies |
+| 14 | [14- Choosing a Partition Strategy](./14-%20Choosing%20a%20Partition%20Strategy.md) | Framework for selecting a partitioning approach |
+| 15 | [15- When to Partition](./15-%20When%20to%20Partition.md) | Conditions that justify partitioning |
+| 16 | [16- When Not to Partition](./16-%20When%20Not%20to%20Partition.md) | Cases where partitioning adds unnecessary complexity |
+| 17 | [17- Partitioning Tradeoffs](./17-%20Partitioning%20Tradeoffs.md) | Performance, scalability, and operational tradeoffs |
+| 18 | [18- Common Partitioning Mistakes](./18-%20Common%20Partitioning%20Mistakes.md) | Common design and production failures |
 
 ## Partitioning at a Glance
 

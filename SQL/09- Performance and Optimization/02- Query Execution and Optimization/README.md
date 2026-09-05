@@ -10,19 +10,21 @@ The topics progress from execution fundamentals to practical optimization patter
 
 ## Navigation
 
-- [23- Predicate Pushdown](./23-%20Predicate%20Pushdown.md) — Reducing rows processed by applying filters early in the execution pipeline
-- [24- SARGability](./24-%20SARGability.md) — Writing predicates that allow efficient index and access path usage
-- [25- Avoiding Functions on Indexed Columns](./25-%20Avoiding%20Functions%20on%20Indexed%20Columns.md) — How expressions on indexed columns affect index usability
-- [26- JOIN Optimization](./26-%20JOIN%20Optimization.md) — Optimizing joins through predicates, indexes, cardinality, and execution plans
-- [27- Aggregation Optimization](./27-%20Aggregation%20Optimization.md) — Reducing the cost of GROUP BY, aggregates, sorting, and large-scale aggregation
-- [28- Subquery Optimization](./28-%20Subquery%20Optimization.md) — Evaluating correlated and uncorrelated subqueries and choosing efficient formulations
-- [29- CTE Optimization](./29-%20CTE%20Optimization.md) — CTE execution behavior, materialization, and query structure trade-offs
-- [30- Pagination Optimization](./30-%20Pagination%20Optimization.md) — Comparing offset and keyset pagination for large datasets
-- [31- Query Optimization Rules](./31-%20Query%20Optimization%20Rules.md) — Practical rules for writing and reviewing efficient SQL
-- [32- When to Optimize SQL](./32-%20When%20to%20Optimize%20SQL.md) — Identifying when query optimization is justified by workload evidence
-- [33- When Not to Optimize SQL](./33-%20When%20Not%20to%20Optimize%20SQL.md) — Recognizing premature optimization and avoiding unnecessary complexity
-- [34- Query Optimization Decision Guide](./34-%20Query%20Optimization%20Decision%20Guide.md) — A structured process for diagnosing and resolving SQL performance problems
-- [35- Common SQL Performance Anti-Patterns](./35-%20Common%20SQL%20Performance%20Anti-Patterns.md) — Query, indexing, ORM, transaction, and application-level patterns that create unnecessary work
+| # | File | Description |
+|---|---|---|
+| 23 | [23- Predicate Pushdown](./23-%20Predicate%20Pushdown.md) | Reducing rows processed by applying filters early in the execution pipeline |
+| 24 | [24- SARGability](./24-%20SARGability.md) | Writing predicates that allow efficient index and access path usage |
+| 25 | [25- Avoiding Functions on Indexed Columns](./25-%20Avoiding%20Functions%20on%20Indexed%20Columns.md) | How expressions on indexed columns affect index usability |
+| 26 | [26- JOIN Optimization](./26-%20JOIN%20Optimization.md) | Optimizing joins through predicates, indexes, cardinality, and execution plans |
+| 27 | [27- Aggregation Optimization](./27-%20Aggregation%20Optimization.md) | Reducing the cost of GROUP BY, aggregates, sorting, and large-scale aggregation |
+| 28 | [28- Subquery Optimization](./28-%20Subquery%20Optimization.md) | Evaluating correlated and uncorrelated subqueries and choosing efficient formulations |
+| 29 | [29- CTE Optimization](./29-%20CTE%20Optimization.md) | CTE execution behavior, materialization, and query structure trade-offs |
+| 30 | [30- Pagination Optimization](./30-%20Pagination%20Optimization.md) | Comparing offset and keyset pagination for large datasets |
+| 31 | [31- Query Optimization Rules](./31-%20Query%20Optimization%20Rules.md) | Practical rules for writing and reviewing efficient SQL |
+| 32 | [32- When to Optimize SQL](./32-%20When%20to%20Optimize%20SQL.md) | Identifying when query optimization is justified by workload evidence |
+| 33 | [33- When Not to Optimize SQL](./33-%20When%20Not%20to%20Optimize%20SQL.md) | Recognizing premature optimization and avoiding unnecessary complexity |
+| 34 | [34- Query Optimization Decision Guide](./34-%20Query%20Optimization%20Decision%20Guide.md) | A structured process for diagnosing and resolving SQL performance problems |
+| 35 | [35- Common SQL Performance Anti-Patterns](./35-%20Common%20SQL%20Performance%20Anti-Patterns.md) | Query, indexing, ORM, transaction, and application-level patterns that create unnecessary work |
 
 ## Scope
 
