@@ -14,32 +14,34 @@ If the answer is "one customer," joining several one-to-many relationships witho
 
 ## Navigation
 
-- [01- JOIN Fundamentals](./01-%20JOIN%20Fundamentals.md) — What JOINs are and how they combine rows from related tables
-- [02- How JOINs Work](./02-%20How%20JOINs%20Work.md) — Logical execution and row matching
-- [03- INNER JOIN](./03-%20INNER%20JOIN.md) — Returning only matching rows from both tables
-- [04- LEFT JOIN](./04-%20LEFT%20JOIN.md) — Preserving all rows from the left table
-- [05- RIGHT JOIN](./05-%20RIGHT%20JOIN.md) — Preserving all rows from the right table
-- [06- FULL OUTER JOIN](./06-%20FULL%20OUTER%20JOIN.md) — Preserving all rows from both tables
-- [07- CROSS JOIN](./07-%20CROSS%20JOIN.md) — Cartesian product of two tables
-- [08- SELF JOIN](./08-%20SELF%20JOIN.md) — Joining a table to itself
-- [09- Multiple JOINs](./09-%20Multiple%20JOINs.md) — Composing queries across multiple related tables
-- [10- JOIN Conditions](./10-%20JOIN%20Conditions.md) — How ON defines relationships between rows
-- [11- ON vs WHERE in JOINs](./11-%20ON%20vs%20WHERE%20in%20JOINs.md) — Predicate placement and outer JOIN semantics
-- [12- JOIN and NULL Behavior](./12-%20JOIN%20and%20NULL%20Behavior.md) — Three-valued logic and NULL-extended rows
-- [13- One-to-One JOINs](./13-%20One-to-One%20JOINs.md) — Joining uniquely related records
-- [14- One-to-Many JOINs](./14-%20One-to-Many%20JOINs.md) — Parent-child relationships and row multiplication
-- [15- Many-to-Many JOINs](./15-%20Many-to-Many%20JOINs.md) — Association tables and relationship traversal
-- [16- JOIN Cardinality](./16-%20JOIN%20Cardinality.md) — Predicting result size and relationship multiplication
-- [17- JOIN Result Duplication](./17-%20JOIN%20Result%20Duplication.md) — Diagnosing and preventing unexpected duplicate rows
-- [18- JOIN Ordering and Query Logic](./18-%20JOIN%20Ordering%20and%20Query%20Logic.md) — Logical query composition and dependency between relations
-- [19- INNER vs LEFT JOIN](./19-%20INNER%20vs%20LEFT%20JOIN.md) — Choosing between mandatory and optional relationships
-- [20- JOIN vs Subquery](./20-%20JOIN%20vs%20Subquery.md) — Choosing equivalent query shapes based on intent
-- [21- JOIN vs EXISTS](./21-%20JOIN%20vs%20EXISTS.md) — Relationship retrieval versus existence checks
-- [22- JOIN Selection Rules](./22-%20JOIN%20Selection%20Rules.md) — Practical rules for choosing JOIN strategies
-- [23- When to Use Each JOIN Type](./23-%20When%20to%20Use%20Each%20JOIN%20Type.md) — Real-world use cases for JOIN variants
-- [24- Common JOIN Mistakes](./24-%20Common%20JOIN%20Mistakes.md) — Production pitfalls and incorrect query patterns
-- [25- JOIN Performance Considerations](./25-%20JOIN%20Performance%20Considerations.md) — Indexes, cardinality, execution plans, and query cost
-- [26- Practical JOIN Patterns](./26-%20Practical%20JOIN%20Patterns.md) — Production-oriented JOIN query patterns
+| # | File | Description |
+|---|---|---|
+| 01 | [01- JOIN Fundamentals](./01-%20JOIN%20Fundamentals.md) | What JOINs are and how they combine rows from related tables |
+| 02 | [02- How JOINs Work](./02-%20How%20JOINs%20Work.md) | Logical execution and row matching |
+| 03 | [03- INNER JOIN](./03-%20INNER%20JOIN.md) | Returning only matching rows from both tables |
+| 04 | [04- LEFT JOIN](./04-%20LEFT%20JOIN.md) | Preserving all rows from the left table |
+| 05 | [05- RIGHT JOIN](./05-%20RIGHT%20JOIN.md) | Preserving all rows from the right table |
+| 06 | [06- FULL OUTER JOIN](./06-%20FULL%20OUTER%20JOIN.md) | Preserving all rows from both tables |
+| 07 | [07- CROSS JOIN](./07-%20CROSS%20JOIN.md) | Cartesian product of two tables |
+| 08 | [08- SELF JOIN](./08-%20SELF%20JOIN.md) | Joining a table to itself |
+| 09 | [09- Multiple JOINs](./09-%20Multiple%20JOINs.md) | Composing queries across multiple related tables |
+| 10 | [10- JOIN Conditions](./10-%20JOIN%20Conditions.md) | How ON defines relationships between rows |
+| 11 | [11- ON vs WHERE in JOINs](./11-%20ON%20vs%20WHERE%20in%20JOINs.md) | Predicate placement and outer JOIN semantics |
+| 12 | [12- JOIN and NULL Behavior](./12-%20JOIN%20and%20NULL%20Behavior.md) | Three-valued logic and NULL-extended rows |
+| 13 | [13- One-to-One JOINs](./13-%20One-to-One%20JOINs.md) | Joining uniquely related records |
+| 14 | [14- One-to-Many JOINs](./14-%20One-to-Many%20JOINs.md) | Parent-child relationships and row multiplication |
+| 15 | [15- Many-to-Many JOINs](./15-%20Many-to-Many%20JOINs.md) | Association tables and relationship traversal |
+| 16 | [16- JOIN Cardinality](./16-%20JOIN%20Cardinality.md) | Predicting result size and relationship multiplication |
+| 17 | [17- JOIN Result Duplication](./17-%20JOIN%20Result%20Duplication.md) | Diagnosing and preventing unexpected duplicate rows |
+| 18 | [18- JOIN Ordering and Query Logic](./18-%20JOIN%20Ordering%20and%20Query%20Logic.md) | Logical query composition and dependency between relations |
+| 19 | [19- INNER vs LEFT JOIN](./19-%20INNER%20vs%20LEFT%20JOIN.md) | Choosing between mandatory and optional relationships |
+| 20 | [20- JOIN vs Subquery](./20-%20JOIN%20vs%20Subquery.md) | Choosing equivalent query shapes based on intent |
+| 21 | [21- JOIN vs EXISTS](./21-%20JOIN%20vs%20EXISTS.md) | Relationship retrieval versus existence checks |
+| 22 | [22- JOIN Selection Rules](./22-%20JOIN%20Selection%20Rules.md) | Practical rules for choosing JOIN strategies |
+| 23 | [23- When to Use Each JOIN Type](./23-%20When%20to%20Use%20Each%20JOIN%20Type.md) | Real-world use cases for JOIN variants |
+| 24 | [24- Common JOIN Mistakes](./24-%20Common%20JOIN%20Mistakes.md) | Production pitfalls and incorrect query patterns |
+| 25 | [25- JOIN Performance Considerations](./25-%20JOIN%20Performance%20Considerations.md) | Indexes, cardinality, execution plans, and query cost |
+| 26 | [26- Practical JOIN Patterns](./26-%20Practical%20JOIN%20Patterns.md) | Production-oriented JOIN query patterns |
 
 ## Recommended Progression
 

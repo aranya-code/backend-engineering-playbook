@@ -10,32 +10,34 @@ The material progresses from common subquery operators to execution behavior, pe
 
 ## Navigation
 
-- [01- Subqueries Introduction](./01-%20Subqueries%20Introduction.md) — What subqueries are and when to use them
-- [02- Subquery Execution Model](./02-%20Subquery%20Execution%20Model.md) — How subqueries are evaluated by the database
-- [03- Scalar Subqueries](./03-%20Scalar%20Subqueries.md) — Subqueries that return a single value
-- [04- Single-Row Subqueries](./04-%20Single-Row%20Subqueries.md) — Subqueries that return one row
-- [05- Multi-Row Subqueries](./05-%20Multi-Row%20Subqueries.md) — Subqueries that return multiple rows
-- [06- Subqueries in SELECT](./06-%20Subqueries%20in%20SELECT.md) — Inline scalar calculations in the projection
-- [07- Subqueries in FROM](./07-%20Subqueries%20in%20FROM.md) — Derived tables and inline relations
-- [08- Subqueries in WHERE](./08-%20Subqueries%20in%20WHERE.md) — Filtering rows using subquery results
-- [09- Subqueries in HAVING](./09-%20Subqueries%20in%20HAVING.md) — Filtering groups using subquery results
-- [10- IN with Subqueries](./10-%20IN%20with%20Subqueries.md) — Membership testing against a subquery result
-- [11- NOT IN with Subqueries](./11-%20NOT%20IN%20with%20Subqueries.md) — Negative membership and NULL semantics
-- [12- EXISTS](./12-%20EXISTS.md) — Efficient existence predicates and semi-join semantics
-- [13- NOT EXISTS](./13-%20NOT%20EXISTS.md) — Anti-existence checks and anti-join semantics
-- [14- EXISTS vs IN](./14-%20EXISTS%20vs%20IN.md) — Semantic and performance trade-offs
-- [15- Correlated Subqueries](./15-%20Correlated%20Subqueries.md) — Outer-query references and dependent execution
-- [16- Non-Correlated Subqueries](./16-%20Non-Correlated%20Subqueries.md) — Independent subquery evaluation
-- [17- Correlated vs Non-Correlated Subqueries](./17-%20Correlated%20vs%20Non-Correlated%20Subqueries.md) — Execution and design differences
-- [18- Subquery Execution Rules](./18-%20Subquery%20Execution%20Rules.md) — Logical SQL versus physical execution
-- [19- Subquery vs JOIN](./19-%20Subquery%20vs%20JOIN.md) — Cardinality, semantics, and execution strategies
-- [20- Subquery vs CTE](./20-%20Subquery%20vs%20CTE.md) — Readability, reuse, optimization, and materialization
-- [21- Subquery vs Window Function](./21-%20Subquery%20vs%20Window%20Function.md) — Group-level calculations and row-preserving analytics
-- [22- When to Choose a Subquery](./22-%20When%20to%20Choose%20a%20Subquery.md) — Practical decision criteria
-- [23- When Not to Use a Subquery](./23-%20When%20Not%20to%20Use%20a%20Subquery.md) — Cases where joins, CTEs, or window functions are clearer
-- [24- Common Subquery Patterns](./24-%20Common%20Subquery%20Patterns.md) — Reusable production query patterns
-- [25- Common Subquery Mistakes](./25-%20Common%20Subquery%20Mistakes.md) — Correctness, maintainability, and performance pitfalls
-- [26- Subquery Performance](./26-%20Subquery%20Performance.md) — Execution plans, indexes, cardinality, and optimization
+| # | File | Description |
+|---|---|---|
+| 01 | [01- Subqueries Introduction](./01-%20Subqueries%20Introduction.md) | What subqueries are and when to use them |
+| 02 | [02- Subquery Execution Model](./02-%20Subquery%20Execution%20Model.md) | How subqueries are evaluated by the database |
+| 03 | [03- Scalar Subqueries](./03-%20Scalar%20Subqueries.md) | Subqueries that return a single value |
+| 04 | [04- Single-Row Subqueries](./04-%20Single-Row%20Subqueries.md) | Subqueries that return one row |
+| 05 | [05- Multi-Row Subqueries](./05-%20Multi-Row%20Subqueries.md) | Subqueries that return multiple rows |
+| 06 | [06- Subqueries in SELECT](./06-%20Subqueries%20in%20SELECT.md) | Inline scalar calculations in the projection |
+| 07 | [07- Subqueries in FROM](./07-%20Subqueries%20in%20FROM.md) | Derived tables and inline relations |
+| 08 | [08- Subqueries in WHERE](./08-%20Subqueries%20in%20WHERE.md) | Filtering rows using subquery results |
+| 09 | [09- Subqueries in HAVING](./09-%20Subqueries%20in%20HAVING.md) | Filtering groups using subquery results |
+| 10 | [10- IN with Subqueries](./10-%20IN%20with%20Subqueries.md) | Membership testing against a subquery result |
+| 11 | [11- NOT IN with Subqueries](./11-%20NOT%20IN%20with%20Subqueries.md) | Negative membership and NULL semantics |
+| 12 | [12- EXISTS](./12-%20EXISTS.md) | Efficient existence predicates and semi-join semantics |
+| 13 | [13- NOT EXISTS](./13-%20NOT%20EXISTS.md) | Anti-existence checks and anti-join semantics |
+| 14 | [14- EXISTS vs IN](./14-%20EXISTS%20vs%20IN.md) | Semantic and performance trade-offs |
+| 15 | [15- Correlated Subqueries](./15-%20Correlated%20Subqueries.md) | Outer-query references and dependent execution |
+| 16 | [16- Non-Correlated Subqueries](./16-%20Non-Correlated%20Subqueries.md) | Independent subquery evaluation |
+| 17 | [17- Correlated vs Non-Correlated Subqueries](./17-%20Correlated%20vs%20Non-Correlated%20Subqueries.md) | Execution and design differences |
+| 18 | [18- Subquery Execution Rules](./18-%20Subquery%20Execution%20Rules.md) | Logical SQL versus physical execution |
+| 19 | [19- Subquery vs JOIN](./19-%20Subquery%20vs%20JOIN.md) | Cardinality, semantics, and execution strategies |
+| 20 | [20- Subquery vs CTE](./20-%20Subquery%20vs%20CTE.md) | Readability, reuse, optimization, and materialization |
+| 21 | [21- Subquery vs Window Function](./21-%20Subquery%20vs%20Window%20Function.md) | Group-level calculations and row-preserving analytics |
+| 22 | [22- When to Choose a Subquery](./22-%20When%20to%20Choose%20a%20Subquery.md) | Practical decision criteria |
+| 23 | [23- When Not to Use a Subquery](./23-%20When%20Not%20to%20Use%20a%20Subquery.md) | Cases where joins, CTEs, or window functions are clearer |
+| 24 | [24- Common Subquery Patterns](./24-%20Common%20Subquery%20Patterns.md) | Reusable production query patterns |
+| 25 | [25- Common Subquery Mistakes](./25-%20Common%20Subquery%20Mistakes.md) | Correctness, maintainability, and performance pitfalls |
+| 26 | [26- Subquery Performance](./26-%20Subquery%20Performance.md) | Execution plans, indexes, cardinality, and optimization |
 
 ## Core Concepts
 

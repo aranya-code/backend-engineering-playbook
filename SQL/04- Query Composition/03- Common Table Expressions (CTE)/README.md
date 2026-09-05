@@ -28,30 +28,32 @@ CTEs are especially valuable when each stage represents a meaningful relational 
 
 ## Navigation
 
-- [01- CTE Introduction](./01-%20CTE%20Introduction.md) — Core concept, purpose, and when to use CTEs
-- [02- CTE Syntax and Structure](./02-%20CTE%20Syntax%20and%20Structure.md) — WITH clause syntax and basic SQL structure
-- [03- How CTEs Work](./03-%20How%20CTEs%20Work.md) — Logical query evaluation and optimizer behavior
-- [04- Single CTE](./04-%20Single%20CTE.md) — Writing and using a single named relation
-- [05- Multiple CTEs](./05-%20Multiple%20CTEs.md) — Composing multiple query stages
-- [06- CTE Dependencies](./06-%20CTE%20Dependencies.md) — Relationships and execution order between CTEs
-- [07- CTE with JOINs](./07-%20CTE%20with%20JOINs.md) — Join composition and cardinality within CTEs
-- [08- CTE with Aggregations](./08-%20CTE%20with%20Aggregations.md) — Multi-stage aggregation patterns
-- [09- CTE with Window Functions](./09-%20CTE%20with%20Window%20Functions.md) — Ranking and analytical queries using CTEs
-- [10- CTE with INSERT UPDATE DELETE](./10-%20CTE%20with%20INSERT%20UPDATE%20DELETE.md) — Data modification statements using CTEs
-- [11- Recursive CTEs](./11-%20Recursive%20CTEs.md) — Recursive query execution and termination
-- [12- Recursive CTE Structure](./12-%20Recursive%20CTE%20Structure.md) — Anchor and recursive members
-- [13- Recursive CTE Use Cases](./13-%20Recursive%20CTE%20Use%20Cases.md) — Hierarchies, trees, and graph traversal
-- [14- CTE Naming and Readability Rules](./14-%20CTE%20Naming%20and%20Readability%20Rules.md) — Writing maintainable SQL with descriptive CTE names
-- [15- CTE Scope and Lifetime](./15-%20CTE%20Scope%20and%20Lifetime.md) — Statement-level visibility and lifetime
-- [16- CTE vs Subquery](./16-%20CTE%20vs%20Subquery.md) — Query composition choices
-- [17- CTE vs Temporary Table](./17-%20CTE%20vs%20Temporary%20Table.md) — Intermediate-state storage choices
-- [18- CTE vs View](./18-%20CTE%20vs%20View.md) — Query abstraction choices
-- [19- CTE vs Derived Table](./19-%20CTE%20vs%20Derived%20Table.md) — Inline relational expressions
-- [20- CTE Performance Considerations](./20-%20CTE%20Performance%20Considerations.md) — Materialization, execution plans, and optimization
-- [21- When to Choose a CTE](./21-%20When%20to%20Choose%20a%20CTE.md) — Engineering decision-making criteria
-- [22- When Not to Use a CTE](./22-%20When%20Not%20to%20Use%20a%20CTE.md) — Avoiding unnecessary CTEs
-- [23- Practical CTE Patterns](./23-%20Practical%20CTE%20Patterns.md) — Reusable production query patterns
-- [24- Common CTE Mistakes](./24-%20Common%20CTE%20Mistakes.md) — Failure modes and pitfalls
+| # | File | Description |
+|---|---|---|
+| 01 | [01- CTE Introduction](./01-%20CTE%20Introduction.md) | Core concept, purpose, and when to use CTEs |
+| 02 | [02- CTE Syntax and Structure](./02-%20CTE%20Syntax%20and%20Structure.md) | WITH clause syntax and basic SQL structure |
+| 03 | [03- How CTEs Work](./03-%20How%20CTEs%20Work.md) | Logical query evaluation and optimizer behavior |
+| 04 | [04- Single CTE](./04-%20Single%20CTE.md) | Writing and using a single named relation |
+| 05 | [05- Multiple CTEs](./05-%20Multiple%20CTEs.md) | Composing multiple query stages |
+| 06 | [06- CTE Dependencies](./06-%20CTE%20Dependencies.md) | Relationships and execution order between CTEs |
+| 07 | [07- CTE with JOINs](./07-%20CTE%20with%20JOINs.md) | Join composition and cardinality within CTEs |
+| 08 | [08- CTE with Aggregations](./08-%20CTE%20with%20Aggregations.md) | Multi-stage aggregation patterns |
+| 09 | [09- CTE with Window Functions](./09-%20CTE%20with%20Window%20Functions.md) | Ranking and analytical queries using CTEs |
+| 10 | [10- CTE with INSERT UPDATE DELETE](./10-%20CTE%20with%20INSERT%20UPDATE%20DELETE.md) | Data modification statements using CTEs |
+| 11 | [11- Recursive CTEs](./11-%20Recursive%20CTEs.md) | Recursive query execution and termination |
+| 12 | [12- Recursive CTE Structure](./12-%20Recursive%20CTE%20Structure.md) | Anchor and recursive members |
+| 13 | [13- Recursive CTE Use Cases](./13-%20Recursive%20CTE%20Use%20Cases.md) | Hierarchies, trees, and graph traversal |
+| 14 | [14- CTE Naming and Readability Rules](./14-%20CTE%20Naming%20and%20Readability%20Rules.md) | Writing maintainable SQL with descriptive CTE names |
+| 15 | [15- CTE Scope and Lifetime](./15-%20CTE%20Scope%20and%20Lifetime.md) | Statement-level visibility and lifetime |
+| 16 | [16- CTE vs Subquery](./16-%20CTE%20vs%20Subquery.md) | Query composition choices |
+| 17 | [17- CTE vs Temporary Table](./17-%20CTE%20vs%20Temporary%20Table.md) | Intermediate-state storage choices |
+| 18 | [18- CTE vs View](./18-%20CTE%20vs%20View.md) | Query abstraction choices |
+| 19 | [19- CTE vs Derived Table](./19-%20CTE%20vs%20Derived%20Table.md) | Inline relational expressions |
+| 20 | [20- CTE Performance Considerations](./20-%20CTE%20Performance%20Considerations.md) | Materialization, execution plans, and optimization |
+| 21 | [21- When to Choose a CTE](./21-%20When%20to%20Choose%20a%20CTE.md) | Engineering decision-making criteria |
+| 22 | [22- When Not to Use a CTE](./22-%20When%20Not%20to%20Use%20a%20CTE.md) | Avoiding unnecessary CTEs |
+| 23 | [23- Practical CTE Patterns](./23-%20Practical%20CTE%20Patterns.md) | Reusable production query patterns |
+| 24 | [24- Common CTE Mistakes](./24-%20Common%20CTE%20Mistakes.md) | Failure modes and pitfalls |
 
 ## Core Concepts
 

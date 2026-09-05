@@ -1,4 +1,4 @@
-﻿# Query Composition
+# Query Composition
 
 ## Overview
 
@@ -10,9 +10,12 @@ These are not advanced topics in the sense of being rare. Every non-trivial prod
 
 ## Navigation
 
-- [01- JOINs](./01-%20JOINs/README.md) — Combining rows from related tables with full cardinality control
-- [02- Subqueries](./02-%20Subqueries/README.md) — Embedding queries as scalar values, derived tables, and existence tests
-- [03- Common Table Expressions (CTE)](./03-%20Common%20Table%20Expressions%20%28CTE%29/README.md) — Named, reusable query stages using the WITH clause
+| # | Section | Layer | Description |
+|---|---|---|---|
+| 01 | [Query Composition](./README.md) | SQL Foundations | JOINs, subqueries, and Common Table Expressions |
+| 02 | [01- JOINs](./01-%20JOINs/README.md) | SQL Foundations | Combining rows from related tables with full cardinality control |
+| 03 | [02- Subqueries](./02-%20Subqueries/README.md) | SQL Foundations | Embedding queries as scalar values, derived tables, and existence tests |
+| 04 | [03- Common Table Expressions (CTE)](./03-%20Common%20Table%20Expressions%20%28CTE%29/README.md) | SQL Foundations | Named, reusable query stages using the WITH clause |
 
 ---
 
