@@ -53,35 +53,38 @@ The primary database examples use PostgreSQL because transaction behavior is dat
 
 ## Navigation
 
-- [01- Transactions](./01-%20Transactions.md) — What transactions are and why they are essential for backend reliability
-- [02- ACID Properties](./02-%20ACID%20Properties.md) — Atomicity, Consistency, Isolation, and Durability explained
-- [03- BEGIN](./03-%20BEGIN.md) — Starting a transaction explicitly
-- [04- COMMIT and ROLLBACK](./04-%20COMMIT%20and%20ROLLBACK.md) — Finalizing or reversing a transaction
-- [05- SAVEPOINT](./05-%20SAVEPOINT.md) — Partial rollback with named savepoints
-- [06- Transaction Boundaries](./06-%20Transaction%20Boundaries.md) — Defining where transactions begin and end in application code
-- [07- Autocommit](./07-%20Autocommit.md) — Implicit transaction behavior and its implications
-- [08- Isolation Levels](./08-%20Isolation%20Levels.md) — How databases control visibility of concurrent changes
-- [09- Read Uncommitted](./09-%20Read%20Uncommitted.md) — The weakest isolation level and its risks
-- [10- Read Committed](./10-%20Read%20Committed.md) — PostgreSQL default isolation and its concurrency behavior
-- [11- Repeatable Read](./11-%20Repeatable%20Read.md) — Preventing non-repeatable reads within a transaction
-- [12- Serializable](./12-%20Serializable.md) — Strongest isolation and serializable snapshot isolation
-- [13- Snapshot Isolation](./13-%20Snapshot%20Isolation.md) — MVCC-based isolation and how PostgreSQL implements it
-- [14- Dirty Reads](./14-%20Dirty%20Reads.md) — Reading uncommitted data and why it is dangerous
-- [15- Non-Repeatable Reads](./15-%20Non-Repeatable%20Reads.md) — When the same row returns different values within one transaction
-- [16- Phantom Reads](./16-%20Phantom%20Reads.md) — When repeated queries return different row sets
-- [17- Lost Updates](./17-%20Lost%20Updates.md) — Concurrent overwrites and how to prevent them
-- [18- Locks](./18-%20Locks.md) — How the database controls concurrent access to shared data
-- [19- Shared and Exclusive Locks](./19-%20Shared%20and%20Exclusive%20Locks.md) — Lock types, compatibility, and acquisition rules
-- [20- Row-Level and Table-Level Locks](./20-%20Row-Level%20and%20Table-Level%20Locks.md) — Lock granularity and its effect on concurrency
-- [21- Deadlocks](./21-%20Deadlocks.md) — How deadlocks form, how to detect them, and how to avoid them
-- [22- Optimistic vs Pessimistic Concurrency](./22-%20Optimistic%20vs%20Pessimistic%20Concurrency.md) — Choosing a concurrency strategy for the workload
-- [23- Transaction Retry Strategies](./23-%20Transaction%20Retry%20Strategies.md) — Designing retry logic for serialization failures
-- [24- Transaction Design Rules](./24-%20Transaction%20Design%20Rules.md) — Practical rules for correct and safe transaction design
-- [25- Choosing an Isolation Level](./25-%20Choosing%20an%20Isolation%20Level.md) — Selecting the right isolation level for a workload
-- [26- When to Use Transactions](./26-%20When%20to%20Use%20Transactions.md) — Identifying operations that require transactional guarantees
-- [27- When Not to Use Large Transactions](./27-%20When%20Not%20to%20Use%20Large%20Transactions.md) — Risks of long-running transactions and how to avoid them
-- [28- Transactions in Backend Applications](./28-%20Transactions%20in%20Backend%20Applications.md) — Django, SQLAlchemy, and application-level transaction management
-- [29- Common Transaction Mistakes](./29-%20Common%20Transaction%20Mistakes.md) — Correctness, performance, isolation, and production pitfalls
+| # | Section | Layer | Description |
+|---|---|---|---|
+| 01 | [Transactions and Concurrency](./README.md) | Performance and Reliability | ACID properties, isolation levels, locking, and deadlocks |
+| 02 | [01- Transactions](./01-%20Transactions.md) | Performance and Reliability | What transactions are and why they are essential for backend reliability |
+| 03 | [02- ACID Properties](./02-%20ACID%20Properties.md) | Performance and Reliability | Atomicity, Consistency, Isolation, and Durability explained |
+| 04 | [03- BEGIN](./03-%20BEGIN.md) | Performance and Reliability | Starting a transaction explicitly |
+| 05 | [04- COMMIT and ROLLBACK](./04-%20COMMIT%20and%20ROLLBACK.md) | Performance and Reliability | Finalizing or reversing a transaction |
+| 06 | [05- SAVEPOINT](./05-%20SAVEPOINT.md) | Performance and Reliability | Partial rollback with named savepoints |
+| 07 | [06- Transaction Boundaries](./06-%20Transaction%20Boundaries.md) | Performance and Reliability | Defining where transactions begin and end in application code |
+| 08 | [07- Autocommit](./07-%20Autocommit.md) | Performance and Reliability | Implicit transaction behavior and its implications |
+| 09 | [08- Isolation Levels](./08-%20Isolation%20Levels.md) | Performance and Reliable | How databases control visibility of concurrent changes |
+| 10 | [09- Read Uncommitted](./09-%20Read%20Uncommitted.md) | Performance and Reliability | The weakest isolation level and its risks |
+| 11 | [10- Read Committed](./10-%20Read%20Committed.md) | Performance and Reliability | PostgreSQL default isolation and its concurrency behavior |
+| 12 | [11- Repeatable Read](./11-%20Repeatable%20Read.md) | Performance and Reliability | Preventing non-repeatable reads within a transaction |
+| 13 | [12- Serializable](./12-%20Serializable.md) | Performance and Reliability | Strongest isolation and serializable snapshot isolation |
+| 14 | [13- Snapshot Isolation](./13-%20Snapshot%20Isolation.md) | Performance and Reliability | MVCC-based isolation and how PostgreSQL implements it |
+| 15 | [14- Dirty Reads](./14-%20Dirty%20Reads.md) | Performance and Reliability | Reading uncommitted data and why it is dangerous |
+| 16 | [15- Non-Repeatable Reads](./15-%20Non-Repeatable%20Reads.md) | Performance and Reliability | When the same row returns different values within one transaction |
+| 17 | [16- Phantom Reads](./16-%20Phantom%20Reads.md) | Performance and Reliability | When repeated queries return different row sets |
+| 18 | [17- Lost Updates](./17-%20Lost%20Updates.md) | Performance and Reliability | Concurrent overwrites and how to prevent them |
+| 19 | [18- Locks](./18-%20Locks.md) | Performance and Reliability | How the database controls concurrent access to shared data |
+| 20 | [19- Shared and Exclusive Locks](./19-%20Shared%20and%20Exclusive%20Locks.md) | Performance and Reliability | Lock types, compatibility, and acquisition rules |
+| 21 | [20- Row-Level and Table-Level Locks](./20-%20Row-Level%20and%20Table-Level%20Locks.md) | Performance and Reliability | Lock granularity and its effect on concurrency |
+| 22 | [21- Deadlocks](./21-%20Deadlocks.md) | Performance and Reliability | How deadlocks form, how to detect them, and how to avoid them |
+| 23 | [22- Optimistic vs Pessimistic Concurrency](./22-%20Optimistic%20vs%20Pessimistic%20Concurrency.md) | Performance and Reliability | Choosing a concurrency strategy for the workload |
+| 24 | [23- Transaction Retry Strategies](./23-%20Transaction%20Retry%20Strategies.md) | Performance and Reliability | Designing retry logic for serialization failures |
+| 25 | [24- Transaction Design Rules](./24-%20Transaction%20Design%20Rules.md) | Performance and Reliability | Practical rules for correct and safe transaction design |
+| 26 | [25- Choosing an Isolation Level](./25-%20Choosing%20an%20Isolation%20Level.md) | Performance and Reliability | Selecting the right isolation level for a workload |
+| 27 | [26- When to Use Transactions](./26-%20When%20to%20Use%20Transactions.md) | Performance and Reliability | Identifying operations that require transactional guarantees |
+| 28 | [27- When Not to Use Large Transactions](./27-%20When%20Not%20to%20Use%20Large%20Transactions.md) | Performance and Reliability | Risks of long-running transactions and how to avoid them |
+| 29 | [28- Transactions in Backend Applications](./28-%20Transactions%20in%20Backend%20Applications.md) | Performance and Reliability | Django, SQLAlchemy, and application-level transaction management |
+| 30 | [29- Common Transaction Mistakes](./29-%20Common%20Transaction%20Mistakes.md) | Performance and Reliability | Correctness, performance, isolation, and production pitfalls |
 
 ---
 
