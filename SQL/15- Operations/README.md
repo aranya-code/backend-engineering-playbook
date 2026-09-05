@@ -41,31 +41,34 @@ The goal is not to memorize operational commands. The goal is to understand **wh
 
 ## Navigation
 
-- [01- SQL Production Operations](./01-%20SQL%20Production%20Operations.md) — Overview of production SQL operational practice and responsibilities
-- [02- Database Monitoring](./02-%20Database%20Monitoring.md) — Database health, query, and resource monitoring
-- [03- Query Performance Monitoring](./03-%20Query%20Performance%20Monitoring.md) — Identifying and tracking slow or expensive queries
-- [04- Slow Query Monitoring](./04-%20Slow%20Query%20Monitoring.md) — Detecting and alerting on slow query patterns
-- [05- Database CPU Monitoring](./05-%20Database%20CPU%20Monitoring.md) — CPU saturation detection and analysis
-- [06- Database Memory Monitoring](./06-%20Database%20Memory%20Monitoring.md) — Memory pressure detection and analysis
-- [07- Connection Monitoring](./07-%20Connection%20Monitoring.md) — Connection pool and database connection monitoring
-- [08- Lock and Deadlock Monitoring](./08-%20Lock%20and%20Deadlock%20Monitoring.md) — Detecting lock contention and deadlocks in production
-- [09- Index Monitoring](./09-%20Index%20Monitoring.md) — Index usage, bloat, and effectiveness monitoring
-- [10- Table Growth Monitoring](./10-%20Table%20Growth%20Monitoring.md) — Tracking table size, growth rate, and storage trends
-- [11- Storage Monitoring](./11-%20Storage%20Monitoring.md) — Disk space, WAL, and storage capacity monitoring
-- [12- Database Statistics](./12-%20Database%20Statistics.md) — PostgreSQL statistics views and planner accuracy
-- [13- Index Maintenance](./13-%20Index%20Maintenance.md) — Index lifecycle, usage, bloat, and production maintenance
-- [14- Table Maintenance](./14-%20Table%20Maintenance.md) — Table health, dead tuples, bloat, and maintenance operations
-- [15- VACUUM and ANALYZE](./15-%20VACUUM%20and%20ANALYZE.md) — MVCC cleanup, statistics maintenance, and autovacuum
-- [16- Database Backups](./16-%20Database%20Backups.md) — Backup strategies, retention, encryption, and verification
-- [17- Restore and Recovery](./17-%20Restore%20and%20Recovery.md) — Database restoration procedures and recovery validation
-- [18- Point in Time Recovery](./18-%20Point%20in%20Time%20Recovery.md) — WAL archiving, recovery targets, and PITR
-- [19- Database Capacity Planning](./19-%20Database%20Capacity%20Planning.md) — Resource forecasting, workload growth, and scaling decisions
-- [20- Connection Pooling](./20-%20Connection%20Pooling.md) — Pool architecture, connection budgets, exhaustion, and application integration
-- [21- Read Replicas](./21-%20Read%20Replicas.md) — Replica architecture, lag, read routing, consistency, and failure handling
-- [22- Database Failover](./22-%20Database%20Failover.md) — Promotion, fencing, connection recovery, and HA operations
-- [23- Production SQL Best Practices](./23-%20Production%20SQL%20Best%20Practices.md) — Production SQL design, performance, safety, and operational practices
-- [24- Database Reliability Practices](./24-%20Database%20Reliability%20Practices.md) — Reliability engineering principles for SQL systems
-- [25- Operational Checklists](./25-%20Operational%20Checklists.md) — Repeatable operational procedures and verification checklists
+| # | Section | Layer | Description |
+|---|---|---|---|
+| 01 | [Operations](./README.md) | Production Engineering | Monitoring, maintenance, backups, recovery, capacity planning, and failover |
+| 02 | [01- SQL Production Operations](./01-%20SQL%20Production%20Operations.md) | Production Engineering | Overview of production SQL operational practice and responsibilities |
+| 03 | [02- Database Monitoring](./02-%20Database%20Monitoring.md) | Production Engineering | Database health, query, and resource monitoring |
+| 04 | [03- Query Performance Monitoring](./03-%20Query%20Performance%20Monitoring.md) | Production Engineering | Identifying and tracking slow or expensive queries |
+| 05 | [04- Slow Query Monitoring](./04-%20Slow%20Query%20Monitoring.md) | Production Engineering | Detecting and alerting on slow query patterns |
+| 06 | [05- Database CPU Monitoring](./05-%20Database%20CPU%20Monitoring.md) | Production Engineering | CPU saturation detection and analysis |
+| 07 | [06- Database Memory Monitoring](./06-%20Database%20Memory%20Monitoring.md) | Production Engineering | Memory pressure detection and analysis |
+| 08 | [07- Connection Monitoring](./07-%20Connection%20Monitoring.md) | Production Engineering | Connection pool and database connection monitoring |
+| 09 | [08- Lock and Deadlock Monitoring](./08-%20Lock%20and%20Deadlock%20Monitoring.md) | Production Engineering | Detecting lock contention and deadlocks in production |
+| 10 | [09- Index Monitoring](./09-%20Index%20Monitoring.md) | Production Engineering | Index usage, bloat, and effectiveness monitoring |
+| 11 | [10- Table Growth Monitoring](./10-%20Table%20Growth%20Monitoring.md) | Production Engineering | Tracking table size, growth rate, and storage trends |
+| 12 | [11- Storage Monitoring](./11-%20Storage%20Monitoring.md) | Production Engineering | Disk space, WAL, and storage capacity monitoring |
+| 13 | [12- Database Statistics](./12-%20Database%20Statistics.md) | Production Engineering | PostgreSQL statistics views and planner accuracy |
+| 14 | [13- Index Maintenance](./13-%20Index%20Maintenance.md) | Production Engineering | Index lifecycle, usage, bloat, and production maintenance |
+| 15 | [14- Table Maintenance](./14-%20Table%20Maintenance.md) | Production Engineering | Table health, dead tuples, bloat, and maintenance operations |
+| 16 | [15- VACUUM and ANALYZE](./15-%20VACUUM%20and%20ANALYZE.md) | Production Engineering | MVCC cleanup, statistics maintenance, and autovacuum |
+| 17 | [16- Database Backups](./16-%20Database%20Backups.md) | Production Engineering | Backup strategies, retention, encryption, and verification |
+| 18 | [17- Restore and Recovery](./17-%20Restore%20and%20Recovery.md) | Production Engineering | Database restoration procedures and recovery validation |
+| 19 | [18- Point in Time Recovery](./18-%20Point%20in%20Time%20Recovery.md) | Production Engineering | WAL archiving, recovery targets, and PITR |
+| 20 | [19- Database Capacity Planning](./19-%20Database%20Capacity%20Planning.md) | Production Engineering | Resource forecasting, workload growth, and scaling decisions |
+| 21 | [20- Connection Pooling](./20-%20Connection%20Pooling.md) | Production Engineering | Pool architecture, connection budgets, exhaustion, and application integration |
+| 22 | [21- Read Replicas](./21-%20Read%20Replicas.md) | Production Engineering | Replica architecture, lag, read routing, consistency, and failure handling |
+| 23 | [22- Database Failover](./22-%20Database%20Failover.md) | Production Engineering | Promotion, fencing, connection recovery, and HA operations |
+| 24 | [23- Production SQL Best Practices](./23-%20Production%20SQL%20Best%20Practices.md) | Production Engineering | Production SQL design, performance, safety, and operational practices |
+| 25 | [24- Database Reliability Practices](./24-%20Database%20Reliability%20Practices.md) | Production Engineering | Reliability engineering principles for SQL systems |
+| 26 | [25- Operational Checklists](./25-%20Operational%20Checklists.md) | Production Engineering | Repeatable operational procedures and verification checklists |
 
 ---
 
