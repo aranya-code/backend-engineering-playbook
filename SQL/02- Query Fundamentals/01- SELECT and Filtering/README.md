@@ -12,22 +12,24 @@ The documents in this section build on each other:
 
 ## Navigation
 
-- [01- SELECT Fundamentals](./01-%20SELECT%20Fundamentals.md) — Retrieving and projecting columns
-- [02- Selecting Columns and Expressions](./02-%20Selecting%20Columns%20and%20Expressions.md) — Computed values and expressions in projections
-- [03- Aliases](./03-%20Aliases.md) — Naming columns and expressions
-- [04- DISTINCT](./04-%20DISTINCT.md) — Removing duplicate result rows
-- [05- WHERE Clause](./05-%20WHERE%20Clause.md) — Row-level filtering
-- [06- Comparison Operators](./06-%20Comparison%20Operators.md) — Equality, inequality, ordering, and comparisons
-- [07- Logical Operators](./07-%20Logical%20Operators.md) — Combining predicates with AND, OR, and NOT
-- [08- Operator Precedence](./08-%20Operator%20Precedence.md) — Correct evaluation of compound predicates
-- [09- IN and NOT IN](./09-%20IN%20and%20NOT%20IN.md) — Matching against a set of values
-- [10- BETWEEN](./10-%20BETWEEN.md) — Inclusive range predicates
-- [11- LIKE and Pattern Matching](./11-%20LIKE%20and%20Pattern%20Matching.md) — Prefix, suffix, and wildcard searches
-- [12- NULL Filtering](./12-%20NULL%20Filtering.md) — SQL three-valued logic and null-safe filtering
-- [13- Filtering Rules and Best Practices](./13-%20Filtering%20Rules%20and%20Best%20Practices.md) — Correctness and production-oriented filtering
-- [14- WHERE vs HAVING](./14-%20WHERE%20vs%20HAVING.md) — Row-level versus group-level filtering
-- [15- When to Use Which Filter](./15-%20When%20to%20Use%20Which%20Filter.md) — Choosing the appropriate predicate
-- [16- Common Filtering Mistakes](./16-%20Common%20Filtering%20Mistakes.md) — Debugging and avoiding filtering failures
+| # | File | Description |
+|---|---|---|
+| 01 | [01- SELECT Fundamentals](./01-%20SELECT%20Fundamentals.md) | Retrieving and projecting columns |
+| 02 | [02- Selecting Columns and Expressions](./02-%20Selecting%20Columns%20and%20Expressions.md) | Computed values and expressions in projections |
+| 03 | [03- Aliases](./03-%20Aliases.md) | Naming columns and expressions |
+| 04 | [04- DISTINCT](./04-%20DISTINCT.md) | Removing duplicate result rows |
+| 05 | [05- WHERE Clause](./05-%20WHERE%20Clause.md) | Row-level filtering |
+| 06 | [06- Comparison Operators](./06-%20Comparison%20Operators.md) | Equality, inequality, ordering, and comparisons |
+| 07 | [07- Logical Operators](./07-%20Logical%20Operators.md) | Combining predicates with AND, OR, and NOT |
+| 08 | [08- Operator Precedence](./08-%20Operator%20Precedence.md) | Correct evaluation of compound predicates |
+| 09 | [09- IN and NOT IN](./09-%20IN%20and%20NOT%20IN.md) | Matching against a set of values |
+| 10 | [10- BETWEEN](./10-%20BETWEEN.md) | Inclusive range predicates |
+| 11 | [11- LIKE and Pattern Matching](./11-%20LIKE%20and%20Pattern%20Matching.md) | Prefix, suffix, and wildcard searches |
+| 12 | [12- NULL Filtering](./12-%20NULL%20Filtering.md) | SQL three-valued logic and null-safe filtering |
+| 13 | [13- Filtering Rules and Best Practices](./13-%20Filtering%20Rules%20and%20Best%20Practices.md) | Correctness and production-oriented filtering |
+| 14 | [14- WHERE vs HAVING](./14-%20WHERE%20vs%20HAVING.md) | Row-level versus group-level filtering |
+| 15 | [15- When to Use Which Filter](./15-%20When%20to%20Use%20Which%20Filter.md) | Choosing the appropriate predicate |
+| 16 | [16- Common Filtering Mistakes](./16-%20Common%20Filtering%20Mistakes.md) | Debugging and avoiding filtering failures |
 
 ## Core SQL Pattern
 

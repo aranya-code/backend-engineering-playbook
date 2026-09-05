@@ -1,4 +1,4 @@
-﻿# Query Fundamentals
+# Query Fundamentals
 
 ## Overview
 
@@ -10,13 +10,16 @@ Mastery of these fundamentals is what separates engineers who can write syntacti
 
 ## Navigation
 
-- [01- SELECT and Filtering](./01-%20SELECT%20and%20Filtering/README.md) — Projecting columns, filtering rows, and writing correct WHERE clauses
-- [02- Sorting Pagination and Result Control](./02-%20Sorting%20Pagination%20and%20Result%20Control/README.md) — ORDER BY, LIMIT, OFFSET, and pagination strategy
-- [03- SQL Operators](./03-%20SQL%20Operators/README.md) — Comparison, logical, membership, and range operators
-- [04- Aggregate Functions](./04-%20Aggregate%20Functions/README.md) — COUNT, SUM, AVG, MIN, MAX, GROUP BY, and HAVING
-- [05- String Functions](./05-%20String%20Functions/README.md) — Concatenation, trimming, pattern matching, and string transformations
-- [06- Date and Time](./06-%20Date%20and%20Time/README.md) — Temporal types, date arithmetic, filtering, and timezone-safe queries
-- [07- NULL Handling](./07-%20NULL%20Handling/README.md) — Three-valued logic, NULL predicates, COALESCE, NULLIF, and NULL-safe design
+| # | Section | Layer | Description |
+|---|---|---|---|
+| 01 | [Query Fundamentals](./README.md) | SQL Foundations | SELECT, filtering, sorting, operators, aggregate functions, string functions, dates, and NULL handling |
+| 02 | [01- SELECT and Filtering](./01-%20SELECT%20and%20Filtering/README.md) | SQL Foundations | Projecting columns, filtering rows, and writing correct WHERE clauses |
+| 03 | [02- Sorting Pagination and Result Control](./02-%20Sorting%20Pagination%20and%20Result%20Control/README.md) | SQL Foundations | ORDER BY, LIMIT, OFFSET, and pagination strategy |
+| 04 | [03- SQL Operators](./03-%20SQL%20Operators/README.md) | SQL Foundations | Comparison, logical, membership, and range operators |
+| 05 | [04- Aggregate Functions](./04-%20Aggregate%20Functions/README.md) | SQL Foundations | COUNT, SUM, AVG, MIN, MAX, GROUP BY, and HAVING |
+| 06 | [05- String Functions](./05-%20String%20Functions/README.md) | SQL Foundations | Concatenation, trimming, pattern matching, and string transformations |
+| 07 | [06- Date and Time](./06-%20Date%20and%20Time/README.md) | SQL Foundations | Temporal types, date arithmetic, filtering, and timezone-safe queries |
+| 08 | [07- NULL Handling](./07-%20NULL%20Handling/README.md) | SQL Foundations | Three-valued logic, NULL predicates, COALESCE, NULLIF, and NULL-safe design |
 
 ---
 

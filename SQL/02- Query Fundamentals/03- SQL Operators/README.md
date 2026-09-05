@@ -19,14 +19,16 @@ The goal is not to memorize every operator, but to understand **which operator e
 
 ## Navigation
 
-- [01- Arithmetic Operators](./01-%20Arithmetic%20Operators.md)
-- [02- Comparison Operators](./02-%20Comparison%20Operators.md)
-- [03- Logical Operators](./03-%20Logical%20Operators.md)
-- [04- Bitwise Operators](./04-%20Bitwise%20Operators.md)
-- [05- String Operators](./05-%20String%20Operators.md)
-- [06- Operator Precedence](./06-%20Operator%20Precedence.md)
-- [07- Operator Selection Rules](./07-%20Operator%20Selection%20Rules.md)
-- [08- Common Operator Mistakes](./08-%20Common%20Operator%20Mistakes.md)
+| # | File | Description |
+|---|---|---|
+| 01 | [01- Arithmetic Operators](./01-%20Arithmetic%20Operators.md) | |
+| 02 | [02- Comparison Operators](./02-%20Comparison%20Operators.md) | |
+| 03 | [03- Logical Operators](./03-%20Logical%20Operators.md) | |
+| 04 | [04- Bitwise Operators](./04-%20Bitwise%20Operators.md) | |
+| 05 | [05- String Operators](./05-%20String%20Operators.md) | |
+| 06 | [06- Operator Precedence](./06-%20Operator%20Precedence.md) | |
+| 07 | [07- Operator Selection Rules](./07-%20Operator%20Selection%20Rules.md) | |
+| 08 | [08- Common Operator Mistakes](./08-%20Common%20Operator%20Mistakes.md) | |
 
 ## Operator Categories
 

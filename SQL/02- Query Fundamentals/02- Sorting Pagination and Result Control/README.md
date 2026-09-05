@@ -23,19 +23,21 @@ The central engineering principle is:
 
 ## Navigation
 
-- [01- ORDER BY](./01-%20ORDER%20BY.md) — Sorting query results
-- [02- ASC and DESC](./02-%20ASC%20and%20DESC.md) — Ascending and descending order
-- [03- Sorting by Multiple Columns](./03-%20Sorting%20by%20Multiple%20Columns.md) — Deterministic ordering and tie-breaking
-- [04- Sorting Expressions](./04-%20Sorting%20Expressions.md) — Conditional and computed ordering
-- [05- LIMIT and TOP](./05-%20LIMIT%20and%20TOP.md) — Restricting returned rows
-- [06- OFFSET](./06-%20OFFSET.md) — Skipping rows
-- [07- Pagination Fundamentals](./07-%20Pagination%20Fundamentals.md) — Designing bounded result sets
-- [08- Offset Pagination](./08-%20Offset%20Pagination.md) — Page-number-based APIs
-- [09- Keyset Pagination](./09-%20Keyset%20Pagination.md) — Efficient sequential traversal
-- [10- Cursor Pagination](./10-%20Cursor%20Pagination.md) — Opaque API continuation
-- [11- Offset vs Keyset vs Cursor](./11-%20Offset%20vs%20Keyset%20vs%20Cursor.md) — Architectural tradeoffs
-- [12- Pagination Rules and Tradeoffs](./12-%20Pagination%20Rules%20and%20Tradeoffs.md) — Production constraints
-- [13- When to Choose Each Pagination Strategy](./13-%20When%20to%20Choose%20Each%20Pagination%20Strategy.md) — Requirement-driven decisions
+| # | File | Description |
+|---|---|---|
+| 01 | [01- ORDER BY](./01-%20ORDER%20BY.md) | Sorting query results |
+| 02 | [02- ASC and DESC](./02-%20ASC%20and%20DESC.md) | Ascending and descending order |
+| 03 | [03- Sorting by Multiple Columns](./03-%20Sorting%20by%20Multiple%20Columns.md) | Deterministic ordering and tie-breaking |
+| 04 | [04- Sorting Expressions](./04-%20Sorting%20Expressions.md) | Conditional and computed ordering |
+| 05 | [05- LIMIT and TOP](./05-%20LIMIT%20and%20TOP.md) | Restricting returned rows |
+| 06 | [06- OFFSET](./06-%20OFFSET.md) | Skipping rows |
+| 07 | [07- Pagination Fundamentals](./07-%20Pagination%20Fundamentals.md) | Designing bounded result sets |
+| 08 | [08- Offset Pagination](./08-%20Offset%20Pagination.md) | Page-number-based APIs |
+| 09 | [09- Keyset Pagination](./09-%20Keyset%20Pagination.md) | Efficient sequential traversal |
+| 10 | [10- Cursor Pagination](./10-%20Cursor%20Pagination.md) | Opaque API continuation |
+| 11 | [11- Offset vs Keyset vs Cursor](./11-%20Offset%20vs%20Keyset%20vs%20Cursor.md) | Architectural tradeoffs |
+| 12 | [12- Pagination Rules and Tradeoffs](./12-%20Pagination%20Rules%20and%20Tradeoffs.md) | Production constraints |
+| 13 | [13- When to Choose Each Pagination Strategy](./13-%20When%20to%20Choose%20Each%20Pagination%20Strategy.md) | Requirement-driven decisions |
 
 ## Ordering Results with ORDER BY
 
