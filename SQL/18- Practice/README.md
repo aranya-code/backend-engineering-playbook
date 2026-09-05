@@ -42,28 +42,31 @@ The target is not simply to complete exercises. The target is to develop the abi
 
 ## Navigation
 
-- [01- SQL Playground Setup](./01-%20SQL%20Playground%20Setup.md) — Setting up a local PostgreSQL environment for SQL practice
-- [02- Database Setup](./02-%20Database%20Setup.md) — Creating and configuring practice databases and roles
-- [03- Schema Creation Exercises](./03-%20Schema%20Creation%20Exercises.md) — Designing and creating relational schemas from scratch
-- [04- CRUD Exercises](./04-%20CRUD%20Exercises.md) — INSERT, SELECT, UPDATE, DELETE practice exercises
-- [05- Filtering Exercises](./05-%20Filtering%20Exercises.md) — WHERE, LIKE, IN, BETWEEN, and predicate filtering exercises
-- [06- JOIN Exercises](./06-%20JOIN%20Exercises.md) — INNER, LEFT, RIGHT, FULL, CROSS, and self JOIN exercises
-- [07- Aggregation Exercises](./07-%20Aggregation%20Exercises.md) — GROUP BY, HAVING, COUNT, SUM, AVG, and aggregation exercises
-- [08- NULL Handling Exercises](./08-%20NULL%20Handling%20Exercises.md) — NULL semantics, IS NULL, COALESCE, and three-valued logic exercises
-- [09- CASE Exercises](./09-%20CASE%20Exercises.md) — Conditional logic and CASE expression exercises
-- [10- Date and Time Exercises](./10-%20Date%20and%20Time%20Exercises.md) — Timestamp, interval, timezone, and date arithmetic exercises
-- [11- Subquery Exercises](./11-%20Subquery%20Exercises.md) — Correlated and uncorrelated subquery exercises
-- [12- CTE Exercises](./12-%20CTE%20Exercises.md) — Common Table Expression and recursive CTE exercises
-- [13- Window Function Exercises](./13-%20Window%20Function%20Exercises.md) — ROW_NUMBER, RANK, LAG, LEAD, and window frame exercises
-- [14- Indexing Exercises](./14-%20Indexing%20Exercises.md) — Index design, selectivity, and access path exercises
-- [15- Query Optimization Exercises](./15-%20Query%20Optimization%20Exercises.md) — Execution plan analysis and query rewriting exercises
-- [16- Transaction Exercises](./16-%20Transaction%20Exercises.md) — Transaction control, isolation levels, and rollback exercises
-- [17- Concurrency Exercises](./17-%20Concurrency%20Exercises.md) — Lock contention, deadlock, and concurrent write exercises
-- [18- Database Design Exercises](./18-%20Database%20Design%20Exercises.md) — Schema modeling, normalization, and design decision exercises
-- [19- Pagination Exercises](./19-%20Pagination%20Exercises.md) — Offset and keyset pagination exercises for large datasets
-- [20- Backend API Query Exercises](./20-%20Backend%20API%20Query%20Exercises.md) — SQL exercises modeled on real backend API query patterns
-- [21- Production Scenario Exercises](./21-%20Production%20Scenario%20Exercises.md) — End-to-end production database problem-solving exercises
-- [22- SQL Challenge Progress](./22-%20SQL%20Challenge%20Progress.md) — Progress tracker for completed SQL practice exercises
+| # | Section | Layer | Description |
+|---|---|---|---|
+| 01 | [Practice](./README.md) | Applied SQL | Hands-on SQL exercises from basic CRUD through transactions, optimization, and production scenarios |
+| 02 | [01- SQL Playground Setup](./01-%20SQL%20Playground%20Setup.md) | Applied SQL | Setting up a local PostgreSQL environment for SQL practice |
+| 03 | [02- Database Setup](./02-%20Database%20Setup.md) | Applied SQL | Creating and configuring practice databases and roles |
+| 04 | [03- Schema Creation Exercises](./03-%20Schema%20Creation%20Exercises.md) | Applied SQL | Designing and creating relational schemas from scratch |
+| 05 | [04- CRUD Exercises](./04-%20CRUD%20Exercises.md) | Applied SQL | INSERT, SELECT, UPDATE, DELETE practice exercises |
+| 06 | [05- Filtering Exercises](./05-%20Filtering%20Exercises.md) | Applied SQL | WHERE, LIKE, IN, BETWEEN, and predicate filtering exercises |
+| 07 | [06- JOIN Exercises](./06-%20JOIN%20Exercises.md) | Applied SQL | INNER, LEFT, RIGHT, FULL, CROSS, and self JOIN exercises |
+| 08 | [07- Aggregation Exercises](./07-%20Aggregation%20Exercises.md) | Applied SQL | GROUP BY, HAVING, COUNT, SUM, AVG, and aggregation exercises |
+| 09 | [08- NULL Handling Exercises](./08-%20NULL%20Handling%20Exercises.md) | Applied SQL | NULL semantics, IS NULL, COALESCE, and three-valued logic exercises |
+| 10 | [09- CASE Exercises](./09-%20CASE%20Exercises.md) | Applied SQL | Conditional logic and CASE expression exercises |
+| 11 | [10- Date and Time Exercises](./10-%20Date%20and%20Time%20Exercises.md) | Applied SQL | Timestamp, interval, timezone, and date arithmetic exercises |
+| 12 | [11- Subquery Exercises](./11-%20Subquery%20Exercises.md) | Applied SQL | Correlated and uncorrelated subquery exercises |
+| 13 | [12- CTE Exercises](./12-%20CTE%20Exercises.md) | Applied SQL | Common Table Expression and recursive CTE exercises |
+| 14 | [13- Window Function Exercises](./13-%20Window%20Function%20Exercises.md) | Applied SQL | ROW_NUMBER, RANK, LAG, LEAD, and window frame exercises |
+| 15 | [14- Indexing Exercises](./14-%20Indexing%20Exercises.md) | Applied SQL | Index design, selectivity, and access path exercises |
+| 16 | [15- Query Optimization Exercises](./15-%20Query%20Optimization%20Exercises.md) | Applied SQL | Execution plan analysis and query rewriting exercises |
+| 17 | [16- Transaction Exercises](./16-%20Transaction%20Exercises.md) | Applied SQL | Transaction control, isolation levels, and rollback exercises |
+| 18 | [17- Concurrency Exercises](./17-%20Concurrency%20Exercises.md) | Applied SQL | Lock contention, deadlock, and concurrent write exercises |
+| 19 | [18- Database Design Exercises](./18-%20Database%20Design%20Exercises.md) | Applied SQL | Schema modeling, normalization, and design decision exercises |
+| 20 | [19- Pagination Exercises](./19-%20Pagination%20Exercises.md) | Applied SQL | Offset and keyset pagination exercises for large datasets |
+| 21 | [20- Backend API Query Exercises](./20-%20Backend%20API%20Query%20Exercises.md) | Applied SQL | SQL exercises modeled on real backend API query patterns |
+| 22 | [21- Production Scenario Exercises](./21-%20Production%20Scenario%20Exercises.md) | Applied SQL | End-to-end production database problem-solving exercises |
+| 23 | [22- SQL Challenge Progress](./22-%20SQL%20Challenge%20Progress.md) | Applied SQL | Progress tracker for completed SQL practice exercises |
 
 ---
 
