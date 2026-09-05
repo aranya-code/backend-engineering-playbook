@@ -31,21 +31,24 @@ The goal is to make database changes:
 
 ## Navigation
 
-- [01- Database Deployment Fundamentals](./01-%20Database%20Deployment%20Fundamentals.md) — Core concepts and deployment model for production database changes
-- [02- Schema Changes](./02-%20Schema%20Changes.md) — Safe schema evolution strategies and patterns
-- [03- Database Migrations](./03-%20Database%20Migrations.md) — Migration design, ordering, and lifecycle management
-- [04- Migration Ordering](./04-%20Migration%20Ordering.md) — Dependency and execution ordering for migrations
-- [05- Backward Compatible Schema Changes](./05-%20Backward%20Compatible%20Schema%20Changes.md) — Compatibility during rolling deployments
-- [06- Zero Downtime Migrations](./06-%20Zero%20Downtime%20Migrations.md) — Safe schema changes without planned downtime
-- [07- Adding Columns Safely](./07-%20Adding%20Columns%20Safely.md) — Safe column introduction in production
-- [08- Removing Columns Safely](./08-%20Removing%20Columns%20Safely.md) — Safe destructive schema changes
-- [09- Index Deployment](./09-%20Index%20Deployment.md) — Production index creation and removal
-- [10- Large Table Migration Strategies](./10-%20Large%20Table%20Migration%20Strategies.md) — Large-scale data and schema changes
-- [11- Migration Rollback Strategies](./11-%20Migration%20Rollback%20Strategies.md) — Rollback, roll-forward, and recovery planning
-- [12- Database Deployment in CI CD](./12-%20Database%20Deployment%20in%20CI%20CD.md) — CI/CD pipeline integration for database changes
-- [13- SQLAlchemy and Alembic Migrations](./13-%20SQLAlchemy%20and%20Alembic%20Migrations.md) — Alembic-based migration workflows
-- [14- Django Database Migrations](./14-%20Django%20Database%20Migrations.md) — Django migration architecture and operations
-- [15- Production Database Change Checklist](./15-%20Production%20Database%20Change%20Checklist.md) — End-to-end production database change checklist
+| # | Section | Layer | Description |
+|---|---|---|---|
+| 01 | [Deployment](./README.md) | Production Engineering | Schema migrations, zero-downtime changes, CI/CD, and production deployment safety |
+| 02 | [01- Database Deployment Fundamentals](./01-%20Database%20Deployment%20Fundamentals.md) | Production Engineering | Core concepts and deployment model for production database changes |
+| 03 | [02- Schema Changes](./02-%20Schema%20Changes.md) | Production Engineering | Safe schema evolution strategies and patterns |
+| 04 | [03- Database Migrations](./03-%20Database%20Migrations.md) | Production Engineering | Migration design, ordering, and lifecycle management |
+| 05 | [04- Migration Ordering](./04-%20Migration%20Ordering.md) | Production Engineering | Dependency and execution ordering for migrations |
+| 06 | [05- Backward Compatible Schema Changes](./05-%20Backward%20Compatible%20Schema%20Changes.md) | Production Engineering | Compatibility during rolling deployments |
+| 07 | [06- Zero Downtime Migrations](./06-%20Zero%20Downtime%20Migrations.md) | Production Engineering | Safe schema changes without planned downtime |
+| 08 | [07- Adding Columns Safely](./07-%20Adding%20Columns%20Safely.md) | Production Engineering | Safe column introduction in production |
+| 09 | [08- Removing Columns Safely](./08-%20Removing%20Columns%20Safely.md) | Production Engineering | Safe destructive schema changes |
+| 10 | [09- Index Deployment](./09-%20Index%20Deployment.md) | Production Engineering | Production index creation and removal |
+| 11 | [10- Large Table Migration Strategies](./10-%20Large%20Table%20Migration%20Strategies.md) | Production Engineering | Large-scale data and schema changes |
+| 12 | [11- Migration Rollback Strategies](./11-%20Migration%20Rollback%20Strategies.md) | Production Engineering | Rollback, roll-forward, and recovery planning |
+| 13 | [12- Database Deployment in CI CD](./12-%20Database%20Deployment%20in%20CI%20CD.md) | Production Engineering | CI/CD pipeline integration for database changes |
+| 14 | [13- SQLAlchemy and Alembic Migrations](./13-%20SQLAlchemy%20and%20Alembic%20Migrations.md) | Production Engineering | Alembic-based migration workflows |
+| 15 | [14- Django Database Migrations](./14-%20Django%20Database%20Migrations.md) | Production Engineering | Django migration architecture and operations |
+| 16 | [15- Production Database Change Checklist](./15-%20Production%20Database%20Change%20Checklist.md) | Production Engineering | End-to-end production database change checklist |
 
 ---
 
