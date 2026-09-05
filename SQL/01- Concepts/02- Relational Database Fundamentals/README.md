@@ -10,18 +10,20 @@ The documents progress from core relational concepts to practical database desig
 
 ## Navigation
 
-- [01- Tables Rows and Columns](./01-%20Tables%20Rows%20and%20Columns.md)
-- [02- Primary Keys](./02-%20Primary%20Keys.md)
-- [03- Foreign Keys](./03-%20Foreign%20Keys.md)
-- [04- Relationships](./04-%20Relationships.md)
-- [05- One-to-One Relationships](./05-%20One-to-One%20Relationships.md)
-- [06- One-to-Many Relationships](./06-%20One-to-Many%20Relationships.md)
-- [07- Many-to-Many Relationships](./07-%20Many-to-Many%20Relationships.md)
-- [08- NULL and Missing Data](./08-%20NULL%20and%20Missing%20Data.md)
-- [09- Constraints](./09-%20Constraints.md)
-- [10- Data Integrity](./10-%20Data%20Integrity.md)
-- [11- Referential Integrity](./11-%20Referential%20Integrity.md)
-- [12- Database Design Rules](./12-%20Database%20Design%20Rules.md)
+| # | File | Description |
+|---|---|---|
+| 01 | [01- Tables Rows and Columns](./01-%20Tables%20Rows%20and%20Columns.md) | |
+| 02 | [02- Primary Keys](./02-%20Primary%20Keys.md) | |
+| 03 | [03- Foreign Keys](./03-%20Foreign%20Keys.md) | |
+| 04 | [04- Relationships](./04-%20Relationships.md) | |
+| 05 | [05- One-to-One Relationships](./05-%20One-to-One%20Relationships.md) | |
+| 06 | [06- One-to-Many Relationships](./06-%20One-to-Many%20Relationships.md) | |
+| 07 | [07- Many-to-Many Relationships](./07-%20Many-to-Many%20Relationships.md) | |
+| 08 | [08- NULL and Missing Data](./08-%20NULL%20and%20Missing%20Data.md) | |
+| 09 | [09- Constraints](./09-%20Constraints.md) | |
+| 10 | [10- Data Integrity](./10-%20Data%20Integrity.md) | |
+| 11 | [11- Referential Integrity](./11-%20Referential%20Integrity.md) | |
+| 12 | [12- Database Design Rules](./12-%20Database%20Design%20Rules.md) | |
 
 ---
 

@@ -12,13 +12,15 @@ The material progresses from relational modeling and relationships to data integ
 
 SQL commands can be understood by the responsibility they perform: defining database structures, manipulating data, retrieving data, controlling privileges, and controlling transactions.
 
-- [01- DDL](./01-%20DDL.md) — Define and modify database structures
-- [02- DML](./02-%20DML.md) — Insert, update, and delete data
-- [03- DQL](./03-%20DQL.md) — Retrieve data with queries
-- [04- DCL](./04-%20DCL.md) — Manage database privileges
-- [05- TCL](./05-%20TCL.md) — Control transaction boundaries
-- [06- Command Category Comparison](./06-%20Command%20Category%20Comparison.md) — Compare SQL command categories
-- [07- When to Use Each SQL Command Category](./07-%20When%20to%20Use%20Each%20SQL%20Command%20Category.md) — Select the appropriate command category for backend operations
+| # | File | Description |
+|---|---|---|
+| 01 | [01- DDL](./01-%20DDL.md) | Define and modify database structures |
+| 02 | [02- DML](./02-%20DML.md) | Insert, update, and delete data |
+| 03 | [03- DQL](./03-%20DQL.md) | Retrieve data with queries |
+| 04 | [04- DCL](./04-%20DCL.md) | Manage database privileges |
+| 05 | [05- TCL](./05-%20TCL.md) | Control transaction boundaries |
+| 06 | [06- Command Category Comparison](./06-%20Command%20Category%20Comparison.md) | Compare SQL command categories |
+| 07 | [07- When to Use Each SQL Command Category](./07-%20When%20to%20Use%20Each%20SQL%20Command%20Category.md) | Select the appropriate command category for backend operations |
 
 ## Relational Modeling Concepts
 

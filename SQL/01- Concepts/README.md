@@ -1,4 +1,4 @@
-﻿# Concepts
+# Concepts
 
 ## Overview
 
@@ -10,9 +10,11 @@ The material here is not about syntax. It is about building the mental model tha
 
 ## Navigation
 
-- [01- Introduction](./01-%20Introduction/README.md) — What SQL is, how it executes, and how it fits into backend systems
-- [02- Relational Database Fundamentals](./02-%20Relational%20Database%20Fundamentals/README.md) — Tables, keys, relationships, constraints, and data integrity
-- [03- SQL Command Categories](./03-%20SQL%20Command%20Categories/README.md) — DDL, DML, DQL, DCL, and TCL
+| # | Section | Layer | Description |
+|---|---|---|---|
+| 01 | [Concepts](./README.md) | SQL Foundations | Relational database fundamentals, SQL command categories, and the relational model |
+| 02 | [Query Fundamentals](./02-%20Query%20Fundamentals/README.md) | SQL Foundations | SELECT, filtering, sorting, operators, aggregate functions, string functions, dates, and NULL handling |
+| 03 | [Query-Logic and Transformation](./03-%20Query-Logic%20and%20Transformation/README.md) | SQL Foundations | CASE WHEN, type casting, and set operators |
 
 ---
 
