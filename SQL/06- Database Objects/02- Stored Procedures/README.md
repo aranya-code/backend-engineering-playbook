@@ -12,20 +12,22 @@ This section progresses from stored procedure fundamentals through implementatio
 
 ## Navigation
 
-- [01- Stored Procedures Introduction](./01-%20Stored%20Procedures%20Introduction.md) — Purpose, characteristics, execution model, use cases, advantages, and limitations
-- [02- Stored Procedure Structure](./02-%20Stored%20Procedure%20Structure.md) — Anatomy, declaration sections, executable statements, parameters, and database-specific structure
-- [03- Parameters](./03-%20Parameters.md) — Input, output, and inout parameters, parameter types, defaults, and validation
-- [04- Variables and Control Flow](./04-%20Variables%20and%20Control%20Flow.md) — Local variables, assignments, conditional execution, loops, and procedural control flow
-- [05- Conditional Logic](./05-%20Conditional%20Logic.md) — IF, ELSE, CASE, branching strategies, null handling, and conditional database operations
-- [06- Error Handling](./06-%20Error%20Handling.md) — Exceptions, error propagation, custom errors, rollback behavior, and retryable failures
-- [07- Transactions in Stored Procedures](./07-%20Transactions%20in%20Stored%20Procedures.md) — Transaction boundaries, atomicity, isolation, locking, and rollback behavior
-- [08- Stored Procedures vs Application Logic](./08-%20Stored%20Procedures%20vs%20Application%20Logic.md) — Responsibility boundaries between database-side logic and application code
-- [09- Stored Procedures vs Functions](./09-%20Stored%20Procedures%20vs%20Functions.md) — Invocation, return behavior, transaction capabilities, side effects, and use cases
-- [10- Stored Procedures vs CTEs](./10-%20Stored%20Procedures%20vs%20CTEs.md) — Choosing between procedural routines and declarative query composition
-- [11- When to Use Stored Procedures](./11-%20When%20to%20Use%20Stored%20Procedures.md) — Practical decision criteria and production scenarios
-- [12- When Not to Use Stored Procedures](./12-%20When%20Not%20to%20Use%20Stored%20Procedures.md) — Situations where application logic, queries, or other objects are a better fit
-- [13- Database Portability Considerations](./13-%20Database%20Portability%20Considerations.md) — Vendor-specific behavior, portability trade-offs, and migration implications
-- [14- Common Stored Procedure Mistakes](./14-%20Common%20Stored%20Procedure%20Mistakes.md) — Correctness, performance, security, concurrency, and operational failures
+| # | File | Description |
+|---|---|---|
+| 01 | [01- Stored Procedures Introduction](./01-%20Stored%20Procedures%20Introduction.md) | Purpose, characteristics, execution model, use cases, advantages, and limitations |
+| 02 | [02- Stored Procedure Structure](./02-%20Stored%20Procedure%20Structure.md) | Anatomy, declaration sections, executable statements, parameters, and database-specific structure |
+| 03 | [03- Parameters](./03-%20Parameters.md) | Input, output, and inout parameters, parameter types, defaults, and validation |
+| 04 | [04- Variables and Control Flow](./04-%20Variables%20and%20Control%20Flow.md) | Local variables, assignments, conditional execution, loops, and procedural control flow |
+| 05 | [05- Conditional Logic](./05-%20Conditional%20Logic.md) | IF, ELSE, CASE, branching strategies, null handling, and conditional database operations |
+| 06 | [06- Error Handling](./06-%20Error%20Handling.md) | Exceptions, error propagation, custom errors, rollback behavior, and retryable failures |
+| 07 | [07- Transactions in Stored Procedures](./07-%20Transactions%20in%20Stored%20Procedures.md) | Transaction boundaries, atomicity, isolation, locking, and rollback behavior |
+| 08 | [08- Stored Procedures vs Application Logic](./08-%20Stored%20Procedures%20vs%20Application%20Logic.md) | Responsibility boundaries between database-side logic and application code |
+| 09 | [09- Stored Procedures vs Functions](./09-%20Stored%20Procedures%20vs%20Functions.md) | Invocation, return behavior, transaction capabilities, side effects, and use cases |
+| 10 | [10- Stored Procedures vs CTEs](./10-%20Stored%20Procedures%20vs%20CTEs.md) | Choosing between procedural routines and declarative query composition |
+| 11 | [11- When to Use Stored Procedures](./11-%20When%20to%20Use%20Stored%20Procedures.md) | Practical decision criteria and production scenarios |
+| 12 | [12- When Not to Use Stored Procedures](./12-%20When%20Not%20to%20Use%20Stored%20Procedures.md) | Situations where application logic, queries, or other objects are a better fit |
+| 13 | [13- Database Portability Considerations](./13-%20Database%20Portability%20Considerations.md) | Vendor-specific behavior, portability trade-offs, and migration implications |
+| 14 | [14- Common Stored Procedure Mistakes](./14-%20Common%20Stored%20Procedure%20Mistakes.md) | Correctness, performance, security, concurrency, and operational failures |
 
 ## Stored Procedure Decision Model
 

@@ -1,4 +1,4 @@
-﻿# Database Objects
+# Database Objects
 
 ## Overview
 
@@ -10,8 +10,11 @@ These objects are tools for managing complexity, enforcing consistency, and cont
 
 ## Navigation
 
-- [01- Views](./01-%20Views/README.md) — Reusable query abstractions, updatable views, security, and maintainability
-- [02- Stored Procedures](./02-%20Stored%20Procedures/README.md) — Database-side procedural logic, transactions, parameters, and architectural tradeoffs
+| # | Section | Layer | Description |
+|---|---|---|---|
+| 01 | [Database Objects](./README.md) | Schema and Data Management | Views and stored procedures |
+| 02 | [01- Views](./01-%20Views/README.md) | Schema and Data Management | Reusable query abstractions, updatable views, security, and maintainability |
+| 03 | [02- Stored Procedures](./02-%20Stored%20Procedures/README.md) | Schema and Data Management | Database-side procedural logic, transactions, parameters, and architectural tradeoffs |
 
 ---
 

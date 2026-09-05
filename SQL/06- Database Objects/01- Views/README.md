@@ -10,22 +10,24 @@ The emphasis is on understanding **when a view is the right abstraction**, not s
 
 ## Navigation
 
-- [01- Views Introduction](./01-%20Views%20Introduction.md) — View fundamentals, purpose, characteristics, and use cases
-- [02- Creating and Dropping Views](./02-%20Creating%20and%20Dropping%20Views.md) — CREATE VIEW, CREATE OR REPLACE VIEW, and DROP VIEW
-- [03- How Views Work](./03-%20How%20Views%20Work.md) — Query expansion, execution, optimization, and lifecycle
-- [04- View Types](./04-%20View%20Types.md) — Normal, materialized, recursive, and specialized view patterns
-- [05- Updatable Views](./05-%20Updatable%20Views.md) — INSERT, UPDATE, DELETE, and view updatability rules
-- [06- Views with JOINs](./06-%20Views%20with%20JOINs.md) — Combining related tables through database-level projections
-- [07- Views with Aggregations](./07-%20Views%20with%20Aggregations.md) — GROUP BY, aggregate functions, reporting, and performance
-- [08- Views with CTEs](./08-%20Views%20with%20CTEs.md) — Using CTEs to structure complex view definitions
-- [09- Views vs CTEs](./09-%20Views%20vs%20CTEs.md) — Choosing persistent views versus query-local CTEs
-- [10- Views vs Temporary Tables](./10-%20Views%20vs%20Temporary%20Tables.md) — Persistent abstractions versus session-specific intermediate data
-- [11- Views vs Stored Procedures](./11-%20Views%20vs%20Stored%20Procedures.md) — Declarative data access versus procedural database logic
-- [12- View Security Use Cases](./12-%20View%20Security%20Use%20Cases.md) — Data exposure, privileges, tenant isolation, and security boundaries
-- [13- View Maintenance](./13-%20View%20Maintenance.md) — Dependencies, migrations, compatibility, monitoring, and ownership
-- [14- When to Use Views](./14-%20When%20to%20Use%20Views.md) — Practical decision criteria and production use cases
-- [15- When Not to Use Views](./15-%20When%20Not%20to%20Use%20Views.md) — Cases where application queries, CTEs, tables, or other abstractions are better
-- [16- Common View Mistakes](./16-%20Common%20View%20Mistakes.md) — Performance, security, maintainability, dependency, and design pitfalls
+| # | File | Description |
+|---|---|---|
+| 01 | [01- Views Introduction](./01-%20Views%20Introduction.md) | View fundamentals, purpose, characteristics, and use cases |
+| 02 | [02- Creating and Dropping Views](./02-%20Creating%20and%20Dropping%20Views.md) | CREATE VIEW, CREATE OR REPLACE VIEW, and DROP VIEW |
+| 03 | [03- How Views Work](./03-%20How%20Views%20Work.md) | Query expansion, execution, optimization, and lifecycle |
+| 04 | [04- View Types](./04-%20View%20Types.md) | Normal, materialized, recursive, and specialized view patterns |
+| 05 | [05- Updatable Views](./05-%20Updatable%20Views.md) | INSERT, UPDATE, DELETE, and view updatability rules |
+| 06 | [06- Views with JOINs](./06-%20Views%20with%20JOINs.md) | Combining related tables through database-level projections |
+| 07 | [07- Views with Aggregations](./07-%20Views%20with%20Aggregations.md) | GROUP BY, aggregate functions, reporting, and performance |
+| 08 | [08- Views with CTEs](./08-%20Views%20with%20CTEs.md) | Using CTEs to structure complex view definitions |
+| 09 | [09- Views vs CTEs](./09-%20Views%20vs%20CTEs.md) | Choosing persistent views versus query-local CTEs |
+| 10 | [10- Views vs Temporary Tables](./10-%20Views%20vs%20Temporary%20Tables.md) | Persistent abstractions versus session-specific intermediate data |
+| 11 | [11- Views vs Stored Procedures](./11-%20Views%20vs%20Stored%20Procedures.md) | Declarative data access versus procedural database logic |
+| 12 | [12- View Security Use Cases](./12-%20View%20Security%20Use%20Cases.md) | Data exposure, privileges, tenant isolation, and security boundaries |
+| 13 | [13- View Maintenance](./13-%20View%20Maintenance.md) | Dependencies, migrations, compatibility, monitoring, and ownership |
+| 14 | [14- When to Use Views](./14-%20When%20to%20Use%20Views.md) | Practical decision criteria and production use cases |
+| 15 | [15- When Not to Use Views](./15-%20When%20Not%20to%20Use%20Views.md) | Cases where application queries, CTEs, tables, or other abstractions are better |
+| 16 | [16- Common View Mistakes](./16-%20Common%20View%20Mistakes.md) | Performance, security, maintainability, dependency, and design pitfalls |
 
 ## Recommended Reading Order
 
