@@ -19,22 +19,24 @@ The goal is not to normalize every table mechanically. A senior backend engineer
 
 ## Navigation
 
-- [01- Database Schema Design](./01-%20Database%20Schema%20Design.md) — Designing production-ready relational schemas
-- [02- Entity Relationship Modeling](./02-%20Entity%20Relationship%20Modeling.md) — Entities, relationships, cardinality, and ER modeling
-- [03- Normalization Introduction](./03-%20Normalization%20Introduction.md) — Why normalization exists and the problems it solves
-- [04- First Normal Form](./04-%20First%20Normal%20Form.md) — Atomic values and eliminating repeating groups
-- [05- Second Normal Form](./05-%20Second%20Normal%20Form.md) — Removing partial dependencies
-- [06- Third Normal Form](./06-%20Third%20Normal%20Form.md) — Removing transitive dependencies
-- [07- BCNF](./07-%20BCNF.md) — Boyce-Codd Normal Form and stronger dependency-based normalization
-- [08- Functional Dependencies](./08-%20Functional%20Dependencies.md) — Reasoning about attribute dependencies
-- [09- Normalization Rules](./09-%20Normalization%20Rules.md) — Practical rules for evaluating relational schemas
-- [10- Denormalization](./10-%20Denormalization.md) — Intentionally introducing controlled redundancy
-- [11- Normalization vs Denormalization](./11-%20Normalization%20vs%20Denormalization.md) — Trade-offs between integrity and read performance
-- [12- When to Normalize](./12-%20When%20to%20Normalize.md) — Situations where normalized designs are preferable
-- [13- When to Denormalize](./13-%20When%20to%20Denormalize.md) — Workload-driven reasons for controlled redundancy
-- [14- Choosing Between Normalization and Denormalization](./14-%20Choosing%20Between%20Normalization%20and%20Denormalization.md) — A systematic decision framework
-- [15- Schema Evolution](./15-%20Schema%20Evolution.md) — Safely changing schemas in production
-- [16- Common Database Design Mistakes](./16-%20Common%20Database%20Design%20Mistakes.md) — Common modeling, integrity, performance, and operational failures
+| # | Section | Layer | Description |
+|---|---|---|---|
+| 01 | [Database Schema Design](./01-%20Database%20Schema%20Design.md) | Schema and Data Management | Designing production-ready relational schemas |
+| 02 | [Entity Relationship Modeling](./02-%20Entity%20Relationship%20Modeling.md) | Schema and Data Management | Entities, relationships, cardinality, and ER modeling |
+| 03 | [Normalization Introduction](./03-%20Normalization%20Introduction.md) | Schema and Data Management | Why normalization exists and the problems it solves |
+| 04 | [First Normal Form](./04-%20First%20Normal%20Form.md) | Schema and Data Management | Atomic values and eliminating repeating groups |
+| 05 | [Second Normal Form](./05-%20Second%20Normal%20Form.md) | Schema and Data Management | Removing partial dependencies |
+| 06 | [Third Normal Form](./06-%20Third%20Normal%20Form.md) | Schema and Data Management | Removing transitive dependencies |
+| 07 | [BCNF](./07-%20BCNF.md) | Schema and Data Management | Boyce-Codd Normal Form and stronger dependency-based normalization |
+| 08 | [Functional Dependencies](./08-%20Functional%20Dependencies.md) | Schema and Data Management | Reasoning about attribute dependencies |
+| 09 | [Normalization Rules](./09-%20Normalization%20Rules.md) | Schema and Data Management | Practical rules for evaluating relational schemas |
+| 10 | [Denormalization](./10-%20Denormalization.md) | Schema and Data Management | Intentionally introducing controlled redundancy |
+| 11 | [Normalization vs Denormalization](./11-%20Normalization%20vs%20Denormalization.md) | Schema and Data Management | Trade-offs between integrity and read performance |
+| 12 | [When to Normalize](./12-%20When%20to%20Normalize.md) | Schema and Data Management | Situations where normalized designs are preferable |
+| 13 | [When to Denormalize](./13-%20When%20to%20Denormalize.md) | Schema and Data Management | Workload-driven reasons for controlled redundancy |
+| 14 | [Choosing Between Normalization and Denormalization](./14-%20Choosing%20Between%20Normalization%20and%20Denormalization.md) | Schema and Data Management | A systematic decision framework |
+| 15 | [Schema Evolution](./15-%20Schema%20Evolution.md) | Production Engineering | Safely changing schemas in production |
+| 16 | [Common Database Design Mistakes](./16-%20Common%20Database%20Design%20Mistakes.md) | Production Engineering | Common modeling, integrity, performance, and operational failures |
 
 ## Recommended Learning Flow
 
@@ -283,33 +285,39 @@ The concepts in this section apply directly to common backend frameworks and inf
 
 ## Navigation
 
-### Schema Fundamentals
-
-- [01- Database Schema Design](./01-%20Database%20Schema%20Design.md)
-- [02- Entity Relationship Modeling](./02-%20Entity%20Relationship%20Modeling.md)
+| # | Section | Layer | Description |
+|---|---|---|---|
+| 01 | [Database Schema Design](./01-%20Database%20Schema%20Design.md) | Schema and Data Management | Designing production-ready relational schemas |
+| 02 | [Entity Relationship Modeling](./02-%20Entity%20Relationship%20Modeling.md) | Schema and Data Management | Entities, relationships, cardinality, and ER modeling |
 
 ### Normalization
 
-- [03- Normalization Introduction](./03-%20Normalization%20Introduction.md)
-- [04- First Normal Form](./04-%20First%20Normal%20Form.md)
-- [05- Second Normal Form](./05-%20Second%20Normal%20Form.md)
-- [06- Third Normal Form](./06-%20Third%20Normal%20Form.md)
-- [07- BCNF](./07-%20BCNF.md)
-- [08- Functional Dependencies](./08-%20Functional%20Dependencies.md)
-- [09- Normalization Rules](./09-%20Normalization%20Rules.md)
+| # | Section | Layer | Description |
+|---|---|---|---|
+| 03 | [Normalization Introduction](./03-%20Normalization%20Introduction.md) | Schema and Data Management | Why normalization exists and the problems it solves |
+| 04 | [First Normal Form](./04-%20First%20Normal%20Form.md) | Schema and Data Management | Atomic values and eliminating repeating groups |
+| 05 | [Second Normal Form](./05-%20Second%20Normal%20Form.md) | Schema and Data Management | Removing partial dependencies |
+| 06 | [Third Normal Form](./06-%20Third%20Normal%20Form.md) | Schema and Data Management | Removing transitive dependencies |
+| 07 | [BCNF](./07-%20BCNF.md) | Schema and Data Management | Boyce-Codd Normal Form and stronger dependency-based normalization |
+| 08 | [Functional Dependencies](./08-%20Functional%20Dependencies.md) | Schema and Data Management | Reasoning about attribute dependencies |
+| 09 | [Normalization Rules](./09-%20Normalization%20Rules.md) | Schema and Data Management | Practical rules for evaluating relational schemas |
 
 ### Denormalization and Design Trade-offs
 
-- [10- Denormalization](./10-%20Denormalization.md)
-- [11- Normalization vs Denormalization](./11-%20Normalization%20vs%20Denormalization.md)
-- [12- When to Normalize](./12-%20When%20to%20Normalize.md)
-- [13- When to Denormalize](./13-%20When%20to%20Denormalize.md)
-- [14- Choosing Between Normalization and Denormalization](./14-%20Choosing%20Between%20Normalization%20and%20Denormalization.md)
+| # | Section | Layer | Description |
+|---|---|---|---|
+| 10 | [Denormalization](./10-%20Denormalization.md) | Schema and Data Management | Intentionally introducing controlled redundancy |
+| 11 | [Normalization vs Denormalization](./11-%20Normalization%20vs%20Denormalization.md) | Schema and Data Management | Trade-offs between integrity and read performance |
+| 12 | [When to Normalize](./12-%20When%20to%20Normalize.md) | Schema and Data Management | Situations where normalized designs are preferable |
+| 13 | [When to Denormalize](./13-%20When%20to%20Denormalize.md) | Schema and Data Management | Workload-driven reasons for controlled redundancy |
+| 14 | [Choosing Between Normalization and Denormalization](./14-%20Choosing%20Between%20Normalization%20and%20Denormalization.md) | Schema and Data Management | A systematic decision framework |
 
 ### Production Design
 
-- [15- Schema Evolution](./15-%20Schema%20Evolution.md)
-- [16- Common Database Design Mistakes](./16-%20Common%20Database%20Design%20Mistakes.md)
+| # | Section | Layer | Description |
+|---|---|---|---|
+| 15 | [Schema Evolution](./15-%20Schema%20Evolution.md) | Production Engineering | Safely changing schemas in production |
+| 16 | [Common Database Design Mistakes](./16-%20Common%20Database%20Design%20Mistakes.md) | Production Engineering | Common modeling, integrity, performance, and operational failures |
 
 ## Key Takeaways
 

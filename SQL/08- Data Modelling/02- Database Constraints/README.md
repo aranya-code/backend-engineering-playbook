@@ -22,18 +22,20 @@ The goal is not merely to know constraint syntax, but to understand **which inva
 
 ## Navigation
 
-- [01- Constraints Introduction](./01-%20Constraints%20Introduction.md) — What database constraints are, why they matter, and how they differ from application validation
-- [02- NOT NULL](./02-%20NOT%20NULL.md) — Preventing missing values and enforcing required columns
-- [03- UNIQUE](./03-%20UNIQUE.md) — Preventing duplicate values and enforcing uniqueness invariants
-- [04- PRIMARY KEY](./04-%20PRIMARY%20KEY.md) — Stable row identity and primary-key design decisions
-- [05- FOREIGN KEY](./05-%20FOREIGN%20KEY.md) — Referential integrity, cascades, and relationship enforcement
-- [06- CHECK](./06-%20CHECK.md) — Row-level validity rules and predicate constraints
-- [07- DEFAULT](./07-%20DEFAULT.md) — Supplying database-side values when a column is omitted
-- [08- Constraint Enforcement](./08-%20Constraint%20Enforcement.md) — How the database enforces constraints under concurrency and production load
-- [09- Constraint Naming Rules](./09-%20Constraint%20Naming%20Rules.md) — Naming conventions for maintainable and debuggable constraint definitions
-- [10- Constraints vs Application Validation](./10-%20Constraints%20vs%20Application%20Validation.md) — Where each type of invariant belongs and why database constraints are not optional
-- [11- Choosing the Right Constraint](./11-%20Choosing%20the%20Right%20Constraint.md) — Matching constraints to business invariants systematically
-- [12- Common Constraint Mistakes](./12-%20Common%20Constraint%20Mistakes.md) — Production pitfalls, incorrect constraint choices, and operational failures
+| # | File | Description |
+|---|---|---|
+| 01 | [01- Constraints Introduction](./01-%20Constraints%20Introduction.md) | What database constraints are, why they matter, and how they differ from application validation |
+| 02 | [02- NOT NULL](./02-%20NOT%20NULL.md) | Preventing missing values and enforcing required columns |
+| 03 | [03- UNIQUE](./03-%20UNIQUE.md) | Preventing duplicate values and enforcing uniqueness invariants |
+| 04 | [04- PRIMARY KEY](./04-%20PRIMARY%20KEY.md) | Stable row identity and primary-key design decisions |
+| 05 | [05- FOREIGN KEY](./05-%20FOREIGN%20KEY.md) | Referential integrity, cascades, and relationship enforcement |
+| 06 | [06- CHECK](./06-%20CHECK.md) | Row-level validity rules and predicate constraints |
+| 07 | [07- DEFAULT](./07-%20DEFAULT.md) | Supplying database-side values when a column is omitted |
+| 08 | [08- Constraint Enforcement](./08-%20Constraint%20Enforcement.md) | How the database enforces constraints under concurrency and production load |
+| 09 | [09- Constraint Naming Rules](./09-%20Constraint%20Naming%20Rules.md) | Naming conventions for maintainable and debuggable constraint definitions |
+| 10 | [10- Constraints vs Application Validation](./10-%20Constraints%20vs%20Application%20Validation.md) | Where each type of invariant belongs and why database constraints are not optional |
+| 11 | [11- Choosing the Right Constraint](./11-%20Choosing%20the%20Right%20Constraint.md) | Matching constraints to business invariants systematically |
+| 12 | [12- Common Constraint Mistakes](./12-%20Common%20Constraint%20Mistakes.md) | Production pitfalls, incorrect constraint choices, and operational failures |
 
 ## Constraint Mental Model
 

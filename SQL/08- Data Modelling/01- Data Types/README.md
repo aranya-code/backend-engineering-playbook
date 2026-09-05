@@ -10,23 +10,25 @@ The documents progress from type fundamentals through specific data types, produ
 
 ## Navigation
 
-- [01- SQL Data Types Introduction](./01-%20SQL%20Data%20Types%20Introduction.md) — Data type fundamentals, type selection, domain modeling, and database/application boundaries
-- [02- Integer Types](./02-%20Integer%20Types.md) — Integer ranges, signed values, identity columns, and capacity planning
-- [03- Decimal and Numeric Types](./03-%20Decimal%20and%20Numeric%20Types.md) — Exact decimal arithmetic, NUMERIC, monetary values, precision, and scale
-- [04- Floating Point Types](./04-%20Floating%20Point%20Types.md) — REAL, DOUBLE PRECISION, approximation, numerical accuracy, and scientific workloads
-- [05- Character Types](./05-%20Character%20Types.md) — CHAR, VARCHAR, TEXT, length constraints, encoding, and string semantics
-- [06- Boolean Types](./06-%20Boolean%20Types.md) — Boolean representation, three-valued logic, NULL, defaults, and application mappings
-- [07- Date and Time Types](./07-%20Date%20and%20Time%20Types.md) — Dates, timestamps, time zones, intervals, UTC, and distributed-system time handling
-- [08- UUID Types](./08-%20UUID%20Types.md) — UUID representation, identifiers, generation strategies, indexing, and distributed systems
-- [09- JSON and JSONB](./09-%20JSON%20and%20JSONB.md) — Semi-structured data, PostgreSQL JSONB, indexing, querying, and relational boundaries
-- [10- Binary Types](./10-%20Binary%20Types.md) — Binary data, bytea, large objects, application handling, and object-storage trade-offs
-- [11- Enum Types](./11-%20Enum%20Types.md) — PostgreSQL enums, controlled vocabularies, schema evolution, and lookup-table alternatives
-- [12- NULL and Data Types](./12-%20NULL%20and%20Data%20Types.md) — Nullability, three-valued logic, missing versus empty values, defaults, and constraints
-- [13- Precision and Scale](./13-%20Precision%20and%20Scale.md) — Numeric precision, decimal scale, capacity planning, rounding, and financial data
-- [14- Choosing the Right Data Type](./14-%20Choosing%20the%20Right%20Data%20Type.md) — Practical type-selection methodology based on domain, constraints, performance, and growth
-- [15- Data Type Storage and Performance](./15-%20Data%20Type%20Storage%20and%20Performance.md) — Row size, indexes, storage overhead, cache behavior, and query performance
-- [16- Database-Specific Data Types](./16-%20Database-Specific%20Data%20Types.md) — PostgreSQL-specific types, portability, vendor lock-in, and production trade-offs
-- [17- Common Data Type Mistakes](./17-%20Common%20Data%20Type%20Mistakes.md) — Production pitfalls, incorrect type choices, migration problems, and ORM issues
+| # | File | Description |
+|---|---|---|
+| 01 | [01- SQL Data Types Introduction](./01-%20SQL%20Data%20Types%20Introduction.md) | Data type fundamentals, type selection, domain modeling, and database/application boundaries |
+| 02 | [02- Integer Types](./02-%20Integer%20Types.md) | Integer ranges, signed values, identity columns, and capacity planning |
+| 03 | [03- Decimal and Numeric Types](./03-%20Decimal%20and%20Numeric%20Types.md) | Exact decimal arithmetic, NUMERIC, monetary values, precision, and scale |
+| 04 | [04- Floating Point Types](./04-%20Floating%20Point%20Types.md) | REAL, DOUBLE PRECISION, approximation, numerical accuracy, and scientific workloads |
+| 05 | [05- Character Types](./05-%20Character%20Types.md) | CHAR, VARCHAR, TEXT, length constraints, encoding, and string semantics |
+| 06 | [06- Boolean Types](./06-%20Boolean%20Types.md) | Boolean representation, three-valued logic, NULL, defaults, and application mappings |
+| 07 | [07- Date and Time Types](./07-%20Date%20and%20Time%20Types.md) | Dates, timestamps, time zones, intervals, UTC, and distributed-system time handling |
+| 08 | [08- UUID Types](./08-%20UUID%20Types.md) | UUID representation, identifiers, generation strategies, indexing, and distributed systems |
+| 09 | [09- JSON and JSONB](./09-%20JSON%20and%20JSONB.md) | Semi-structured data, PostgreSQL JSONB, indexing, querying, and relational boundaries |
+| 10 | [10- Binary Types](./10-%20Binary%20Types.md) | Binary data, bytea, large objects, application handling, and object-storage trade-offs |
+| 11 | [11- Enum Types](./11-%20Enum%20Types.md) | PostgreSQL enums, controlled vocabularies, schema evolution, and lookup-table alternatives |
+| 12 | [12- NULL and Data Types](./12-%20NULL%20and%20Data%20Types.md) | Nullability, three-valued logic, missing versus empty values, defaults, and constraints |
+| 13 | [13- Precision and Scale](./13-%20Precision%20and%20Scale.md) | Numeric precision, decimal scale, capacity planning, rounding, and financial data |
+| 14 | [14- Choosing the Right Data Type](./14-%20Choosing%20the%20Right%20Data%20Type.md) | Practical type-selection methodology based on domain, constraints, performance, and growth |
+| 15 | [15- Data Type Storage and Performance](./15-%20Data%20Type%20Storage%20and%20Performance.md) | Row size, indexes, storage overhead, cache behavior, and query performance |
+| 16 | [16- Database-Specific Data Types](./16-%20Database-Specific%20Data%20Types.md) | PostgreSQL-specific types, portability, vendor lock-in, and production trade-offs |
+| 17 | [17- Common Data Type Mistakes](./17-%20Common%20Data%20Type%20Mistakes.md) | Production pitfalls, incorrect type choices, migration problems, and ORM issues |
 
 ## Recommended Reading Order
 

@@ -1,4 +1,4 @@
-﻿# Data Modelling
+# Data Modelling
 
 ## Overview
 
@@ -10,7 +10,10 @@ Good data modelling prevents classes of bugs that cannot be fixed with better qu
 
 ## Navigation
 
-- [01- Data Types](./01-%20Data%20Types/README.md) — Choosing correct SQL types for integers, decimals, strings, dates, UUIDs, JSON, and enums
+| # | Section | Layer | Description |
+|---|---|---|---|
+| 01 | [Data Modelling](./README.md) | Schema and Data Management | Data types, database constraints, schema design, and normalization |
+| 02 | [01- Data Types](./01-%20Data%20Types/README.md) | Schema and Data Management | Choosing correct SQL types for integers, decimals, strings, dates, UUIDs, JSON, and enums |
 
 ---
 
