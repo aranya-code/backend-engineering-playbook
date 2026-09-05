@@ -1,4 +1,4 @@
-﻿# Window Functions
+# Window Functions
 
 ## Overview
 
@@ -12,11 +12,13 @@ Unlike `GROUP BY`, which collapses rows into summary records, window functions r
 
 ## Navigation
 
-- [01- Fundamentals](./01-%20Fundamentals/README.md) — OVER clause, PARTITION BY, ORDER BY, frame boundaries, and execution rules
-- [02- Aggregate Functions](./02-%20Aggregate%20Functions/README.md) — Running totals, cumulative aggregates, and group-level metrics without collapsing rows
-- [03- Ranking Functions](./03-%20Ranking%20Functions/README.md) — ROW_NUMBER, RANK, DENSE_RANK, and NTILE
-- [04- Value Functions](./04-%20Value%20Functions/README.md) — LAG, LEAD, FIRST_VALUE, LAST_VALUE, and NTH_VALUE
-- [05- Decision Guides](./05-%20Decision%20Guides/README.md) — When to use window functions versus GROUP BY, subqueries, and CTEs
+| # | File | Description |
+|---|---|---|
+| 01 | [01- Fundamentals](./01-%20Fundamentals/README.md) | OVER clause, PARTITION BY, ORDER BY, frame boundaries, and execution rules |
+| 02 | [02- Aggregate Functions](./02-%20Aggregate%20Functions/README.md) | Running totals, cumulative aggregates, and group-level metrics without collapsing rows |
+| 03 | [03- Ranking Functions](./03-%20Ranking%20Functions/README.md) | ROW_NUMBER, RANK, DENSE_RANK, and NTILE |
+| 04 | [04- Value Functions](./04-%20Value%20Functions/README.md) | LAG, LEAD, FIRST_VALUE, LAST_VALUE, and NTH_VALUE |
+| 05 | [05- Decision Guides](./05-%20Decision%20Guides/README.md) | When to use window functions versus GROUP BY, subqueries, and CTEs |
 
 ---
 

@@ -30,22 +30,24 @@ Understanding this logical processing model is essential. Many window-function m
 
 ## Navigation
 
-- [01- Window Functions Introduction](./01-%20Window%20Functions%20Introduction.md) — Purpose, core concept, and how window functions differ from aggregate functions
-- [02- Window Function Mental Model](./02-%20Window%20Function%20Mental%20Model.md) — Building the right intuition for how window functions execute
-- [03- Aggregate vs Window Functions](./03-%20Aggregate%20vs%20Window%20Functions.md) — When to collapse rows versus preserve them with a window
-- [04- OVER Clause](./04-%20OVER%20Clause.md) — The OVER clause and how it defines the window
-- [05- PARTITION BY](./05-%20PARTITION%20BY.md) — Dividing rows into independent windows with PARTITION BY
-- [06- ORDER BY in Window Functions](./06-%20ORDER%20BY%20in%20Window%20Functions.md) — Row ordering within the window and its effect on calculations
-- [07- Window Function Execution Rules](./07-%20Window%20Function%20Execution%20Rules.md) — Logical processing order and when window functions evaluate
-- [08- Window Frames Introduction](./08-%20Window%20Frames%20Introduction.md) — What frame clauses are and why they matter
-- [09- ROWS vs RANGE](./09-%20ROWS%20vs%20RANGE.md) — Physical versus logical frame semantics
-- [10- Default Window Frames](./10-%20Default%20Window%20Frames.md) — Default frame behavior when ORDER BY is and is not present
-- [11- Window Frame Boundaries](./11-%20Window%20Frame%20Boundaries.md) — UNBOUNDED PRECEDING, CURRENT ROW, FOLLOWING, and custom boundaries
-- [12- Window Functions and GROUP BY](./12-%20Window%20Functions%20and%20GROUP%20BY.md) — Combining GROUP BY with window functions correctly
-- [13- Window Functions and WHERE](./13-%20Window%20Functions%20and%20WHERE.md) — Why WHERE cannot filter on window function results directly
-- [14- Window Functions and HAVING](./14-%20Window%20Functions%20and%20HAVING.md) — HAVING interaction and filtering after grouping
-- [15- Window Functions and CTEs](./15-%20Window%20Functions%20and%20CTEs.md) — Staging window results in CTEs for further filtering
-- [16- Window Functions and Subqueries](./16-%20Window%20Functions%20and%20Subqueries.md) — Wrapping window queries in subqueries to filter on their output
+| # | File | Description |
+|---|---|---|
+| 01 | [01- Window Functions Introduction](./01-%20Window%20Functions%20Introduction.md) | Purpose, core concept, and how window functions differ from aggregate functions |
+| 02 | [02- Window Function Mental Model](./02-%20Window%20Function%20Mental%20Model.md) | Building the right intuition for how window functions execute |
+| 03 | [03- Aggregate vs Window Functions](./03-%20Aggregate%20vs%20Window%20Functions.md) | When to collapse rows versus preserve them with a window |
+| 04 | [04- OVER Clause](./04-%20OVER%20Clause.md) | The OVER clause and how it defines the window |
+| 05 | [05- PARTITION BY](./05-%20PARTITION%20BY.md) | Dividing rows into independent windows with PARTITION BY |
+| 06 | [06- ORDER BY in Window Functions](./06-%20ORDER%20BY%20in%20Window%20Functions.md) | Row ordering within the window and its effect on calculations |
+| 07 | [07- Window Function Execution Rules](./07-%20Window%20Function%20Execution%20Rules.md) | Logical processing order and when window functions evaluate |
+| 08 | [08- Window Frames Introduction](./08-%20Window%20Frames%20Introduction.md) | What frame clauses are and why they matter |
+| 09 | [09- ROWS vs RANGE](./09-%20ROWS%20vs%20RANGE.md) | Physical versus logical frame semantics |
+| 10 | [10- Default Window Frames](./10-%20Default%20Window%20Frames.md) | Default frame behavior when ORDER BY is and is not present |
+| 11 | [11- Window Frame Boundaries](./11-%20Window%20Frame%20Boundaries.md) | UNBOUNDED PRECEDING, CURRENT ROW, FOLLOWING, and custom boundaries |
+| 12 | [12- Window Functions and GROUP BY](./12-%20Window%20Functions%20and%20GROUP%20BY.md) | Combining GROUP BY with window functions correctly |
+| 13 | [13- Window Functions and WHERE](./13-%20Window%20Functions%20and%20WHERE.md) | Why WHERE cannot filter on window function results directly |
+| 14 | [14- Window Functions and HAVING](./14-%20Window%20Functions%20and%20HAVING.md) | HAVING interaction and filtering after grouping |
+| 15 | [15- Window Functions and CTEs](./15-%20Window%20Functions%20and%20CTEs.md) | Staging window results in CTEs for further filtering |
+| 16 | [16- Window Functions and Subqueries](./16-%20Window%20Functions%20and%20Subqueries.md) | Wrapping window queries in subqueries to filter on their output |
 
 ## What Window Functions Solve
 

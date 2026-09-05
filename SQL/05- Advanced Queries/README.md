@@ -1,4 +1,4 @@
-﻿# Advanced Queries
+# Advanced Queries
 
 ## Overview
 
@@ -10,7 +10,10 @@ These are not exotic features. Window functions, in particular, appear in produc
 
 ## Navigation
 
-- [01- Window Functions](./01-%20Window%20Functions/README.md) — Calculations across related rows without collapsing the result set
+| # | Section | Layer | Description |
+|---|---|---|---|
+| 01 | [Advanced Queries](./README.md) | SQL Foundations | Window functions, ranking, value functions, and decision guides |
+| 02 | [01- Window Functions](./01-%20Window%20Functions/README.md) | SQL Foundations | Calculations across related rows without collapsing the result set |
 
 ---
 
