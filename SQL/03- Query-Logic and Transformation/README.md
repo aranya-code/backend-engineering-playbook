@@ -1,4 +1,4 @@
-﻿# Query-Logic and Transformation
+# Query-Logic and Transformation
 
 ## Overview
 
@@ -10,9 +10,12 @@ These capabilities are essential for backend engineers building reporting pipeli
 
 ## Navigation
 
-- [01- CASE WHEN](./01-%20CASE%20WHEN/README.md) — Conditional expressions, classifications, and derived values
-- [02- Type Casting and Conversion](./02-%20Type%20Casting%20and%20Conversion/README.md) — CAST, CONVERT, FORMAT, and safe type transformation
-- [03- Set Operators](./03-%20Set%20Operators/README.md) — UNION, UNION ALL, INTERSECT, and EXCEPT
+| # | Section | Layer | Description |
+|---|---|---|---|
+| 01 | [Query-Logic and Transformation](./README.md) | SQL Foundations | CASE WHEN, type casting, and set operators |
+| 02 | [01- CASE WHEN](./01-%20CASE%20WHEN/README.md) | SQL Foundations | Conditional expressions, classifications, and derived values |
+| 03 | [02- Type Casting and Conversion](./02-%20Type%20Casting%20and%20Conversion/README.md) | SQL Foundations | CAST, CONVERT, FORMAT, and safe type transformation |
+| 04 | [03- Set Operators](./03-%20Set%20Operators/README.md) | SQL Foundations | UNION, UNION ALL, INTERSECT, and EXCEPT |
 
 ---
 

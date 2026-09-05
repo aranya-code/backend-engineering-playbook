@@ -10,19 +10,21 @@ This section focuses primarily on SQL Server conversion behavior, including `CAS
 
 ## Navigation
 
-- [01- Data Types and Type Compatibility](./01-%20Data%20Types%20and%20Type%20Compatibility.md) — SQL data types, compatibility, precedence, and why type alignment matters
-- [02- CAST](./02-%20CAST.md) — Standard explicit type conversion
-- [03- CONVERT](./03-%20CONVERT.md) — SQL Server-specific conversion with style support
-- [04- FORMAT](./04-%20FORMAT.md) — Presentation-oriented formatting and its performance trade-offs
-- [05- CAST vs CONVERT vs FORMAT](./05-%20CAST%20vs%20CONVERT%20vs%20FORMAT.md) — Choosing the appropriate conversion mechanism
-- [06- Numeric Conversion](./06-%20Numeric%20Conversion.md) — Integer, decimal, precision, scale, overflow, and numeric conversion
-- [07- String Conversion](./07-%20String%20Conversion.md) — Converting between strings and other SQL data types
-- [08- Date and Time Conversion](./08-%20Date%20and%20Time%20Conversion.md) — Date/time parsing, formatting, precision, and safe filtering
-- [09- Implicit vs Explicit Conversion](./09-%20Implicit%20vs%20Explicit%20Conversion.md) — Automatic versus intentional conversion and its consequences
-- [10- Conversion Rules](./10-%20Conversion%20Rules.md) — SQL Server conversion behavior, precedence, and compatibility rules
-- [11- Conversion Errors and Edge Cases](./11-%20Conversion%20Errors%20and%20Edge%20Cases.md) — Invalid input, overflow, NULL, failed parsing, and boundary conditions
-- [12- When to Use Each Conversion Method](./12-%20When%20to%20Use%20Each%20Conversion%20Method.md) — Practical decision-making between available conversion approaches
-- [13- Conversion and Query Performance](./13-%20Conversion%20and%20Query%20Performance.md) — SARGability, indexes, execution plans, CPU cost, and production optimization
+| # | File | Description |
+|---|---|---|
+| 01 | [01- Data Types and Type Compatibility](./01-%20Data%20Types%20and%20Type%20Compatibility.md) | SQL data types, compatibility, precedence, and why type alignment matters |
+| 02 | [02- CAST](./02-%20CAST.md) | Standard explicit type conversion |
+| 03 | [03- CONVERT](./03-%20CONVERT.md) | SQL Server-specific conversion with style support |
+| 04 | [04- FORMAT](./04-%20FORMAT.md) | Presentation-oriented formatting and its performance trade-offs |
+| 05 | [05- CAST vs CONVERT vs FORMAT](./05-%20CAST%20vs%20CONVERT%20vs%20FORMAT.md) | Choosing the appropriate conversion mechanism |
+| 06 | [06- Numeric Conversion](./06-%20Numeric%20Conversion.md) | Integer, decimal, precision, scale, overflow, and numeric conversion |
+| 07 | [07- String Conversion](./07-%20String%20Conversion.md) | Converting between strings and other SQL data types |
+| 08 | [08- Date and Time Conversion](./08-%20Date%20and%20Time%20Conversion.md) | Date/time parsing, formatting, precision, and safe filtering |
+| 09 | [09- Implicit vs Explicit Conversion](./09-%20Implicit%20vs%20Explicit%20Conversion.md) | Automatic versus intentional conversion and its consequences |
+| 10 | [10- Conversion Rules](./10-%20Conversion%20Rules.md) | SQL Server conversion behavior, precedence, and compatibility rules |
+| 11 | [11- Conversion Errors and Edge Cases](./11-%20Conversion%20Errors%20and%20Edge%20Cases.md) | Invalid input, overflow, NULL, failed parsing, and boundary conditions |
+| 12 | [12- When to Use Each Conversion Method](./12-%20When%20to%20Use%20Each%20Conversion%20Method.md) | Practical decision-making between available conversion approaches |
+| 13 | [13- Conversion and Query Performance](./13-%20Conversion%20and%20Query%20Performance.md) | SARGability, indexes, execution plans, CPU cost, and production optimization |
 
 ## Conversion Mental Model
 

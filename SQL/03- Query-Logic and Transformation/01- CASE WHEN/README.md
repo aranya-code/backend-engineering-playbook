@@ -8,20 +8,22 @@ This folder focuses on using `CASE` effectively across common SQL operations:
 
 ## Navigation
 
-- [01- CASE WHEN Introduction](./01-%20CASE%20WHEN%20Introduction.md) — Core CASE concepts and syntax
-- [02- Simple CASE](./02-%20Simple%20CASE.md) — Equality-based CASE expressions
-- [03- Searched CASE](./03-%20Searched%20CASE.md) — Condition-based CASE expressions
-- [04- CASE Evaluation Rules](./04-%20CASE%20Evaluation%20Rules.md) — Branch ordering and evaluation behavior
-- [05- CASE with NULL](./05-%20CASE%20with%20NULL.md) — NULL handling inside conditional logic
-- [06- CASE with Aggregation](./06-%20CASE%20with%20Aggregation.md) — Conditional aggregation patterns
-- [07- CASE with GROUP BY](./07-%20CASE%20with%20GROUP%20BY.md) — Grouping data using derived classifications
-- [08- CASE with ORDER BY](./08-%20CASE%20with%20ORDER%20BY.md) — Conditional sorting and custom priorities
-- [09- CASE in UPDATE Statements](./09-%20CASE%20in%20UPDATE%20Statements.md) — Conditional data modification
-- [10- CASE for Conditional Logic](./10-%20CASE%20for%20Conditional%20Logic.md) — Practical conditional transformations
-- [11- CASE vs COALESCE](./11-%20CASE%20vs%20COALESCE.md) — Choosing between conditional logic and COALESCE
-- [12- CASE vs Application Logic](./12-%20CASE%20vs%20Application%20Logic.md) — Deciding where business logic should execute
-- [13- When to Use CASE WHEN](./13-%20When%20to%20Use%20CASE%20WHEN.md) — Practical decision-making and appropriate use cases
-- [14- Common CASE Mistakes](./14-%20Common%20CASE%20Mistakes.md) — Common correctness, performance, and design mistakes
+| # | File | Description |
+|---|---|---|
+| 01 | [01- CASE WHEN Introduction](./01-%20CASE%20WHEN%20Introduction.md) | Core CASE concepts and syntax |
+| 02 | [02- Simple CASE](./02-%20Simple%20CASE.md) | Equality-based CASE expressions |
+| 03 | [03- Searched CASE](./03-%20Searched%20CASE.md) | Condition-based CASE expressions |
+| 04 | [04- CASE Evaluation Rules](./04-%20CASE%20Evaluation%20Rules.md) | Branch ordering and evaluation behavior |
+| 05 | [05- CASE with NULL](./05-%20CASE%20with%20NULL.md) | NULL handling inside conditional logic |
+| 06 | [06- CASE with Aggregation](./06-%20CASE%20with%20Aggregation.md) | Conditional aggregation patterns |
+| 07 | [07- CASE with GROUP BY](./07-%20CASE%20with%20GROUP%20BY.md) | Grouping data using derived classifications |
+| 08 | [08- CASE with ORDER BY](./08-%20CASE%20with%20ORDER%20BY.md) | Conditional sorting and custom priorities |
+| 09 | [09- CASE in UPDATE Statements](./09-%20CASE%20in%20UPDATE%20Statements.md) | Conditional data modification |
+| 10 | [10- CASE for Conditional Logic](./10-%20CASE%20for%20Conditional%20Logic.md) | Practical conditional transformations |
+| 11 | [11- CASE vs COALESCE](./11-%20CASE%20vs%20COALESCE.md) | Choosing between conditional logic and COALESCE |
+| 12 | [12- CASE vs Application Logic](./12-%20CASE%20vs%20Application%20Logic.md) | Deciding where business logic should execute |
+| 13 | [13- When to Use CASE WHEN](./13-%20When%20to%20Use%20CASE%20WHEN.md) | Practical decision-making and appropriate use cases |
+| 14 | [14- Common CASE Mistakes](./14-%20Common%20CASE%20Mistakes.md) | Common correctness, performance, and design mistakes |
 
 ## What CASE WHEN Solves
 
