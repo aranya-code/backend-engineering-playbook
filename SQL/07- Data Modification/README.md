@@ -23,22 +23,25 @@ The section progresses from individual DML operations to production-grade patter
 
 ## Navigation
 
-- [01- INSERT Fundamentals](./01-%20INSERT%20Fundamentals.md) — Creating rows correctly with INSERT
-- [02- INSERT Multiple Rows](./02-%20INSERT%20Multiple%20Rows.md) — Bulk insertion and write efficiency
-- [03- INSERT from SELECT](./03-%20INSERT%20from%20SELECT.md) — Set-based data movement with INSERT ... SELECT
-- [04- UPDATE Fundamentals](./04-%20UPDATE%20Fundamentals.md) — Modifying existing rows correctly
-- [05- UPDATE with JOIN](./05-%20UPDATE%20with%20JOIN.md) — Updating rows based on related data
-- [06- DELETE Fundamentals](./06-%20DELETE%20Fundamentals.md) — Removing rows safely
-- [07- DELETE with JOIN](./07-%20DELETE%20with%20JOIN.md) — Deleting rows based on related data
-- [08- MERGE and Upsert Concepts](./08-%20MERGE%20and%20Upsert%20Concepts.md) — Insert-or-update and reconciliation semantics
-- [09- Upsert Patterns](./09-%20Upsert%20Patterns.md) — Database-specific and production-safe upsert patterns
-- [10- Safe UPDATE Practices](./10-%20Safe%20UPDATE%20Practices.md) — Preventing accidental mass modifications
-- [11- Safe DELETE Practices](./11-%20Safe%20DELETE%20Practices.md) — Preventing accidental data loss
-- [12- Returning Modified Rows](./12-%20Returning%20Modified%20Rows.md) — Obtaining affected rows from DML statements
-- [13- DML and NULL](./13-%20DML%20and%20NULL.md) — Correct handling of unknown and missing values in DML
-- [14- DML and Constraints](./14-%20DML%20and%20Constraints.md) — Primary keys, foreign keys, unique and check constraints in DML
-- [15- DML Rules and Safety Checklist](./15-%20DML%20Rules%20and%20Safety%20Checklist.md) — Production execution checklist for DML statements
-- [16- Choosing INSERT UPDATE DELETE MERGE](./16-%20Choosing%20INSERT%20UPDATE%20DELETE%20MERGE.md) — Selecting the correct DML operation for a business requirement
+| # | Section | Layer | Description |
+|---|---|---|---|
+| 01 | [Data Modification](./README.md) | Schema and Data Management | INSERT, UPDATE, DELETE, UPSERT, and bulk data operations |
+| 02 | [01- INSERT Fundamentals](./01-%20INSERT%20Fundamentals.md) | Schema and Data Management | Creating rows correctly with INSERT |
+| 03 | [02- INSERT Multiple Rows](./02-%20INSERT%20Multiple%20Rows.md) | Schema and Data Management | Bulk insertion and write efficiency |
+| 04 | [03- INSERT from SELECT](./03-%20INSERT%20from%20SELECT.md) | Schema and Data Management | Set-based data movement with INSERT ... SELECT |
+| 05 | [04- UPDATE Fundamentals](./04-%20UPDATE%20Fundamentals.md) | Schema and Data Management | Modifying existing rows correctly |
+| 06 | [05- UPDATE with JOIN](./05-%20UPDATE%20with%20JOIN.md) | Schema and Data Management | Updating rows based on related data |
+| 07 | [06- DELETE Fundamentals](./06-%20DELETE%20Fundamentals.md) | Schema and Data Management | Removing rows safely |
+| 08 | [07- DELETE with JOIN](./07-%20DELETE%20with%20JOIN.md) | Schema and Data Management | Deleting rows based on related data |
+| 09 | [08- MERGE and Upsert Concepts](./08-%20MERGE%20and%20Upsert%20Concepts.md) | Schema and Data Management | Insert-or-update and reconciliation semantics |
+| 10 | [09- Upsert Patterns](./09-%20Upsert%20Patterns.md) | Schema and Data Management | Database-specific and production-safe upsert patterns |
+| 11 | [10- Safe UPDATE Practices](./10-%20Safe%20UPDATE%20Practices.md) | Schema and Data Management | Preventing accidental mass modifications |
+| 12 | [11- Safe DELETE Practices](./11-%20Safe%20DELETE%20Practices.md) | Schema and Data Management | Preventing accidental data loss |
+| 13 | [12- Returning Modified Rows](./12-%20Returning%20Modified%20Rows.md) | Schema and Data Management | Obtaining affected rows from DML statements |
+| 14 | [13- DML and NULL](./13-%20DML%20and%20NULL.md) | Schema and Data Management | Correct handling of unknown and missing values in DML |
+| 15 | [14- DML and Constraints](./14-%20DML%20and%20Constraints.md) | Schema and Data Management | Primary keys, foreign keys, unique and check constraints in DML |
+| 16 | [15- DML Rules and Safety Checklist](./15-%20DML%20Rules%20and%20Safety%20Checklist.md) | Schema and Data Management | Production execution checklist for DML statements |
+| 17 | [16- Choosing INSERT UPDATE DELETE MERGE](./16-%20Choosing%20INSERT%20UPDATE%20DELETE%20MERGE.md) | Schema and Data Management | Selecting the correct DML operation for a business requirement |
 
 ## DML Fundamentals
 
