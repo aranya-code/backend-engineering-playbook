@@ -21,33 +21,36 @@ The material progresses from SQL fundamentals to query construction, aggregation
 
 ## Navigation
 
-- [01- Core SQL Interview Questions](./01-%20Core%20SQL%20Interview%20Questions.md) — Foundational SQL interview question set covering the full topic range
-- [02- SQL Fundamentals Questions](./02-%20SQL%20Fundamentals%20Questions.md) — Questions on relational model, SQL categories, and database basics
-- [03- SELECT and Filtering Questions](./03-%20SELECT%20and%20Filtering%20Questions.md) — Questions on SELECT, WHERE, LIKE, IN, NULL, and result filtering
-- [04- JOIN Questions](./04-%20JOIN%20Questions.md) — Questions on INNER, LEFT, RIGHT, FULL, CROSS, and self JOINs
-- [05- Aggregation Questions](./05-%20Aggregation%20Questions.md) — Questions on GROUP BY, HAVING, COUNT, SUM, AVG, and aggregation behavior
-- [06- NULL and CASE Questions](./06-%20NULL%20and%20CASE%20Questions.md) — Questions on NULL semantics, three-valued logic, and CASE expressions
-- [07- Subquery Questions](./07-%20Subquery%20Questions.md) — Questions on correlated and uncorrelated subqueries
-- [08- CTE Questions](./08-%20CTE%20Questions.md) — Questions on Common Table Expressions, recursion, and query structure
-- [09- Window Function Questions](./09-%20Window%20Function%20Questions.md) — Questions on ROW_NUMBER, RANK, LAG, LEAD, and window frames
-- [10- Index Questions](./10-%20Index%20Questions.md) — Questions on index types, design, selectivity, and trade-offs
-- [11- Query Optimization Questions](./11-%20Query%20Optimization%20Questions.md) — Questions on execution plans, SARGability, and optimization techniques
-- [12- Transaction Questions](./12-%20Transaction%20Questions.md) — Questions on ACID, isolation levels, and transaction design
-- [13- Concurrency and Locking Questions](./13-%20Concurrency%20and%20Locking%20Questions.md) — Questions on deadlocks, lock types, and concurrent access
-- [14- Database Design Questions](./14-%20Database%20Design%20Questions.md) — Questions on schema design, relationships, and modeling decisions
-- [15- Normalization Questions](./15-%20Normalization%20Questions.md) — Questions on normal forms, dependencies, and normalization trade-offs
-- [16- Partitioning Questions](./16-%20Partitioning%20Questions.md) — Questions on table partitioning strategies and when to partition
-- [17- SQL Architecture Questions](./17-%20SQL%20Architecture%20Questions.md) — Questions on database internals and production system architecture
-- [18- Backend SQL Questions](./18-%20Backend%20SQL%20Questions.md) — Questions connecting SQL decisions to API and backend design
-- [19- SQL Scenario Based Questions](./19-%20SQL%20Scenario%20Based%20Questions.md) — Practical scenario questions requiring end-to-end SQL reasoning
-- [20- SQL Troubleshooting Questions](./20-%20SQL%20Troubleshooting%20Questions.md) — Questions on diagnosing and resolving SQL problems in production
-- [21- SQL Performance Scenarios](./21-%20SQL%20Performance%20Scenarios.md) — Performance-focused scenarios covering latency, indexes, and query cost
-- [22- SQL Security Questions](./22-%20SQL%20Security%20Questions.md) — Questions on injection, permissions, encryption, and database security
-- [23- SQL Comparison Questions](./23-%20SQL%20Comparison%20Questions.md) — Questions comparing SQL constructs, approaches, and design choices
-- [24- Why Choose X Instead of Y](./24-%20Why%20Choose%20X%20Instead%20of%20Y.md) — Decision-based questions on choosing between competing SQL options
-- [25- Common SQL Interview Traps](./25-%20Common%20SQL%20Interview%20Traps.md) — Frequently misunderstood questions and common incorrect answers
-- [26- Common SQL Misconceptions](./26-%20Common%20SQL%20Misconceptions.md) — Widespread SQL misconceptions and the correct mental models
-- [27- Senior Backend SQL Questions](./27-%20Senior%20Backend%20SQL%20Questions.md) — Senior-level questions on architecture, trade-offs, and production reasoning
+| # | Section | Layer | Description |
+|---|---|---|---|
+| 01 | [Interview Questions](./README.md) | Applied SQL | SQL interview questions from fundamentals through senior backend and production scenarios |
+| 02 | [01- Core SQL Interview Questions](./01-%20Core%20SQL%20Interview%20Questions.md) | Applied SQL | Foundational SQL interview question set covering the full topic range |
+| 03 | [02- SQL Fundamentals Questions](./02-%20SQL%20Fundamentals%20Questions.md) | Applied SQL | Questions on relational model, SQL categories, and database basics |
+| 04 | [03- SELECT and Filtering Questions](./03-%20SELECT%20and%20Filtering%20Questions.md) | Applied SQL | Questions on SELECT, WHERE, LIKE, IN, NULL, and result filtering |
+| 05 | [04- JOIN Questions](./04-%20JOIN%20Questions.md) | Applied SQL | Questions on INNER, LEFT, RIGHT, FULL, CROSS, and self JOINs |
+| 06 | [05- Aggregation Questions](./05-%20Aggregation%20Questions.md) | Applied SQL | Questions on GROUP BY, HAVING, COUNT, SUM, AVG, and aggregation behavior |
+| 07 | [06- NULL and CASE Questions](./06-%20NULL%20and%20CASE%20Questions.md) | Applied SQL | Questions on NULL semantics, three-valued logic, and CASE expressions |
+| 08 | [07- Subquery Questions](./07-%20Subquery%20Questions.md) | Applied SQL | Questions on correlated and uncorrelated subqueries |
+| 09 | [08- CTE Questions](./08-%20CTE%20Questions.md) | Applied SQL | Questions on Common Table Expressions, recursion, and query structure |
+| 10 | [09- Window Function Questions](./09-%20Window%20Function%20Questions.md) | Applied SQL | Questions on ROW_NUMBER, RANK, LAG, LEAD, and window frames |
+| 11 | [10- Index Questions](./10-%20Index%20Questions.md) | Applied SQL | Questions on index types, design, selectivity, and trade-offs |
+| 12 | [11- Query Optimization Questions](./11-%20Query%20Optimization%20Questions.md) | Applied SQL | Questions on execution plans, SARGability, and optimization techniques |
+| 13 | [12- Transaction Questions](./12-%20Transaction%20Questions.md) | Applied SQL | Questions on ACID, isolation levels, and transaction design |
+| 14 | [13- Concurrency and Locking Questions](./13-%20Concurrency%20and%20Locking%20Questions.md) | Applied SQL | Questions on deadlocks, lock types, and concurrent access |
+| 15 | [14- Database Design Questions](./14-%20Database%20Design%20Questions.md) | Applied SQL | Questions on schema design, relationships, and modeling decisions |
+| 16 | [15- Normalization Questions](./15-%20Normalization%20Questions.md) | Applied SQL | Questions on normal forms, dependencies, and normalization trade-offs |
+| 17 | [16- Partitioning Questions](./16-%20Partitioning%20Questions.md) | Applied SQL | Questions on table partitioning strategies and when to partition |
+| 18 | [17- SQL Architecture Questions](./17-%20SQL%20Architecture%20Questions.md) | Applied SQL | Questions on database internals and production system architecture |
+| 19 | [18- Backend SQL Questions](./18-%20Backend%20SQL%20Questions.md) | Applied SQL | Questions connecting SQL decisions to API and backend design |
+| 20 | [19- SQL Scenario Based Questions](./19-%20SQL%20Scenario%20Based%20Questions.md) | Applied SQL | Practical scenario questions requiring end-to-end SQL reasoning |
+| 21 | [20- SQL Troubleshooting Questions](./20-%20SQL%20Troubleshooting%20Questions.md) | Applied SQL | Questions on diagnosing and resolving SQL problems in production |
+| 22 | [21- SQL Performance Scenarios](./21-%20SQL%20Performance%20Scenarios.md) | Applied SQL | Performance-focused scenarios covering latency, indexes, and query cost |
+| 23 | [22- SQL Security Questions](./22-%20SQL%20Security%20Questions.md) | Applied SQL | Questions on injection, permissions, encryption, and database security |
+| 24 | [23- SQL Comparison Questions](./23-%20SQL%20Comparison%20Questions.md) | Applied SQL | Questions comparing SQL constructs, approaches, and design choices |
+| 25 | [24- Why Choose X Instead of Y](./24-%20Why%20Choose%20X%20Instead%20of%20Y.md) | Applied SQL | Decision-based questions on choosing between competing SQL options |
+| 26 | [25- Common SQL Interview Traps](./25-%20Common%20SQL%20Interview%20Traps.md) | Applied SQL | Frequently misunderstood questions and common incorrect answers |
+| 27 | [26- Common SQL Misconceptions](./26-%20Common%20SQL%20Misconceptions.md) | Applied SQL | Widespread SQL misconceptions and the correct mental models |
+| 28 | [27- Senior Backend SQL Questions](./27-%20Senior%20Backend%20SQL%20Questions.md) | Applied SQL | Senior-level questions on architecture, trade-offs, and production reasoning |
 - [28- Production Database Scenarios](./28-%20Production%20Database%20Scenarios.md) — Realistic production database scenarios requiring architectural answers
 - [29- SQL Query Writing Exercises](./29-%20SQL%20Query%20Writing%20Exercises.md) — Hands-on query writing exercises for interview practice
 - [30- SQL Interview Decision Making](./30-%20SQL%20Interview%20Decision%20Making.md) — Framework for making and explaining SQL decisions in an interview setting
