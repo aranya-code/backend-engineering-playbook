@@ -26,32 +26,33 @@ The goal is to build the architectural reasoning required to design, operate, tr
 
 ## Navigation
 
-- [01- Relational Database Architecture](./01-%20Relational%20Database%20Architecture.md) — Overall relational database internals and architecture
-- [02- Database Server and Client Architecture](./02-%20Database%20Server%20and%20Client%20Architecture.md) — Client/server communication, drivers, sessions, and protocols
-- [03- Storage Engine Concepts](./03-%20Storage%20Engine%20Concepts.md) — Pages, tuples, storage layout, WAL, vacuum, and persistence
-- [04- Buffer Pool and Memory](./04-%20Buffer%20Pool%20and%20Memory.md) — Database memory, caching, shared buffers, and working memory
-- [05- Query Parser Planner and Executor](./05-%20Query%20Parser%20Planner%20and%20Executor.md) — SQL processing lifecycle from parsing to execution
-- [06- Query Optimizer Architecture](./06-%20Query%20Optimizer%20Architecture.md) — Cost-based optimization, cardinality, plans, and statistics
-- [07- Transaction Architecture](./07-%20Transaction%20Architecture.md) — Transaction boundaries, atomicity, isolation, and failure handling
-- [08- Locking and Concurrency Architecture](./08-%20Locking%20and%20Concurrency%20Architecture.md) — MVCC, locks, contention, deadlocks, and concurrency control
-- [09- Index Architecture](./09-%20Index%20Architecture.md) — Index structures, access paths, composite indexes, and maintenance
-- [10- Partitioned Table Architecture](./10-%20Partitioned%20Table%20Architecture.md) — Partitioning strategies, pruning, lifecycle, and large tables
-- [11- Read Heavy vs Write Heavy Database Architecture](./11-%20Read%20Heavy%20vs%20Write%20Heavy%20Database%20Architecture.md) — Workload characteristics and architecture selection
-- [12- OLTP Architecture](./12-%20OLTP%20Architecture.md) — Transaction-oriented database workloads
-- [13- OLAP Architecture](./13-%20OLAP%20Architecture.md) — Analytical workloads, aggregation, and analytical storage
-- [14- OLTP vs OLAP Architecture](./14-%20OLTP%20vs%20OLAP%20Architecture.md) — Architectural differences and workload isolation
-- [15- Primary Database and Read Replica Architecture](./15-%20Primary%20Database%20and%20Read%20Replica%20Architecture.md) — Primary/replica topology and read scaling
-- [16- Connection Pooling Architecture](./16-%20Connection%20Pooling%20Architecture.md) — Connection lifecycle, pooling, capacity, and exhaustion
-- [17- Database Scaling Architecture](./17-%20Database%20Scaling%20Architecture.md) — Progressive strategies for database scaling
-- [18- Vertical vs Horizontal Database Scaling](./18-%20Vertical%20vs%20Horizontal%20Database%20Scaling.md) — Scaling strategy trade-offs
-- [19- Replication Architecture](./19-%20Replication%20Architecture.md) — WAL replication, synchronous/asynchronous replication, and lag
-- [20- Sharding Architecture](./20-%20Sharding%20Architecture.md) — Distributed data placement, shard keys, routing, and rebalancing
-- [21- Multi-Tenant Database Architecture](./21-%20Multi-Tenant%20Database%20Architecture.md) — Tenant isolation, routing, scaling, and security
-- [22- High Availability Database Architecture](./22-%20High%20Availability%20Database%20Architecture.md) — Failover, fencing, RPO/RTO, backups, and HA operations
-- [23- Backend Application to Database Architecture](./23-%20Backend%20Application%20to%20Database%20Architecture.md) — Application/database boundaries, drivers, pools, transactions, and scaling
-- [24- Production SQL Architecture Patterns](./24-%20Production%20SQL%20Architecture%20Patterns.md) — Practical production patterns combining database and backend architecture
-
----
+| # | Section | Layer | Description |
+|---|---|---|---|
+| 01 | [Architecture](./README.md) | Production Engineering | Database internals, replication, scaling, HA, and production architecture patterns |
+| 02 | [01- Relational Database Architecture](./01-%20Relational%20Database%20Architecture.md) | Production Engineering | Overall relational database internals and architecture |
+| 03 | [02- Database Server and Client Architecture](./02-%20Database%20Server%20and%20Client%20Architecture.md) | Production Engineering | Client/server communication, drivers, sessions, and protocols |
+| 04 | [03- Storage Engine Concepts](./03-%20Storage%20Engine%20Concepts.md) | Production Engineering | Pages, tuples, storage layout, WAL, vacuum, and persistence |
+| 05 | [04- Buffer Pool and Memory](./04-%20Buffer%20Pool%20and%20Memory.md) | Production Engineering | Database memory, caching, shared buffers, and working memory |
+| 06 | [05- Query Parser Planner and Executor](./05-%20Query%20Parser%20Planner%20and%20Executor.md) | Production Engineering | SQL processing lifecycle from parsing to execution |
+| 07 | [06- Query Optimizer Architecture](./06-%20Query%20Optimizer%20Architecture.md) | Production Engineering | Cost-based optimization, cardinality, plans, and statistics |
+| 08 | [07- Transaction Architecture](./07-%20Transaction%20Architecture.md) | Production Engineering | Transaction boundaries, atomicity, isolation, and failure handling |
+| 09 | [08- Locking and Concurrency Architecture](./08-%20Locking%20and%20Concurrency%20Architecture.md) | Production Engineering | MVCC, locks, contention, deadlocks, and concurrency control |
+| 10 | [09- Index Architecture](./09-%20Index%20Architecture.md) | Production Engineering | Index structures, access paths, composite indexes, and maintenance |
+| 11 | [10- Partitioned Table Architecture](./10-%20Partitioned%20Table%20Architecture.md) | Production Engineering | Partitioning strategies, pruning, lifecycle, and large tables |
+| 12 | [11- Read Heavy vs Write Heavy Database Architecture](./11-%20Read%20Heavy%20vs%20Write%20Heavy%20Database%20Architecture.md) | Production Engineering | Workload characteristics and architecture selection |
+| 13 | [12- OLTP Architecture](./12-%20OLTP%20Architecture.md) | Production Engineering | Transaction-oriented database workloads |
+| 14 | [13- OLAP Architecture](./13-%20OLAP%20Architecture.md) | Production Engineering | Analytical workloads, aggregation, and analytical storage |
+| 15 | [14- OLTP vs OLAP Architecture](./14-%20OLTP%20vs%20OLAP%20Architecture.md) | Production Engineering | Architectural differences and workload isolation |
+| 16 | [15- Primary Database and Read Replica Architecture](./15-%20Primary%20Database%20and%20Read%20Replica%20Architecture.md) | Production Engineering | Primary/replica topology and read scaling |
+| 17 | [16- Connection Pooling Architecture](./16-%20Connection%20Pooling%20Architecture.md) | Production Engineering | Connection lifecycle, pooling, capacity, and exhaustion |
+| 18 | [17- Database Scaling Architecture](./17-%20Database%20Scaling%20Architecture.md) | Production Engineering | Progressive strategies for database scaling |
+| 19 | [18- Vertical vs Horizontal Database Scaling](./18-%20Vertical%20vs%20Horizontal%20Database%20Scaling.md) | Production Engineering | Scaling strategy trade-offs |
+| 20 | [19- Replication Architecture](./19-%20Replication%20Architecture.md) | Production Engineering | WAL replication, synchronous/asynchronous replication, and lag |
+| 21 | [20- Sharding Architecture](./20-%20Sharding%20Architecture.md) | Production Engineering | Distributed data placement, shard keys, routing, and rebalancing |
+| 22 | [21- Multi-Tenant Database Architecture](./21-%20Multi-Tenant%20Database%20Architecture.md) | Production Engineering | Tenant isolation, routing, scaling, and security |
+| 23 | [22- High Availability Database Architecture](./22-%20High%20Availability%20Database%20Architecture.md) | Production Engineering | Failover, fencing, RPO/RTO, backups, and HA operations |
+| 24 | [23- Backend Application to Database Architecture](./23-%20Backend%20Application%20to%20Database%20Architecture.md) | Production Engineering | Application/database boundaries, drivers, pools, transactions, and scaling |
+| 25 | [24- Production SQL Architecture Patterns](./24-%20Production%20SQL%20Architecture%20Patterns.md) | Production Engineering | Practical production patterns combining database and backend architecture |
 
 ## Architecture at a Glance
 
