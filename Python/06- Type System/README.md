@@ -123,24 +123,24 @@ Static typing is particularly valuable in systems with many interacting componen
 
 The files are intentionally ordered so that later concepts build on earlier ones.
 
-| File | Topic | Primary Focus |
-|---|---|---|
-| `01- Type Hints.md` | Type Hints | Python annotations and the overall typing model |
-| `02- Built-in Generic Types.md` | Built-in Generics | `list[T]`, `dict[K, V]`, `tuple`, `Sequence`, `Mapping`, and related types |
-| `03- Optional and Union.md` | Optional and Union | Nullable values and multiple possible types |
-| `04- Any Never Noreturn.md` | Special Types | `Any`, `Never`, and `NoReturn` |
-| `05- Callable.md` | Callable | Functions, callbacks, callable objects, and higher-order APIs |
-| `06- Type Aliases.md` | Type Aliases | Reusable and semantic type definitions |
-| `07- TypedDict.md` | TypedDict | Static dictionary-shape contracts |
-| `08- Literal.md` | Literal | Finite value sets and static value discrimination |
-| `09- TypeVar.md` | TypeVar | Generic relationships and constrained typing |
-| `10- Generics.md` | Generics | Generic functions, classes, aliases, and application architecture |
-| `11- Protocols.md` | Protocols | Structural typing and behavioral interfaces |
-| `12- Type Guards.md` | Type Guards | Runtime predicates and static type narrowing |
-| `13- Overloads.md` | Overloads | Multiple static call signatures |
-| `14- Static Type Checking.md` | Static Type Checking | Static analysis concepts and engineering workflow |
-| `15- Mypy.md` | Mypy | Mypy configuration, workflows, CI, and production usage |
-| `16- Pyright.md` | Pyright | Pyright configuration, inference, editor integration, and CI |
+| # | File | Topic | Primary Focus |
+|---|---|---|---|
+| 01 | [Type Hints](01-%20Type%20Hints.md) | Type Hints | Python annotations and the overall typing model |
+| 02 | [Built-in Generic Types](02-%20Built-in%20Generic%20Types.md) | Built-in Generics | `list[T]`, `dict[K, V]`, `tuple`, `Sequence`, `Mapping`, and related types |
+| 03 | [Optional and Union](03-%20Optional%20and%20Union.md) | Optional and Union | Nullable values and multiple possible types |
+| 04 | [Any, Never, NoReturn](04-%20Any%20Never%20Noreturn.md) | Special Types | `Any`, `Never`, and `NoReturn` |
+| 05 | [Callable](05-%20Callable.md) | Callable | Functions, callbacks, callable objects, and higher-order APIs |
+| 06 | [Type Aliases](06-%20Type%20Aliases.md) | Type Aliases | Reusable and semantic type definitions |
+| 07 | [TypedDict](07-%20TypedDict.md) | TypedDict | Static dictionary-shape contracts |
+| 08 | [Literal](08-%20Literal.md) | Literal | Finite value sets and static value discrimination |
+| 09 | [TypeVar](09-%20TypeVar.md) | TypeVar | Generic relationships and constrained typing |
+| 10 | [Generics](10-%20Generics.md) | Generics | Generic functions, classes, aliases, and application architecture |
+| 11 | [Protocols](11-%20Protocols.md) | Protocols | Structural typing and behavioral interfaces |
+| 12 | [Type Guards](12-%20Type%20Guards.md) | Type Guards | Runtime predicates and static type narrowing |
+| 13 | [Overloads](13-%20Overloads.md) | Overloads | Multiple static call signatures |
+| 14 | [Static Type Checking](14-%20Static%20Type%20Checking.md) | Static Type Checking | Static analysis concepts and engineering workflow |
+| 15 | [Mypy](15-%20Mypy.md) | Mypy | Mypy configuration, workflows, CI, and production usage |
+| 16 | [Pyright](16-%20Pyright.md) | Pyright | Pyright configuration, inference, editor integration, and CI |
 
 ---
 
