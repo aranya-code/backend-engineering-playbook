@@ -80,19 +80,19 @@ Poor data modeling tends to produce:
 
 ## Section Structure
 
-| File | Topic | Primary Concern |
-|---|---|---|
-| `01- Dataclasses.md` | Dataclasses | Core dataclass mechanics and configuration |
-| `02- Fields and Defaults.md` | Fields and Defaults | Field behavior, defaults, factories, and metadata |
-| `03- Post Initialization.md` | Post Initialization | Construction-time validation and derived state |
-| `04- Frozen Dataclasses.md` | Frozen Dataclasses | Immutability and value semantics |
-| `05- Slots.md` | Slots | Memory efficiency and attribute layout |
-| `06- Dataclass Inheritance.md` | Dataclass Inheritance | Inheritance, MRO, fields, and initialization |
-| `07- Asdict and Astuple.md` | Asdict and Astuple | Dataclass conversion and serialization boundaries |
-| `08- Data Modeling Patterns.md` | Data Modeling Patterns | Common backend and domain modeling patterns |
-| `09- Value Objects.md` | Value Objects | Value semantics, invariants, and immutable domain concepts |
-| `10- DTO.md` | DTO | Data transfer across application and service boundaries |
-| `11- Domain Models.md` | Domain Models | Entities, invariants, behavior, aggregates, and domain architecture |
+| # | File | Topic | Primary Concern |
+|---|---|---|---|
+| 01 | [Dataclasses](01-%20Dataclasses.md) | Dataclasses | Core dataclass mechanics and configuration |
+| 02 | [Fields and Defaults](02-%20Fields%20and%20Defaults.md) | Fields and Defaults | Field behavior, defaults, factories, and metadata |
+| 03 | [Post Initialization](03-%20Post%20Initialization.md) | Post Initialization | Construction-time validation and derived state |
+| 04 | [Frozen Dataclasses](04-%20Frozen%20Dataclasses.md) | Frozen Dataclasses | Immutability and value semantics |
+| 05 | [Slots](05-%20Slots.md) | Slots | Memory efficiency and attribute layout |
+| 06 | [Dataclass Inheritance](06-%20Dataclass%20Inheritance.md) | Dataclass Inheritance | Inheritance, MRO, fields, and initialization |
+| 07 | [Asdict and Astuple](07-%20Asdict%20and%20Astuple.md) | Asdict and Astuple | Dataclass conversion and serialization boundaries |
+| 08 | [Data Modeling Patterns](08-%20Data%20Modeling%20Patterns.md) | Data Modeling Patterns | Common backend and domain modeling patterns |
+| 09 | [Value Objects](09-%20Value%20Objects.md) | Value Objects | Value semantics, invariants, and immutable domain concepts |
+| 10 | [DTO](10-%20DTO.md) | DTO | Data transfer across application and service boundaries |
+| 11 | [Domain Models](11-%20Domain%20Models.md) | Domain Models | Entities, invariants, behavior, aggregates, and domain architecture |
 
 ---
 
