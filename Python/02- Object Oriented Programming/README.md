@@ -93,13 +93,13 @@ Encapsulation
 
 Start by understanding how Python represents objects and how classes provide structure around state and behavior.
 
-| File | Topic | Primary Focus |
-|---|---|---|
-| `01- OOP Fundamentals.md` | OOP Fundamentals | Python's object model and OOP concepts |
-| `02- Classes and Objects.md` | Classes and Objects | Class definitions, instances, identity, namespaces |
-| `03- Instance Attributes and Methods.md` | Instance Attributes and Methods | Object state and instance behavior |
-| `04- Class Attributes and Methods.md` | Class Attributes and Methods | Class-level state and behavior |
-| `05- Constructors and Initialization.md` | Constructors and Initialization | `__new__`, `__init__`, object lifecycle |
+| # | File | Topic | Primary Focus |
+|---|---|---|---|
+| 01 | [OOP Fundamentals](01-%20OOP%20Fundamentals.md) | OOP Fundamentals | Python's object model and OOP concepts |
+| 02 | [Classes and Objects](02-%20Classes%20and%20Objects.md) | Classes and Objects | Class definitions, instances, identity, namespaces |
+| 03 | [Instance Attributes and Methods](03-%20Instance%20Attributes%20and%20Methods.md) | Instance Attributes and Methods | Object state and instance behavior |
+| 04 | [Class Attributes and Methods](04-%20Class%20Attributes%20and%20Methods.md) | Class Attributes and Methods | Class-level state and behavior |
+| 05 | [Constructors and Initialization](05-%20Constructors%20and%20Initialization.md) | Constructors and Initialization | `__new__`, `__init__`, object lifecycle |
 
 These concepts establish the mechanics required for understanding more advanced object-oriented design.
 
@@ -107,13 +107,13 @@ These concepts establish the mechanics required for understanding more advanced 
 
 The next group focuses on controlling state and expressing relationships between objects.
 
-| File | Topic | Primary Focus |
-|---|---|---|
-| `06- Encapsulation.md` | Encapsulation | Controlling state and implementation details |
-| `07- Inheritance.md` | Inheritance | Reusing and specializing behavior |
-| `08- Composition.md` | Composition | Building behavior from collaborating objects |
-| `09- Polymorphism.md` | Polymorphism | Interchangeable implementations and runtime behavior |
-| `10- Abstraction.md` | Abstraction | Stable behavioral boundaries |
+| # | File | Topic | Primary Focus |
+|---|---|---|---|
+| 06 | [Encapsulation](06-%20Encapsulation.md) | Encapsulation | Controlling state and implementation details |
+| 07 | [Inheritance](07-%20Inheritance.md) | Inheritance | Reusing and specializing behavior |
+| 08 | [Composition](08-%20Composition.md) | Composition | Building behavior from collaborating objects |
+| 09 | [Polymorphism](09-%20Polymorphism.md) | Polymorphism | Interchangeable implementations and runtime behavior |
+| 10 | [Abstraction](10-%20Abstraction.md) | Abstraction | Stable behavioral boundaries |
 
 A key engineering principle is:
 
@@ -128,14 +128,14 @@ In backend systems, composition is frequently the better default.
 
 These topics explain mechanisms that are important for understanding Python's runtime behavior.
 
-| File | Topic | Primary Focus |
-|---|---|---|
-| `11- Method Resolution Order.md` | Method Resolution Order | MRO and C3 linearization |
-| `12- Multiple Inheritance.md` | Multiple Inheritance | Multiple parent classes and cooperative inheritance |
-| `13- Super.md` | `super()` | MRO-aware delegation |
-| `14- Dunder Methods.md` | Dunder Methods | Python data model and special methods |
-| `15- Properties.md` | Properties | Managed attribute access |
-| `16- Descriptors.md` | Descriptors | Attribute-level runtime customization |
+| # | File | Topic | Primary Focus |
+|---|---|---|---|
+| 11 | [Method Resolution Order](11-%20Method%20Resolution%20Order.md) | Method Resolution Order | MRO and C3 linearization |
+| 12 | [Multiple Inheritance](12-%20Multiple%20Inheritance.md) | Multiple Inheritance | Multiple parent classes and cooperative inheritance |
+| 13 | [Super](13-%20Super.md) | `super()` | MRO-aware delegation |
+| 14 | [Dunder Methods](14-%20Dunder%20Methods.md) | Dunder Methods | Python data model and special methods |
+| 15 | [Properties](15-%20Properties.md) | Properties | Managed attribute access |
+| 16 | [Descriptors](16-%20Descriptors.md) | Descriptors | Attribute-level runtime customization |
 
 These mechanisms appear directly or indirectly in major Python frameworks.
 
@@ -162,12 +162,12 @@ Understanding these mechanisms makes framework behavior easier to debug rather t
 
 The final concepts focus on designing boundaries between business logic and implementation details.
 
-| File | Topic | Primary Focus |
-|---|---|---|
-| `17- Abstract Base Classes.md` | Abstract Base Classes | Nominal contracts and runtime abstraction |
-| `18- Protocols.md` | Protocols | Structural typing and behavioral contracts |
-| `19- Dependency Injection.md` | Dependency Injection | Explicit dependency composition |
-| `20- OOP Design Principles.md` | OOP Design Principles | SOLID and practical object-oriented design |
+| # | File | Topic | Primary Focus |
+|---|---|---|---|
+| 17 | [Abstract Base Classes](17-%20Abstract%20Base%20Classes.md) | Abstract Base Classes | Nominal contracts and runtime abstraction |
+| 18 | [Protocols](18-%20Protocols.md) | Protocols | Structural typing and behavioral contracts |
+| 19 | [Dependency Injection](19-%20Dependency%20Injection.md) | Dependency Injection | Explicit dependency composition |
+| 20 | [OOP Design Principles](20-%20OOP%20Design%20Principles.md) | OOP Design Principles | SOLID and practical object-oriented design |
 
 These concepts are particularly relevant to backend architecture.
 
