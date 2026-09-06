@@ -49,39 +49,39 @@ The section emphasizes:
 
 ## Section Structure
 
-| File | Topic | Primary Focus |
-|---|---|---|
-| `01- Python Project Structure.md` | Python Project Structure | Organizing production Python applications |
-| `02- Virtual Environments.md` | Virtual Environments | Environment isolation and reproducibility |
-| `03- Dependency Management.md` | Dependency Management | Dependency graphs, versions, locks, and upgrades |
-| `04- pyproject.toml.md` | pyproject.toml | Modern Python project configuration |
-| `05- Package Management.md` | Package Management | Installing, building, publishing, and inspecting packages |
-| `06- Environment Configuration.md` | Environment Configuration | Runtime configuration and environment-specific settings |
-| `07- Configuration Management.md` | Configuration Management | Configuration ownership, validation, layering, and lifecycle |
-| `08- Logging.md` | Logging | Python logging fundamentals and operational logging |
-| `09- Structured Logging.md` | Structured Logging | Machine-readable logs, context, correlation, and event schemas |
-| `10- HTTP Fundamentals.md` | HTTP Fundamentals | HTTP semantics, lifecycle, headers, methods, and protocols |
-| `11- HTTP Clients.md` | HTTP Clients | Reliable outbound HTTP communication |
-| `12- REST API Design.md` | REST API Design | Resource-oriented API contracts and operational behavior |
-| `13- API Clients.md` | API Clients | Typed and reliable integrations with external/internal APIs |
-| `14- Request Validation.md` | Request Validation | Validating untrusted HTTP input and enforcing boundaries |
-| `15- Authentication and Authorization.md` | Authentication and Authorization | Identity, credentials, tokens, sessions, and access control |
-| `16- Database Connectivity.md` | Database Connectivity | Python database drivers, sessions, connections, and lifecycle |
-| `17- SQL Integration.md` | SQL Integration | SQL, ORMs, repositories, queries, indexes, and database integration |
-| `18- Connection Pooling.md` | Connection Pooling | Reusing database connections and controlling database concurrency |
-| `19- Transactions.md` | Transactions | ACID, isolation, locking, consistency, and transaction boundaries |
-| `20- Caching.md` | Caching | Cache strategies, invalidation, consistency, and Redis |
-| `21- Message Queues.md` | Message Queues | Asynchronous messaging, delivery guarantees, retries, and backpressure |
-| `22- Background Jobs.md` | Background Jobs | Reliable asynchronous application work and worker systems |
-| `23- Webhooks.md` | Webhooks | Event delivery, signatures, retries, deduplication, and processing |
-| `24- CLI Applications.md` | CLI Applications | Production command-line interfaces and operational tooling |
-| `25- Dependency Injection.md` | Dependency Injection | Explicit dependency ownership, composition, and testability |
-| `26- Service Layer.md` | Service Layer | Application use cases, orchestration, and business workflows |
-| `27- Repository Pattern.md` | Repository Pattern | Persistence abstraction and application/database boundaries |
-| `28- Secrets Management.md` | Secrets Management | Secure storage, retrieval, rotation, and usage of credentials |
-| `29- Observability.md` | Observability | Logs, metrics, traces, correlation, and system diagnosis |
-| `30- Health Checks.md` | Health Checks | Liveness, readiness, startup, dependency health, and orchestration |
-| `31- Graceful Shutdown.md` | Graceful Shutdown | Draining traffic, terminating work, and releasing resources safely |
+| # | File | Topic | Primary Focus |
+|---|---|---|---|
+| 01 | [Python Project Structure](01-%20Python%20Project%20Structure.md) | Python Project Structure | Organizing production Python applications |
+| 02 | [Virtual Environments](02-%20Virtual%20Environments.md) | Virtual Environments | Environment isolation and reproducibility |
+| 03 | [Dependency Management](03-%20Dependency%20Management.md) | Dependency Management | Dependency graphs, versions, locks, and upgrades |
+| 04 | [pyproject.toml](04-%20pyproject.toml.md) | pyproject.toml | Modern Python project configuration |
+| 05 | [Package Management](05-%20Package%20Management.md) | Package Management | Installing, building, publishing, and inspecting packages |
+| 06 | [Environment Configuration](06-%20Environment%20Configuration.md) | Environment Configuration | Runtime configuration and environment-specific settings |
+| 07 | [Configuration Management](07-%20Configuration%20Management.md) | Configuration Management | Configuration ownership, validation, layering, and lifecycle |
+| 08 | [Logging](08-%20Logging.md) | Logging | Python logging fundamentals and operational logging |
+| 09 | [Structured Logging](09-%20Structured%20Logging.md) | Structured Logging | Machine-readable logs, context, correlation, and event schemas |
+| 10 | [HTTP Fundamentals](10-%20HTTP%20Fundamentals.md) | HTTP Fundamentals | HTTP semantics, lifecycle, headers, methods, and protocols |
+| 11 | [HTTP Clients](11-%20HTTP%20Clients.md) | HTTP Clients | Reliable outbound HTTP communication |
+| 12 | [REST API Design](12-%20REST%20API%20Design.md) | REST API Design | Resource-oriented API contracts and operational behavior |
+| 13 | [API Clients](13-%20API%20Clients.md) | API Clients | Typed and reliable integrations with external/internal APIs |
+| 14 | [Request Validation](14-%20Request%20Validation.md) | Request Validation | Validating untrusted HTTP input and enforcing boundaries |
+| 15 | [Authentication and Authorization](15-%20Authentication%20and%20Authorization.md) | Authentication and Authorization | Identity, credentials, tokens, sessions, and access control |
+| 16 | [Database Connectivity](16-%20Database%20Connectivity.md) | Database Connectivity | Python database drivers, sessions, connections, and lifecycle |
+| 17 | [SQL Integration](17-%20SQL%20Integration.md) | SQL Integration | SQL, ORMs, repositories, queries, indexes, and database integration |
+| 18 | [Connection Pooling](18-%20Connection%20Pooling.md) | Connection Pooling | Reusing database connections and controlling database concurrency |
+| 19 | [Transactions](19-%20Transactions.md) | Transactions | ACID, isolation, locking, consistency, and transaction boundaries |
+| 20 | [Caching](20-%20Caching.md) | Caching | Cache strategies, invalidation, consistency, and Redis |
+| 21 | [Message Queues](21-%20Message%20Queues.md) | Message Queues | Asynchronous messaging, delivery guarantees, retries, and backpressure |
+| 22 | [Background Jobs](22-%20Background%20Jobs.md) | Background Jobs | Reliable asynchronous application work and worker systems |
+| 23 | [Webhooks](23-%20Webhooks.md) | Webhooks | Event delivery, signatures, retries, deduplication, and processing |
+| 24 | [CLI Applications](24-%20CLI%20Applications.md) | CLI Applications | Production command-line interfaces and operational tooling |
+| 25 | [Dependency Injection](25-%20Dependency%20Injection.md) | Dependency Injection | Explicit dependency ownership, composition, and testability |
+| 26 | [Service Layer](26-%20Service%20Layer.md) | Service Layer | Application use cases, orchestration, and business workflows |
+| 27 | [Repository Pattern](27-%20Repository%20Pattern.md) | Repository Pattern | Persistence abstraction and application/database boundaries |
+| 28 | [Secrets Management](28-%20Secrets%20Management.md) | Secrets Management | Secure storage, retrieval, rotation, and usage of credentials |
+| 29 | [Observability](29-%20Observability.md) | Observability | Logs, metrics, traces, correlation, and system diagnosis |
+| 30 | [Health Checks](30-%20Health%20Checks.md) | Health Checks | Liveness, readiness, startup, dependency health, and orchestration |
+| 31 | [Graceful Shutdown](31-%20Graceful%20Shutdown.md) | Graceful Shutdown | Draining traffic, terminating work, and releasing resources safely |
 
 ---
 
