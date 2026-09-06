@@ -94,13 +94,13 @@ These features are not isolated language tricks. Together they form much of the 
 
 The first group establishes functions as runtime objects rather than merely named blocks of code.
 
-| File | Focus |
-|---|---|
-| `01- First Class Functions.md` | Functions as objects, callbacks, registries, strategies, and dependency injection |
-| `02- Higher Order Functions.md` | Functions accepting or returning other functions |
-| `03- Lambda Functions.md` | Small anonymous callable expressions |
-| `04- Closures.md` | Functions retaining access to enclosing-scope state |
-| `05- Decorators.md` | Reusable callable transformations and cross-cutting behavior |
+| # | File | Focus |
+|---|---|---|
+| 01 | [First Class Functions](01-%20First%20Class%20Functions.md) | Functions as objects, callbacks, registries, strategies, and dependency injection |
+| 02 | [Higher Order Functions](02-%20Higher%20Order%20Functions.md) | Functions accepting or returning other functions |
+| 03 | [Lambda Functions](03-%20Lambda%20Functions.md) | Small anonymous callable expressions |
+| 04 | [Closures](04-%20Closures.md) | Functions retaining access to enclosing-scope state |
+| 05 | [Decorators](05-%20Decorators.md) | Reusable callable transformations and cross-cutting behavior |
 
 These concepts are especially important for understanding:
 
@@ -121,11 +121,11 @@ A backend engineer should understand not only how these features work syntactica
 
 The next group focuses on Python's iterator model and lazy execution.
 
-| File | Focus |
-|---|---|
-| `06- Generators.md` | Lazy execution with `yield`, suspension, streaming, and generator state |
-| `07- Generator Expressions.md` | Compact lazy transformations |
-| `08- Iterator Protocol.md` | `iter()`, `next()`, `__iter__()`, `__next__()`, and `StopIteration` |
+| # | File | Focus |
+|---|---|---|
+| 06 | [Generators](06-%20Generators.md) | Lazy execution with `yield`, suspension, streaming, and generator state |
+| 07 | [Generator Expressions](07-%20Generator%20Expressions.md) | Compact lazy transformations |
+| 08 | [Iterator Protocol](08-%20Iterator%20Protocol.md) | `iter()`, `next()`, `__iter__()`, `__next__()`, and `StopIteration` |
 
 These concepts are important for processing large datasets without unnecessary materialization.
 
@@ -170,10 +170,10 @@ The important engineering distinction is:
 
 Context managers provide deterministic resource lifecycle management.
 
-| File | Focus |
-|---|---|
-| `09- Context Managers.md` | Context-manager protocol and standard `contextlib` utilities |
-| `10- Custom Context Managers.md` | Designing application-specific resource lifecycle abstractions |
+| # | File | Focus |
+|---|---|---|
+| 09 | [Context Managers](09-%20Context%20Managers.md) | Context-manager protocol and standard `contextlib` utilities |
+| 10 | [Custom Context Managers](10-%20Custom%20Context%20Managers.md) | Designing application-specific resource lifecycle abstractions |
 
 Important use cases include:
 
@@ -211,10 +211,10 @@ Context managers are especially important because production failures often occu
 
 Python is multi-paradigm. Functional techniques are useful when they make data flow explicit and behavior composable.
 
-| File | Focus |
-|---|---|
-| `11- Functional Programming.md` | Functional style, pure functions, composition, immutability, and side-effect control |
-| `12- Map Filter Reduce.md` | Functional transformations and reductions |
+| # | File | Focus |
+|---|---|---|
+| 11 | [Functional Programming](11-%20Functional%20Programming.md) | Functional style, pure functions, composition, immutability, and side-effect control |
+| 12 | [Map, Filter, Reduce](12-%20Map%20Filter%20Reduce.md) | Functional transformations and reductions |
 
 The practical goal is not to make all Python code purely functional.
 
@@ -246,11 +246,11 @@ Keeping side effects near system boundaries can make business logic easier to te
 
 The next group covers Python features that make APIs and business logic more expressive.
 
-| File | Focus |
-|---|---|
-| `13- Unpacking.md` | Iterable unpacking, mapping unpacking, `*args`, and `**kwargs` |
-| `14- Pattern Matching.md` | Structural pattern matching with `match` and `case` |
-| `15- Regular Expressions.md` | Text matching, extraction, substitution, and validation |
+| # | File | Focus |
+|---|---|---|
+| 13 | [Unpacking](13-%20Unpacking.md) | Iterable unpacking, mapping unpacking, `*args`, and `**kwargs` |
+| 14 | [Pattern Matching](14-%20Pattern%20Matching.md) | Structural pattern matching with `match` and `case` |
+| 15 | [Regular Expressions](15-%20Regular%20Expressions.md) | Text matching, extraction, substitution, and validation |
 
 These features are useful for:
 
@@ -270,13 +270,13 @@ The key engineering concern is readability. Expressive syntax is valuable only w
 
 The final group introduces high-value standard-library tools for data structures and functional composition.
 
-| File | Focus |
-|---|---|
-| `16- Collections.md` | `Counter`, `defaultdict`, `deque`, `ChainMap`, and specialized containers |
-| `17- Itertools.md` | Lazy iterator composition and iterator algebra |
-| `18- Functools.md` | Caching, partial application, decorators, dispatch, and function utilities |
-| `19- Enum.md` | Finite symbolic domains, state values, flags, and API-safe representations |
-| `20- Standard Library.md` | High-value Python standard-library modules for backend engineering |
+| # | File | Focus |
+|---|---|---|
+| 16 | [Collections](16-%20Collections.md) | `Counter`, `defaultdict`, `deque`, `ChainMap`, and specialized containers |
+| 17 | [Itertools](17-%20Itertools.md) | Lazy iterator composition and iterator algebra |
+| 18 | [Functools](18-%20Functools.md) | Caching, partial application, decorators, dispatch, and function utilities |
+| 19 | [Enum](19-%20Enum.md) | Finite symbolic domains, state values, flags, and API-safe representations |
+| 20 | [Standard Library](20-%20Standard%20Library.md) | High-value Python standard-library modules for backend engineering |
 
 These modules frequently appear in production code because they provide optimized and well-tested primitives for common problems.
 
