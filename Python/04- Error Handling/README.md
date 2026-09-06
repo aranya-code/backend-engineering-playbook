@@ -63,18 +63,18 @@ Retry and Recovery
 Error Handling in APIs
 ```
 
-| File | Focus |
-|---|---|
-| `01- Exception Fundamentals.md` | Exception semantics, failure vs normal control flow, and basic exception behavior |
-| `02- Exception Hierarchy.md` | Built-in exception hierarchy, inheritance, and selecting appropriate exception types |
-| `03- Try Except.md` | `try`, `except`, matching rules, propagation, and practical handling |
-| `04- Else and Finally.md` | Successful execution paths, cleanup, and `finally` semantics |
-| `05- Raising Exceptions.md` | `raise`, re-raising, explicit exceptions, and failure contracts |
-| `06- Custom Exceptions.md` | Application/domain exceptions and structured failure models |
-| `07- Exception Chaining.md` | `__cause__`, `__context__`, translation, and preserving failure causality |
-| `08- Exception Handling Patterns.md` | Reusable handling, translation, recovery, fallback, and boundary patterns |
-| `09- Retry and Recovery.md` | Transient failures, retries, backoff, idempotency, recovery, and resilience |
-| `10- Error Handling in APIs.md` | HTTP error contracts, status codes, error mapping, security, and observability |
+| # | File | Focus |
+|---|---|---|
+| 01 | [Exception Fundamentals](01-%20Exception%20Fundamentals.md) | Exception semantics, failure vs normal control flow, and basic exception behavior |
+| 02 | [Exception Hierarchy](02-%20Exception%20Hierarchy.md) | Built-in exception hierarchy, inheritance, and selecting appropriate exception types |
+| 03 | [Try Except](03-%20Try%20Except.md) | `try`, `except`, matching rules, propagation, and practical handling |
+| 04 | [Else and Finally](04-%20Else%20and%20Finally.md) | Successful execution paths, cleanup, and `finally` semantics |
+| 05 | [Raising Exceptions](05-%20Raising%20Exceptions.md) | `raise`, re-raising, explicit exceptions, and failure contracts |
+| 06 | [Custom Exceptions](06-%20Custom%20Exceptions.md) | Application/domain exceptions and structured failure models |
+| 07 | [Exception Chaining](07-%20Exception%20Chaining.md) | `__cause__`, `__context__`, translation, and preserving failure causality |
+| 08 | [Exception Handling Patterns](08-%20Exception%20Handling%20Patterns.md) | Reusable handling, translation, recovery, fallback, and boundary patterns |
+| 09 | [Retry and Recovery](09-%20Retry%20and%20Recovery.md) | Transient failures, retries, backoff, idempotency, recovery, and resilience |
+| 10 | [Error Handling in APIs](10-%20Error%20Handling%20in%20APIs.md) | HTTP error contracts, status codes, error mapping, security, and observability |
 
 ---
 
