@@ -87,19 +87,19 @@ These topics collectively establish the language-level mental model required bef
 
 The files are ordered to build a progressively stronger mental model.
 
-| File | Topic | Primary Focus |
-|---|---|---|
-| `01- Python Overview.md` | Python Overview | Python's role, characteristics, runtime, ecosystem, and backend relevance |
-| `02- Execution Model.md` | Execution Model | Source code, bytecode, runtime execution, namespaces, frames, imports, and process behavior |
-| `03- Variables and Data Types.md` | Variables and Data Types | Names, references, objects, mutability, built-in types, equality, identity, and type behavior |
-| `04- Control Flow.md` | Control Flow | Conditions, loops, iteration, branching, pattern matching, and request-processing logic |
-| `05- Functions.md` | Functions | Function semantics, parameters, scopes, return values, closures, composition, and backend design |
-| `06- Comprehensions.md` | Comprehensions | List, set, dictionary, and generator expressions with readability and memory considerations |
-| `07- Iterators and Iterables.md` | Iterators and Iterables | Iterator protocols, lazy evaluation, generators, streaming, and data pipelines |
-| `08- Modules and Imports.md` | Modules and Imports | Namespaces, import resolution, module caching, dependency graphs, and import behavior |
-| `09- Packages.md` | Packages | Package structure, namespaces, distribution, dependency boundaries, and application organization |
-| `10- Built-in Functions.md` | Built-in Functions | Core Python functions, object protocols, iteration, conversion, inspection, and I/O |
-| `11- Coding Conventions.md` | Coding Conventions | PEP 8, naming, formatting, tooling, maintainability, testing, security, and production standards |
+| # | File | Topic | Primary Focus |
+|---|---|---|---|
+| 01 | [Python Overview](01-%20Python%20Overview.md) | Python Overview | Python's role, characteristics, runtime, ecosystem, and backend relevance |
+| 02 | [Execution Model](02-%20Execution%20Model.md) | Execution Model | Source code, bytecode, runtime execution, namespaces, frames, imports, and process behavior |
+| 03 | [Variables and Data Types](03-%20Variables%20and%20Data%20Types.md) | Variables and Data Types | Names, references, objects, mutability, built-in types, equality, identity, and type behavior |
+| 04 | [Control Flow](04-%20Control%20Flow.md) | Control Flow | Conditions, loops, iteration, branching, pattern matching, and request-processing logic |
+| 05 | [Functions](05-%20Functions.md) | Functions | Function semantics, parameters, scopes, return values, closures, composition, and backend design |
+| 06 | [Comprehensions](06-%20Comprehensions.md) | Comprehensions | List, set, dictionary, and generator expressions with readability and memory considerations |
+| 07 | [Iterators and Iterables](07-%20Iterators%20and%20Iterables.md) | Iterators and Iterables | Iterator protocols, lazy evaluation, generators, streaming, and data pipelines |
+| 08 | [Modules and Imports](08-%20Modules%20and%20Imports.md) | Modules and Imports | Namespaces, import resolution, module caching, dependency graphs, and import behavior |
+| 09 | [Packages](09-%20Packages.md) | Packages | Package structure, namespaces, distribution, dependency boundaries, and application organization |
+| 10 | [Built-in Functions](10-%20Built-in%20Functions.md) | Built-in Functions | Core Python functions, object protocols, iteration, conversion, inspection, and I/O |
+| 11 | [Coding Conventions](11-%20Coding%20Conventions.md) | Coding Conventions | PEP 8, naming, formatting, tooling, maintainability, testing, security, and production standards |
 
 ## Recommended Progression
 
