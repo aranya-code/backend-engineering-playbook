@@ -48,6 +48,31 @@ The section therefore progresses from Python's runtime and memory model through 
 
 ---
 
+## Navigation
+
+| # | File | Topic |
+|---|---|---|
+| 01 | [Python Memory Model](01-%20Python%20Memory%20Model.md) | Names, object references, allocation, namespaces, and CPython memory behavior |
+| 02 | [Object References](02-%20Object%20References.md) | Aliasing, rebinding, identity, shared state, closures, and reference lifetime |
+| 03 | [Identity, Equality, and Hashing](03-%20Identity%20Equality%20Hashing.md) | `is`, `==`, `__eq__`, `__hash__`, dicts, sets, and caching correctness |
+| 04 | [Mutable vs Immutable](04-%20Mutable%20vs%20Immutable.md) | Mutability effects on aliasing, concurrency, hashing, and API design |
+| 05 | [Shallow vs Deep Copy](05-%20Shallow%20vs%20Deep%20Copy.md) | Assignment, shallow copy, deep copy, and avoiding unnecessary duplication |
+| 06 | [Reference Counting](06-%20Reference%20Counting.md) | CPython reference counting, cyclic references, and object lifetime |
+| 07 | [Garbage Collection](07-%20Garbage%20Collection.md) | Cyclic GC, `gc` module, finalization, and managing object reachability |
+| 08 | [Weak References](08-%20Weak%20References.md) | `weakref`, observer registries, identity maps, and opportunistic caches |
+| 09 | [Slots](09-%20Slots.md) | `__slots__`, per-instance memory, inheritance, and dataclass compatibility |
+| 10 | [Time Complexity](10-%20Time%20Complexity.md) | Big-O analysis, Python built-in complexity, and algorithmic cost modeling |
+| 11 | [Space Complexity](11-%20Space%20Complexity.md) | Memory growth patterns, peak live memory, and streaming vs loading strategies |
+| 12 | [Profiling](12-%20Profiling.md) | CPU, memory, and allocation profiling; production profiling workflow |
+| 13 | [Timeit](13-%20Timeit.md) | Controlled microbenchmarks for isolated function comparison |
+| 14 | [cProfile](14-%20cProfile.md) | Deterministic function-level CPU profiling with `ncalls`, `tottime`, `cumtime` |
+| 15 | [Tracemalloc](15-%20Tracemalloc.md) | Python-level allocation tracing, snapshot comparison, and memory growth diagnosis |
+| 16 | [Lazy Evaluation](16-%20Lazy%20Evaluation.md) | Generators, iterators, and deferred computation for memory-efficient processing |
+| 17 | [Performance Optimization](17-%20Performance%20Optimization.md) | Profiling-driven optimization, algorithmic improvements, and systems-level thinking |
+| 18 | [Memory Efficient Processing](18-%20Memory%20Efficient%20Processing.md) | Bounded-memory pipelines, chunking, streaming, and large-dataset patterns |
+
+---
+
 ## What This Section Covers
 
 ### Memory Model
