@@ -38,19 +38,19 @@ The engineering challenge is not simply reading and writing files. It is control
 
 ## What This Section Covers
 
-| File | Topic | Primary Focus |
-|---|---|---|
-| `01- File Handling.md` | File Handling | Opening, reading, writing, buffering, modes, and safe file operations |
-| `02- Pathlib.md` | Pathlib | Portable and safe filesystem path manipulation |
-| `03- Text Files.md` | Text Files | Encoding, decoding, newline handling, and text I/O |
-| `04- Binary Files.md` | Binary Files | Bytes, binary I/O, chunking, checksums, and binary processing |
-| `05- CSV.md` | CSV | Structured tabular data exchange and large imports/exports |
-| `06- JSON.md` | JSON | API payloads, structured data, serialization, and schema evolution |
-| `07- YAML.md` | YAML | Configuration files, structured configuration, and safe parsing |
-| `08- Pickle.md` | Pickle | Python-native object serialization and its security implications |
-| `09- Serialization.md` | Serialization | Representation design, format selection, compatibility, and boundaries |
-| `10- Deserialization and Validation.md` | Deserialization and Validation | Parsing, schema validation, normalization, and trust boundaries |
-| `11- Streaming Large Files.md` | Streaming Large Files | Bounded-memory processing, chunking, backpressure, and large datasets |
+| # | File | Topic | Primary Focus |
+|---|---|---|---|
+| 01 | [File Handling](01-%20File%20Handling.md) | File Handling | Opening, reading, writing, buffering, modes, and safe file operations |
+| 02 | [Pathlib](02-%20Pathlib.md) | Pathlib | Portable and safe filesystem path manipulation |
+| 03 | [Text Files](03-%20Text%20Files.md) | Text Files | Encoding, decoding, newline handling, and text I/O |
+| 04 | [Binary Files](04-%20Binary%20Files.md) | Binary Files | Bytes, binary I/O, chunking, checksums, and binary processing |
+| 05 | [CSV](05-%20CSV.md) | CSV | Structured tabular data exchange and large imports/exports |
+| 06 | [JSON](06-%20JSON.md) | JSON | API payloads, structured data, serialization, and schema evolution |
+| 07 | [YAML](07-%20YAML.md) | YAML | Configuration files, structured configuration, and safe parsing |
+| 08 | [Pickle](08-%20Pickle.md) | Pickle | Python-native object serialization and its security implications |
+| 09 | [Serialization](09-%20Serialization.md) | Serialization | Representation design, format selection, compatibility, and boundaries |
+| 10 | [Deserialization and Validation](10-%20Deserialization%20and%20Validation.md) | Deserialization and Validation | Parsing, schema validation, normalization, and trust boundaries |
+| 11 | [Streaming Large Files](11-%20Streaming%20Large%20Files.md) | Streaming Large Files | Bounded-memory processing, chunking, backpressure, and large datasets |
 
 ---
 
