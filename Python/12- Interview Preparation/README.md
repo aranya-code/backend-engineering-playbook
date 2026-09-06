@@ -71,29 +71,29 @@ Interview readiness requires more than knowing syntax. A strong candidate should
 
 ## Documentation Map
 
-| File | Primary Focus |
-|---|---|
-| `01- Python Fundamentals.md` | Syntax, execution, types, control flow, core language behavior |
-| `02- Python Data Structures.md` | Lists, tuples, dictionaries, sets, queues, heaps, strings, complexity |
-| `03- Functions and Scope.md` | Functions, parameters, LEGB, closures, argument semantics |
-| `04- OOP Questions.md` | Classes, inheritance, composition, polymorphism, descriptors, MRO |
-| `05- Decorators and Generators.md` | Decorators, closures, generators, lazy evaluation |
-| `06- Iterators and Context Managers.md` | Iterator protocol, generators, context managers, resource lifecycle |
-| `07- Exceptions.md` | Exception hierarchy, handling, chaining, retries, API boundaries |
-| `08- Type System.md` | Type hints, generics, protocols, TypedDict, TypeVar, static checking |
-| `09- Dataclasses and Data Modeling.md` | Dataclasses, DTOs, value objects, domain models, immutability |
-| `10- Memory Management.md` | Object references, GC, reference counting, copying, memory behavior |
-| `11- GIL and Concurrency.md` | GIL, threading, processes, async concurrency, synchronization |
-| `12- Threading Multiprocessing Asyncio.md` | Choosing and implementing Python concurrency models |
-| `13- Performance.md` | Complexity, profiling, optimization, memory-efficient processing |
-| `14- Backend Python.md` | Production Python services, APIs, databases, caching, queues, configuration |
-| `15- Testing and Mocking.md` | pytest, unittest, fixtures, mocking, integration and API testing |
-| `16- Coding Problems.md` | Python-focused algorithmic and coding interview problems |
-| `17- Debugging Scenarios.md` | Production debugging, failures, performance, observability |
-| `18- Backend Scenarios.md` | Real-world backend architecture and operational scenarios |
-| `19- Data Engineering Scenarios.md` | ETL, large datasets, pipelines, Kafka, data quality, processing |
-| `20- AWS Python Scenarios.md` | Lambda, S3, SQS, RDS, DynamoDB, IAM, ECS/EKS, AWS architecture |
-| `21- System Design with Python.md` | End-to-end system design using Python and distributed-system patterns |
+| # | File | Primary Focus |
+|---|---|---|
+| 01 | [Python Fundamentals](01-%20Python%20Fundamentals.md) | Syntax, execution, types, control flow, core language behavior |
+| 02 | [Python Data Structures](02-%20Python%20Data%20Structures.md) | Lists, tuples, dictionaries, sets, queues, heaps, strings, complexity |
+| 03 | [Functions and Scope](03-%20Functions%20and%20Scope.md) | Functions, parameters, LEGB, closures, argument semantics |
+| 04 | [OOP Questions](04-%20OOP%20Questions.md) | Classes, inheritance, composition, polymorphism, descriptors, MRO |
+| 05 | [Decorators and Generators](05-%20Decorators%20and%20Generators.md) | Decorators, closures, generators, lazy evaluation |
+| 06 | [Iterators and Context Managers](06-%20Iterators%20and%20Context%20Managers.md) | Iterator protocol, generators, context managers, resource lifecycle |
+| 07 | [Exceptions](07-%20Exceptions.md) | Exception hierarchy, handling, chaining, retries, API boundaries |
+| 08 | [Type System](08-%20Type%20System.md) | Type hints, generics, protocols, TypedDict, TypeVar, static checking |
+| 09 | [Dataclasses and Data Modeling](09-%20Dataclasses%20and%20Data%20Modeling.md) | Dataclasses, DTOs, value objects, domain models, immutability |
+| 10 | [Memory Management](10-%20Memory%20Management.md) | Object references, GC, reference counting, copying, memory behavior |
+| 11 | [GIL and Concurrency](11-%20GIL%20and%20Concurrency.md) | GIL, threading, processes, async concurrency, synchronization |
+| 12 | [Threading, Multiprocessing, Asyncio](12-%20Threading%20Multiprocessing%20Asyncio.md) | Choosing and implementing Python concurrency models |
+| 13 | [Performance](13-%20Performance.md) | Complexity, profiling, optimization, memory-efficient processing |
+| 14 | [Backend Python](14-%20Backend%20Python.md) | Production Python services, APIs, databases, caching, queues, configuration |
+| 15 | [Testing and Mocking](15-%20Testing%20and%20Mocking.md) | pytest, unittest, fixtures, mocking, integration and API testing |
+| 16 | [Coding Problems](16-%20Coding%20Problems.md) | Python-focused algorithmic and coding interview problems |
+| 17 | [Debugging Scenarios](17-%20Debugging%20Scenarios.md) | Production debugging, failures, performance, observability |
+| 18 | [Backend Scenarios](18-%20Backend%20Scenarios.md) | Real-world backend architecture and operational scenarios |
+| 19 | [Data Engineering Scenarios](19-%20Data%20Engineering%20Scenarios.md) | ETL, large datasets, pipelines, Kafka, data quality, processing |
+| 20 | [AWS Python Scenarios](20-%20AWS%20Python%20Scenarios.md) | Lambda, S3, SQS, RDS, DynamoDB, IAM, ECS/EKS, AWS architecture |
+| 21 | [System Design with Python](21-%20System%20Design%20with%20Python.md) | End-to-end system design using Python and distributed-system patterns |
 
 ---
 
