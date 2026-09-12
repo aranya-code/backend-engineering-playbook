@@ -32,7 +32,24 @@ Performance and Memory
 Backend and Data Engineering
     ↓
 Interview Preparation
-```
+## Navigation
+
+| # | File | Description |
+|---|---|---|
+| 01 | [01- Pandas Overview](./01-%20Pandas%20Overview.md) | Foundational Pandas concepts covering DataFrame and Series processing |
+| 02 | [02- Pandas Data Model](./02-%20Pandas%20Data%20Model.md) | Data model, structure, and semantics of Pandas objects |
+| 03 | [03- Series.md](./03-%20Series.md) | One-dimensional labeled data and Series semantics |
+| 04 | [04- Dataframe.md](./04-%20Dataframe.md) | Two-dimensional tabular data and column-oriented processing |
+| 05 | [05- Index.md](./05-%20Index.md) | Labels, alignment, selection, and index semantics |
+| 06 | [06- Columns And Dtypes.md](./06-%20Columns%20And%20Dtypes.md) | Column schema and dtype decisions |
+| 07 | [07- Creating Dataframes.md](./07-%20Creating%20Dataframes.md) | Constructing DataFrames from records, dictionaries, arrays, and external sources |
+| 08 | [08- Creating Series.md](./08-%20Creating%20Series.md) | Constructing typed Series with explicit Index and dtype semantics |
+| 09 | [09- Inspecting Data.md](./09-%20Inspecting%20Data.md) | Structural inspection, schema checks, row counts, and data-quality diagnostics |
+| 10 | [10- Shape Size And Dimensions.md](./10-%20Shape%20Size%20And%20Dimensions.md) | Understanding rows, columns, dimensions, and total element counts |
+| 11 | [11- Pandas Data Types.md](./11-%20Pandas%20Data%20Types.md) | Numeric, string, boolean, datetime, categorical, nullable, and object dtypes |
+| 12 | [12- Missing Values Overview.md](./12-%20Missing%20Values%20Overview.md) | Detection, semantics, validation, and production handling of missing data |
+| 13 | [13- Copying Data.md](./13-%20Copying%20Data.md) | Ownership, mutation, copying, and memory implications |
+| 14 | [14- Method Chaining.md](./14-%20Method%20Chaining.md) | Readable and maintainable Pandas transformation pipelines |
 
 A backend engineer should be comfortable moving between Python objects, API payloads, database query results, files, and Pandas structures without losing control of schema, row identity, types, missing values, or memory behavior.
 
