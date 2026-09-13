@@ -45,26 +45,3 @@ A FastAPI webhook receiver demonstrating HMAC-SHA256 signature verification with
 **Key skills:** FastAPI · HMAC-SHA256 · constant-time comparison · replay prevention · event routing · idempotency · layered architecture · queue decoupling
 
 ---
-
-## Navigation
-
-| # | Section |
-|---|---|
-| [01](../01-%20Fundamentals/README.md) | Fundamentals |
-| [02](../02-%20Object%20Oriented%20Programming/README.md) | Object Oriented Programming |
-| [03](../03-%20Intermediate%20Python/README.md) | Intermediate Python |
-| [04](../04-%20Error%20Handling/README.md) | Error Handling |
-| [05](../05-%20Files%20and%20Serialization/README.md) | Files and Serialization |
-| [06](../06-%20Type%20System/README.md) | Type System |
-| [07](../07-%20Dataclasses%20and%20Data%20Modeling/README.md) | Dataclasses and Data Modeling |
-| [08](../08-%20Concurrency%20and%20Parallelism/README.md) | Concurrency and Parallelism |
-| [09](../09-%20Memory%20and%20Performance/README.md) | Memory and Performance |
-| [10](../10-%20Backend%20Python/README.md) | Backend Python |
-| [11](../11-%20Testing/README.md) | Testing |
-| [12](../12-%20Interview%20Preparation/README.md) | Interview Preparation |
-| **13** | **Projects** |
-| ↳ [01](01-%20REST%20API%20Service/README.md) | REST API Service |
-| ↳ [02](02-%20Async%20API%20Client/README.md) | Async API Client |
-| ↳ [03](03-%20Background%20Job%20System/README.md) | Background Job System |
-| ↳ [04](04-%20Concurrent%20Data%20Processor/README.md) | Concurrent Data Processor |
-| ↳ [05](05-%20Webhook%20Processing%20Service/README.md) | Webhook Processing Service |
