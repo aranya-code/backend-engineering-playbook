@@ -1,0 +1,219 @@
+# Python bytecode and cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Packaging and build artifacts
+build/
+dist/
+*.egg-info/
+.eggs/
+pip-wheel-metadata/
+*.whl
+
+# Test and coverage artifacts
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+.mypy_cache/
+.ruff_cache/
+.pyre/
+.pytype/
+
+# Local IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Environment and local configuration
+.env
+.env.*
+!.env.example
+
+# Credentials and secrets
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+credentials.json
+secrets.yaml
+secrets.yml
+secrets.json
+
+# Pipeline-generated data
+data/raw/*
+data/staging/*
+data/processed/*
+reports/*
+
+# Preserve directory placeholders
+!data/raw/.gitkeep
+!data/staging/.gitkeep
+!data/processed/.gitkeep
+!reports/.gitkeep
+
+# Temporary and intermediate files
+*.tmp
+*.temp
+*.bak
+*.swp
+*.part
+*.lock
+
+# Logs
+*.log
+logs/
+log/
+
+# Local databases
+*.db
+*.sqlite
+*.sqlite3
+
+# OS metadata
+Thumbs.db
+ehthumbs.db
+
+# Jupyter artifacts
+.ipynb_checkpoints/
+
+# Profiling and benchmark output
+.prof
+.profraw
+*.lprof
+
+# Local pipeline overrides
+config/local/
+config/override/
+config/*.local.yaml
+config/*.local.yml
+
+# Generated API payloads and exports
+*.json.tmp
+*.csv.tmp
+*.parquet.tmp
+
+# Python bytecode and cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Packaging and build artifacts
+build/
+dist/
+*.egg-info/
+.eggs/
+pip-wheel-metadata/
+*.whl
+
+# Test and coverage artifacts
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+.mypy_cache/
+.ruff_cache/
+.pyre/
+.pytype/
+
+# Local IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Environment and local configuration
+.env
+.env.*
+!.env.example
+
+# Credentials and secrets
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+credentials.json
+secrets.yaml
+secrets.yml
+secrets.json
+
+# Pipeline-generated data
+data/raw/*
+data/staging/*
+data/processed/*
+reports/*
+
+# Preserve directory placeholders
+!data/raw/.gitkeep
+!data/staging/.gitkeep
+!data/processed/.gitkeep
+!reports/.gitkeep
+
+# Temporary and intermediate files
+*.tmp
+*.temp
+*.bak
+*.swp
+*.part
+*.lock
+
+# Logs
+*.log
+logs/
+log/
+
+# Local databases
+*.db
+*.sqlite
+*.sqlite3
+
+# OS metadata
+Thumbs.db
+ehthumbs.db
+
+# Jupyter artifacts
+.ipynb_checkpoints/
+
+# Profiling and benchmark output
+.prof
+.profraw
+*.lprof
+
+# Local pipeline overrides
+config/local/
+config/override/
+config/*.local.yaml
+config/*.local.yml
+
+# Generated API payloads and exports
+*.json.tmp
+*.csv.tmp
+*.parquet.tmp

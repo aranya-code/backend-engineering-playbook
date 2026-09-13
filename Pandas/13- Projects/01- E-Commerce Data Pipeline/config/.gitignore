@@ -1,0 +1,115 @@
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Test and coverage artifacts
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+
+# Build and packaging artifacts
+build/
+dist/
+*.egg-info/
+*.egg
+pip-wheel-metadata/
+
+# Local environment and secrets
+.env
+.env.*
+!.env.example
+
+# IDE and editor metadata
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Operating system metadata
+.DS_Store
+Thumbs.db
+
+# Pipeline-generated data
+data/staging/
+data/processed/
+reports/
+
+# Temporary and atomic-write artifacts
+*.tmp
+*.tmp-*
+.*.tmp-*
+
+# Local logs
+*.log
+
+# Local configuration overrides
+config/settings.local.yaml
+config/settings.local.yml
+
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Test and coverage artifacts
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+
+# Build and packaging artifacts
+build/
+dist/
+*.egg-info/
+*.egg
+pip-wheel-metadata/
+
+# Local environment and secrets
+.env
+.env.*
+!.env.example
+
+# IDE and editor metadata
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Operating system metadata
+.DS_Store
+Thumbs.db
+
+# Pipeline-generated data
+data/staging/
+data/processed/
+reports/
+
+# Temporary and atomic-write artifacts
+*.tmp
+*.tmp-*
+.*.tmp-*
+
+# Local logs
+*.log
+
+# Local configuration overrides
+config/settings.local.yaml
+config/settings.local.yml
