@@ -1,0 +1,123 @@
+environment: development
+
+application:
+  name: background-job-system
+  version: 0.1.0
+
+queue:
+  url: memory://jobs
+  visibility_timeout_seconds: 300
+  poll_interval_seconds: 1.0
+
+worker:
+  concurrency: 4
+  job_timeout_seconds: 600
+  shutdown_timeout_seconds: 30
+
+retry:
+  max_retries: 3
+  delay_seconds: 1.0
+  backoff:
+    enabled: true
+    multiplier: 2.0
+    max_delay_seconds: 60.0
+    jitter: true
+
+scheduler:
+  poll_interval_seconds: 1.0
+
+dead_letter:
+  enabled: true
+  retain_failed_jobs: true
+
+storage:
+  backend: memory
+
+logging:
+  level: INFO
+  format: "%(asctime)s %(levelname)s %(name)s %(message)s"
+
+monitoring:
+  enabled: true
+  metrics:
+    enabled: true
+    include_job_name: true
+    include_status: true
+  health:
+    enabled: true
+
+jobs:
+  default_max_retries: 3
+  idempotency:
+    enabled: true
+
+security:
+  allow_untrusted_job_types: false
+  log_payloads: false
+  redact_sensitive_fields:
+    - password
+    - token
+    - api_key
+    - authorization
+
+environment: development
+
+application:
+  name: background-job-system
+  version: 0.1.0
+
+queue:
+  url: memory://jobs
+  visibility_timeout_seconds: 300
+  poll_interval_seconds: 1.0
+
+worker:
+  concurrency: 4
+  job_timeout_seconds: 600
+  shutdown_timeout_seconds: 30
+
+retry:
+  max_retries: 3
+  delay_seconds: 1.0
+  backoff:
+    enabled: true
+    multiplier: 2.0
+    max_delay_seconds: 60.0
+    jitter: true
+
+scheduler:
+  poll_interval_seconds: 1.0
+
+dead_letter:
+  enabled: true
+  retain_failed_jobs: true
+
+storage:
+  backend: memory
+
+logging:
+  level: INFO
+  format: "%(asctime)s %(levelname)s %(name)s %(message)s"
+
+monitoring:
+  enabled: true
+  metrics:
+    enabled: true
+    include_job_name: true
+    include_status: true
+  health:
+    enabled: true
+
+jobs:
+  default_max_retries: 3
+  idempotency:
+    enabled: true
+
+security:
+  allow_untrusted_job_types: false
+  log_payloads: false
+  redact_sensitive_fields:
+    - password
+    - token
+    - api_key
+    - authorization

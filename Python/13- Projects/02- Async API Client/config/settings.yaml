@@ -1,0 +1,95 @@
+environment: development
+
+application:
+  name: async-api-client
+  version: 0.1.0
+
+api:
+  base_url: https://api.example.com
+  timeout_seconds: 10.0
+  follow_redirects: true
+  user_agent: async-api-client/0.1.0
+
+authentication:
+  enabled: false
+  scheme: bearer
+  api_key_env: API_KEY
+
+concurrency:
+  max_concurrency: 10
+
+rate_limit:
+  requests_per_second: 10.0
+
+retry:
+  max_retries: 3
+  base_delay_seconds: 0.5
+  max_delay_seconds: 30.0
+  jitter_ratio: 0.2
+  retryable_status_codes:
+    - 408
+    - 429
+    - 500
+    - 502
+    - 503
+    - 504
+
+logging:
+  level: INFO
+  format: "%(asctime)s %(levelname)s %(name)s %(message)s"
+
+observability:
+  request_logging: true
+  include_request_id: true
+
+security:
+  verify_tls: true
+  allow_insecure_http: false
+
+environment: development
+
+application:
+  name: async-api-client
+  version: 0.1.0
+
+api:
+  base_url: https://api.example.com
+  timeout_seconds: 10.0
+  follow_redirects: true
+  user_agent: async-api-client/0.1.0
+
+authentication:
+  enabled: false
+  scheme: bearer
+  api_key_env: API_KEY
+
+concurrency:
+  max_concurrency: 10
+
+rate_limit:
+  requests_per_second: 10.0
+
+retry:
+  max_retries: 3
+  base_delay_seconds: 0.5
+  max_delay_seconds: 30.0
+  jitter_ratio: 0.2
+  retryable_status_codes:
+    - 408
+    - 429
+    - 500
+    - 502
+    - 503
+    - 504
+
+logging:
+  level: INFO
+  format: "%(asctime)s %(levelname)s %(name)s %(message)s"
+
+observability:
+  request_logging: true
+  include_request_id: true
+
+security:
+  verify_tls: true
+  allow_insecure_http: false

@@ -1,0 +1,159 @@
+environment: development
+
+application:
+  name: webhook-processing-service
+  version: 0.1.0
+  host: 127.0.0.1
+  port: 8000
+  webhook_path: /webhooks
+  graceful_shutdown: true
+
+security:
+  signature_validation:
+    enabled: true
+    algorithm: sha256
+    secret_env_var: WEBHOOK_SECRET
+  replay_protection:
+    enabled: true
+    window_seconds: 300
+  request:
+    max_body_size_bytes: 1048576
+
+storage:
+  backend: memory
+  database:
+    url: postgresql://localhost/webhook_service
+    pool:
+      min_size: 5
+      max_size: 20
+      timeout_seconds: 30
+      max_lifetime_seconds: 1800
+  idempotency:
+    enabled: true
+
+queue:
+  backend: memory
+  url: memory://webhooks
+  max_size: 1000
+  publish_timeout_seconds: 5
+
+processing:
+  max_workers: 4
+  max_retries: 3
+  retry_delay_seconds: 1.0
+  exponential_backoff: true
+  max_retry_delay_seconds: 30
+  dead_letter_enabled: true
+
+observability:
+  logging:
+    level: INFO
+    format: "%(asctime)s %(levelname)s %(name)s %(message)s"
+  metrics:
+    enabled: true
+  tracing:
+    enabled: false
+
+health:
+  readiness:
+    check_storage: true
+    check_queue: true
+  liveness:
+    enabled: true
+
+reliability:
+  graceful_shutdown: true
+  shutdown_timeout_seconds: 30
+  fail_fast: false
+
+api:
+  cors:
+    enabled: false
+    allowed_origins: []
+  trusted_hosts:
+    enabled: false
+    allowed_hosts: []
+
+deployment:
+  workers: 1
+  reload: false
+
+environment: development
+
+application:
+  name: webhook-processing-service
+  version: 0.1.0
+  host: 127.0.0.1
+  port: 8000
+  webhook_path: /webhooks
+  graceful_shutdown: true
+
+security:
+  signature_validation:
+    enabled: true
+    algorithm: sha256
+    secret_env_var: WEBHOOK_SECRET
+  replay_protection:
+    enabled: true
+    window_seconds: 300
+  request:
+    max_body_size_bytes: 1048576
+
+storage:
+  backend: memory
+  database:
+    url: postgresql://localhost/webhook_service
+    pool:
+      min_size: 5
+      max_size: 20
+      timeout_seconds: 30
+      max_lifetime_seconds: 1800
+  idempotency:
+    enabled: true
+
+queue:
+  backend: memory
+  url: memory://webhooks
+  max_size: 1000
+  publish_timeout_seconds: 5
+
+processing:
+  max_workers: 4
+  max_retries: 3
+  retry_delay_seconds: 1.0
+  exponential_backoff: true
+  max_retry_delay_seconds: 30
+  dead_letter_enabled: true
+
+observability:
+  logging:
+    level: INFO
+    format: "%(asctime)s %(levelname)s %(name)s %(message)s"
+  metrics:
+    enabled: true
+  tracing:
+    enabled: false
+
+health:
+  readiness:
+    check_storage: true
+    check_queue: true
+  liveness:
+    enabled: true
+
+reliability:
+  graceful_shutdown: true
+  shutdown_timeout_seconds: 30
+  fail_fast: false
+
+api:
+  cors:
+    enabled: false
+    allowed_origins: []
+  trusted_hosts:
+    enabled: false
+    allowed_hosts: []
+
+deployment:
+  workers: 1
+  reload: false

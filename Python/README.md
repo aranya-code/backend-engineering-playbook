@@ -1,4 +1,4 @@
-﻿# Python Backend Engineering Playbook
+# Python Backend Engineering Playbook
 
 ## Overview
 
@@ -61,6 +61,7 @@ Each section contains a `README.md` with a section overview, a navigation table,
 | 10 | [Backend Python](10-%20Backend%20Python/README.md) | 31 | Project structure, environments, dependency management, logging, HTTP, REST API design, authentication, database connectivity, connection pooling, caching, message queues, background jobs, webhooks, DI, service layer, repository pattern, secrets, observability, and graceful shutdown |
 | 11 | [Testing](11-%20Testing/README.md) | 21 | Testing fundamentals, pytest, fixtures, parametrization, mocking, async testing, integration testing, API and database testing, isolation, coverage, and testing strategy |
 | 12 | [Interview Preparation](12-%20Interview%20Preparation/README.md) | 21 | Compressed, interview-focused coverage of language fundamentals, runtime behavior, concurrency, backend architecture, testing, debugging, data engineering, AWS, and system design |
+| 13 | [Projects](13-%20Projects/README.md) | 5 | Applied end-to-end projects: REST API service, async API client, background job system, concurrent data processor, and webhook processing service |
 
 ---
 
@@ -221,6 +222,22 @@ Consolidates Python knowledge specifically for backend engineering interviews.
 Topics cover Python language fundamentals, data structures, functions and scope, OOP, decorators and generators, iterators and context managers, exceptions, the type system, dataclasses and data modeling, memory management, GIL and concurrency, threading/multiprocessing/asyncio, performance, backend Python, testing and mocking, coding problems, debugging scenarios, backend scenarios, data engineering scenarios, AWS Python scenarios, and system design with Python.
 
 → [Open section](12-%20Interview%20Preparation/README.md)
+
+---
+
+### 13 — Projects
+
+Applied end-to-end projects that put the skills from all preceding sections to work in realistic production-style backend scenarios. Each project is a self-contained Python package with full source, tests, typed configuration, and a CLI entry point or runnable service.
+
+| Project | Description |
+|---|---|
+| [01 — REST API Service](13-%20Projects/01-%20REST%20API%20Service/README.md) | FastAPI + SQLAlchemy service-layer · repository pattern · DI · schema/domain separation |
+| [02 — Async API Client](13-%20Projects/02-%20Async%20API%20Client/README.md) | httpx async client · semaphore concurrency · token-bucket rate limiting · exponential-backoff retry |
+| [03 — Background Job System](13-%20Projects/03-%20Background%20Job%20System/README.md) | asyncio worker pool · heap scheduler · visibility timeout · retry · graceful shutdown |
+| [04 — Concurrent Data Processor](13-%20Projects/04-%20Concurrent%20Data%20Processor/README.md) | asyncio / threading / multiprocessing comparison · backpressure · atomic output · benchmarks |
+| [05 — Webhook Processing Service](13-%20Projects/05-%20Webhook%20Processing%20Service/README.md) | HMAC-SHA256 signature · replay prevention · event routing · idempotency · queue decoupling |
+
+→ [Open section](13-%20Projects/README.md)
 
 ---
 

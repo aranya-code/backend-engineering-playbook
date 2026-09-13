@@ -1,0 +1,115 @@
+environment: development
+
+application:
+  name: concurrent-data-processor
+  version: 0.1.0
+
+input:
+  path: data/input/records.jsonl
+  format: jsonl
+  encoding: utf-8
+
+output:
+  path: data/output/processed.jsonl
+  format: jsonl
+  encoding: utf-8
+  atomic_write: true
+
+processing:
+  concurrency_mode: thread
+  max_workers: 4
+  batch_size: 100
+  continue_on_error: false
+  preserve_order: true
+
+concurrency:
+  thread:
+    max_workers: 4
+  process:
+    max_workers: 4
+  asyncio:
+    max_concurrency: 20
+
+backpressure:
+  enabled: true
+  max_pending_tasks: 1000
+
+performance:
+  benchmark_enabled: true
+  collect_metrics: true
+
+logging:
+  level: INFO
+  format: "%(asctime)s %(levelname)s %(name)s %(message)s"
+
+observability:
+  metrics_enabled: true
+  log_progress: true
+  progress_interval_records: 1000
+
+reliability:
+  fail_fast: true
+  graceful_shutdown: true
+  shutdown_timeout_seconds: 30
+
+security:
+  allow_arbitrary_input_paths: false
+  allow_arbitrary_output_paths: false
+
+environment: development
+
+application:
+  name: concurrent-data-processor
+  version: 0.1.0
+
+input:
+  path: data/input/records.jsonl
+  format: jsonl
+  encoding: utf-8
+
+output:
+  path: data/output/processed.jsonl
+  format: jsonl
+  encoding: utf-8
+  atomic_write: true
+
+processing:
+  concurrency_mode: thread
+  max_workers: 4
+  batch_size: 100
+  continue_on_error: false
+  preserve_order: true
+
+concurrency:
+  thread:
+    max_workers: 4
+  process:
+    max_workers: 4
+  asyncio:
+    max_concurrency: 20
+
+backpressure:
+  enabled: true
+  max_pending_tasks: 1000
+
+performance:
+  benchmark_enabled: true
+  collect_metrics: true
+
+logging:
+  level: INFO
+  format: "%(asctime)s %(levelname)s %(name)s %(message)s"
+
+observability:
+  metrics_enabled: true
+  log_progress: true
+  progress_interval_records: 1000
+
+reliability:
+  fail_fast: true
+  graceful_shutdown: true
+  shutdown_timeout_seconds: 30
+
+security:
+  allow_arbitrary_input_paths: false
+  allow_arbitrary_output_paths: false

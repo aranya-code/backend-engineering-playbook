@@ -1,0 +1,73 @@
+environment: development
+
+application:
+  name: rest-api-service
+  debug: false
+  host: 127.0.0.1
+  port: 8000
+
+database:
+  url: sqlite:///./app.db
+  pool:
+    size: 10
+    max_overflow: 20
+    timeout_seconds: 30
+    recycle_seconds: 1800
+
+api:
+  prefix: /api
+  version: v1
+  docs:
+    enabled: true
+    path: /docs
+  redoc:
+    enabled: true
+    path: /redoc
+
+logging:
+  level: INFO
+  format: "%(asctime)s %(levelname)s %(name)s %(message)s"
+
+security:
+  authentication:
+    enabled: false
+  cors:
+    enabled: false
+    allowed_origins: []
+
+environment: development
+
+application:
+  name: rest-api-service
+  debug: false
+  host: 127.0.0.1
+  port: 8000
+
+database:
+  url: sqlite:///./app.db
+  pool:
+    size: 10
+    max_overflow: 20
+    timeout_seconds: 30
+    recycle_seconds: 1800
+
+api:
+  prefix: /api
+  version: v1
+  docs:
+    enabled: true
+    path: /docs
+  redoc:
+    enabled: true
+    path: /redoc
+
+logging:
+  level: INFO
+  format: "%(asctime)s %(levelname)s %(name)s %(message)s"
+
+security:
+  authentication:
+    enabled: false
+  cors:
+    enabled: false
+    allowed_origins: []

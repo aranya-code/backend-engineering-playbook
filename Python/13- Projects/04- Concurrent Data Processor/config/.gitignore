@@ -1,0 +1,129 @@
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# Python cache and compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Test and coverage artifacts
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+
+# Type-checking and linting caches
+.mypy_cache/
+.ruff_cache/
+
+# Packaging and build artifacts
+build/
+dist/
+*.egg-info/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Logs and runtime artifacts
+*.log
+logs/
+*.pid
+
+# Local processor data
+data/input/*
+data/output/*
+data/errors/*
+data/tmp/*
+data/*.jsonl
+data/*.csv
+data/*.parquet
+
+# Benchmark artifacts
+benchmarks/results/
+benchmarks/*.json
+benchmarks/*.csv
+
+# Local configuration overrides
+config/settings.local.yaml
+config/settings.*.local.yaml
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# Python cache and compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Test and coverage artifacts
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+
+# Type-checking and linting caches
+.mypy_cache/
+.ruff_cache/
+
+# Packaging and build artifacts
+build/
+dist/
+*.egg-info/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Logs and runtime artifacts
+*.log
+logs/
+*.pid
+
+# Local processor data
+data/input/*
+data/output/*
+data/errors/*
+data/tmp/*
+data/*.jsonl
+data/*.csv
+data/*.parquet
+
+# Benchmark artifacts
+benchmarks/results/
+benchmarks/*.json
+benchmarks/*.csv
+
+# Local configuration overrides
+config/settings.local.yaml
+config/settings.*.local.yaml

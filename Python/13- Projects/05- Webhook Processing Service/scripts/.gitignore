@@ -1,0 +1,103 @@
+# Python caches and compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Test and coverage artifacts
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+
+# Type-checking and linting caches
+.mypy_cache/
+.ruff_cache/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Environment and local secrets
+.env
+.env.*
+!.env.example
+
+# Local databases and runtime state
+*.db
+*.sqlite
+*.sqlite3
+*.pid
+
+# Logs and runtime output
+*.log
+logs/
+
+# Build and packaging artifacts
+build/
+dist/
+*.egg-info/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Python caches and compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Test and coverage artifacts
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+
+# Type-checking and linting caches
+.mypy_cache/
+.ruff_cache/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Environment and local secrets
+.env
+.env.*
+!.env.example
+
+# Local databases and runtime state
+*.db
+*.sqlite
+*.sqlite3
+*.pid
+
+# Logs and runtime output
+*.log
+logs/
+
+# Build and packaging artifacts
+build/
+dist/
+*.egg-info/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Operating system files
+.DS_Store
+Thumbs.db

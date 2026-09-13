@@ -1,0 +1,83 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "async-api-client"
+version = "0.1.0"
+description = "Production-oriented asynchronous Python API client."
+requires-python = ">=3.12"
+dependencies = [
+    "httpx>=0.28,<1.0",
+    "pydantic>=2.10,<3.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.3,<9.0",
+    "pytest-asyncio>=0.25,<1.0",
+    "ruff>=0.9,<1.0",
+    "mypy>=1.14,<2.0",
+]
+
+[project.scripts]
+run-client = "scripts.run_client:main"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+asyncio_mode = "auto"
+pythonpath = ["."]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "async-api-client"
+version = "0.1.0"
+description = "Production-oriented asynchronous Python API client."
+requires-python = ">=3.12"
+dependencies = [
+    "httpx>=0.28,<1.0",
+    "pydantic>=2.10,<3.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.3,<9.0",
+    "pytest-asyncio>=0.25,<1.0",
+    "ruff>=0.9,<1.0",
+    "mypy>=1.14,<2.0",
+]
+
+[project.scripts]
+run-client = "scripts.run_client:main"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+asyncio_mode = "auto"
+pythonpath = ["."]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
