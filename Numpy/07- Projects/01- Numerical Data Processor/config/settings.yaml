@@ -1,0 +1,71 @@
+application:
+  name: numerical-data-processor
+  environment: development
+
+input:
+  directory: data/raw
+  filename: numerical_data.npy
+  format: npy
+  dtype: float64
+  max_elements: 1000000
+
+validation:
+  minimum_value: 0.0
+  maximum_value: 1000000.0
+  reject_non_finite: true
+  require_one_dimensional: true
+  require_non_empty: true
+
+processing:
+  normalize: true
+  normalization_range:
+    minimum: 0.0
+    maximum: 1.0
+  batch_size: 100000
+
+output:
+  directory: data/processed
+  array_filename: processed_data.npy
+  statistics_filename: statistics.json
+  format: npy
+  allow_pickle: false
+
+logging:
+  level: INFO
+  format: "%(asctime)s %(levelname)s %(name)s: %(message)s"
+
+application:
+  name: numerical-data-processor
+  environment: development
+
+input:
+  directory: data/raw
+  filename: numerical_data.npy
+  format: npy
+  dtype: float64
+  max_elements: 1000000
+
+validation:
+  minimum_value: 0.0
+  maximum_value: 1000000.0
+  reject_non_finite: true
+  require_one_dimensional: true
+  require_non_empty: true
+
+processing:
+  normalize: true
+  normalization_range:
+    minimum: 0.0
+    maximum: 1.0
+  batch_size: 100000
+
+output:
+  directory: data/processed
+  array_filename: processed_data.npy
+  statistics_filename: statistics.json
+  format: npy
+  allow_pickle: false
+
+logging:
+  level: INFO
+  format: "%(asctime)s %(levelname)s %(name)s: %(message)s"

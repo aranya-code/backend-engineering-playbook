@@ -1,0 +1,257 @@
+application:
+  name: performance-benchmarking
+  environment: development
+
+benchmark:
+  iterations: 10
+  warmup_iterations: 2
+  seed: 42
+
+datasets:
+  default_size: 100000
+
+  matrix:
+    rows: 10000
+    columns: 128
+
+  dtype_comparison:
+    enabled: true
+    dtypes:
+      - float32
+      - float64
+
+  reproducibility:
+    enabled: true
+    seed: 42
+
+suite:
+  fail_fast: true
+  benchmarks:
+    - benchmark_loops.py
+    - benchmark_vectorization.py
+    - benchmark_dtypes.py
+    - benchmark_views.py
+    - benchmark_broadcasting.py
+
+benchmarks:
+  loops:
+    enabled: true
+    size: 100000
+    factor: 1.25
+    offset: 10.0
+    minimum: 0.0
+    maximum: 1000000.0
+
+  vectorization:
+    enabled: true
+    size: 100000
+    factor: 1.25
+    offset: 10.0
+    minimum: 0.0
+    maximum: 1000000.0
+
+  dtypes:
+    enabled: true
+    size: 1000000
+    factor: 1.25
+    offset: 10.0
+    minimum: 0.0
+    maximum: 1000000.0
+    dtypes:
+      - float32
+      - float64
+
+  views:
+    enabled: true
+    size: 1000000
+    slice:
+      start: 100000
+      stop: 900000
+      stride: 2
+
+  broadcasting:
+    enabled: true
+    rows: 10000
+    columns: 128
+
+  memory:
+    enabled: true
+    collect_garbage: true
+    measure_array_memory: true
+    measure_process_memory: false
+
+results:
+  directory: results
+  format: txt
+  timestamped_filenames: true
+  overwrite: false
+
+performance:
+  use_monotonic_clock: true
+  clock: perf_counter
+  disable_gc_during_timing: true
+  validate_equivalence_before_benchmark: true
+  include_minimum_runtime: true
+  include_median_runtime: true
+  include_mean_runtime: true
+  include_standard_deviation: true
+  include_operations_per_second: true
+
+validation:
+  require_positive_iterations: true
+  require_non_negative_warmup_iterations: true
+  require_positive_dataset_sizes: true
+  require_reproducible_seed: true
+  numerical:
+    enabled: true
+    rtol: 1.0e-5
+    atol: 1.0e-6
+
+reporting:
+  include_dataset_metadata: true
+  include_dtype: true
+  include_shape: true
+  include_itemsize: true
+  include_nbytes: true
+  include_benchmark_parameters: true
+  include_execution_timestamp: true
+
+logging:
+  level: INFO
+  console_output: true
+  include_progress: true
+
+safety:
+  max_dataset_size: 10000000
+  max_matrix_elements: 5000000
+  prevent_unbounded_allocations: true
+  avoid_huge_broadcast_outputs: true
+
+application:
+  name: performance-benchmarking
+  environment: development
+
+benchmark:
+  iterations: 10
+  warmup_iterations: 2
+  seed: 42
+
+datasets:
+  default_size: 100000
+
+  matrix:
+    rows: 10000
+    columns: 128
+
+  dtype_comparison:
+    enabled: true
+    dtypes:
+      - float32
+      - float64
+
+  reproducibility:
+    enabled: true
+    seed: 42
+
+suite:
+  fail_fast: true
+  benchmarks:
+    - benchmark_loops.py
+    - benchmark_vectorization.py
+    - benchmark_dtypes.py
+    - benchmark_views.py
+    - benchmark_broadcasting.py
+
+benchmarks:
+  loops:
+    enabled: true
+    size: 100000
+    factor: 1.25
+    offset: 10.0
+    minimum: 0.0
+    maximum: 1000000.0
+
+  vectorization:
+    enabled: true
+    size: 100000
+    factor: 1.25
+    offset: 10.0
+    minimum: 0.0
+    maximum: 1000000.0
+
+  dtypes:
+    enabled: true
+    size: 1000000
+    factor: 1.25
+    offset: 10.0
+    minimum: 0.0
+    maximum: 1000000.0
+    dtypes:
+      - float32
+      - float64
+
+  views:
+    enabled: true
+    size: 1000000
+    slice:
+      start: 100000
+      stop: 900000
+      stride: 2
+
+  broadcasting:
+    enabled: true
+    rows: 10000
+    columns: 128
+
+  memory:
+    enabled: true
+    collect_garbage: true
+    measure_array_memory: true
+    measure_process_memory: false
+
+results:
+  directory: results
+  format: txt
+  timestamped_filenames: true
+  overwrite: false
+
+performance:
+  use_monotonic_clock: true
+  clock: perf_counter
+  disable_gc_during_timing: true
+  validate_equivalence_before_benchmark: true
+  include_minimum_runtime: true
+  include_median_runtime: true
+  include_mean_runtime: true
+  include_standard_deviation: true
+  include_operations_per_second: true
+
+validation:
+  require_positive_iterations: true
+  require_non_negative_warmup_iterations: true
+  require_positive_dataset_sizes: true
+  require_reproducible_seed: true
+  numerical:
+    enabled: true
+    rtol: 1.0e-5
+    atol: 1.0e-6
+
+reporting:
+  include_dataset_metadata: true
+  include_dtype: true
+  include_shape: true
+  include_itemsize: true
+  include_nbytes: true
+  include_benchmark_parameters: true
+  include_execution_timestamp: true
+
+logging:
+  level: INFO
+  console_output: true
+  include_progress: true
+
+safety:
+  max_dataset_size: 10000000
+  max_matrix_elements: 5000000
+  prevent_unbounded_allocations: true
+  avoid_huge_broadcast_outputs: true

@@ -1,0 +1,93 @@
+application:
+  name: vectorized-data-transformation
+  environment: development
+
+input:
+  directory: data/raw
+  filename: input.npy
+  format: npy
+  dtype: float64
+  max_elements: 1000000
+  allow_pickle: false
+
+processing:
+  batch_size: 100000
+
+  transformation:
+    scale: 1.0
+    offset: 0.0
+    minimum: 0.0
+    maximum: 1000000.0
+
+  normalization:
+    enabled: false
+    minimum: 0.0
+    maximum: 1.0
+
+  validation:
+    require_numeric: true
+    reject_non_finite: true
+    inclusive_range: true
+
+output:
+  directory: data/processed
+  filename: transformed.npy
+  format: npy
+  overwrite: false
+
+logging:
+  level: INFO
+  include_array_metadata: true
+  include_statistics: true
+
+performance:
+  vectorized_operations: true
+  avoid_unbounded_allocations: true
+  batch_processing: true
+
+application:
+  name: vectorized-data-transformation
+  environment: development
+
+input:
+  directory: data/raw
+  filename: input.npy
+  format: npy
+  dtype: float64
+  max_elements: 1000000
+  allow_pickle: false
+
+processing:
+  batch_size: 100000
+
+  transformation:
+    scale: 1.0
+    offset: 0.0
+    minimum: 0.0
+    maximum: 1000000.0
+
+  normalization:
+    enabled: false
+    minimum: 0.0
+    maximum: 1.0
+
+  validation:
+    require_numeric: true
+    reject_non_finite: true
+    inclusive_range: true
+
+output:
+  directory: data/processed
+  filename: transformed.npy
+  format: npy
+  overwrite: false
+
+logging:
+  level: INFO
+  include_array_metadata: true
+  include_statistics: true
+
+performance:
+  vectorized_operations: true
+  avoid_unbounded_allocations: true
+  batch_processing: true
