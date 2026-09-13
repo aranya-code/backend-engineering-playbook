@@ -1,23 +1,114 @@
-# E-Commerce Data Pipeline
-
-A production-oriented Pandas pipeline that ingests order, customer, and product CSV data, applies validation and enrichment, and publishes Parquet sales reports.
-
----
+# README
 
 ## Overview
 
-This project demonstrates a realistic backend data pipeline built entirely with Pandas. It covers chunked ingestion, schema validation, referential integrity checks, data cleaning, business-rule transformation, multi-level aggregation, and atomic report publication — the same concerns that appear in production analytics and ETL systems.
+The `config/` directory contains configuration files for the E-Commerce Data Pipeline. Configuration is kept separate from application logic so operational behavior can change without modifying the Python implementation.
 
-The pipeline reads three raw CSV datasets:
+The primary configuration file is `settings.yaml`. It defines pipeline paths, input and output filenames, processing parameters, validation rules, reporting behavior, runtime options, and logging defaults.
+
+The current application code uses `PipelineConfig` in `src/config.py` as the runtime configuration object. Environment variables provide runtime overrides for several operational settings, which is preferable for CI/CD, Docker, Kubernetes, and cloud deployments.
+
+## Configuration Structure
 
 ```text
-data/raw/
-├── orders.csv
-├── customers.csv
-└── products.csv
+config/
+└── settings.yaml
 ```
 
-It produces four outputs:
+The configuration is organized into logical domains:
+
+| Section | Purpose |
+| --- | --- |
+| `pipeline` | Pipeline identity and execution environment |
+| `paths` | Directory locations used by the project |
+| `inputs` | Source dataset filenames |
+| `outputs` | Generated report filenames |
+| `processing` | Chunking, timezone, and invalid-record behavior |
+| `validation` | Schema and data-quality expectations |
+| `reporting` | Completed-order status and reconciliation settings |
+| `runtime` | Directory creation and atomic-write behavior |
+| `logging` | Logging level and output format |
+
+## Settings
+
+### Pipeline Identity
+
+```yaml
+pipeline:
+  name: e-commerce-data-pipeline
+  environment: development
+```
+
+`name` identifies the workload in logs, automation, and operational tooling.
+
+`environment` identifies the intended execution environment. Typical values include:
+
+- `development`
+- `testing`
+- `staging`
+- `production`
+
+Environment-specific behavior should be controlled through deployment configuration or environment variables rather than maintaining separate application implementations.
+
+### Paths
+
+```yaml
+paths:
+  data_dir: data
+  raw_data_dir: data/raw
+  staging_data_dir: data/staging
+  processed_data_dir: data/processed
+  reports_dir: reports
+  config_dir: config
+```
+
+The project uses a layered data layout:
+
+```mermaid
+flowchart LR
+    A[Raw Input] --> B[Staging]
+    B --> C[Processed Data]
+    C --> D[Reports]
+```
+
+The separation is useful because raw inputs should remain immutable while intermediate and derived datasets can be regenerated.
+
+The current pipeline primarily reads from `data/raw/` and writes reports to `reports/`. The staging and processed directories are created as part of the runtime directory contract and are available for future processing stages.
+
+### Inputs
+
+```yaml
+inputs:
+  orders_file: orders.csv
+  customers_file: customers.csv
+  products_file: products.csv
+```
+
+These filenames are resolved relative to the configured raw-data directory.
+
+Expected source layout:
+
+```text
+data/
+└── raw/
+    ├── orders.csv
+    ├── customers.csv
+    └── products.csv
+```
+
+Orders are processed incrementally using Pandas CSV chunking. Customers and products are treated as reference datasets and loaded into memory.
+
+### Outputs
+
+```yaml
+outputs:
+  daily_sales_report_file: daily_sales_report.parquet
+  customer_sales_report_file: customer_sales_report.parquet
+  product_sales_report_file: product_sales_report.parquet
+  rejected_orders_file: rejected_orders.csv
+```
+
+Expected report layout:
 
 ```text
 reports/
@@ -27,265 +118,464 @@ reports/
 └── rejected_orders.csv
 ```
 
----
+Parquet is preferred for analytical reports because it provides typed columnar storage and is generally more efficient for downstream analytical workloads than CSV.
 
-## Architecture
+The rejected-record file remains CSV because it is easy to inspect manually and can be consumed by operational workflows.
 
-```text
-orders.csv (chunked)     customers.csv     products.csv
-       │                      │                 │
-       ▼                      ▼                 ▼
-   Ingestion ──────── Reference Data Load ──────┘
-       │
-       ▼
-   Validation
-   (schema · status · amount · timestamps · referential integrity)
-       │
-       ├──── rejected_orders.csv
-       │
-       ▼
-   Cleaning
-   (nulls · types · normalization)
-       │
-       ▼
-   Transformation / Enrichment
-   (joins · derived columns · order value)
-       │
-       ▼
-   Aggregation
-   (daily · by customer · by product)
-       │
-       ▼
-   Reporting
-   (Parquet reports · reconciliation)
-       │
-       ▼
-   Atomic Publication
+## Processing Settings
+
+```yaml
+processing:
+  csv_chunksize: 100000
+  report_timezone: UTC
+  fail_on_invalid_records: false
 ```
 
-### Source Modules
+### CSV Chunk Size
 
-| Module | Responsibility |
-|---|---|
-| `src/ingestion.py` | Chunked CSV loading and reference dataset ingestion |
-| `src/validation.py` | Schema, domain, timestamp, and referential-integrity checks |
-| `src/cleaning.py` | Null handling, dtype coercion, string normalization |
-| `src/transformation.py` | Order enrichment with customer and product attributes |
-| `src/aggregation.py` | Daily, customer, and product-level metric aggregation |
-| `src/reporting.py` | Report building, reconciliation, and file publication |
-| `src/pipeline.py` | Orchestration — runs the complete pipeline end to end |
-| `src/config.py` | Runtime configuration object with environment-variable overrides |
+`csv_chunksize` controls the number of rows Pandas reads from `orders.csv` at a time.
 
----
+A value of `100000` means the ingestion layer processes approximately 100,000 rows per chunk.
 
-## Project Structure
+Chunking reduces peak memory usage compared with loading the entire order dataset at once:
 
-```text
-01- E-Commerce Data Pipeline/
-├── config/
-│   ├── settings.yaml       # Baseline operational configuration
-│   ├── pyproject.toml      # Project metadata and tooling
-│   ├── .gitignore
-│   └── README.md           # Configuration reference
-├── scripts/
-│   └── run_pipeline.py     # CLI entry point
-├── src/
-│   ├── __init__.py
-│   ├── aggregation.py
-│   ├── cleaning.py
-│   ├── config.py
-│   ├── ingestion.py
-│   ├── pipeline.py
-│   ├── reporting.py
-│   ├── transformation.py
-│   └── validation.py
-└── tests/
-    ├── __init__.py
-    ├── test_aggregation.py
-    ├── test_cleaning.py
-    ├── test_ingestion.py
-    ├── test_pipeline.py
-    ├── test_transformation.py
-    └── test_validation.py
+```mermaid
+flowchart LR
+    A[orders.csv] --> B[Chunk 1]
+    A --> C[Chunk 2]
+    A --> D[Chunk N]
+    B --> E[Cleaning]
+    C --> E
+    D --> E
 ```
 
----
+The optimal chunk size depends on:
 
-## Key Concepts Demonstrated
+- Available memory
+- Row width
+- Transformation complexity
+- Join cardinality
+- I/O throughput
+- Deployment environment
 
-### Chunked CSV Ingestion
+Increasing the chunk size generally improves throughput but increases memory pressure.
 
-Orders are read in configurable chunks rather than loaded entirely into memory. This makes the pipeline suitable for datasets that exceed available RAM:
+### Report Timezone
 
-```python
-pd.read_csv("data/raw/orders.csv", chunksize=100_000)
+```yaml
+report_timezone: UTC
 ```
 
-Reference datasets (customers, products) are small enough to load once and used as in-memory lookup tables during chunk processing.
+UTC is the recommended operational default for distributed systems because it avoids ambiguity across machines, containers, regions, and daylight-saving transitions.
 
-### Schema Validation
+Business-local reporting can be applied as a deliberate transformation when required, rather than relying on host-machine timezone settings.
 
-Before any transformation runs, every chunk is checked for:
+### Invalid Record Policy
 
-- Required columns (`order_id`, `customer_id`, `product_id`, `status`, `amount`, `created_at`, `updated_at`)
-- Valid order statuses (`pending`, `completed`, `cancelled`)
-- Non-negative amounts
-- `updated_at >= created_at` timestamp ordering
+```yaml
+fail_on_invalid_records: false
+```
 
-Invalid records are quarantined into `rejected_orders.csv` and optionally fail the pipeline, depending on the `fail_on_invalid_records` setting.
+When disabled, invalid order records are quarantined into `rejected_orders.csv` while valid records continue through the pipeline.
+
+When enabled, any rejected record causes pipeline execution to fail.
+
+This allows the same pipeline to support both:
+
+- Tolerant batch processing where bad records are isolated
+- Strict data-quality enforcement where bad input must block publication
+
+## Validation Settings
+
+```yaml
+validation:
+  required_order_columns:
+    - order_id
+    - customer_id
+    - product_id
+    - status
+    - amount
+    - created_at
+    - updated_at
+
+  valid_order_statuses:
+    - pending
+    - completed
+    - cancelled
+
+  amount:
+    minimum: 0.0
+
+  timestamps:
+    require_updated_at_gte_created_at: true
+
+  relationships:
+    require_customer_reference: true
+    require_unique_customer_id: true
+    require_unique_order_id: true
+```
+
+Validation rules define the expected contract for the order dataset.
+
+### Required Columns
+
+Every order record must originate from a dataset containing:
+
+| Column | Purpose |
+| --- | --- |
+| `order_id` | Unique business identifier |
+| `customer_id` | Customer foreign key |
+| `product_id` | Product reference |
+| `status` | Order lifecycle state |
+| `amount` | Monetary order value |
+| `created_at` | Creation timestamp |
+| `updated_at` | Latest record-update timestamp |
+
+Schema validation should happen before downstream transformations so failures occur close to the source of the problem.
+
+### Status Values
+
+Only the configured status values are valid:
+
+```yaml
+valid_order_statuses:
+  - pending
+  - completed
+  - cancelled
+```
+
+Unknown statuses are rejected rather than silently accepted.
+
+This is important for reporting correctness because downstream logic treats `completed` as revenue-generating while `pending` and `cancelled` do not contribute completed sales.
+
+### Amount Validation
+
+```yaml
+amount:
+  minimum: 0.0
+```
+
+Negative order amounts are rejected.
+
+Currency-specific validation is intentionally outside this project configuration because the current pipeline treats `amount` as a numeric business value rather than implementing a full multi-currency ledger.
+
+### Timestamp Ordering
+
+```yaml
+timestamps:
+  require_updated_at_gte_created_at: true
+```
+
+`updated_at` must be greater than or equal to `created_at`.
+
+This protects downstream logic that relies on update timestamps for deduplication and version selection.
 
 ### Referential Integrity
 
-Every `customer_id` in the orders dataset must exist in `customers.csv`. Orphaned records are rejected rather than silently dropped or processed with missing attributes.
+```yaml
+relationships:
+  require_customer_reference: true
+  require_unique_customer_id: true
+  require_unique_order_id: true
+```
 
-### Enrichment and Transformation
+The configuration expresses the expected relationships between transactional and reference data:
 
-Valid, cleaned orders are joined with customer and product reference data to produce an enriched DataFrame with derived columns that support multi-dimensional reporting.
+```text
+orders.customer_id
+        │
+        ▼
+customers.customer_id
+```
 
-### Aggregation and Reporting
+Unknown customer references should fail relationship validation because silently dropping or inventing customer attributes would produce incorrect reports.
 
-Three report types are produced:
+## Reporting Settings
 
-| Report | Grain | Key Metrics |
-|---|---|---|
-| Daily Sales | Order date | Revenue, order count, average order value |
-| Customer Sales | Customer | Lifetime revenue, order count |
-| Product Sales | Product | Units sold, product revenue |
+```yaml
+reporting:
+  completed_order_status: completed
+  reconciliation:
+    enabled: true
+    tolerance: 0.01
+```
 
-All Parquet outputs are written atomically — written to a temporary file first and then replaced into the final destination to protect downstream consumers from partially written files.
+The pipeline considers orders with status `completed` to be revenue-generating.
 
 ### Reconciliation
 
-After report generation, pipeline metrics are reconciled: the sum of completed-order revenue across all reports must match the source data within a configurable tolerance (`0.01` by default). This verifies that no revenue was silently lost during aggregation.
+Reconciliation compares source order totals with generated report totals.
 
----
+For example:
 
-## Configuration
+```text
+Source completed orders
+        │
+        ├── order count
+        └── revenue
+             │
+             ▼
+       Generated report
+             │
+        ├── order count
+        └── revenue
+```
 
-The pipeline is configured through `config/settings.yaml` and supports environment-variable overrides at runtime.
+A tolerance of `0.01` allows small floating-point or currency rounding differences while still detecting meaningful discrepancies.
 
-Key configuration options:
+Reconciliation should remain enabled in production unless there is a documented reason to disable it.
 
-| Setting | Default | Purpose |
-|---|---|---|
-| `csv_chunksize` | `100000` | Rows per ingestion chunk |
-| `report_timezone` | `UTC` | Timestamp normalization |
-| `fail_on_invalid_records` | `false` | Quarantine vs. abort on bad records |
-| `reconciliation.enabled` | `true` | Validate report totals against source |
-| `reconciliation.tolerance` | `0.01` | Allowed revenue rounding difference |
-| `atomic_writes` | `true` | Protect consumers from partial outputs |
+## Runtime Settings
 
-Environment variable overrides:
+```yaml
+runtime:
+  create_directories: true
+  atomic_writes: true
+```
+
+### Directory Creation
+
+When enabled, required directories are created automatically during pipeline startup.
+
+This makes local execution and fresh CI environments easier to reproduce.
+
+### Atomic Writes
+
+Atomic writes protect consumers from partially written report files.
+
+The intended behavior is:
+
+```mermaid
+sequenceDiagram
+    participant P as Pipeline
+    participant T as Temporary File
+    participant R as Report Path
+
+    P->>T: Write complete output
+    T-->>P: Write succeeds
+    P->>R: Atomic replace
+    R-->>P: Published report
+```
+
+This is particularly important when reports are consumed by another process, scheduled job, API, or downstream analytics system.
+
+## Logging
+
+```yaml
+logging:
+  level: INFO
+  format: "%(asctime)s %(levelname)s %(name)s %(message)s"
+```
+
+The default logging level is `INFO`.
+
+The format includes:
+
+- Timestamp
+- Log level
+- Logger name
+- Message
+
+For production environments, structured logging can be added later so logs can be indexed by systems such as CloudWatch, OpenSearch, Datadog, or another centralized logging platform.
+
+## Runtime Overrides
+
+The Python configuration layer supports environment-variable overrides for operational settings.
+
+Examples include:
 
 ```bash
 PANDAS_CSV_CHUNKSIZE=50000
-FAIL_ON_INVALID_RECORDS=true
 REPORT_TIMEZONE=UTC
-LOG_LEVEL=DEBUG
+FAIL_ON_INVALID_RECORDS=true
+CREATE_PIPELINE_DIRECTORIES=true
+ATOMIC_PIPELINE_WRITES=true
+PIPELINE_RECONCILIATION_ENABLED=true
+PIPELINE_RECONCILIATION_TOLERANCE=0.01
+LOG_LEVEL=INFO
 ```
 
-See [`config/README.md`](config/README.md) for the full configuration reference.
+This separation is intentional:
 
----
-
-## Requirements
-
-- Python ≥ 3.11
-- pandas ≥ 2.2, < 3.0
-- pyarrow ≥ 16, < 22
-- PyYAML ≥ 6.0, < 7.0
-
----
-
-## Installation
-
-```bash
-# From the project root
-pip install -e ".[dev]"
+```text
+settings.yaml
+    │
+    │ static project defaults
+    ▼
+PipelineConfig
+    ▲
+    │ runtime overrides
+environment variables
 ```
 
----
+Do not store credentials, API keys, database passwords, or cloud secrets in `settings.yaml`. Secrets should be supplied through a secrets manager or environment-specific secret injection mechanism.
 
-## Running the Pipeline
+## Development and Production Configuration
+
+The checked-in configuration should contain safe defaults.
+
+For deployment environments:
+
+| Environment | Recommended approach |
+| --- | --- |
+| Local development | `settings.yaml` defaults |
+| CI | Environment variables |
+| Docker | Environment variables or injected configuration |
+| Kubernetes | ConfigMap + Secret |
+| AWS | Environment variables, Secrets Manager, or Parameter Store |
+
+Configuration should be immutable during a single pipeline run. Changing settings halfway through execution can create inconsistent results and makes failures difficult to reproduce.
+
+## Configuration and Application Code
+
+`config/settings.yaml` defines the intended operational contract, while `src/config.py` defines the runtime configuration object used by the application.
+
+The separation provides two useful layers:
+
+```text
+YAML
+  │
+  │ human-readable project configuration
+  ▼
+Runtime configuration
+  │
+  │ validated Python values
+  ▼
+Pipeline components
+```
+
+The application should not scatter calls to `os.getenv()` throughout ingestion, transformation, validation, or reporting modules. Centralizing runtime configuration keeps operational behavior predictable and testable.
+
+## Common Mistakes
+
+### Hardcoding Environment-Specific Paths
+
+Avoid embedding production filesystem paths directly in source code.
+
+Prefer configuration and environment-specific deployment settings so the same application can run locally, in CI, and inside containers.
+
+### Storing Secrets in YAML
+
+Do not place passwords, access tokens, private keys, or cloud credentials in this file.
+
+Configuration files are frequently committed to Git, copied into Docker images, and exposed to CI systems.
+
+### Using Host Timezones
+
+Do not rely on the operating system's local timezone for report calculations.
+
+Use an explicit timezone such as UTC and apply business-local conversions intentionally.
+
+### Loading Large CSV Files Without Chunking
+
+A pipeline that works with a small local CSV can fail when the same input grows significantly.
+
+Chunked ingestion is preferable when the source can exceed available memory.
+
+### Disabling Reconciliation to Hide Failures
+
+Reconciliation failures should be investigated rather than permanently disabled.
+
+A report that is generated successfully but does not reconcile with its source can be more dangerous than a pipeline that fails loudly.
+
+## Operational Considerations
+
+### Scalability
+
+The primary scaling boundary is Pandas memory usage.
+
+For moderate datasets, chunked CSV ingestion can keep memory usage manageable. For substantially larger workloads, consider:
+
+- Parquet instead of CSV
+- Predicate and column pushdown
+- SQL-side aggregation
+- Database-native processing
+- Distributed processing frameworks when Pandas is no longer appropriate
+
+### Reliability
+
+Production jobs should preserve raw inputs and publish derived reports atomically.
+
+A common operational pattern is:
+
+```text
+Immutable source
+      │
+      ▼
+Validated processing
+      │
+      ▼
+Temporary output
+      │
+      ▼
+Atomic publication
+```
+
+This minimizes the chance of consumers seeing incomplete results.
+
+### Monitoring
+
+At minimum, monitor:
+
+- Input row counts
+- Rejected row counts
+- Completed order counts
+- Total revenue
+- Pipeline duration
+- Validation failures
+- Reconciliation failures
+- Output publication failures
+
+These metrics make data-quality regressions observable rather than silent.
+
+### Security
+
+Configuration should follow least privilege and avoid secret material.
+
+For cloud deployments, IAM roles, workload identities, Kubernetes Secrets, AWS Secrets Manager, or AWS Systems Manager Parameter Store should be preferred over credentials committed to Git.
+
+## Useful Commands
+
+Run the pipeline from the project root:
 
 ```bash
-# Using the script
 python scripts/run_pipeline.py
+```
 
-# Using the installed CLI entry point
+Run the installed CLI entry point after installing the package:
+
+```bash
 run-pipeline
+```
 
-# Override chunk size
+Run the test suite:
+
+```bash
+pytest
+```
+
+Run tests with coverage:
+
+```bash
+pytest --cov=src --cov-report=term-missing
+```
+
+Override chunk size for a local run:
+
+```bash
 PANDAS_CSV_CHUNKSIZE=25000 python scripts/run_pipeline.py
+```
 
-# Fail on any invalid record
+Fail the pipeline on invalid source records:
+
+```bash
 FAIL_ON_INVALID_RECORDS=true python scripts/run_pipeline.py
 ```
 
-Place the input files in `data/raw/` before running. The pipeline creates all required directories automatically.
+## Key Takeaways
 
----
-
-## Running Tests
-
-```bash
-# Full test suite
-pytest
-
-# With coverage report
-pytest --cov=src --cov-report=term-missing
-
-# Integration tests only
-pytest -m integration
-
-# Single module
-pytest tests/test_validation.py
-```
-
----
-
-## Data Quality Design
-
-The pipeline is designed to surface data-quality problems rather than hide them:
-
-- **Schema failures** are caught before expensive transformations
-- **Rejected records** are preserved in `rejected_orders.csv` for inspection and reprocessing
-- **Reconciliation** verifies that derived report totals are consistent with source data
-- **Atomic writes** ensure consumers never see a half-written report
-
-Silently producing an incorrect report is treated as a worse failure than failing the pipeline loudly.
-
----
-
-## Production Considerations
-
-| Concern | Approach |
-|---|---|
-| Memory | Chunked CSV ingestion with configurable chunk size |
-| Reliability | Atomic writes, reconciliation, quarantine for bad records |
-| Observability | Structured logging, pipeline metrics, reconciliation results |
-| Configuration | YAML defaults + environment-variable overrides, no secrets in files |
-| Scalability | For very large datasets, replace Pandas chunking with Parquet + column pushdown or a distributed framework |
-
----
-
-## Navigation
-
-| # | Section |
-|---|---|
-| [01](../01-%20Fundamentals/README.md) | Fundamentals |
-| [02](../02-%20Reading%20and%20Writing%20Data/README.md) | Reading and Writing Data |
-| [03](../03-%20Selecting%20and%20Filtering/README.md) | Selecting and Filtering |
-| [04](../04-%20Data%20Cleaning/README.md) | Data Cleaning |
-| [05](../05-%20Data%20Transformation/README.md) | Data Transformation |
-| [06](../06-%20Grouping%20and%20Aggregation/README.md) | Grouping and Aggregation |
-| [07](../07-%20Combining%20Data/README.md) | Combining Data |
-| [08](../08-%20Sorting%20Ranking%20and%20Statistics/README.md) | Sorting Ranking and Statistics |
-| [09](../09-%20Strings%20and%20Datetime/README.md) | Strings and Datetime |
-| [10](../10-%20Performance%20and%20Memory/README.md) | Performance and Memory |
-| [11](../11-%20Backend%20and%20Data%20Engineering/README.md) | Backend and Data Engineering |
-| [12](../12-%20Interview%20Preparation/README.md) | Interview Preparation |
-| **13** | **Projects** |
-| ↳ [01](README.md) | E-Commerce Data Pipeline |
-| ↳ [02](../02-%20API%20Data%20Processing%20Pipeline/README.md) | API Data Processing Pipeline |
-| ↳ [03](../03-%20Large%20Dataset%20Processing/README.md) | Large Dataset Processing |
+- Keep static pipeline defaults in `settings.yaml` and runtime-specific overrides in environment variables.
+- Treat raw inputs as immutable and publish derived reports atomically.
+- Use chunked ingestion and explicit validation rules to control memory usage and protect data quality.
+- Keep secrets out of configuration files and use environment-specific secret injection instead.
+- Keep reconciliation enabled so generated reports are continuously checked against their source data.

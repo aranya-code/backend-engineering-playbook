@@ -1,278 +1,540 @@
-# API Data Processing Pipeline
-
-A production-oriented Pandas pipeline that ingests paginated REST API data with retry logic, normalizes and validates the response payload, applies business transformations, and writes typed Parquet outputs.
-
----
+# README
 
 ## Overview
 
-This project demonstrates how to build a reliable data pipeline that treats an external REST API as its source. It covers authenticated HTTP ingestion with exponential backoff, paginated data collection, JSON-to-DataFrame normalization, schema validation, business transformation, and atomic Parquet publication.
+The `config/` directory contains the runtime configuration contract for the API Data Processing Pipeline.
 
-The same patterns appear in backend engineering jobs that connect internal data stores to external APIs, sync CRM systems, process webhook payloads, or build data products from SaaS platforms.
+The project separates configuration from processing logic so that API connectivity, filesystem locations, validation behavior, retry policy, logging, and operational defaults can change without modifying the core Pandas pipeline. The configuration layer is designed to work consistently across local development, automated tests, CI/CD, containers, staging, and production environments.
 
----
+Configuration is intentionally split across two concerns:
 
-## Architecture
+- `settings.yaml` provides a human-readable baseline configuration and documents the intended operational contract.
+- `src/config.py` provides the runtime configuration object used by the Python application and supports environment-variable overrides for deployment-specific values.
 
-```text
-REST API (paginated)
-       │
-       ▼
-   HTTP Client
-   (auth · timeouts · retries · backoff · pagination)
-       │
-       ▼
-   Ingestion
-   (collect pages · validate HTTP responses)
-       │
-       ▼
-   Normalization
-   (JSON → DataFrame · timestamps · numerics · identifiers)
-       │
-       ▼
-   Validation
-   (schema · domain rules · missing values · type enforcement)
-       │
-       ├──── rejected_records.csv
-       │
-       ▼
-   Transformation
-   (business rules · derived columns · deduplication)
-       │
-       ▼
-   Storage
-   (atomic Parquet + CSV writes · directory management)
-       │
-       ▼
-   Reports
-   (normalized_data.parquet · processing_report.parquet)
+The YAML file is therefore the project configuration reference, while environment variables remain the preferred mechanism for secrets and environment-specific overrides.
+
+## Configuration Architecture
+
+The configuration flow is:
+
+```mermaid
+flowchart LR
+    YAML["config/settings.yaml<br/>Baseline configuration"]
+    ENV["Environment variables<br/>Deployment overrides"]
+    CONFIG["src/config.py<br/>PipelineConfig"]
+    CLIENT["API Client"]
+    PIPELINE["Pipeline orchestration"]
+    STORAGE["Storage layer"]
+    LOGGING["Logging"]
+
+    YAML --> CONFIG
+    ENV --> CONFIG
+    CONFIG --> CLIENT
+    CONFIG --> PIPELINE
+    CONFIG --> STORAGE
+    CONFIG --> LOGGING
 ```
 
-### Source Modules
+The important design principle is that application modules consume a typed `PipelineConfig` object rather than reading environment variables throughout the codebase.
 
-| Module | Responsibility |
-|---|---|
-| `src/client.py` | HTTP client with authentication, timeouts, retries, and exponential backoff |
-| `src/ingestion.py` | Paginated API traversal and raw response collection |
-| `src/normalization.py` | JSON payload normalization into typed DataFrames |
-| `src/validation.py` | Schema enforcement and data-quality checks |
-| `src/transformation.py` | Business logic, derived columns, and deduplication |
-| `src/storage.py` | Atomic Parquet/CSV writes and directory creation |
-| `src/pipeline.py` | End-to-end orchestration |
-| `src/config.py` | Typed runtime configuration with environment-variable overrides |
-| `src/logging_config.py` | Structured logging setup |
+This gives the project a single configuration boundary and prevents configuration logic from leaking into ingestion, transformation, validation, and storage modules.
 
----
+## Files
 
-## Project Structure
+| File | Purpose |
+| --- | --- |
+| `settings.yaml` | Human-readable baseline and operational configuration reference |
+| `README.md` | Documents the configuration model and operational expectations |
+
+The runtime configuration implementation lives outside this directory:
 
 ```text
-02- API Data Processing Pipeline/
-├── config/
-│   ├── settings.yaml       # Baseline operational configuration
-│   ├── pyproject.toml      # Project metadata and tooling
-│   ├── .gitignore
-│   └── README.md           # Configuration reference
-├── scripts/
-│   └── run_pipeline.py     # CLI entry point
-├── src/
-│   ├── __init__.py
-│   ├── client.py
-│   ├── config.py
-│   ├── ingestion.py
-│   ├── logging_config.py
-│   ├── normalization.py
-│   ├── pipeline.py
-│   ├── storage.py
-│   ├── transformation.py
-│   └── validation.py
-└── tests/
-    ├── __init__.py
-    ├── test_client.py
-    ├── test_ingestion.py
-    ├── test_normalization.py
-    ├── test_pipeline.py
-    ├── test_transformation.py
-    └── test_validation.py
+src/
+└── config.py
 ```
 
----
+## Configuration Responsibilities
 
-## Key Concepts Demonstrated
+The configuration system controls the following areas:
 
-### Reliable HTTP Client
+| Area | Examples |
+| --- | --- |
+| API connectivity | Base URL, authentication token, timeouts |
+| Reliability | Retries, exponential backoff, retryable status codes |
+| Pagination | Page size, maximum page count |
+| Data paths | Raw, staging, processed, and report directories |
+| Input/output names | JSON, Parquet, CSV, and report files |
+| Data normalization | Timestamp timezone, identifiers, numeric fields |
+| Validation | Invalid-record handling, schema enforcement |
+| Storage | Atomic writes, compression, encoding |
+| Runtime | Logging, fail-fast behavior |
+| Security | Secret handling and TLS expectations |
+| Observability | Pipeline metrics and logging behavior |
 
-The HTTP client is built around the real-world requirements of calling external APIs under production conditions:
+## Baseline Configuration
 
-- **Authentication** — Bearer token supplied via `API_TOKEN` environment variable, never hardcoded
-- **Timeouts** — Separate connect and read timeouts prevent indefinite hangs
-- **Retries with exponential backoff** — Transient failures (`429`, `500`, `502`, `503`, `504`) are retried with configurable backoff; permanent failures (`401`, `403`, `404`) are not retried
-- **Pagination** — Collects all pages up to a configurable `max_pages` safety limit
+The baseline configuration is stored in `settings.yaml`.
 
-```text
-Request
-   ↓
-Success?  ──── Yes ──→ Return response
-   │
-   No
-   ↓
-Retryable status?  ──── No ──→ Raise PermanentError
-   │
-   Yes
-   ↓
-Retries exhausted?  ──── Yes ──→ Raise RetryError
-   │
-   No
-   ↓
-Backoff sleep
-   ↓
-Retry
+Typical sections include:
+
+```yaml
+pipeline:
+  name: api_data_processing_pipeline
+  version: "1.0.0"
+  timezone: UTC
+
+api:
+  base_url: https://api.example.com
+  timeout_seconds: 30.0
+  connect_timeout_seconds: 10.0
+  read_timeout_seconds: 30.0
+  max_retries: 3
+  backoff_factor: 1.0
+  page_size: 100
+  max_pages: 10000
 ```
 
-### JSON Normalization
+This file is intended to make the operational contract visible to developers and reviewers.
 
-API responses are JSON, not DataFrames. The normalization layer handles:
+It should contain safe defaults and descriptive configuration values, but it should not contain secrets.
 
-- Flattening nested JSON structures into columnar DataFrames
-- Parsing timestamps from ISO-8601 strings to timezone-aware `datetime64`
-- Coercing numeric fields to correct Pandas dtypes
-- Preserving string identifiers (order IDs, customer IDs) without numeric conversion
+## Environment Variable Overrides
 
-This separation means the ingestion layer stays simple (collect raw data) while normalization handles the schema contract explicitly.
+Deployment-specific settings are supplied through environment variables.
 
-### Schema Validation and Rejected Records
+The current runtime configuration supports variables such as:
 
-All normalized data is validated before transformation:
+| Variable | Purpose | Default |
+| --- | --- | --- |
+| `API_BASE_URL` | API endpoint or base URL | `https://api.example.com` |
+| `API_TOKEN` | Bearer authentication token | unset |
+| `API_CONNECT_TIMEOUT_SECONDS` | Connection timeout | `10.0` |
+| `API_READ_TIMEOUT_SECONDS` | Response read timeout | `30.0` |
+| `API_MAX_RETRIES` | Retry limit | `3` |
+| `API_BACKOFF_FACTOR` | Retry backoff factor | `1.0` |
+| `API_PAGE_SIZE` | Requested records per page | `100` |
+| `API_MAX_PAGES` | Maximum pages per execution | `10000` |
+| `API_RESPONSE_TIMEZONE` | Target timestamp timezone | `UTC` |
+| `DROP_INVALID_RECORDS` | Continue after rejecting invalid records | `false` |
+| `FAIL_ON_HTTP_ERROR` | Fail on unrecoverable HTTP failures | `true` |
+| `FAIL_ON_SCHEMA_ERROR` | Fail on schema/data-quality violations | `true` |
+| `CREATE_PIPELINE_DIRECTORIES` | Create required directories | `true` |
+| `ATOMIC_PIPELINE_WRITES` | Enable atomic output replacement | `true` |
+| `LOG_LEVEL` | Application log level | `INFO` |
+| `LOG_FORMAT` | Python logging format | project default |
 
-- Required column presence
-- Type conformance
-- Null/missing value policy
-- Domain rule enforcement (e.g., non-negative amounts)
+Environment variables are particularly useful in Docker, Kubernetes, AWS ECS, CI/CD systems, and scheduled jobs because the same application artifact can be promoted across environments without rebuilding the code.
 
-Invalid records are written to `rejected_records.csv` so they can be inspected, re-ingested, or escalated without blocking the rest of the pipeline.
+## Secrets
 
-### Transformation
+Authentication credentials must not be committed to `settings.yaml`, source code, or version control.
 
-Validated records go through business-rule transformation:
-
-- Derived columns (e.g., enriched status labels, revenue tiers)
-- Deduplication by business key
-- Cross-column consistency checks
-
-### Atomic Outputs
-
-All outputs are written atomically — to a temporary file first, then moved into place. Consumers (scheduled jobs, dashboards, downstream pipelines) always see either a complete previous version or a complete new version.
-
----
-
-## Configuration
-
-| Setting | Default | Purpose |
-|---|---|---|
-| `API_BASE_URL` | `https://api.example.com` | API endpoint |
-| `API_TOKEN` | (unset) | Bearer authentication token |
-| `API_CONNECT_TIMEOUT_SECONDS` | `10.0` | Connection timeout |
-| `API_READ_TIMEOUT_SECONDS` | `30.0` | Read timeout |
-| `API_MAX_RETRIES` | `3` | Maximum retry attempts |
-| `API_BACKOFF_FACTOR` | `1.0` | Exponential backoff factor |
-| `API_PAGE_SIZE` | `100` | Records per page |
-| `API_MAX_PAGES` | `10000` | Maximum pages per run |
-| `DROP_INVALID_RECORDS` | `false` | Quarantine vs. abort on bad records |
-| `FAIL_ON_HTTP_ERROR` | `true` | Abort on unrecoverable HTTP failures |
-| `FAIL_ON_SCHEMA_ERROR` | `true` | Abort on schema violations |
-| `LOG_LEVEL` | `INFO` | Application log level |
-
-> **Never commit `API_TOKEN` or any credentials to `settings.yaml` or source control.** Use environment variables or a managed secret provider.
-
-See [`config/README.md`](config/README.md) for the full configuration reference.
-
----
-
-## Requirements
-
-- Python ≥ 3.11
-- pandas ≥ 2.2, < 3.0
-- pyarrow ≥ 16, < 22
-- requests ≥ 2.32, < 3.0
-- PyYAML ≥ 6.0, < 7.0
-
----
-
-## Installation
+Use an environment variable such as:
 
 ```bash
-pip install -e ".[dev]"
+export API_TOKEN="replace-with-real-secret"
 ```
 
----
+For production workloads, prefer a managed secret system rather than storing credentials directly in deployment manifests.
 
-## Running the Pipeline
+Typical production choices include:
+
+- AWS Secrets Manager
+- AWS Systems Manager Parameter Store
+- Kubernetes Secrets
+- CI/CD secret stores
+- External secret operators
+
+The token should never be emitted in application logs, exception messages, metrics, or debugging output.
+
+## API Configuration
+
+API configuration controls request behavior and reliability.
+
+### Timeouts
+
+Separate connect and read timeouts are preferred over an unbounded request.
+
+```yaml
+api:
+  connect_timeout_seconds: 10.0
+  read_timeout_seconds: 30.0
+```
+
+A connect timeout protects the process from hanging while establishing a connection. A read timeout limits the time spent waiting for server data after the connection is established.
+
+Production workloads should use finite timeouts because an unavailable or degraded upstream must not consume pipeline workers indefinitely.
+
+### Retries
+
+Only transient failures should be retried.
+
+The project treats statuses such as `429`, `500`, `502`, `503`, and `504` as retry candidates.
+
+```yaml
+api:
+  max_retries: 3
+  backoff_factor: 1.0
+```
+
+Retry behavior should use exponential backoff and honor `Retry-After` when the upstream API provides it.
+
+Retries must remain bounded. An API outage should fail predictably rather than turning into an infinite retry loop.
+
+### Pagination
+
+The client uses page-oriented retrieval:
+
+```yaml
+api:
+  page_size: 100
+  max_pages: 10000
+```
+
+`max_pages` acts as a safety boundary against malformed pagination metadata or unexpectedly large datasets.
+
+The pipeline should never trust an upstream pagination cursor or page number without enforcing forward progress and an upper bound.
+
+## Data Processing Configuration
+
+The processing configuration defines assumptions made during normalization and transformation.
+
+Example:
+
+```yaml
+processing:
+  response_timezone: UTC
+  numeric_columns:
+    - amount
+    - quantity
+  timestamp_columns:
+    - created_at
+    - updated_at
+    - timestamp
+  identifier_columns:
+    - id
+    - order_id
+    - customer_id
+    - product_id
+```
+
+These fields establish the expected shape of API-derived data before it enters downstream Pandas transformations.
+
+The processing layer should treat external API data as untrusted input. Configuration defines the intended schema; validation determines whether actual data satisfies it.
+
+## Validation Configuration
+
+Validation behavior determines whether the pipeline fails, rejects records, or continues.
+
+Example:
+
+```yaml
+validation:
+  drop_invalid_records: false
+  fail_on_http_error: true
+  fail_on_schema_error: true
+```
+
+The default strict behavior is intentional.
+
+For critical reporting or financial pipelines, silently dropping invalid data is dangerous because it can produce apparently successful but incomplete output.
+
+When invalid records are intentionally tolerated, the rejected records must remain observable and auditable.
+
+## Storage Configuration
+
+Output paths and file formats are centrally configured.
+
+Example:
+
+```yaml
+paths:
+  raw_data_dir: data/raw
+  staging_data_dir: data/staging
+  processed_data_dir: data/processed
+  reports_dir: reports
+
+outputs:
+  normalized_data_file: normalized_data.parquet
+  rejected_records_file: rejected_records.csv
+  processing_report_file: processing_report.parquet
+```
+
+The pipeline uses Parquet for structured analytical output because it provides efficient columnar storage and integrates well with Pandas and downstream data-processing systems.
+
+CSV remains useful for rejected-record inspection because it is easy to inspect manually and consume from operational tooling.
+
+## Atomic Writes
+
+Atomic writes are enabled by default:
+
+```yaml
+storage:
+  atomic_writes: true
+```
+
+The storage layer writes to a temporary file before replacing the destination.
+
+This reduces the likelihood of consumers observing partially written output files.
+
+For scheduled pipelines, this is important when another process may immediately read the generated Parquet or CSV files.
+
+A successful pipeline execution should leave consumers with either the previous complete version or the new complete version, not a half-written artifact.
+
+## Directory Creation
+
+The project can create required directories automatically:
+
+```yaml
+storage:
+  create_directories: true
+```
+
+This simplifies local development and ephemeral container execution.
+
+In production, directory creation should still be treated as a startup concern rather than a substitute for properly provisioning durable storage.
+
+For containers, persistent outputs should normally be externalized to object storage such as Amazon S3 when the data must survive container replacement.
+
+## Timezone Handling
+
+Timestamps arriving from APIs may be:
+
+- UTC
+- timezone-aware with an explicit offset
+- timezone-naive
+- malformed
+
+The normalization layer converts timestamps into a consistent representation using the configured timezone.
+
+The recommended production default is UTC:
+
+```yaml
+processing:
+  response_timezone: UTC
+```
+
+UTC is preferred for storage and cross-system interoperability. Local timezone conversion should normally happen only at reporting or presentation boundaries.
+
+## Logging Configuration
+
+Runtime logging is configured through:
+
+```yaml
+runtime:
+  log_level: INFO
+  log_format: "%(asctime)s %(levelname)s %(name)s %(message)s"
+```
+
+Use:
+
+- `DEBUG` for controlled troubleshooting
+- `INFO` for normal production execution
+- `WARNING` for degraded but recoverable conditions
+- `ERROR` for failed operations that require attention
+- `CRITICAL` for process-level failures
+
+Production logs should provide enough context to diagnose failed runs without exposing credentials or sensitive payloads.
+
+## Environment Profiles
+
+The same codebase should support multiple environments through configuration overrides rather than duplicated source code.
+
+| Environment | Typical characteristics |
+| --- | --- |
+| Local | Safe test API, verbose logging, local filesystem |
+| Test | Mock/stub API, isolated temporary data |
+| Staging | Production-like API contract and infrastructure |
+| Production | Managed secrets, external storage, strict validation, controlled logging |
+
+A deployment pipeline should promote the same application version while changing configuration through the deployment environment.
+
+## Local Usage
+
+Set the API endpoint and optional authentication token:
 
 ```bash
-# Set credentials
 export API_BASE_URL="https://api.example.com/orders"
-export API_TOKEN="your-token"
+export API_TOKEN="your-development-token"
+```
 
-# Run with script
+Then execute:
+
+```bash
 python scripts/run_pipeline.py
+```
 
-# Pass the endpoint directly
-python scripts/run_pipeline.py "https://api.example.com/orders"
+An explicit endpoint can override the configured default:
 
-# Use the installed entry point
+```bash
+python scripts/run_pipeline.py \
+  "https://api.example.com/orders"
+```
+
+The project can also be invoked through the installed console entry point:
+
+```bash
 run-pipeline "https://api.example.com/orders"
 ```
 
----
+## Testing Configuration
 
-## Running Tests
+Tests should avoid using production endpoints or production credentials.
 
-Tests use mocked API responses and isolated temporary directories — no production credentials or network access required.
+Use mocked API responses and isolated filesystem locations.
+
+A typical test invocation is:
 
 ```bash
-# Full test suite
 pytest
-
-# With coverage
-pytest --cov=src --cov-report=term-missing
-
-# Specific module
-pytest tests/test_client.py
-pytest tests/test_validation.py
 ```
 
----
+For coverage:
 
-## Production Considerations
+```bash
+pytest --cov
+```
 
-| Concern | Approach |
-|---|---|
-| Reliability | Bounded retries, exponential backoff, separate connect/read timeouts |
-| Security | Bearer token via env var; never in YAML or logs |
-| Data quality | Schema validation, rejected-record quarantine, fail-fast on schema errors |
-| Scalability | Paginated ingestion; for very large APIs, consider incremental extraction |
-| Observability | Structured logging, per-stage metrics (records fetched, normalized, rejected, transformed) |
-| Deployment | Container-friendly — all secrets and paths via environment variables |
+Configuration-related tests should verify:
 
----
+- Environment variables are parsed correctly.
+- Invalid numeric values fail fast.
+- Invalid boolean values fail fast.
+- Default values are stable.
+- Secret values are not exposed by representations or logs.
+- Paths resolve consistently.
+- Runtime behavior honors configuration overrides.
 
-## Navigation
+## Docker and Kubernetes
 
-| # | Section |
-|---|---|
-| [01](../01-%20Fundamentals/README.md) | Fundamentals |
-| [02](../02-%20Reading%20and%20Writing%20Data/README.md) | Reading and Writing Data |
-| [03](../03-%20Selecting%20and%20Filtering/README.md) | Selecting and Filtering |
-| [04](../04-%20Data%20Cleaning/README.md) | Data Cleaning |
-| [05](../05-%20Data%20Transformation/README.md) | Data Transformation |
-| [06](../06-%20Grouping%20and%20Aggregation/README.md) | Grouping and Aggregation |
-| [07](../07-%20Combining%20Data/README.md) | Combining Data |
-| [08](../08-%20Sorting%20Ranking%20and%20Statistics/README.md) | Sorting Ranking and Statistics |
-| [09](../09-%20Strings%20and%20Datetime/README.md) | Strings and Datetime |
-| [10](../10-%20Performance%20and%20Memory/README.md) | Performance and Memory |
-| [11](../11-%20Backend%20and%20Data%20Engineering/README.md) | Backend and Data Engineering |
-| [12](../12-%20Interview%20Preparation/README.md) | Interview Preparation |
-| **13** | **Projects** |
-| ↳ [01](../01-%20E-Commerce%20Data%20Pipeline/README.md) | E-Commerce Data Pipeline |
-| ↳ [02](README.md) | API Data Processing Pipeline |
-| ↳ [03](../03-%20Large%20Dataset%20Processing/README.md) | Large Dataset Processing |
+Configuration should be injected into containers rather than baked into images.
+
+Example Docker usage:
+
+```bash
+docker run --rm \
+  -e API_BASE_URL="https://api.example.com/orders" \
+  -e API_TOKEN="$API_TOKEN" \
+  -e API_MAX_RETRIES="5" \
+  api-data-processing-pipeline:latest
+```
+
+In Kubernetes, configuration values can be supplied through `ConfigMap` and secrets through `Secret`.
+
+The application should remain stateless with respect to its executable container. Generated datasets should be written to durable storage when they need to survive pod replacement.
+
+## Production Recommendations
+
+### Reliability
+
+Use bounded timeouts, bounded retries, exponential backoff, and pagination limits.
+
+Do not retry permanent failures such as authentication or authorization errors.
+
+### Security
+
+Keep secrets outside source control. Require HTTPS for external API traffic and never log bearer tokens.
+
+### Scalability
+
+Pandas is appropriate when the transformed working set fits comfortably in process memory. This project's API ingestion layer is paginated, but downstream normalization and transformation still materialize data in memory.
+
+For substantially larger workloads, consider:
+
+- chunked processing
+- partitioned Parquet output
+- incremental processing
+- SQL pushdown
+- AWS Glue
+- Spark
+- Polars
+- DuckDB
+
+### Observability
+
+Track at least:
+
+- records fetched
+- pages fetched
+- records normalized
+- records rejected
+- records transformed
+- rows removed
+- total numeric value
+- pipeline execution duration
+
+A successful process exit should not be treated as proof that the dataset was correct. Data-quality metrics must be evaluated alongside execution status.
+
+### Cost
+
+Avoid excessive retries, oversized page sizes, unnecessary DataFrame copies, and repeated API downloads.
+
+For recurring jobs, incremental API extraction is generally preferable to repeatedly processing the entire source dataset.
+
+## Common Mistakes
+
+### Storing Secrets in YAML
+
+Do not commit:
+
+```yaml
+api:
+  token: "actual-production-token"
+```
+
+Use environment variables or a managed secret provider instead.
+
+### Treating Configuration as Documentation Only
+
+Changing `settings.yaml` does not automatically change runtime behavior unless the application explicitly loads that YAML file.
+
+The current runtime path is driven by `src/config.py` and environment variables. The YAML file acts as the documented baseline configuration contract.
+
+This distinction should remain explicit during maintenance to avoid configuration drift.
+
+### Using Unlimited Retries
+
+Unlimited retry loops can create cascading failures and exhaust worker capacity.
+
+Always define a retry count, timeout, and backoff strategy.
+
+### Using Local Disk for Durable Production Data
+
+Container-local storage is ephemeral.
+
+Production outputs that must survive restarts should generally be written to durable external storage such as Amazon S3.
+
+### Disabling Validation to Make Jobs Green
+
+Changing:
+
+```bash
+export FAIL_ON_SCHEMA_ERROR=false
+```
+
+can be appropriate for exploratory or tolerant workloads, but it should not become a mechanism for hiding upstream contract changes.
+
+Validation failures should be investigated rather than normalized away.
+
+## Configuration Change Guidelines
+
+Configuration changes can alter runtime behavior without changing application code, so they should be reviewed with the same discipline as source changes.
+
+For every production configuration change:
+
+1. Document the reason for the change.
+2. Review its reliability and security impact.
+3. Test it against representative API data.
+4. Verify the resulting metrics and outputs.
+5. Roll out gradually when the change affects upstream load or retry behavior.
+6. Record the effective production configuration through the deployment system.
+
+Never commit secrets or environment-specific credentials to this directory.
+
+## Key Takeaways
+
+- `settings.yaml` defines the project's documented baseline configuration, while `src/config.py` is the runtime configuration boundary.
+- Environment variables should provide deployment-specific values and secrets rather than embedding them in source-controlled YAML.
+- API reliability depends on bounded timeouts, bounded retries, exponential backoff, and safe pagination limits.
+- Data-quality configuration should favor explicit validation and observable rejected records over silent data loss.
+- Production deployments should externalize durable outputs, protect secrets, and monitor both pipeline execution and data-quality metrics.
