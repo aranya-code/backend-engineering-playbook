@@ -1,0 +1,467 @@
+pipeline:
+  name: api_data_processing_pipeline
+  version: "1.0.0"
+  timezone: UTC
+
+api:
+  base_url: https://api.example.com
+  token_environment_variable: API_TOKEN
+  timeout_seconds: 30.0
+  connect_timeout_seconds: 10.0
+  read_timeout_seconds: 30.0
+  max_retries: 3
+  backoff_factor: 1.0
+  page_size: 100
+  max_pages: 10000
+  retryable_status_codes:
+    - 429
+    - 500
+    - 502
+    - 503
+    - 504
+
+paths:
+  data_dir: data
+  raw_data_dir: data/raw
+  staging_data_dir: data/staging
+  processed_data_dir: data/processed
+  reports_dir: reports
+
+inputs:
+  raw_response_file: api_response.json
+
+outputs:
+  normalized_data_file: normalized_data.parquet
+  rejected_records_file: rejected_records.csv
+  processing_report_file: processing_report.parquet
+
+processing:
+  response_timezone: UTC
+  numeric_columns:
+    - amount
+    - quantity
+  timestamp_columns:
+    - created_at
+    - updated_at
+    - timestamp
+  identifier_columns:
+    - id
+    - order_id
+    - customer_id
+    - product_id
+
+validation:
+  drop_invalid_records: false
+  fail_on_http_error: true
+  fail_on_schema_error: true
+  required_identifier_columns:
+    - id
+  allowed_status_values:
+    - pending
+    - processing
+    - completed
+    - cancelled
+
+storage:
+  create_directories: true
+  atomic_writes: true
+  parquet_compression: snappy
+  csv_encoding: utf-8
+  json_indent: 2
+
+runtime:
+  log_level: INFO
+  log_format: "%(asctime)s %(levelname)s %(name)s %(message)s"
+  fail_fast: true
+
+environment:
+  variables:
+    API_BASE_URL:
+      description: Base URL used by the API client.
+      required: false
+      default: https://api.example.com
+
+    API_TOKEN:
+      description: Bearer token used for authenticated API requests.
+      required: false
+      sensitive: true
+
+    API_TIMEOUT_SECONDS:
+      description: Legacy overall API timeout setting.
+      required: false
+      default: "30.0"
+
+    API_CONNECT_TIMEOUT_SECONDS:
+      description: Maximum time allowed to establish an API connection.
+      required: false
+      default: "10.0"
+
+    API_READ_TIMEOUT_SECONDS:
+      description: Maximum time allowed while waiting for an API response.
+      required: false
+      default: "30.0"
+
+    API_MAX_RETRIES:
+      description: Maximum number of retries for transient API failures.
+      required: false
+      default: "3"
+
+    API_BACKOFF_FACTOR:
+      description: Base exponential backoff applied between retries.
+      required: false
+      default: "1.0"
+
+    API_PAGE_SIZE:
+      description: Number of records requested per API page.
+      required: false
+      default: "100"
+
+    API_MAX_PAGES:
+      description: Maximum number of API pages processed in a single run.
+      required: false
+      default: "10000"
+
+    API_RESPONSE_TIMEZONE:
+      description: Timezone used when normalizing API timestamps.
+      required: false
+      default: UTC
+
+    DROP_INVALID_RECORDS:
+      description: Allow the pipeline to continue after rejecting invalid records.
+      required: false
+      default: "false"
+
+    FAIL_ON_HTTP_ERROR:
+      description: Fail the pipeline when an unrecoverable HTTP error occurs.
+      required: false
+      default: "true"
+
+    FAIL_ON_SCHEMA_ERROR:
+      description: Fail when normalized records violate the configured schema contract.
+      required: false
+      default: "true"
+
+    CREATE_PIPELINE_DIRECTORIES:
+      description: Create required data and report directories automatically.
+      required: false
+      default: "true"
+
+    ATOMIC_PIPELINE_WRITES:
+      description: Write output files through temporary files and atomic replacement.
+      required: false
+      default: "true"
+
+    LOG_LEVEL:
+      description: Application log level.
+      required: false
+      default: INFO
+
+    LOG_FORMAT:
+      description: Python logging format used by the pipeline.
+      required: false
+      default: "%(asctime)s %(levelname)s %(name)s %(message)s"
+
+operations:
+  retries:
+    strategy: exponential_backoff_with_jitter
+    respect_retry_after: true
+    maximum_delay_seconds: 300
+
+  pagination:
+    strategy: page_number
+    initial_page: 1
+    require_forward_progress: true
+
+  data_quality:
+    preserve_rejected_records: true
+    reset_dataframe_indexes: true
+    normalize_column_names: true
+    normalize_identifiers: true
+    normalize_timestamps: true
+    coerce_numeric_values: true
+
+security:
+  authentication:
+    scheme: bearer
+    token_from_environment: true
+
+  secrets:
+    store_in_environment_variables: true
+    store_in_configuration_files: false
+    log_sensitive_values: false
+
+  transport:
+    require_https: true
+    verify_tls_certificates: true
+
+observability:
+  logging:
+    enabled: true
+    level: INFO
+    include_timestamp: true
+    include_logger_name: true
+
+  metrics:
+    enabled: true
+    track:
+      - records_fetched
+      - pages_fetched
+      - records_normalized
+      - records_rejected
+      - records_transformed
+      - rows_removed
+      - numeric_total
+
+quality:
+  code_style:
+    formatter: ruff
+    linter: ruff
+
+  testing:
+    framework: pytest
+    coverage_required: true
+
+deployment:
+  supported_environments:
+    - local
+    - test
+    - staging
+    - production
+
+  containerized: true
+  stateless: true
+  persistent_outputs_externalized: true
+
+pipeline:
+  name: api_data_processing_pipeline
+  version: "1.0.0"
+  timezone: UTC
+
+api:
+  base_url: https://api.example.com
+  token_environment_variable: API_TOKEN
+  timeout_seconds: 30.0
+  connect_timeout_seconds: 10.0
+  read_timeout_seconds: 30.0
+  max_retries: 3
+  backoff_factor: 1.0
+  page_size: 100
+  max_pages: 10000
+  retryable_status_codes:
+    - 429
+    - 500
+    - 502
+    - 503
+    - 504
+
+paths:
+  data_dir: data
+  raw_data_dir: data/raw
+  staging_data_dir: data/staging
+  processed_data_dir: data/processed
+  reports_dir: reports
+
+inputs:
+  raw_response_file: api_response.json
+
+outputs:
+  normalized_data_file: normalized_data.parquet
+  rejected_records_file: rejected_records.csv
+  processing_report_file: processing_report.parquet
+
+processing:
+  response_timezone: UTC
+  numeric_columns:
+    - amount
+    - quantity
+  timestamp_columns:
+    - created_at
+    - updated_at
+    - timestamp
+  identifier_columns:
+    - id
+    - order_id
+    - customer_id
+    - product_id
+
+validation:
+  drop_invalid_records: false
+  fail_on_http_error: true
+  fail_on_schema_error: true
+  required_identifier_columns:
+    - id
+  allowed_status_values:
+    - pending
+    - processing
+    - completed
+    - cancelled
+
+storage:
+  create_directories: true
+  atomic_writes: true
+  parquet_compression: snappy
+  csv_encoding: utf-8
+  json_indent: 2
+
+runtime:
+  log_level: INFO
+  log_format: "%(asctime)s %(levelname)s %(name)s %(message)s"
+  fail_fast: true
+
+environment:
+  variables:
+    API_BASE_URL:
+      description: Base URL used by the API client.
+      required: false
+      default: https://api.example.com
+
+    API_TOKEN:
+      description: Bearer token used for authenticated API requests.
+      required: false
+      sensitive: true
+
+    API_TIMEOUT_SECONDS:
+      description: Legacy overall API timeout setting.
+      required: false
+      default: "30.0"
+
+    API_CONNECT_TIMEOUT_SECONDS:
+      description: Maximum time allowed to establish an API connection.
+      required: false
+      default: "10.0"
+
+    API_READ_TIMEOUT_SECONDS:
+      description: Maximum time allowed while waiting for an API response.
+      required: false
+      default: "30.0"
+
+    API_MAX_RETRIES:
+      description: Maximum number of retries for transient API failures.
+      required: false
+      default: "3"
+
+    API_BACKOFF_FACTOR:
+      description: Base exponential backoff applied between retries.
+      required: false
+      default: "1.0"
+
+    API_PAGE_SIZE:
+      description: Number of records requested per API page.
+      required: false
+      default: "100"
+
+    API_MAX_PAGES:
+      description: Maximum number of API pages processed in a single run.
+      required: false
+      default: "10000"
+
+    API_RESPONSE_TIMEZONE:
+      description: Timezone used when normalizing API timestamps.
+      required: false
+      default: UTC
+
+    DROP_INVALID_RECORDS:
+      description: Allow the pipeline to continue after rejecting invalid records.
+      required: false
+      default: "false"
+
+    FAIL_ON_HTTP_ERROR:
+      description: Fail the pipeline when an unrecoverable HTTP error occurs.
+      required: false
+      default: "true"
+
+    FAIL_ON_SCHEMA_ERROR:
+      description: Fail when normalized records violate the configured schema contract.
+      required: false
+      default: "true"
+
+    CREATE_PIPELINE_DIRECTORIES:
+      description: Create required data and report directories automatically.
+      required: false
+      default: "true"
+
+    ATOMIC_PIPELINE_WRITES:
+      description: Write output files through temporary files and atomic replacement.
+      required: false
+      default: "true"
+
+    LOG_LEVEL:
+      description: Application log level.
+      required: false
+      default: INFO
+
+    LOG_FORMAT:
+      description: Python logging format used by the pipeline.
+      required: false
+      default: "%(asctime)s %(levelname)s %(name)s %(message)s"
+
+operations:
+  retries:
+    strategy: exponential_backoff_with_jitter
+    respect_retry_after: true
+    maximum_delay_seconds: 300
+
+  pagination:
+    strategy: page_number
+    initial_page: 1
+    require_forward_progress: true
+
+  data_quality:
+    preserve_rejected_records: true
+    reset_dataframe_indexes: true
+    normalize_column_names: true
+    normalize_identifiers: true
+    normalize_timestamps: true
+    coerce_numeric_values: true
+
+security:
+  authentication:
+    scheme: bearer
+    token_from_environment: true
+
+  secrets:
+    store_in_environment_variables: true
+    store_in_configuration_files: false
+    log_sensitive_values: false
+
+  transport:
+    require_https: true
+    verify_tls_certificates: true
+
+observability:
+  logging:
+    enabled: true
+    level: INFO
+    include_timestamp: true
+    include_logger_name: true
+
+  metrics:
+    enabled: true
+    track:
+      - records_fetched
+      - pages_fetched
+      - records_normalized
+      - records_rejected
+      - records_transformed
+      - rows_removed
+      - numeric_total
+
+quality:
+  code_style:
+    formatter: ruff
+    linter: ruff
+
+  testing:
+    framework: pytest
+    coverage_required: true
+
+deployment:
+  supported_environments:
+    - local
+    - test
+    - staging
+    - production
+
+  containerized: true
+  stateless: true
+  persistent_outputs_externalized: true

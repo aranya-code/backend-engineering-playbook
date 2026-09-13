@@ -1,0 +1,387 @@
+# Large Dataset Processing Pipeline configuration.
+# Runtime configuration is loaded by src/config.py. Environment variables
+# can override the values represented here when deploying the project.
+
+pipeline:
+  name: large-dataset-processing
+  input_format: csv
+  output_format: parquet
+  chunk_size: 50000
+  benchmark_chunk_size: 100000
+  max_rows: null
+  min_chunk_size: 1000
+  max_chunk_size: 1000000
+
+paths:
+  input: data/raw/input.csv
+  output: data/processed/output.parquet
+  rejected: data/staging/rejected.csv
+  report: reports/processing_report.parquet
+  raw_data_dir: data/raw
+  staging_data_dir: data/staging
+  processed_data_dir: data/processed
+  reports_dir: reports
+  benchmarks_dir: benchmarks
+  checkpoint_dir: data/staging/checkpoints
+
+storage:
+  parquet_compression: snappy
+  csv_encoding: utf-8
+  csv_separator: ","
+  csv_null_value: ""
+  atomic_writes: true
+  create_directories: true
+
+processing:
+  low_memory: true
+  memory_map: false
+  infer_datetime_format: false
+  parse_dates: true
+  timestamp_timezone: UTC
+
+  timestamp_columns:
+    - created_at
+
+  numeric_columns:
+    - amount
+    - quantity
+
+  identifier_columns:
+    - order_id
+    - customer_id
+
+  required_columns:
+    - order_id
+
+  categorical_columns:
+    - region
+    - status
+    - product
+
+  usecols:
+    - order_id
+    - customer_id
+    - region
+    - status
+    - product
+    - quantity
+    - amount
+    - created_at
+
+  drop_invalid_records: true
+  drop_duplicates: true
+  preserve_chunk_order: true
+
+checkpointing:
+  enabled: true
+  interval: 10
+  resume_enabled: false
+  directory: data/staging/checkpoints
+
+memory:
+  target_memory_mb: 512
+  warning_threshold_percent: 80
+
+validation:
+  fail_on_schema_error: true
+  fail_on_validation: true
+
+  unique_identifier_columns:
+    - order_id
+
+  non_negative_columns:
+    - amount
+    - quantity
+
+  allowed_values:
+    status:
+      - paid
+      - pending
+      - cancelled
+
+runtime:
+  log_level: INFO
+  log_format: "%(asctime)s | %(levelname)s | %(name)s | %(message)s"
+
+benchmarks:
+  enabled: true
+  repetitions: 3
+
+environment:
+  variable_prefix: LARGE_DATASET_PIPELINE_
+
+operations:
+  output_partition_pattern: "part-{chunk_number:08d}.parquet"
+  checkpoint_pattern: "chunk-{chunk_number:08d}.parquet"
+  preserve_intermediate_outputs: true
+
+deployment:
+  local:
+    chunk_size: 10000
+    checkpointing_enabled: false
+    benchmark_enabled: true
+
+  ci:
+    chunk_size: 5000
+    checkpointing_enabled: false
+    benchmark_enabled: false
+
+  production:
+    chunk_size: 50000
+    checkpointing_enabled: true
+    checkpoint_interval: 10
+    resume_enabled: true
+    benchmark_enabled: false
+    atomic_writes: true
+    fail_on_schema_error: true
+    fail_on_validation: true
+
+security:
+  secrets_from_environment: true
+  reject_embedded_credentials: true
+  sensitive_fields:
+    - access_token
+    - authorization
+    - password
+    - api_key
+
+observability:
+  metrics:
+    - rows_read
+    - rows_written
+    - rows_rejected
+    - chunks_processed
+    - chunks_failed
+    - input_memory_bytes
+    - output_memory_bytes
+    - elapsed_seconds
+    - throughput_rows_per_second
+
+  health_checks:
+    validate_input_exists: true
+    validate_input_is_file: true
+    validate_schema: true
+    validate_output_exists: true
+    validate_output_row_count: true
+
+quality:
+  reproducibility:
+    preserve_input_order: true
+    deterministic_partition_names: true
+    deterministic_output_order: true
+
+  failure_policy:
+    fail_fast_on_schema_error: true
+    fail_fast_on_validation_error: true
+    retain_failed_checkpoint: true
+
+aws:
+  recommended_storage:
+    raw: s3
+    processed: s3
+    reports: s3
+
+  recommended_compute:
+    batch: ec2_or_ecs
+    orchestration: eks_or_step_functions
+
+  operational_guidance:
+    enable_server_side_encryption: true
+    enable_bucket_versioning: true
+    enable_lifecycle_policies: true
+    emit_cloudwatch_metrics: true
+    centralize_logs: true
+
+# Large Dataset Processing Pipeline configuration.
+# Runtime configuration is loaded by src/config.py. Environment variables
+# can override the values represented here when deploying the project.
+
+pipeline:
+  name: large-dataset-processing
+  input_format: csv
+  output_format: parquet
+  chunk_size: 50000
+  benchmark_chunk_size: 100000
+  max_rows: null
+  min_chunk_size: 1000
+  max_chunk_size: 1000000
+
+paths:
+  input: data/raw/input.csv
+  output: data/processed/output.parquet
+  rejected: data/staging/rejected.csv
+  report: reports/processing_report.parquet
+  raw_data_dir: data/raw
+  staging_data_dir: data/staging
+  processed_data_dir: data/processed
+  reports_dir: reports
+  benchmarks_dir: benchmarks
+  checkpoint_dir: data/staging/checkpoints
+
+storage:
+  parquet_compression: snappy
+  csv_encoding: utf-8
+  csv_separator: ","
+  csv_null_value: ""
+  atomic_writes: true
+  create_directories: true
+
+processing:
+  low_memory: true
+  memory_map: false
+  infer_datetime_format: false
+  parse_dates: true
+  timestamp_timezone: UTC
+
+  timestamp_columns:
+    - created_at
+
+  numeric_columns:
+    - amount
+    - quantity
+
+  identifier_columns:
+    - order_id
+    - customer_id
+
+  required_columns:
+    - order_id
+
+  categorical_columns:
+    - region
+    - status
+    - product
+
+  usecols:
+    - order_id
+    - customer_id
+    - region
+    - status
+    - product
+    - quantity
+    - amount
+    - created_at
+
+  drop_invalid_records: true
+  drop_duplicates: true
+  preserve_chunk_order: true
+
+checkpointing:
+  enabled: true
+  interval: 10
+  resume_enabled: false
+  directory: data/staging/checkpoints
+
+memory:
+  target_memory_mb: 512
+  warning_threshold_percent: 80
+
+validation:
+  fail_on_schema_error: true
+  fail_on_validation: true
+
+  unique_identifier_columns:
+    - order_id
+
+  non_negative_columns:
+    - amount
+    - quantity
+
+  allowed_values:
+    status:
+      - paid
+      - pending
+      - cancelled
+
+runtime:
+  log_level: INFO
+  log_format: "%(asctime)s | %(levelname)s | %(name)s | %(message)s"
+
+benchmarks:
+  enabled: true
+  repetitions: 3
+
+environment:
+  variable_prefix: LARGE_DATASET_PIPELINE_
+
+operations:
+  output_partition_pattern: "part-{chunk_number:08d}.parquet"
+  checkpoint_pattern: "chunk-{chunk_number:08d}.parquet"
+  preserve_intermediate_outputs: true
+
+deployment:
+  local:
+    chunk_size: 10000
+    checkpointing_enabled: false
+    benchmark_enabled: true
+
+  ci:
+    chunk_size: 5000
+    checkpointing_enabled: false
+    benchmark_enabled: false
+
+  production:
+    chunk_size: 50000
+    checkpointing_enabled: true
+    checkpoint_interval: 10
+    resume_enabled: true
+    benchmark_enabled: false
+    atomic_writes: true
+    fail_on_schema_error: true
+    fail_on_validation: true
+
+security:
+  secrets_from_environment: true
+  reject_embedded_credentials: true
+  sensitive_fields:
+    - access_token
+    - authorization
+    - password
+    - api_key
+
+observability:
+  metrics:
+    - rows_read
+    - rows_written
+    - rows_rejected
+    - chunks_processed
+    - chunks_failed
+    - input_memory_bytes
+    - output_memory_bytes
+    - elapsed_seconds
+    - throughput_rows_per_second
+
+  health_checks:
+    validate_input_exists: true
+    validate_input_is_file: true
+    validate_schema: true
+    validate_output_exists: true
+    validate_output_row_count: true
+
+quality:
+  reproducibility:
+    preserve_input_order: true
+    deterministic_partition_names: true
+    deterministic_output_order: true
+
+  failure_policy:
+    fail_fast_on_schema_error: true
+    fail_fast_on_validation_error: true
+    retain_failed_checkpoint: true
+
+aws:
+  recommended_storage:
+    raw: s3
+    processed: s3
+    reports: s3
+
+  recommended_compute:
+    batch: ec2_or_ecs
+    orchestration: eks_or_step_functions
+
+  operational_guidance:
+    enable_server_side_encryption: true
+    enable_bucket_versioning: true
+    enable_lifecycle_policies: true
+    emit_cloudwatch_metrics: true
+    centralize_logs: true

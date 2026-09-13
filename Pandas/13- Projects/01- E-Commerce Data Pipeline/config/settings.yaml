@@ -1,0 +1,137 @@
+pipeline:
+  name: e-commerce-data-pipeline
+  environment: development
+
+paths:
+  data_dir: data
+  raw_data_dir: data/raw
+  staging_data_dir: data/staging
+  processed_data_dir: data/processed
+  reports_dir: reports
+  config_dir: config
+
+inputs:
+  orders_file: orders.csv
+  customers_file: customers.csv
+  products_file: products.csv
+
+outputs:
+  daily_sales_report_file: daily_sales_report.parquet
+  customer_sales_report_file: customer_sales_report.parquet
+  product_sales_report_file: product_sales_report.parquet
+  rejected_orders_file: rejected_orders.csv
+
+processing:
+  csv_chunksize: 100000
+  report_timezone: UTC
+  fail_on_invalid_records: false
+
+validation:
+  required_order_columns:
+    - order_id
+    - customer_id
+    - product_id
+    - status
+    - amount
+    - created_at
+    - updated_at
+
+  valid_order_statuses:
+    - pending
+    - completed
+    - cancelled
+
+  amount:
+    minimum: 0.0
+
+  timestamps:
+    require_updated_at_gte_created_at: true
+
+  relationships:
+    require_customer_reference: true
+    require_unique_customer_id: true
+    require_unique_order_id: true
+
+reporting:
+  completed_order_status: completed
+
+  reconciliation:
+    enabled: true
+    tolerance: 0.01
+
+runtime:
+  create_directories: true
+  atomic_writes: true
+
+logging:
+  level: INFO
+  format: "%(asctime)s %(levelname)s %(name)s %(message)s"
+
+pipeline:
+  name: e-commerce-data-pipeline
+  environment: development
+
+paths:
+  data_dir: data
+  raw_data_dir: data/raw
+  staging_data_dir: data/staging
+  processed_data_dir: data/processed
+  reports_dir: reports
+  config_dir: config
+
+inputs:
+  orders_file: orders.csv
+  customers_file: customers.csv
+  products_file: products.csv
+
+outputs:
+  daily_sales_report_file: daily_sales_report.parquet
+  customer_sales_report_file: customer_sales_report.parquet
+  product_sales_report_file: product_sales_report.parquet
+  rejected_orders_file: rejected_orders.csv
+
+processing:
+  csv_chunksize: 100000
+  report_timezone: UTC
+  fail_on_invalid_records: false
+
+validation:
+  required_order_columns:
+    - order_id
+    - customer_id
+    - product_id
+    - status
+    - amount
+    - created_at
+    - updated_at
+
+  valid_order_statuses:
+    - pending
+    - completed
+    - cancelled
+
+  amount:
+    minimum: 0.0
+
+  timestamps:
+    require_updated_at_gte_created_at: true
+
+  relationships:
+    require_customer_reference: true
+    require_unique_customer_id: true
+    require_unique_order_id: true
+
+reporting:
+  completed_order_status: completed
+
+  reconciliation:
+    enabled: true
+    tolerance: 0.01
+
+runtime:
+  create_directories: true
+  atomic_writes: true
+
+logging:
+  level: INFO
+  format: "%(asctime)s %(levelname)s %(name)s %(message)s"
