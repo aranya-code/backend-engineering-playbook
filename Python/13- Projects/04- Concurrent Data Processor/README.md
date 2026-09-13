@@ -1,279 +1,461 @@
-# Concurrent Data Processor
-
-A production-oriented Python data processor that demonstrates all three concurrency models — `asyncio`, `threading`, and `multiprocessing` — applied to the same JSONL record-processing workload, with backpressure, metrics, atomic output, and benchmark scripts for measuring each model's performance characteristics.
-
----
+# README
 
 ## Overview
 
-This project answers a question that comes up constantly in backend engineering: which Python concurrency model should I use for my workload? It implements the same processor using all three approaches so their trade-offs can be observed directly rather than theorized about.
+The `config` directory contains runtime configuration for the Concurrent Data Processor. It separates operational settings from application logic so concurrency limits, input/output behavior, reliability controls, and observability defaults can be changed without modifying processing code.
 
-The processor reads JSONL records, applies a configurable transformation per record, writes output atomically, and collects per-run metrics. A benchmark suite compares throughput and resource usage across concurrency models on realistic workloads.
+The primary configuration file is `settings.yaml`. It provides development-oriented defaults, while environment variables or deployment-specific configuration should be used for production overrides.
 
----
+The configuration is designed around four concerns:
 
-## Architecture
+- **Processing behavior** — input/output formats, batching, and error handling.
+- **Concurrency** — thread, process, and asyncio execution limits.
+- **Reliability** — backpressure and graceful shutdown behavior.
+- **Operations** — logging, metrics, progress reporting, and runtime safety.
+
+## Configuration Structure
 
 ```text
-Input (JSONL)
+config/
+├── settings.yaml
+├── pyproject.toml
+└── .gitignore
+```
+
+`settings.yaml` is intended to describe the operational configuration of the processor. `pyproject.toml` defines Python packaging, development dependencies, test configuration, linting, and type checking.
+
+## Settings
+
+The main configuration areas are:
+
+| Section | Purpose |
+|---|---|
+| `environment` | Identifies the runtime environment |
+| `application` | Application identity and version |
+| `input` | Source file and input format |
+| `output` | Destination, serialization, and write behavior |
+| `processing` | Processing mode, worker count, batching, and failure behavior |
+| `concurrency` | Per-model concurrency limits |
+| `backpressure` | Bounds pending work to control memory usage |
+| `performance` | Benchmarking and metrics configuration |
+| `logging` | Application log configuration |
+| `observability` | Metrics and progress reporting |
+| `reliability` | Failure and shutdown behavior |
+| `security` | Runtime restrictions on file paths |
+
+## Input and Output
+
+Input and output configuration should be explicit because data-processing jobs commonly operate on large files.
+
+```yaml
+input:
+  path: data/input/records.jsonl
+  format: jsonl
+  encoding: utf-8
+
+output:
+  path: data/output/processed.jsonl
+  format: jsonl
+  encoding: utf-8
+  atomic_write: true
+```
+
+For large datasets, the processor should stream records rather than loading the entire input into memory. Output should similarly be produced incrementally.
+
+Atomic output is useful for batch jobs because a failed processing run should not leave a partially written file that appears to be a successful result. A production implementation can write to a temporary destination and replace the final file only after successful completion.
+
+## Processing Configuration
+
+```yaml
+processing:
+  concurrency_mode: thread
+  max_workers: 4
+  batch_size: 100
+  continue_on_error: false
+  preserve_order: true
+```
+
+`concurrency_mode` selects the execution model:
+
+| Mode | Best suited for |
+|---|---|
+| `thread` | Blocking I/O and external service calls |
+| `process` | CPU-intensive Python workloads |
+| `asyncio` | High-volume asynchronous I/O |
+
+`max_workers` should not be selected arbitrarily. Increasing concurrency can improve throughput until another resource becomes the bottleneck.
+
+Typical constraints include:
+
+- CPU capacity
+- Memory
+- File-system throughput
+- Database connection limits
+- External API rate limits
+- Network bandwidth
+- Downstream service capacity
+
+`batch_size` controls how many records are grouped into a processing unit. Larger batches can reduce scheduling overhead but increase memory usage and failure granularity.
+
+`preserve_order` is useful when output ordering must match input ordering. It can reduce opportunities for immediate result emission when tasks complete out of order.
+
+## Concurrency Limits
+
+The configuration defines separate limits for each concurrency model:
+
+```yaml
+concurrency:
+  thread:
+    max_workers: 4
+  process:
+    max_workers: 4
+  asyncio:
+    max_concurrency: 20
+```
+
+These limits should be treated as resource-protection controls rather than merely performance settings.
+
+### Threads
+
+Threads are appropriate for blocking I/O because other threads can continue while one thread waits on network or file operations.
+
+For example:
+
+```text
+Record
+  │
+  ├── Thread 1 ──► External API
+  ├── Thread 2 ──► External API
+  ├── Thread 3 ──► External API
+  └── Thread 4 ──► External API
+```
+
+Threads generally should not be used as a way to obtain CPU parallelism for Python bytecode in traditional GIL-enabled CPython.
+
+### Processes
+
+Processes provide separate Python interpreters and address spaces. They are useful when CPU-bound work needs parallel execution.
+
+```text
+                 ┌── Process 1 ──► CPU workload
+Input ───────────┼── Process 2 ──► CPU workload
+                 ├── Process 3 ──► CPU workload
+                 └── Process 4 ──► CPU workload
+```
+
+The trade-off is higher process-management and serialization overhead.
+
+### Asyncio
+
+Asyncio uses cooperative concurrency. Tasks yield control while waiting for asynchronous I/O.
+
+```text
+Event Loop
+   │
+   ├── Task A ──► await I/O ──┐
+   ├── Task B ──► await I/O ──┤
+   ├── Task C ──► await I/O ──┤
+   └── Task D ──► await I/O ──┘
+                             │
+                        Event Loop
+```
+
+Asyncio is effective for high numbers of I/O-bound operations, but blocking functions must not execute directly on the event loop.
+
+## Backpressure
+
+Backpressure prevents producers from generating work faster than consumers can process it.
+
+```yaml
+backpressure:
+  enabled: true
+  max_pending_tasks: 1000
+```
+
+Without a bound on pending work, a fast input reader can enqueue millions of records while workers process them slowly. This can cause excessive memory consumption and eventually process termination.
+
+A production pipeline should generally follow:
+
+```text
+Input Reader
      │
      ▼
-InputReader (src/input.py)
-     │  reads records in batches
-     │  controls backpressure
-     ▼
-Concurrency Layer (src/concurrency.py)
-     ├── AsyncIO mode    → asyncio.gather with Semaphore
-     ├── Thread mode     → ThreadPoolExecutor
-     └── Process mode    → ProcessPoolExecutor
+Bounded Queue
+     │
+     ├──► Worker
+     ├──► Worker
+     ├──► Worker
+     └──► Worker
      │
      ▼
-Worker (src/worker.py)
-     │  applies processor function to each record
-     ▼
-Processor (src/processor.py)
-     │  validate and transform each record
-     ▼
-OutputWriter (src/output.py)
-     │  collects results
-     │  atomic write to JSONL / JSON
-     ▼
-Metrics (src/metrics.py)
-     │  processed / failed / duration / throughput
+Output
 ```
 
-### Source Modules
+The queue capacity acts as a memory and workload-control boundary.
 
-| Module | Responsibility |
-|---|---|
-| `src/processor.py` | `process_record()` — validates and transforms a single record |
-| `src/concurrency.py` | Three concurrency adapters: asyncio, threads, processes |
-| `src/worker.py` | Per-record execution with error isolation |
-| `src/input.py` | JSONL reader with batch iteration and backpressure |
-| `src/output.py` | Result collector and atomic JSONL/JSON writer |
-| `src/metrics.py` | `ProcessingMetrics` — throughput, duration, failure counts |
-| `src/config.py` | `ProcessorConfig` — typed runtime configuration |
-| `src/main.py` | Orchestration — wires all components together |
+## Error Handling
 
-### Benchmark Scripts
+The processor should distinguish between:
 
-| Script | What it measures |
-|---|---|
-| `benchmarks/benchmark_asyncio.py` | asyncio throughput and concurrency scaling |
-| `benchmarks/benchmark_threads.py` | threading throughput and GIL impact |
-| `benchmarks/benchmark_processes.py` | multiprocessing throughput and CPU scaling |
+- Record-level failures
+- Batch-level failures
+- Infrastructure failures
+- Configuration failures
+- Process termination
 
----
+For a fail-fast workload:
 
-## Project Structure
+```yaml
+processing:
+  continue_on_error: false
+```
+
+the first unrecoverable processing failure can terminate the run.
+
+For workloads where individual bad records should not invalidate the entire dataset, error isolation can be enabled:
+
+```yaml
+processing:
+  continue_on_error: true
+```
+
+When continuing after errors, failed records should be observable and, where appropriate, written to a dead-letter or error output rather than silently discarded.
+
+## Observability
+
+The configuration enables metrics and periodic progress reporting:
+
+```yaml
+performance:
+  benchmark_enabled: true
+  collect_metrics: true
+
+observability:
+  metrics_enabled: true
+  log_progress: true
+  progress_interval_records: 1000
+```
+
+Useful processing metrics include:
+
+- Records processed
+- Records succeeded
+- Records failed
+- Batches processed
+- Processing duration
+- Records per second
+- Failure rate
+- Queue depth
+- Worker utilization
+- Input and output throughput
+
+Throughput should be measured at the system boundary, not inferred only from individual worker timings.
+
+For production workloads, structured logs should include identifiers such as:
+
+- Job or run ID
+- Input source
+- Processing mode
+- Worker configuration
+- Batch size
+- Record counts
+- Duration
+- Failure counts
+
+Avoid logging complete input records when they may contain credentials, personal data, tokens, or other sensitive information.
+
+## Reliability
+
+```yaml
+reliability:
+  fail_fast: true
+  graceful_shutdown: true
+  shutdown_timeout_seconds: 30
+```
+
+Graceful shutdown is important when running the processor inside Docker, Kubernetes, or CI/CD environments.
+
+A graceful shutdown should generally:
+
+1. Stop accepting new work.
+2. Allow in-flight work to finish when possible.
+3. Release thread/process/event-loop resources.
+4. Flush or safely finalize output.
+5. Emit final metrics.
+6. Exit with an appropriate status code.
+
+The shutdown timeout prevents a worker from hanging indefinitely.
+
+## Configuration and Environment Separation
+
+Development configuration can safely contain non-sensitive defaults:
+
+```yaml
+environment: development
+
+processing:
+  concurrency_mode: thread
+  max_workers: 4
+```
+
+Production deployments should avoid committing secrets or environment-specific credentials to source control.
+
+Prefer:
+
+- Environment variables
+- Container secrets
+- Kubernetes Secrets
+- AWS Secrets Manager
+- AWS Systems Manager Parameter Store
+- Deployment-specific configuration
+
+The configuration loader should establish a clear precedence model, for example:
 
 ```text
-04- Concurrent Data Processor/
-├── benchmarks/
-│   ├── benchmark_asyncio.py
-│   ├── benchmark_threads.py
-│   └── benchmark_processes.py
-├── config/
-│   ├── .gitignore
-│   ├── pyproject.toml      # Project metadata and tooling
-│   ├── settings.yaml       # Baseline configuration reference
-│   └── README.md           # Configuration reference
-├── scripts/
-│   └── run_processor.py    # CLI entry point
-├── src/
-│   ├── __init__.py
-│   ├── concurrency.py
-│   ├── config.py
-│   ├── input.py
-│   ├── main.py
-│   ├── metrics.py
-│   ├── output.py
-│   ├── processor.py
-│   └── worker.py
-└── tests/
-    ├── __init__.py
-    ├── test_concurrency.py
-    ├── test_processor.py
-    └── test_worker.py
+Built-in defaults
+      │
+      ▼
+settings.yaml
+      │
+      ▼
+Environment variables
+      │
+      ▼
+Explicit CLI arguments
 ```
 
----
+The highest-precedence value should be the most explicit runtime override.
 
-## Key Concepts Demonstrated
+## Path Safety
 
-### Concurrency Model Comparison
+The configuration includes:
 
-The same workload is run through all three Python concurrency models:
+```yaml
+security:
+  allow_arbitrary_input_paths: false
+  allow_arbitrary_output_paths: false
+```
 
-| Model | Best for | GIL impact | Parallelism |
-|---|---|---|---|
-| `asyncio` | I/O-bound, high concurrency | Not relevant | Cooperative, single thread |
-| `threading` | I/O-bound with blocking calls | Limits CPU work | Concurrent, one CPU at a time |
-| `multiprocessing` | CPU-bound (serialization, transformation) | Bypassed | True parallel execution |
+Path restrictions are relevant when configuration can be influenced by untrusted users or external systems. Arbitrary paths can potentially expose sensitive files or permit writes outside an intended working directory.
 
-This makes the trade-offs concrete and measurable rather than theoretical.
+Production implementations should validate paths against approved directories when configuration is externally controlled.
 
-### Backpressure
-
-The input reader uses bounded batching to prevent unbounded memory growth when records arrive faster than they can be processed. The concurrency layer respects this boundary rather than queuing unlimited work:
+For example, an application processing uploaded files should not blindly accept:
 
 ```text
-InputReader → batch of N records
-                    │
-                    ▼
-          Concurrency layer processes batch
-                    │
-                    ▼
-          OutputWriter collects results
-                    │
-                    ▼
-          Next batch (backpressure respected)
+../../../../etc/passwd
 ```
 
-### Atomic Output
+as an input path.
 
-Results are written to a temporary file and replaced into the final output path atomically. Consumers always see a complete previous output or a complete new output — never a partially written file.
+Path validation should complement operating-system permissions and container isolation rather than replace them.
 
-### Error Isolation
+## Benchmarking
 
-Each record is processed independently. One failed record does not abort the batch. Failed records are counted in metrics and can be written to a rejected output file.
+The project contains dedicated benchmarks for the three concurrency models:
 
-### Bounded Concurrency
+```text
+benchmarks/
+├── benchmark_threads.py
+├── benchmark_processes.py
+└── benchmark_asyncio.py
+```
 
-The asyncio adapter uses `asyncio.Semaphore` to limit concurrent coroutines. The thread and process adapters use `max_workers` in `ThreadPoolExecutor` / `ProcessPoolExecutor`. All three respect the configured worker count.
+The benchmarks should be run independently from production processing runs.
 
-### Metrics
+Example:
 
-`ProcessingMetrics` collects per-run statistics:
+```bash
+python benchmarks/benchmark_threads.py
+python benchmarks/benchmark_processes.py
+python benchmarks/benchmark_asyncio.py
+```
 
-- `total_records` — input record count
-- `processed` — successfully transformed records
-- `failed` — records that raised exceptions
-- `duration_seconds` — total elapsed time
-- `throughput_rps` — records per second
+Benchmark results should be interpreted based on workload characteristics.
 
-The benchmark scripts use these metrics to compare concurrency models.
-
-### Typed Configuration
-
-`ProcessorConfig` is loaded from environment variables and the settings file:
-
-| Setting | Purpose |
+| Workload | Preferred model |
 |---|---|
-| `input.path` | Source JSONL file |
-| `output.path` | Destination file |
-| `output.atomic_write` | Enable atomic replacement |
-| `processing.mode` | `asyncio` / `threads` / `processes` |
-| `processing.workers` | Worker count |
-| `processing.batch_size` | Records per batch |
-| `processing.fail_fast` | Abort on first error |
-| `backpressure.max_pending` | Max queued batches |
+| Blocking HTTP requests | Threads or asyncio |
+| Async HTTP client | asyncio |
+| CPU-heavy Python transformation | Processes |
+| Mixed I/O and CPU work | Separate stages or carefully bounded workers |
+| Very large files | Streaming pipeline with bounded concurrency |
 
----
+A benchmark should measure realistic workloads, include warm-up effects where relevant, use multiple repetitions, and avoid drawing conclusions from a single run.
 
-## Configuration
+## Production Deployment
 
-See [`config/README.md`](config/README.md) for the full configuration reference.
+For containerized execution, configuration should normally be supplied through the deployment environment rather than modifying the image.
 
----
-
-## Requirements
-
-- Python ≥ 3.12
-- No external dependencies (stdlib only)
-
----
-
-## Installation
-
-```bash
-pip install -e ".[dev]"
+```text
+Container Image
+      │
+      ▼
+Configuration
+      │
+      ├── Environment
+      ├── Mounted configuration
+      └── Secret provider
+      │
+      ▼
+Concurrent Data Processor
+      │
+      ├── Input
+      ├── Bounded Workers
+      ├── Metrics / Logs
+      └── Output
 ```
 
----
+In Kubernetes, resource requests and limits should be considered together with `max_workers`. Setting a high worker count inside a container with a small CPU or memory limit can reduce performance or cause resource exhaustion.
 
-## Running the Processor
+For AWS batch-style workloads, concurrency should similarly account for the capacity of downstream services such as S3, RDS, DynamoDB, or external APIs.
 
-```bash
-# asyncio mode
-python scripts/run_processor.py \
-  --input data/input/records.jsonl \
-  --output data/output/processed.jsonl \
-  --mode asyncio \
-  --workers 10
+## Common Configuration Mistakes
 
-# thread mode
-python scripts/run_processor.py \
-  --input data/input/records.jsonl \
-  --output data/output/processed.jsonl \
-  --mode threads \
-  --workers 8
+### Unbounded concurrency
 
-# process mode
-python scripts/run_processor.py \
-  --input data/input/records.jsonl \
-  --output data/output/processed.jsonl \
-  --mode processes \
-  --workers 4
+Increasing worker counts without measuring resource usage can cause:
 
-# installed entry point
-run-processor --input ... --output ... --mode asyncio
+- Context-switching overhead
+- Memory pressure
+- Database connection exhaustion
+- API throttling
+- CPU saturation
+
+Concurrency should be bounded and benchmarked.
+
+### Using threads for CPU parallelism
+
+Threads do not generally provide Python-bytecode CPU parallelism in traditional GIL-enabled CPython. Processes are usually the better model for CPU-heavy workloads.
+
+### Blocking the asyncio event loop
+
+Calling blocking file, database, or network APIs directly from an asyncio task can stall unrelated tasks.
+
+Use asynchronous libraries where available or explicitly isolate unavoidable blocking work.
+
+### Loading the entire dataset into memory
+
+This pattern does not scale:
+
+```python
+records = list(reader.read())
 ```
 
----
+Prefer streaming and bounded processing so memory usage remains approximately independent of total input size.
 
-## Running Benchmarks
+### Treating configuration as validation
 
-```bash
-python benchmarks/benchmark_asyncio.py --records 100000
-python benchmarks/benchmark_threads.py --records 100000
-python benchmarks/benchmark_processes.py --records 100000
-```
+Configuration values should be validated when loaded. Invalid worker counts, paths, formats, or concurrency modes should fail before processing begins.
 
-Run on representative hardware with realistic record sizes. CPU speed, core count, record complexity, and I/O characteristics all affect results.
+### Committing secrets
 
----
+API keys, database passwords, cloud credentials, and tokens should never be stored in `settings.yaml` or source control.
 
-## Running Tests
+## Key Takeaways
 
-```bash
-pytest
-pytest --cov=src --cov-report=term-missing
-
-ruff check src tests scripts benchmarks
-mypy src
-```
-
----
-
-## When to Use Each Model
-
-| Workload | Recommended model | Reason |
-|---|---|---|
-| Calling external APIs, network I/O | `asyncio` | High concurrency with low overhead |
-| File I/O, database queries | `asyncio` or `threads` | Both work; asyncio preferred for new code |
-| CPU-intensive transformation | `multiprocessing` | Bypasses the GIL; real parallelism |
-| Blocking third-party libraries | `threads` | Releases GIL during blocking calls |
-| Mixed I/O + CPU | Hybrid executor | Asyncio for I/O, process pool for CPU work |
-
----
-
-## Production Considerations
-
-| Concern | Approach |
-|---|---|
-| Memory | Bounded batch size and backpressure prevent OOM |
-| Reliability | Atomic output, error isolation, fail-fast option |
-| Observability | Per-run metrics, failed record count, throughput |
-| Scalability | Increase workers or switch to process mode for CPU-bound work |
-| Data safety | Never overwrite output until all records processed (atomic write) |
-
----
-
-## Navigation
-
-| ↳ [01](../01-%20REST%20API%20Service/README.md) | REST API Service |
-| ↳ [02](../02-%20Async%20API%20Client/README.md) | Async API Client |
-| ↳ [03](../03-%20Background%20Job%20System/README.md) | Background Job System |
-| ↳ [04](README.md) | Concurrent Data Processor |
-| ↳ [05](../05-%20Webhook%20Processing%20Service/README.md) | Webhook Processing Service |
+- Configuration separates processing behavior and operational limits from application code.
+- Concurrency limits, batch sizes, and backpressure are resource-protection mechanisms as much as performance settings.
+- Large datasets should be processed through bounded, streaming pipelines rather than loaded entirely into memory.
+- Production configuration should validate inputs, avoid secrets in source control, and account for container and downstream-service capacity.
+- Benchmark threads, processes, and asyncio with representative workloads before selecting a concurrency model.

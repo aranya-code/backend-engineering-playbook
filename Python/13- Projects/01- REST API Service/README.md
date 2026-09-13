@@ -1,272 +1,309 @@
-# REST API Service
-
-A production-oriented Python REST API service built with FastAPI, SQLAlchemy, and Pydantic. Demonstrates the service-layer, repository pattern, dependency injection, typed request/response schemas, and a layered architecture that separates HTTP concerns from business logic and data access.
-
----
+# README
 
 ## Overview
 
-This project implements a user-management REST API that applies the engineering patterns used in real backend services: a thin HTTP layer, a service layer that owns business rules, a repository that abstracts persistence, a domain model that is independent of the framework, and a typed schema layer for request validation and response serialization.
+The `config` directory contains environment-specific configuration for the REST API service. Configuration is kept separate from application and business logic so runtime behavior can be changed without modifying Python source code.
 
-The goal is not to be a feature-complete user service. It is to demonstrate how each architectural layer is separated, tested, and wired together in a production-oriented Python service.
+This directory currently provides `settings.yaml` as a human-readable configuration baseline. Sensitive or deployment-specific values should be supplied through environment variables or a secrets manager rather than committed to source control.
 
----
-
-## Architecture
+## Configuration Structure
 
 ```text
-HTTP Request
-     │
-     ▼
-FastAPI Routes (src/api/routes.py)
-     │  validates input via Pydantic schemas
-     │  injects dependencies via FastAPI DI
-     ▼
-UserService (src/services/user_service.py)
-     │  owns business rules
-     │  raises domain exceptions
-     ▼
-UserRepository (src/repositories/user_repository.py)
-     │  owns persistence logic
-     │  abstracts SQLAlchemy
-     ▼
-SQLAlchemy / Database
-     │
-     ▼
-HTTP Response
-     │  serialized via Pydantic schemas
+config/
+└── settings.yaml
 ```
 
-### Layer Responsibilities
+The configuration is organized into logical sections:
 
-| Layer | Module | Responsibility |
-|---|---|---|
-| **Routes** | `src/api/routes.py` | HTTP routing, input/output schema binding, dependency wiring |
-| **Dependencies** | `src/api/dependencies.py` | FastAPI dependency injection (session, service) |
-| **Schemas** | `src/schemas/user.py` | Pydantic request/response models — wire format only |
-| **Service** | `src/services/user_service.py` | Business rules, validation, orchestration |
-| **Repository** | `src/repositories/user_repository.py` | CRUD operations, query logic, SQLAlchemy isolation |
-| **Domain Model** | `src/models/user.py` | Core domain entity — independent of framework and persistence |
-| **Database** | `src/database/` | Engine, session factory, connection management |
-| **Config** | `src/config/settings.py` | Typed settings via Pydantic Settings |
+| Section | Purpose |
+|---|---|
+| `environment` | Identifies the runtime environment |
+| `application` | Host, port, debug behavior, and application identity |
+| `database` | Database connection and connection-pool settings |
+| `api` | API prefix, version, and documentation endpoints |
+| `logging` | Application logging configuration |
+| `security` | Authentication and CORS settings |
 
----
+## Configuration Flow
 
-## Project Structure
+Configuration should follow a predictable precedence model:
+
+```mermaid
+flowchart LR
+    A["settings.yaml"] --> C["Configuration Loader"]
+    B["Environment Variables"] --> C
+    D["Secret Manager"] --> C
+    C --> E["Application Settings"]
+    E --> F["API"]
+    E --> G["Database"]
+    E --> H["Logging"]
+    E --> I["Security"]
+```
+
+The committed YAML file provides safe defaults and local-development configuration. Environment variables or a secret-management system should override deployment-specific values.
+
+## Environment Configuration
+
+A production service should not rely exclusively on committed configuration files.
+
+Typical deployment-specific values include:
+
+- `DATABASE_URL`
+- database pool parameters
+- authentication secrets
+- allowed CORS origins
+- external service credentials
+- logging level
+- environment name
+
+For example:
+
+```bash
+export DATABASE_URL="postgresql+psycopg://app_user:password@db:5432/app"
+export DB_POOL_SIZE="20"
+export DB_MAX_OVERFLOW="40"
+export DB_POOL_TIMEOUT="30"
+export DB_POOL_RECYCLE="1800"
+```
+
+Secrets should be injected by the deployment platform rather than stored in `settings.yaml`, Git, Docker images, or Kubernetes manifests committed to the repository.
+
+## Development Configuration
+
+The current `settings.yaml` is intended to support local development:
+
+```yaml
+environment: development
+
+application:
+  name: rest-api-service
+  debug: false
+  host: 127.0.0.1
+  port: 8000
+```
+
+Development configuration should remain close to production semantics. For example, keeping `debug` disabled by default helps prevent accidental reliance on development-only behavior.
+
+## Database Configuration
+
+The database configuration defines connection behavior:
+
+```yaml
+database:
+  url: sqlite:///./app.db
+  pool:
+    size: 10
+    max_overflow: 20
+    timeout_seconds: 30
+    recycle_seconds: 1800
+```
+
+The project currently uses SQLite as its local default while the application is structured to support a production database such as PostgreSQL.
+
+Connection-pool settings matter because every application process can maintain its own pool. In a multi-worker deployment, effective database connection usage can therefore be significantly larger than the configured pool size for one process.
+
+For example:
 
 ```text
-01- REST API Service/
-├── config/
-│   ├── settings.yaml       # Baseline configuration reference
-│   ├── pyproject.toml      # Project metadata and tooling
-│   ├── .gitignore
-│   └── README.md           # Configuration reference
-├── scripts/
-│   └── seed_database.py    # Database seed utility
-├── src/
-│   ├── __init__.py
-│   ├── api/
-│   │   ├── __init__.py
-│   │   ├── dependencies.py
-│   │   └── routes.py
-│   ├── config/
-│   │   ├── __init__.py
-│   │   └── settings.py
-│   ├── database/
-│   │   ├── __init__.py
-│   │   ├── connection.py
-│   │   └── main.py
-│   ├── models/
-│   │   ├── __init__.py
-│   │   └── user.py
-│   ├── repositories/
-│   │   ├── __init__.py
-│   │   └── user_repository.py
-│   ├── schemas/
-│   │   ├── __init__.py
-│   │   └── user.py
-│   └── services/
-│       ├── __init__.py
-│       └── user_service.py
-└── tests/
-    └── __init__.py
+4 application workers
+× 20 pooled connections
+= up to ~80 application-side database connections
 ```
 
----
+The PostgreSQL connection limit and application concurrency must therefore be designed together.
 
-## Key Concepts Demonstrated
+## API Configuration
 
-### Service Layer
+API configuration controls routing and interactive documentation:
 
-The `UserService` owns all business rules. It does not know about HTTP, SQLAlchemy, or request schemas:
-
-```python
-class UserService:
-    def __init__(self, repository: UserRepository) -> None:
-        self._repository = repository
-
-    def create_user(self, email: str, name: str) -> User:
-        # Business validation
-        if self._repository.get_by_email(email) is not None:
-            raise ValueError("A user with this email already exists.")
-        ...
+```yaml
+api:
+  prefix: /api
+  version: v1
+  docs:
+    enabled: true
+    path: /docs
+  redoc:
+    enabled: true
+    path: /redoc
 ```
 
-This means business rules can be tested directly — no HTTP client, no database, no test setup beyond a mock repository.
+A versioned API namespace makes future compatibility management easier. Production deployments may disable interactive API documentation or restrict access to it depending on security requirements.
 
-### Repository Pattern
+## Logging Configuration
 
-The `UserRepository` is the only layer that knows about SQLAlchemy. The service layer depends on the repository interface, not on ORM internals:
+Logging defaults to an informational level:
 
-```python
-class UserRepository:
-    def __init__(self, session: Session) -> None: ...
-    def get_by_id(self, user_id: UUID) -> User | None: ...
-    def get_by_email(self, email: str) -> User | None: ...
-    def create(self, user: User) -> User: ...
-    def list_users(self, *, offset: int, limit: int) -> list[User]: ...
-    def update(self, user: User) -> User: ...
-    def delete(self, user_id: UUID) -> None: ...
+```yaml
+logging:
+  level: INFO
+  format: "%(asctime)s %(levelname)s %(name)s %(message)s"
 ```
 
-### Domain Model vs. Schema Separation
+Production logging should generally be structured rather than optimized only for human readability. A production application should emit fields such as:
 
-`src/models/user.py` is the internal domain entity. It is not a Pydantic model and is not tied to the HTTP wire format.
+- timestamp
+- severity
+- service name
+- environment
+- request ID or trace ID
+- logger name
+- operation
+- error information
 
-`src/schemas/user.py` contains the Pydantic models (`UserCreate`, `UserUpdate`, `UserResponse`) that define what the API accepts and returns. This separation means internal representation can evolve independently of the external API contract.
+Avoid logging passwords, access tokens, authorization headers, database credentials, or other sensitive data.
 
-### Dependency Injection
+## Security Configuration
 
-FastAPI's `Depends()` system wires the database session and service into each route without coupling route handlers to construction logic:
+Security-related behavior is explicitly represented in configuration:
 
-```python
-@router.post("/users", response_model=UserResponse)
-def create_user(
-    body: UserCreate,
-    service: UserService = Depends(get_user_service),
-) -> UserResponse: ...
+```yaml
+security:
+  authentication:
+    enabled: false
+  cors:
+    enabled: false
+    allowed_origins: []
 ```
 
-### Typed Configuration
+Authentication being disabled is appropriate only for the current development stage. A production deployment should require an explicit authentication strategy rather than silently depending on the configuration default.
 
-Settings are loaded via Pydantic Settings, which validates types at startup and supports environment-variable overrides:
+CORS should use an explicit allowlist. Avoid permissive production configurations such as allowing every origin when authenticated browser clients are involved.
+
+## Configuration Loading
+
+The application should eventually expose configuration through a typed Python settings object rather than reading YAML values throughout the codebase.
+
+A typical pattern with Pydantic Settings is:
 
 ```python
+from pydantic_settings import BaseSettings, SettingsConfigDict
+
+
 class Settings(BaseSettings):
+    """Application settings loaded from environment variables."""
+
+    environment: str = "development"
     database_url: str = "sqlite:///./app.db"
-    db_pool_size: int = 10
-    log_level: str = "INFO"
+
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        env_file_encoding="utf-8",
+        extra="ignore",
+    )
+
+
+settings = Settings()
 ```
 
-### Connection Pool Awareness
+The important design principle is that application code consumes a typed configuration object rather than accessing `os.environ` directly in multiple modules.
 
-The project explicitly configures SQLAlchemy's connection pool. In a multi-worker deployment, each worker process has its own pool — so effective total connections = workers × pool size. This is documented and must be accounted for when sizing database capacity.
+## Production Configuration
 
----
+For production, configuration should be separated into three categories:
 
-## Configuration
-
-| Setting | Default | Purpose |
-|---|---|---|
-| `environment` | `development` | Deployment environment name |
-| `database.url` | `sqlite:///./app.db` | Database connection string |
-| `database.pool.size` | `10` | Connections per pool per process |
-| `database.pool.max_overflow` | `20` | Overflow connections above pool size |
-| `api.prefix` | `/api` | API route prefix |
-| `api.version` | `v1` | API version namespace |
-| `logging.level` | `INFO` | Application log level |
-| `security.authentication.enabled` | `false` | Enable authentication middleware |
-
-Environment-variable overrides:
-
-```bash
-DATABASE_URL="postgresql+psycopg://user:password@db:5432/app"
-DB_POOL_SIZE=20
-LOG_LEVEL=INFO
-```
-
-See [`config/README.md`](config/README.md) for the full configuration reference.
-
----
-
-## Requirements
-
-- Python ≥ 3.12
-- fastapi ≥ 0.115
-- pydantic ≥ 2.10
-- pydantic-settings ≥ 2.7
-- sqlalchemy ≥ 2.0
-- uvicorn[standard] ≥ 0.34
-
----
-
-## Installation
-
-```bash
-pip install -e ".[dev]"
-```
-
----
-
-## Running the Service
-
-```bash
-# Start with Uvicorn directly
-uvicorn src.api.routes:app --host 127.0.0.1 --port 8000
-
-# Seed the database (SQLite)
-python scripts/seed_database.py
-```
-
-API documentation is available at:
-- Swagger UI: `http://127.0.0.1:8000/docs`
-- ReDoc: `http://127.0.0.1:8000/redoc`
-
----
-
-## Running Tests
-
-```bash
-pytest
-pytest --cov=src --cov-report=term-missing
-
-# Static analysis
-ruff check src tests
-mypy src
-```
-
----
-
-## Architecture Principles Applied
-
-| Principle | How it appears here |
+| Configuration type | Recommended source |
 |---|---|
-| Separation of concerns | HTTP, business rules, and persistence are in distinct layers |
-| Dependency injection | Services and sessions injected via FastAPI `Depends()` |
-| Domain model independence | `User` entity has no FastAPI or SQLAlchemy coupling |
-| Schema isolation | Pydantic schemas define API contracts; domain models define business objects |
-| Testability | Business logic tested without HTTP or database setup |
-| Configuration as code | Typed settings validated at startup, no scattered `os.getenv()` calls |
+| Safe application defaults | Source-controlled configuration |
+| Environment-specific values | Environment variables |
+| Secrets | AWS Secrets Manager, Kubernetes Secrets, or equivalent secret manager |
 
----
+A typical deployment flow is:
 
-## Production Considerations
+```mermaid
+sequenceDiagram
+    participant CI as CI/CD
+    participant Runtime as Application Runtime
+    participant Env as Environment
+    participant Secrets as Secret Manager
+    participant App as FastAPI Application
 
-| Concern | Approach |
-|---|---|
-| Database | Switch `database.url` to PostgreSQL; tune pool size relative to worker count |
-| Authentication | Enable and configure authentication in `security` settings |
-| CORS | Add allowed origins explicitly in `security.cors` settings |
-| Logging | Integrate with centralized logging (CloudWatch, ELK, Datadog) |
-| Secrets | Use AWS Secrets Manager, Kubernetes Secrets, or equivalent — never commit credentials |
-| Scaling | Run multiple Uvicorn workers; ensure pool × workers fits within database connection limit |
+    CI->>Runtime: Deploy application
+    Runtime->>Env: Load environment configuration
+    Runtime->>Secrets: Retrieve secrets
+    Runtime->>App: Start with resolved settings
+    App->>App: Validate configuration
+```
 
----
+Configuration should be validated during application startup. Invalid configuration should cause the process to fail fast rather than allowing the service to start in a partially functional state.
 
-## Navigation
+## Security Considerations
 
-| ↳ [01](README.md) | REST API Service |
-| ↳ [02](../02-%20Async%20API%20Client/README.md) | Async API Client |
-| ↳ [03](../03-%20Background%20Job%20System/README.md) | Background Job System |
-| ↳ [04](../04-%20Concurrent%20Data%20Processor/README.md) | Concurrent Data Processor |
-| ↳ [05](../05-%20Webhook%20Processing%20Service/README.md) | Webhook Processing Service |
+Never commit sensitive values such as:
+
+- database passwords
+- JWT signing keys
+- API keys
+- OAuth client secrets
+- private certificates
+- cloud credentials
+
+Use IAM roles or workload identity where possible for AWS and Kubernetes workloads instead of embedding long-lived credentials.
+
+For local development, `.env` files may be convenient, but they should be excluded from Git and should never become the production secret-management mechanism.
+
+## Scalability and Reliability
+
+Configuration becomes part of the system's operational design as the service scales.
+
+Important considerations include:
+
+- Database pool size must account for the number of application workers.
+- Request timeouts should prevent indefinitely blocked resources.
+- Debugging features should not accidentally remain enabled in production.
+- CORS origins should be explicitly controlled.
+- Logging should support centralized collection and correlation.
+- Configuration changes should be reproducible through CI/CD.
+- Secrets should be rotated without rebuilding application source code where practical.
+- Kubernetes deployments should use ConfigMaps for non-sensitive configuration and Secrets or an external secret manager for sensitive values.
+
+For high-availability deployments, configuration should be consistent across application instances while allowing each environment to provide its own runtime values.
+
+## Common Mistakes
+
+### Hardcoding secrets
+
+Storing credentials directly in `settings.yaml` creates a persistent security risk because configuration files are commonly committed, copied, backed up, and exposed through deployment artifacts.
+
+### Reading environment variables everywhere
+
+Calling `os.getenv()` throughout business logic creates hidden dependencies and makes configuration difficult to validate and test.
+
+Prefer loading configuration once and injecting a typed settings object into components that need it.
+
+### Using development defaults in production
+
+Defaults such as SQLite, disabled authentication, or unrestricted development documentation should never silently become production behavior.
+
+Production configuration should be explicit and validated.
+
+### Ignoring process-level connection multiplication
+
+A pool size of `20` does not necessarily mean the entire service uses only 20 database connections. Four worker processes could potentially create four independent pools.
+
+### Treating configuration as immutable infrastructure data
+
+Some configuration changes may be operationally required without rebuilding the application. Use the deployment platform's configuration and secret-management mechanisms for runtime values while keeping safe defaults in source control.
+
+## Recommended Practices
+
+- Keep configuration schema explicit and typed.
+- Separate configuration from business logic.
+- Validate required settings during startup.
+- Prefer environment variables for deployment-specific configuration.
+- Store secrets in a dedicated secret manager.
+- Keep local development defaults safe and deterministic.
+- Use explicit production configuration rather than relying on development defaults.
+- Avoid logging sensitive configuration values.
+- Test configuration loading independently.
+- Document every non-obvious configuration parameter.
+- Keep database pool limits aligned with application worker count and database capacity.
+- Treat configuration changes as deployable, reviewable operational changes.
+
+## Key Takeaways
+
+- `config` centralizes runtime behavior and keeps deployment concerns separate from application logic.
+- Safe defaults can live in source control, while environment-specific values and secrets should be injected at runtime.
+- Database pool configuration must account for every application process, not just one worker.
+- Production configuration should be validated at startup and should never silently inherit unsafe development behavior.
+- Typed configuration and centralized loading reduce hidden dependencies and make the service easier to test, deploy, and operate.
