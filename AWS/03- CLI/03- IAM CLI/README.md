@@ -4,20 +4,6 @@
 
 ---
 
-## Quick Navigation
-
-| Chapter | Topic |
-|----------|-------|
-| [01 - Introduction to IAM CLI](./01-%20Introduction%20to%20IAM%20CLI.md) | Learn IAM fundamentals, authentication vs authorization, IAM resources, and AWS CLI command structure |
-| [02 - IAM Users, Groups & Roles](./02-%20IAM%20Users,%20Groups%20%26%20Roles.md) | Create and manage IAM Users, Groups, Roles, Instance Profiles, and AssumeRole workflows |
-| [03 - IAM Policies](./03-%20IAM%20Policies.md) | Learn policy structure, JSON syntax, policy evaluation, permission boundaries, and least privilege |
-| [04 - Access Keys, MFA & Security](./04-%20Access%20Keys,%20MFA%20%26%20Security.md) | Manage Access Keys, MFA, password policies, credential reports, and IAM security best practices |
-| [05 - IAM Identity Center (SSO)](./05-%20IAM%20Identity%20Center%20(SSO).md) | Configure AWS CLI with SSO, Permission Sets, AWS Organizations integration, and enterprise authentication |
-| [06 - Troubleshooting & Best Practices](./06-%20Troubleshooting%20%26%20Best%20Practices.md) | Troubleshoot IAM permission issues, policy evaluation, authentication failures, and production security |
-| [07 - Cheat Sheet & Interview Guide](./07-%20Cheat%20Sheet%20%26%20Interview%20Guide.md) | Frequently used IAM CLI commands, troubleshooting reference, interview questions, and operational workflows |
-
----
-
 # Overview
 
 AWS Identity and Access Management (IAM) is the security foundation of every AWS environment.
@@ -27,6 +13,22 @@ Every request to an AWS service is authenticated and authorized through IAM befo
 Although IAM can be managed through the AWS Management Console, production environments rely heavily on the AWS CLI and Infrastructure as Code (IaC) for automation, identity management, security audits, and enterprise-scale administration.
 
 This guide focuses on how Backend Engineers, DevOps Engineers, Cloud Engineers, and AWS Solutions Architects manage IAM in real-world production environments.
+
+---
+
+## Navigation
+
+| # | File | Description |
+|---|---|---|
+| 01 | [01- Introduction to IAM CLI](./01-%20Introduction%20to%20IAM%20CLI.md) | IAM fundamentals, authentication vs authorization, IAM resources, and AWS CLI command structure |
+| 02 | [02- IAM Authentication](./02-%20IAM%20Authentication.md) | AWS CLI authentication methods, credential providers, profiles, and identity verification |
+| 03 | [03- IAM Users, Groups & Roles](./03-%20IAM%20Users%2C%20Groups%20%26%20Roles.md) | Creating and managing IAM users, groups, roles, instance profiles, and AssumeRole workflows |
+| 04 | [04- IAM Policies](./04-%20IAM%20Policies.md) | Policy structure, JSON syntax, managed vs inline policies, evaluation logic, and least privilege |
+| 05 | [05- Access Keys, MFA & Security](./05-%20Access%20Keys%2C%20MFA%20%26%20Security.md) | Access key lifecycle, MFA configuration, password policies, credential reports, and security audits |
+| 06 | [06- IAM Identity Center (SSO)](./06-%20IAM%20Identity%20Center%20%28SSO%29.md) | AWS CLI SSO configuration, permission sets, identity providers, and enterprise authentication |
+| 07 | [07- Resource Inspection and Global Options](./07-%20Resource%20Inspection%20and%20Global%20Options.md) | IAM resource inspection commands, output formatting, filtering, and global CLI options |
+| 08 | [08- Troubleshooting & Best Practices](./08-%20Troubleshooting%20%26%20Best%20Practices.md) | Diagnosing IAM permission issues, policy debugging, STS troubleshooting, and production security |
+| 09 | [09- Cheat Sheet & Interview Guide](./09-%20Cheat%20Sheet%20%26%20Interview%20Guide.md) | Frequently used IAM CLI commands, troubleshooting reference, and interview questions |
 
 ---
 
