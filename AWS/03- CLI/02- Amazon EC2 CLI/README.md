@@ -6,15 +6,22 @@
 
 ## Quick Navigation
 
-| Chapter | Topic |
-|----------|-------|
-| [01 - Introduction to EC2 CLI](./01-%20Introduction%20to%20EC2%20CLI.md) | Learn EC2 CLI fundamentals, command structure, instance identifiers, and common query patterns |
-| [02 - Instance Management](./02-%20Instance%20Management.md) | Launch, start, stop, reboot, terminate, tag, and manage EC2 instances |
-| [03 - AMIs, Volumes & Snapshots](./03-%20AMIs,%20Volumes%20%26%20Snapshots.md) | Work with Amazon Machine Images, EBS volumes, snapshots, backups, and disaster recovery |
-| [04 - Networking & Security](./04-%20Networking%20%26%20Security.md) | Configure Security Groups, Key Pairs, Elastic IPs, ENIs, and secure EC2 networking |
-| [05 - Monitoring & Auto Scaling](./05-%20Monitoring%20%26%20Auto%20Scaling.md) | Monitor EC2 with CloudWatch and automatically scale infrastructure using Auto Scaling Groups |
-| [06 - Troubleshooting & Best Practices](./06-%20Troubleshooting%20%26%20Best%20Practices.md) | Resolve common EC2 issues, troubleshoot networking, storage, and apply production best practices |
-| [07 - Cheat Sheet & Interview Guide](./07-%20Cheat%20Sheet%20%26%20Interview%20Guide.md) | Daily command reference, interview questions, production workflows, and senior engineer tips |
+| # | File | Description |
+|---|---|---|
+| 01 | [01- AWS CLI Setup and Configuration](./01-%20AWS%20CLI%20Setup%20and%20Configuration.md) | AWS CLI installation, configuration, credentials, profiles, and EC2 command structure |
+| 02 | [02- EC2 Instance Inspection](./02-%20EC2%20Instance%20Inspection.md) | Inspecting instance metadata, state, configuration, and connected resources |
+| 03 | [03- EC2 Instance Management](./03-%20EC2%20Instance%20Management.md) | Launch, start, stop, reboot, terminate, modify, and manage EC2 instance lifecycle |
+| 04 | [04- AMI Management](./04-%20AMI%20Management.md) | Creating, registering, copying, sharing, and deregistering Amazon Machine Images |
+| 05 | [05- EBS Volume Management](./05-%20EBS%20Volume%20Management.md) | Creating, attaching, detaching, resizing, and managing persistent EBS volumes |
+| 06 | [06- EBS Snapshot Management](./06-%20EBS%20Snapshot%20Management.md) | Point-in-time EBS backups, snapshot lifecycle, copy, restore, and disaster recovery |
+| 07 | [07- Security Group Management](./07-%20Security%20Group%20Management.md) | Creating, modifying, and managing stateful virtual firewall rules for EC2 instances |
+| 08 | [08- Key Pair Management](./08-%20Key%20Pair%20Management.md) | EC2 key pair creation, import, rotation, and public-key authentication for SSH access |
+| 09 | [09- Elastic IP Management](./09-%20Elastic%20IP%20Management.md) | Allocating, associating, disassociating, and releasing static public IPv4 addresses |
+| 10 | [10- Auto Scaling CLI](./10-%20Auto%20Scaling%20CLI.md) | Auto Scaling Groups, Launch Templates, scaling policies, health checks, and capacity management |
+| 11 | [11- Load Balancer CLI](./11-%20Load%20Balancer%20CLI.md) | Elastic Load Balancing, listeners, target groups, health checks, and traffic routing |
+| 12 | [12- Querying and Filtering](./12-%20Querying%20and%20Filtering.md) | JMESPath queries, --filter flags, and extracting focused data from AWS CLI responses |
+| 13 | [13- Output Formatting](./13-%20Output%20Formatting.md) | JSON, table, text, and YAML output formats for human consumption and shell automation |
+| 14 | [14- Operational CLI Workflows](./14-%20Operational%20CLI%20Workflows.md) | Production-grade multi-command workflows for incident investigation and operations |
 
 ---
 
