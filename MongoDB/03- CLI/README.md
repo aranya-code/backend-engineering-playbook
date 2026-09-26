@@ -8,6 +8,24 @@ The material is centered around `mongosh` and MongoDB-specific CLI tooling. It c
 
 The CLI should be treated as an engineering tool rather than a list of commands to memorize. The important skill is understanding which command answers a specific operational question and how its output should influence an engineering decision.
 
+## Navigation
+
+| # | File | Description |
+|---|---|---|
+| 01 | [01- MongoDB Shell Basics](./01-%20MongoDB%20Shell%20Basics.md) | mongosh connections, shell fundamentals, contexts, and shell usage |
+| 02 | [02- Database and Collection Commands](./02-%20Database%20and%20Collection%20Commands.md) | Databases, collections, metadata, and collection operations |
+| 03 | [03- CRUD Commands](./03-%20CRUD%20Commands.md) | Insert, read, update, delete, and bulk operations |
+| 04 | [04- Query and Projection Commands](./04-%20Query%20and%20Projection%20Commands.md) | Query operators, projection, sorting, and pagination |
+| 05 | [05- Update and Array Commands](./05-%20Update%20and%20Array%20Commands.md) | Update operators and array manipulation |
+| 06 | [06- Aggregation Commands](./06-%20Aggregation%20Commands.md) | Aggregation pipelines and expressions |
+| 07 | [07- Index Management Commands](./07-%20Index%20Management%20Commands.md) | Index creation, inspection, and lifecycle |
+| 08 | [08- Query Analysis Commands](./08-%20Query%20Analysis%20Commands.md) | explain(), query plans, and performance diagnosis |
+| 09 | [09- User and Authentication Commands](./09-%20User%20and%20Authentication%20Commands.md) | Authentication, users, roles, and authorization |
+| 10 | [10- Database Inspection Commands](./10-%20Database%20Inspection%20Commands.md) | Database and collection inspection |
+| 11 | [11- Import and Export Commands](./11-%20Import%20and%20Export%20Commands.md) | mongoimport, mongoexport, and data movement |
+| 12 | [12- Backup and Restore Commands](./12-%20Backup%20and%20Restore%20Commands.md) | mongodump, mongorestore, and recovery workflows |
+| 13 | [13- Operational Commands](./13-%20Operational%20Commands.md) | Server status, replication, current operations, and health |
+
 ## Scope
 
 The CLI documentation covers four broad areas:
@@ -56,26 +74,6 @@ flowchart TB
     13- Operational Commands.md
     README.md
 ```
-
-## Navigation
-
-| # | File | Description |
-|---|---|---|
-| 01 | [01- MongoDB Shell Basics](./01-%20MongoDB%20Shell%20Basics.md) | mongosh connections, shell fundamentals, contexts, and shell usage |
-| 02 | [02- Database and Collection Commands](./02-%20Database%20and%20Collection%20Commands.md) | Databases, collections, metadata, and collection operations |
-| 03 | [03- CRUD Commands](./03-%20CRUD%20Commands.md) | Insert, read, update, delete, and bulk operations |
-| 04 | [04- Query and Projection Commands](./04-%20Query%20and%20Projection%20Commands.md) | Query operators, projection, sorting, and pagination |
-| 05 | [05- Update and Array Commands](./05-%20Update%20and%20Array%20Commands.md) | Update operators and array manipulation |
-| 06 | [06- Aggregation Commands](./06-%20Aggregation%20Commands.md) | Aggregation pipelines and expressions |
-| 07 | [07- Index Management Commands](./07-%20Index%20Management%20Commands.md) | Index creation, inspection, and lifecycle |
-| 08 | [08- Query Analysis Commands](./08-%20Query%20Analysis%20Commands.md) | explain(), query plans, and performance diagnosis |
-| 09 | [09- User and Authentication Commands](./09-%20User%20and%20Authentication%20Commands.md) | Authentication, users, roles, and authorization |
-| 10 | [10- Database Inspection Commands](./10-%20Database%20Inspection%20Commands.md) | Database and collection inspection |
-| 11 | [11- Import and Export Commands](./11-%20Import%20and%20Export%20Commands.md) | mongoimport, mongoexport, and data movement |
-| 12 | [12- Backup and Restore Commands](./12-%20Backup%20and%20Restore%20Commands.md) | mongodump, mongorestore, and recovery workflows |
-| 13 | [13- Operational Commands](./13-%20Operational%20Commands.md) | Server status, replication, current operations, and health |
-
-
 
 ## Command Categories
 
@@ -621,24 +619,6 @@ Be able to explain:
 - How to distinguish operational inspection from backup
 - How to safely terminate a long-running operation
 - How CLI diagnostics fit into application observability
-
-## Navigation
-
-| # | File | Description |
-|---|---|---|
-| 01 | [01- MongoDB Shell Basics](./01-%20MongoDB%20Shell%20Basics.md) | mongosh connections, shell fundamentals, contexts, and shell usage |
-| 02 | [02- Database and Collection Commands](./02-%20Database%20and%20Collection%20Commands.md) | Databases, collections, metadata, and collection operations |
-| 03 | [03- CRUD Commands](./03-%20CRUD%20Commands.md) | Insert, read, update, delete, and bulk operations |
-| 04 | [04- Query and Projection Commands](./04-%20Query%20and%20Projection%20Commands.md) | Query operators, projection, sorting, and pagination |
-| 05 | [05- Update and Array Commands](./05-%20Update%20and%20Array%20Commands.md) | Update operators and array manipulation |
-| 06 | [06- Aggregation Commands](./06-%20Aggregation%20Commands.md) | Aggregation pipelines and expressions |
-| 07 | [07- Index Management Commands](./07-%20Index%20Management%20Commands.md) | Index creation, inspection, and lifecycle |
-| 08 | [08- Query Analysis Commands](./08-%20Query%20Analysis%20Commands.md) | explain(), query plans, and performance diagnosis |
-| 09 | [09- User and Authentication Commands](./09-%20User%20and%20Authentication%20Commands.md) | Authentication, users, roles, and authorization |
-| 10 | [10- Database Inspection Commands](./10-%20Database%20Inspection%20Commands.md) | Database and collection inspection |
-| 11 | [11- Import and Export Commands](./11-%20Import%20and%20Export%20Commands.md) | mongoimport, mongoexport, and data movement |
-| 12 | [12- Backup and Restore Commands](./12-%20Backup%20and%20Restore%20Commands.md) | mongodump, mongorestore, and recovery workflows |
-| 13 | [13- Operational Commands](./13-%20Operational%20Commands.md) | Server status, replication, current operations, and health |
 
 ## Key Takeaways
 
