@@ -1,0 +1,11 @@
+pymongo
+pytest
+pytest-cov
+fastapi
+pydantic
+
+pymongo
+pytest
+pytest-cov
+fastapi
+pydantic

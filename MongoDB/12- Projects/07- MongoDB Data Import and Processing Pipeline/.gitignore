@@ -1,0 +1,123 @@
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Test and coverage artifacts
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+
+# Type checker and linter caches
+.mypy_cache/
+.pyright/
+.ruff_cache/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS-generated files
+.DS_Store
+Thumbs.db
+
+# MongoDB local data
+*.wt
+*.wt.*
+mongod.lock
+diagnostic.data/
+journal/
+
+# MongoDB import/export artifacts
+*.bson
+*.bson.gz
+*.metadata.json
+*.archive
+*.archive.gz
+
+# Processed pipeline output
+data/processed/*
+!data/processed/.gitkeep
+
+# Temporary pipeline files
+data/tmp/
+data/temp/
+*.tmp
+*.temp
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Test and coverage artifacts
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+
+# Type checker and linter caches
+.mypy_cache/
+.pyright/
+.ruff_cache/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS-generated files
+.DS_Store
+Thumbs.db
+
+# MongoDB local data
+*.wt
+*.wt.*
+mongod.lock
+diagnostic.data/
+journal/
+
+# MongoDB import/export artifacts
+*.bson
+*.bson.gz
+*.metadata.json
+*.archive
+*.archive.gz
+
+# Processed pipeline output
+data/processed/*
+!data/processed/.gitkeep
+
+# Temporary pipeline files
+data/tmp/
+data/temp/
+*.tmp
+*.temp

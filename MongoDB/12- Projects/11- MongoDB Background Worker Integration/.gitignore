@@ -1,0 +1,129 @@
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Test and coverage artifacts
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+
+# Type checking and linting caches
+.mypy_cache/
+.pyright/
+.ruff_cache/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS-generated files
+.DS_Store
+Thumbs.db
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# Application logs
+*.log
+logs/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Worker runtime files
+*.pid
+*.pid.lock
+
+# Local MongoDB data
+data/
+mongodb-data/
+
+# Build and packaging artifacts
+build/
+dist/
+*.egg-info/
+
+# Jupyter artifacts
+.ipynb_checkpoints/
+
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Test and coverage artifacts
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+
+# Type checking and linting caches
+.mypy_cache/
+.pyright/
+.ruff_cache/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS-generated files
+.DS_Store
+Thumbs.db
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# Application logs
+*.log
+logs/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Worker runtime files
+*.pid
+*.pid.lock
+
+# Local MongoDB data
+data/
+mongodb-data/
+
+# Build and packaging artifacts
+build/
+dist/
+*.egg-info/
+
+# Jupyter artifacts
+.ipynb_checkpoints/

@@ -1,0 +1,13 @@
+Django==6.0.1
+djangorestframework==3.16.1
+pymongo==4.15.0
+dnspython==2.7.0
+pytest==8.4.2
+pytest-django==4.11.1
+
+Django==6.0.1
+djangorestframework==3.16.1
+pymongo==4.15.0
+dnspython==2.7.0
+pytest==8.4.2
+pytest-django==4.11.1
