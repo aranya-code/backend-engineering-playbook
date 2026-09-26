@@ -8,6 +8,23 @@ The focus is on integrating MongoDB into production backend systems rather than 
 
 The material assumes familiarity with backend development, APIs, Python, and basic database concepts.
 
+## Navigation
+
+| # | File | Description |
+|---|---|---|
+| 01 | [01- Python and MongoDB Integration](./01-%20Python%20and%20MongoDB%20Integration.md) | Production Python integration architecture, PyMongo usage, configuration, CRUD, repositories, and application integration |
+| 02 | [02- PyMongo](./02-%20PyMongo.md) | PyMongo client architecture, CRUD, BSON, aggregation, indexes, transactions, pooling, and operational concerns |
+| 03 | [03- MongoEngine](./03-%20MongoEngine.md) | MongoEngine ODM, document modeling, querying, and Django integration |
+| 04 | [04- FastAPI and MongoDB](./04-%20FastAPI%20and%20MongoDB.md) | FastAPI lifecycle, dependency injection, Pydantic, repositories, CRUD, pagination, and production configuration |
+| 05 | [05- Django and MongoDB](./05-%20Django%20and%20MongoDB.md) | Django integration approaches, PyMongo, MongoEngine, service/repository architecture, and testing |
+| 06 | [06- MongoDB Compass](./06-%20MongoDB%20Compass.md) | Compass workflows, document inspection, queries, aggregation, indexes, schema analysis, and troubleshooting |
+| 07 | [07- JSON and CSV Import Export](./07-%20JSON%20and%20CSV%20Import%20Export.md) | JSON/CSV import and export, mongoimport, mongoexport, batching, validation, and migration workflows |
+| 08 | [08- Connection Pooling](./08-%20Connection%20Pooling.md) | MongoClient lifecycle, pool configuration, concurrency, timeouts, and application scaling |
+| 09 | [09- Transactions in Python](./09-%20Transactions%20in%20Python.md) | Sessions, transaction lifecycle, read/write concerns, retries, and transactional workflows |
+| 10 | [10- Change Streams in Python](./10-%20Change%20Streams%20in%20Python.md) | Change streams, event types, resume tokens, consumers, idempotency, and event-driven architecture |
+| 11 | [11- MongoDB in Background Workers](./11-%20MongoDB%20in%20Background%20Workers.md) | MongoDB access from Celery and other workers, task retries, idempotency, and worker architecture |
+| 12 | [12- MongoDB Integration Patterns](./12-%20MongoDB%20Integration%20Patterns.md) | Production integration patterns across APIs, services, workers, Redis, Kafka, and microservices |
+
 ## Integration Architecture
 
 A production MongoDB integration typically separates application concerns:
@@ -52,24 +69,6 @@ MongoDB
 ```
 
 Additional infrastructure such as Redis, Kafka, and Celery should be introduced for specific requirements rather than as generic layers around MongoDB.
-
-## Navigation
-
-| # | File | Description |
-|---|---|---|
-| 01 | [01- Python and MongoDB Integration](./01-%20Python%20and%20MongoDB%20Integration.md) | Production Python integration architecture, PyMongo usage, configuration, CRUD, repositories, and application integration |
-| 02 | [02- PyMongo](./02-%20PyMongo.md) | PyMongo client architecture, CRUD, BSON, aggregation, indexes, transactions, pooling, and operational concerns |
-| 03 | [03- MongoEngine](./03-%20MongoEngine.md) | MongoEngine ODM, document modeling, querying, and Django integration |
-| 04 | [04- FastAPI and MongoDB](./04-%20FastAPI%20and%20MongoDB.md) | FastAPI lifecycle, dependency injection, Pydantic, repositories, CRUD, pagination, and production configuration |
-| 05 | [05- Django and MongoDB](./05-%20Django%20and%20MongoDB.md) | Django integration approaches, PyMongo, MongoEngine, service/repository architecture, and testing |
-| 06 | [06- MongoDB Compass](./06-%20MongoDB%20Compass.md) | Compass workflows, document inspection, queries, aggregation, indexes, schema analysis, and troubleshooting |
-| 07 | [07- JSON and CSV Import Export](./07-%20JSON%20and%20CSV%20Import%20Export.md) | JSON/CSV import and export, mongoimport, mongoexport, batching, validation, and migration workflows |
-| 08 | [08- Connection Pooling](./08-%20Connection%20Pooling.md) | MongoClient lifecycle, pool configuration, concurrency, timeouts, and application scaling |
-| 09 | [09- Transactions in Python](./09-%20Transactions%20in%20Python.md) | Sessions, transaction lifecycle, read/write concerns, retries, and transactional workflows |
-| 10 | [10- Change Streams in Python](./10-%20Change%20Streams%20in%20Python.md) | Change streams, event types, resume tokens, consumers, idempotency, and event-driven architecture |
-| 11 | [11- MongoDB in Background Workers](./11-%20MongoDB%20in%20Background%20Workers.md) | MongoDB access from Celery and other workers, task retries, idempotency, and worker architecture |
-| 12 | [12- MongoDB Integration Patterns](./12-%20MongoDB%20Integration%20Patterns.md) | Production integration patterns across APIs, services, workers, Redis, Kafka, and microservices |
-
 
 ## Learning Path
 
