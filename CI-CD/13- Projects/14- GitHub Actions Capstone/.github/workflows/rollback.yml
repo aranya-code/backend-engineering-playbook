@@ -1,0 +1,23 @@
+name: Capstone Rollback
+
+on:
+  workflow_dispatch:
+    inputs:
+      image-tag:
+        description: Previously known-good immutable image tag
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: capstone-production
+  cancel-in-progress: false
+
+jobs:
+  rollback:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - run: echo "Rollback production to image ${{ inputs.image-tag }}"

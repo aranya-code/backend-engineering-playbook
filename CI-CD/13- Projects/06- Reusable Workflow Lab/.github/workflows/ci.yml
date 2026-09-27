@@ -1,0 +1,16 @@
+name: Caller Workflow
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  call-ci:
+    uses: ./.github/workflows/reusable-python-ci.yml
+    with:
+      python-version: "3.12"

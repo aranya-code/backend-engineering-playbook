@@ -1,0 +1,38 @@
+name: Multi Environment Deployment
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      image: ${{ steps.meta.outputs.image }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: meta
+        run: echo "image=app:${GITHUB_SHA}" >> "$GITHUB_OUTPUT"
+      - run: echo "Build immutable artifact ${{ steps.meta.outputs.image }}"
+
+  staging:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: staging
+    steps:
+      - uses: actions/checkout@v4
+      - run: echo "Deploying ${{ needs.build.outputs.image }} to staging"
+
+  production:
+    needs: staging
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+      - run: echo "Deploying ${{ needs.build.outputs.image }} to production"

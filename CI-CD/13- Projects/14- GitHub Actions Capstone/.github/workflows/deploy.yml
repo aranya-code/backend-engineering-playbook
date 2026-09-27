@@ -1,0 +1,42 @@
+name: Capstone Deployment
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: choice
+        required: true
+        default: staging
+        options:
+          - staging
+          - production
+      image-tag:
+        description: Immutable image tag, normally a commit SHA
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: capstone-${{ inputs.environment }}
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure AWS
+        if: ${{ secrets.AWS_ROLE_ARN != '' }}
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_REGION }}
+      - name: Deploy
+        run: |
+          echo "Environment: ${{ inputs.environment }}"
+          echo "Image: ${{ inputs.image-tag }}"
+          echo "Replace this step with your ECS/EKS/EC2 deployment command."

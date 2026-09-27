@@ -1,0 +1,28 @@
+name: Reusable Python CI
+
+on:
+  workflow_call:
+    inputs:
+      python-version:
+        required: false
+        type: string
+        default: "3.12"
+    outputs:
+      result:
+        description: Test result
+        value: ${{ jobs.test.outputs.result }}
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    outputs:
+      result: ${{ steps.result.outputs.value }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ inputs.python-version }}
+      - run: pip install -r requirements.txt
+      - run: pytest -q
+      - id: result
+        run: echo "value=passed" >> "$GITHUB_OUTPUT"
