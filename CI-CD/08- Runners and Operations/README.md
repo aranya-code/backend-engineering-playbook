@@ -26,6 +26,35 @@ Governance
 
 Production CI/CD requires more than successful workflow execution. The platform must remain secure, observable, scalable, cost-effective, and recoverable when workloads, repositories, teams, and deployment frequency increase.
 
+## Navigation
+
+| # | File | Description |
+|---|---|---|
+| 01 | [01- GitHub Hosted Runners](./01-%20GitHub%20Hosted%20Runners.md) | GitHub-hosted runners are managed execution environments provided by GitHub for running GitHub Actions jobs. |
+| 02 | [02- Self Hosted Runners](./02-%20Self%20Hosted%20Runners.md) | Self-hosted runners are GitHub Actions runners operated and managed by the organization rather than GitHub. |
+| 03 | [03- Runner Registration](./03-%20Runner%20Registration.md) | Runner registration is the process of connecting a self-hosted machine to GitHub Actions so that GitHub can assign wo... |
+| 04 | [04- Runner Labels](./04-%20Runner%20Labels.md) | Runner labels are capability and selection metadata attached to GitHub Actions runners. |
+| 05 | [05- Runner Groups](./05-%20Runner%20Groups.md) | Runner groups provide an access-control layer for GitHub Actions self-hosted runners. |
+| 06 | [06- Linux Runners](./06-%20Linux%20Runners.md) | Linux runners are execution environments used by GitHub Actions jobs on Linux operating systems. |
+| 07 | [07- Windows Runners](./07-%20Windows%20Runners.md) | Windows runners are execution environments used by GitHub Actions jobs that require the Windows operating system. |
+| 08 | [08- Private Network Access](./08-%20Private%20Network%20Access.md) | Private network access allows GitHub Actions workflows to reach infrastructure that is not publicly exposed to the internet. |
+| 09 | [09- Ephemeral Runners](./09-%20Ephemeral%20Runners.md) | An ephemeral runner is a GitHub Actions runner that is provisioned for a limited execution lifecycle, runs a job or a small set of jobs, and is terminated. |
+| 10 | [10- Runner Autoscaling](./10-%20Runner%20Autoscaling.md) | Runner autoscaling is the practice of dynamically increasing or decreasing GitHub Actions runner capacity based on CI/CD workload demand. |
+| 11 | [11- Runner Management](./11-%20Runner%20Management.md) | Runner management is the operational discipline of provisioning, configuring, securing, monitoring, updating, scaling, and retiring GitHub Actions runners. |
+| 12 | [12- Workflow Management](./12-%20Workflow%20Management.md) | Workflow management is the operational discipline of designing, controlling, monitoring, maintaining, and governing GitHub Actions workflows. |
+| 13 | [13- Secrets and Variables Operations](./13-%20Secrets%20and%20Variables%20Operations.md) | Secrets and variables are operational configuration mechanisms used by GitHub Actions to provide workflows with sensitive and non-sensitive values. |
+| 14 | [14- Environment Management](./14-%20Environment%20Management.md) | GitHub Actions Environments provide a controlled boundary around environment-specific deployments, configuration, secrets, and protection rules. |
+| 15 | [15- Artifact Retention and Storage](./15-%20Artifact%20Retention%20and%20Storage.md) | Artifacts are outputs produced by GitHub Actions workflows that need to persist beyond the execution of an individual job. |
+| 16 | [16- Cache Management](./16-%20Cache%20Management.md) | Caching in GitHub Actions reduces workflow execution time by reusing data that is expensive to recreate, such as Python package installations. |
+| 17 | [17- Workflow Usage and Limits](./17-%20Workflow%20Usage%20and%20Limits.md) | GitHub Actions is a managed CI/CD platform, but workflows operate within limits related to execution time, concurrency, storage, and API usage. |
+| 18 | [18- Monitoring and Observability](./18-%20Monitoring%20and%20Observability.md) | Monitoring and observability are essential for operating GitHub Actions as a production CI/CD platform rather than treating it as a black box. |
+| 19 | [19- Workflow Logs and Debugging](./19-%20Workflow%20Logs%20and%20Debugging.md) | GitHub Actions logs are the primary execution evidence for understanding what happened inside a workflow. |
+| 20 | [20- CI CD Reliability](./20-%20CI%20CD%20Reliability.md) | CI/CD reliability is the ability of a delivery system to produce predictable results, recover from failures, and safely deliver software. |
+| 21 | [21- Cost Optimization](./21-%20Cost%20Optimization.md) | CI/CD cost optimization is the process of reducing the compute, storage, network, and operational cost of software delivery pipelines. |
+| 22 | [22- Enterprise Governance](./22-%20Enterprise%20Governance.md) | Enterprise governance for GitHub Actions is the set of policies, controls, ownership models, and operational standards applied across an organization. |
+| 23 | [23- Actions Policies and Allowlists](./23-%20Actions%20Policies%20and%20Allowlists.md) | GitHub Actions policies and allowlists provide enterprise controls over which workflows, actions, runners, and execution patterns are permitted. |
+| 24 | [24- Production Best Practices](./24-%20Production%20Best%20Practices.md) | GitHub Actions should be treated as a production engineering platform rather than a collection of YAML files. |
+
 ---
 
 ## What This Section Covers
