@@ -43,6 +43,26 @@ The documentation in this section connects workflow mechanics with the engineeri
 
 The intended outcome is the ability to design, operate, troubleshoot, and evolve a production GitHub Actions platform for Python, Docker, AWS, and distributed backend systems.
 
+## Navigation
+
+| # | File | Description |
+|---|---|---|
+| 01 | [01- GitHub Actions Architecture](./01-%20GitHub%20Actions%20Architecture.md) | GitHub Actions is a workflow execution platform for implementing CI/CD, automation, testing, security validation, artifact management, and deployment. |
+| 02 | [02- CI CD Architecture Patterns](./02-%20CI%20CD%20Architecture%20Patterns.md) | Production CI/CD architecture is primarily about controlling the flow of changes from source code to validated artifacts and deployments. |
+| 03 | [03- Production CI CD Architecture](./03-%20Production%20CI%20CD%20Architecture.md) | A production CI/CD architecture is the system that moves a code change from source control to a validated, observable, and recoverable running application. |
+| 04 | [04- Reusable Workflow Architecture](./04-%20Reusable%20Workflow%20Architecture.md) | Reusable workflows are a GitHub Actions mechanism for packaging an entire workflow interface so that multiple repositories and callers can invoke the same pipeline. |
+| 05 | [05- Enterprise Workflow Architecture](./05-%20Enterprise%20Workflow%20Architecture.md) | Enterprise GitHub Actions architecture is the design of CI/CD workflows, reusable workflows, actions, runners, security controls, and governance at organizational scale. |
+| 06 | [06- Docker CI CD Architecture](./06-%20Docker%20CI%20CD%20Architecture.md) | Docker CI/CD architecture defines how container images move from source code through validation, image construction, registry publication, and deployment. |
+| 07 | [07- AWS Deployment Architecture](./07-%20AWS%20Deployment%20Architecture.md) | AWS deployment architecture defines how GitHub Actions moves validated application artifacts into AWS environments while maintaining security, reliability, and traceability. |
+| 08 | [08- Artifact Promotion Architecture](./08-%20Artifact%20Promotion%20Architecture.md) | Artifact promotion is the CI/CD architecture pattern in which a validated artifact is built once and then promoted through deployment environments unchanged. |
+| 09 | [09- Environment Promotion Architecture](./09-%20Environment%20Promotion%20Architecture.md) | Environment promotion is the controlled movement of a validated software release through environments such as development, staging, and production. |
+| 10 | [10- Blue Green Deployment Architecture](./10-%20Blue%20Green%20Deployment%20Architecture.md) | Blue-green deployment is a release architecture in which two production environments or runtime versions exist simultaneously. |
+| 11 | [11- Canary Deployment Architecture](./11-%20Canary%20Deployment%20Architecture.md) | Canary deployment is a progressive delivery strategy in which a new application version is exposed to a small portion of production traffic before full rollout. |
+| 12 | [12- Rolling Deployment Architecture](./12-%20Rolling%20Deployment%20Architecture.md) | Rolling deployment replaces an application's existing production instances with a new version gradually rather than replacing all instances simultaneously. |
+| 13 | [13- High Availability CI CD Design](./13-%20High%20Availability%20CI%20CD%20Design.md) | High availability (HA) in CI/CD means designing the delivery system so that software can continue to be built, validated, and deployed even when components fail. |
+| 14 | [14- Scalable GitHub Actions Architecture](./14-%20Scalable%20GitHub%20Actions%20Architecture.md) | A scalable GitHub Actions architecture is designed to support increasing numbers of repositories, workflows, developers, and deployment targets. |
+| 15 | [15- Failure Domains and Recovery](./15-%20Failure%20Domains%20and%20Recovery.md) | Failure-domain design is the practice of identifying where a CI/CD system can fail, isolating failures so that they do not cascade, and defining recovery procedures. |
+
 ---
 
 ## Section Scope
