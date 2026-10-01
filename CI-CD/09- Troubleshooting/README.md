@@ -44,6 +44,33 @@ A failure in any layer can appear as a failure somewhere else. For example:
 
 The purpose of this section is therefore not simply to explain individual error messages. It is to develop a **failure-domain-driven troubleshooting methodology** that can be applied to real production CI/CD systems.
 
+## Navigation
+
+| # | File | Description |
+|---|---|---|
+| 01 | [01- Troubleshooting Methodology](./01-%20Troubleshooting%20Methodology.md) | Production CI/CD failures should be investigated systematically rather than through trial-and-error YAML changes. |
+| 02 | [02- Workflow Syntax Errors](./02-%20Workflow%20Syntax%20Errors.md) | GitHub Actions workflows are declarative YAML configurations interpreted by GitHub before jobs are scheduled and executed. |
+| 03 | [03- Trigger and Event Issues](./03-%20Trigger%20and%20Event%20Issues.md) | GitHub Actions trigger problems are often misdiagnosed as workflow failures. A workflow can be syntactically valid, correctly structured, and still not execute. |
+| 04 | [04- Job and Step Failures](./04-%20Job%20and%20Step%20Failures.md) | GitHub Actions failures can occur at several execution layers: trigger evaluation, job scheduling, step execution, and post-job cleanup. |
+| 05 | [05- Expression and Context Issues](./05-%20Expression%20and%20Context%20Issues.md) | GitHub Actions expressions and contexts control much of the dynamic behavior inside workflows. They determine which jobs run, what values are passed, and how outputs flow. |
+| 06 | [06- Environment Variable and Secret Issues](./06-%20Environment%20Variable%20and%20Secret%20Issues.md) | Environment variables and secrets are fundamental to GitHub Actions workflows because they connect workflow configuration to execution environments. |
+| 07 | [07- Permissions and GITHUB_TOKEN Issues](./07-%20Permissions%20and%20GITHUB_TOKEN%20Issues.md) | GitHub Actions permissions determine what a workflow, job, action, or deployment is allowed to do. |
+| 08 | [08- Matrix Strategy Issues](./08-%20Matrix%20Strategy%20Issues.md) | GitHub Actions matrix strategy is one of the primary mechanisms for running the same job across multiple configurations. |
+| 09 | [09- Reusable Workflow Issues](./09-%20Reusable%20Workflow%20Issues.md) | Reusable workflows allow GitHub Actions teams to define a workflow once and invoke it from multiple repositories or workflows. |
+| 10 | [10- Artifact Issues](./10-%20Artifact%20Issues.md) | Artifacts are a primary data-transfer mechanism in GitHub Actions. They allow one job or workflow to persist files and make them available to later jobs. |
+| 11 | [11- Cache Issues](./11-%20Cache%20Issues.md) | GitHub Actions caches are designed to reduce workflow execution time by reusing data that can be safely recreated, such as Python package installations. |
+| 12 | [12- Container and Service Container Issues](./12-%20Container%20and%20Service%20Container%20Issues.md) | GitHub Actions supports containerized jobs and service containers to provide reproducible CI environments and dependency services. |
+| 13 | [13- Custom Action Issues](./13-%20Custom%20Action%20Issues.md) | Custom GitHub Actions package reusable CI/CD behavior into a stable execution interface. |
+| 14 | [14- Runner Issues](./14-%20Runner%20Issues.md) | GitHub Actions runners are the execution layer for workflows. A workflow defines what should happen, but the runner provides the environment where it happens. |
+| 15 | [15- Self Hosted Runner Issues](./15-%20Self%20Hosted%20Runner%20Issues.md) | Self-hosted runners execute GitHub Actions jobs on infrastructure controlled by the organization rather than on GitHub-managed machines. |
+| 16 | [16- OIDC and AWS Authentication Issues](./16-%20OIDC%20and%20AWS%20Authentication%20Issues.md) | GitHub Actions commonly authenticates with AWS using OpenID Connect (OIDC) rather than long-lived AWS access keys. |
+| 17 | [17- Docker Build and Registry Issues](./17-%20Docker%20Build%20and%20Registry%20Issues.md) | Docker build and registry failures in GitHub Actions usually span multiple independent layers. |
+| 18 | [18- Deployment Failures](./18-%20Deployment%20Failures.md) | Deployment failures occur after or during the transition from a validated build artifact to a running production or non-production environment. |
+| 19 | [19- Concurrency and Race Conditions](./19-%20Concurrency%20and%20Race%20Conditions.md) | Concurrency is a critical part of production CI/CD design because multiple workflows, jobs, matrix executions, deployments, and runners can execute simultaneously. |
+| 20 | [20- Security Related Failures](./20-%20Security%20Related%20Failures.md) | Security-related failures in GitHub Actions are different from ordinary workflow failures because the immediate symptom may not reveal the underlying security cause. |
+| 21 | [21- Production CI CD Failures](./21-%20Production%20CI%20CD%20Failures.md) | Production CI/CD failures are failures that affect the delivery or deployment path of a production system rather than just a developer's local test. |
+| 22 | [22- Diagnostic Commands and Debugging](./22-%20Diagnostic%20Commands%20and%20Debugging.md) | Production CI/CD debugging requires more than reading a failed GitHub Actions step. A production pipeline is a distributed system. |
+
 ---
 
 ## Troubleshooting Philosophy
