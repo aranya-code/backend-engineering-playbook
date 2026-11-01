@@ -10,18 +10,18 @@ The documents in this directory progress from core object storage concepts to th
 
 ## Navigation
 
-| No. | Document | Description |
+| # | File | Description |
 |---|---|---|
-| 01 | [What Is Amazon S3](./01-%20What%20is%20Amazon%20S3.md) | S3 fundamentals, core capabilities, object storage terminology, and backend engineering use cases |
-| 02 | [Object Storage](./02-%20Object%20Storage.md) | Object storage architecture and the differences between object, block, and file storage |
-| 03 | [Buckets](./03-%20Buckets.md) | Bucket fundamentals, supported bucket types, Regions, resource boundaries, and configuration |
-| 04 | [Bucket Naming](./04-%20Bucket%20Naming.md) | Bucket naming rules, namespace considerations, naming conventions, and production naming strategies |
-| 05 | [Objects](./05-%20Objects.md) | Object structure, reads and writes, metadata, tagging, versions, and object operations |
-| 06 | [Object Keys](./06-%20Object%20Keys.md) | Key structure, prefixes, naming patterns, URL encoding, and safe key generation |
-| 07 | [Object Metadata](./07-%20Object%20Metadata.md) | System metadata, user-defined metadata, object tags, and metadata management |
-| 08 | [Durability vs Availability](./08-%20Durability%20vs%20Availability.md) | Durability, availability, failure domains, storage-class characteristics, and recovery considerations |
-| 09 | [Strong Consistency](./09-%20Strong%20Consistency.md) | Read-after-write consistency, atomic object updates, conditional writes, and consistency boundaries |
-| 10 | [AWS Shared Responsibility Model](./10-%20AWS%20Shared%20Responsibility%20Model.md) | AWS and customer responsibilities for infrastructure security, data protection, operations, and compliance |
+| 01 | [01- What is Amazon S3](./01-%20What%20is%20Amazon%20S3.md) | S3 fundamentals, core capabilities, object storage terminology, and backend engineering use cases |
+| 02 | [02- Object Storage](./02-%20Object%20Storage.md) | Object storage architecture and the differences between object, block, and file storage |
+| 03 | [03- Buckets](./03-%20Buckets.md) | Bucket fundamentals, supported bucket types, Regions, resource boundaries, and configuration |
+| 04 | [04- Bucket Naming](./04-%20Bucket%20Naming.md) | Bucket naming rules, namespace considerations, naming conventions, and production naming strategies |
+| 05 | [05- Objects](./05-%20Objects.md) | Object structure, reads and writes, metadata, tagging, versions, and object operations |
+| 06 | [06- Object Keys](./06-%20Object%20Keys.md) | Key structure, prefixes, naming patterns, URL encoding, and safe key generation |
+| 07 | [07- Object Metadata](./07-%20Object%20Metadata.md) | System metadata, user-defined metadata, object tags, and metadata management |
+| 08 | [08- Durability vs Availability](./08-%20Durability%20vs%20Availability.md) | Durability, availability, failure domains, storage-class characteristics, and recovery considerations |
+| 09 | [09- Strong Consistency](./09-%20Strong%20Consistency.md) | Read-after-write consistency, atomic object updates, conditional writes, and consistency boundaries |
+| 10 | [10- AWS Shared Responsibility Model](./10-%20AWS%20Shared%20Responsibility%20Model.md) | AWS and customer responsibilities for infrastructure security, data protection, operations, and compliance |
 
 ## Recommended Learning Path
 
