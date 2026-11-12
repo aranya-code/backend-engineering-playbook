@@ -1,0 +1,24 @@
+{
+  "app": "python app.py",
+  "watch": {
+    "include": [
+      "**"
+    ],
+    "exclude": [
+      "README.md",
+      "cdk*.json",
+      "requirements*.txt",
+      "venv",
+      ".venv",
+      "__pycache__",
+      ".pytest_cache",
+      ".mypy_cache",
+      ".ruff_cache",
+      "cdk.out",
+      "tests",
+      ".git",
+      ".env",
+      "*.pyc"
+    ]
+  }
+}

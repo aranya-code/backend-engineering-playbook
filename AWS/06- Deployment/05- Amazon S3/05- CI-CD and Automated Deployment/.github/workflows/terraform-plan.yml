@@ -1,0 +1,183 @@
+name: Terraform Plan
+
+on:
+  pull_request:
+    paths:
+      - "06- Deployment/05- Amazon S3/**/*.tf"
+      - "06- Deployment/05- Amazon S3/**/*.tfvars"
+      - "06- Deployment/05- Amazon S3/**/.terraform.lock.hcl"
+      - ".github/workflows/terraform-plan.yml"
+  push:
+    branches:
+      - main
+    paths:
+      - "06- Deployment/05- Amazon S3/**/*.tf"
+      - "06- Deployment/05- Amazon S3/**/*.tfvars"
+      - "06- Deployment/05- Amazon S3/**/.terraform.lock.hcl"
+      - ".github/workflows/terraform-plan.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: terraform-plan-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+env:
+  TF_IN_AUTOMATION: "true"
+  TF_INPUT: "false"
+  TERRAFORM_ROOT: "06- Deployment/05- Amazon S3"
+
+jobs:
+  plan:
+    name: Generate Terraform Execution Plan
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Validate workflow configuration
+        env:
+          AWS_ROLE_TO_ASSUME: ${{ vars.AWS_TERRAFORM_PLAN_ROLE_ARN }}
+          AWS_REGION: ${{ vars.AWS_REGION }}
+        run: |
+          if [ -z "$AWS_ROLE_TO_ASSUME" ]; then
+            echo "::error::Repository variable AWS_TERRAFORM_PLAN_ROLE_ARN is required."
+            exit 1
+          fi
+
+          if [ -z "$AWS_REGION" ]; then
+            echo "::error::Repository variable AWS_REGION is required."
+            exit 1
+          fi
+
+          if [ ! -d "$TERRAFORM_ROOT" ]; then
+            echo "::error::Terraform project directory does not exist: $TERRAFORM_ROOT"
+            exit 1
+          fi
+
+      - name: Identify approved Terraform root configurations
+        id: terraform-directories
+        run: |
+          mapfile -t directories < <(
+            find "$TERRAFORM_ROOT" \
+              -type d \
+              \( \
+                -name .git \
+                -o -name .terraform \
+                -o -name .venv \
+                -o -name venv \
+                -o -name node_modules \
+              \) -prune \
+              -o \
+              -type d \
+              \( \
+                -name environment \
+                -o -name environments \
+                -o -name env \
+                -o -name example \
+                -o -name examples \
+              \) -print \
+            | while IFS= read -r approved_root; do
+                find "$approved_root" \
+                  -mindepth 2 \
+                  -maxdepth 2 \
+                  -type f \
+                  -name main.tf \
+                  -printf '%h\n'
+              done \
+            | sort -u
+          )
+
+          if [ "${#directories[@]}" -eq 0 ]; then
+            echo "::error::No approved Terraform environment or example root configurations containing main.tf were found."
+            exit 1
+          fi
+
+          printf '%s\n' "${directories[@]}" > terraform-directories.txt
+
+          echo "Found ${#directories[@]} approved Terraform root configuration(s):"
+          printf '%s\n' "${directories[@]}"
+
+          {
+            echo "### Terraform Plan Targets"
+            echo ""
+            printf '%s\n' "${directories[@]}" | sed 's/^/- /'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.9.8"
+          terraform_wrapper: false
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_TERRAFORM_PLAN_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_REGION }}
+          role-session-name: GitHubActionsTerraformPlan
+
+      - name: Verify AWS identity
+        run: |
+          aws sts get-caller-identity
+
+      - name: Initialize approved Terraform configurations
+        run: |
+          while IFS= read -r directory; do
+            [ -n "$directory" ] || continue
+
+            echo "::group::Terraform init: ${directory}"
+
+            terraform -chdir="$directory" init \
+              -input=false \
+              -no-color \
+              -lockfile=readonly
+
+            echo "::endgroup::"
+          done < terraform-directories.txt
+
+      - name: Validate approved Terraform configurations
+        run: |
+          while IFS= read -r directory; do
+            [ -n "$directory" ] || continue
+
+            echo "::group::Terraform validate: ${directory}"
+
+            terraform -chdir="$directory" validate \
+              -no-color
+
+            echo "::endgroup::"
+          done < terraform-directories.txt
+
+      - name: Generate Terraform plans
+        run: |
+          while IFS= read -r directory; do
+            [ -n "$directory" ] || continue
+
+            echo "::group::Terraform plan: ${directory}"
+
+            terraform -chdir="$directory" plan \
+              -input=false \
+              -no-color \
+              -lock=true \
+              -lock-timeout=5m
+
+            echo "::endgroup::"
+          done < terraform-directories.txt
+
+      - name: Upload Terraform directory report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: terraform-plan-directories
+          path: terraform-directories.txt
+          if-no-files-found: ignore
+          retention-days: 7

@@ -1,0 +1,41 @@
+# AWS account and Region configuration
+aws_region         = "ap-south-1"
+replica_aws_region = "ap-southeast-1"
+
+# Replace with the 12-digit AWS account ID that owns the source bucket.
+source_account_id = "123456789012"
+
+# Replace with globally unique S3 bucket names.
+source_bucket_name  = "your-org-dev-s3-source-documents"
+replica_bucket_name = "your-org-dev-s3-replica-documents"
+
+# Prevent accidental deletion of non-empty buckets.
+force_destroy = false
+
+# Optional customer-managed KMS key ARNs.
+# Leave null to use the bucket module's default encryption configuration.
+# Configure both keys when replicating SSE-KMS encrypted source objects.
+source_kms_key_arn      = null
+destination_kms_key_arn = null
+
+# IAM replication role
+replication_role_name = "dev-s3-replication-role"
+
+# Empty prefix selects all eligible objects.
+# Example: "documents/" restricts replication to that prefix.
+replication_filter_prefix = ""
+
+# Replication rule
+replication_enabled = true
+
+# Destination storage class
+destination_storage_class = "STANDARD"
+
+# Replication monitoring
+replication_metrics_enabled = true
+
+# RTC can incur additional charges.
+replication_time_control_enabled = false
+
+# Common resource tags are defined by the root module's default_tags
+# and local configuration. Do not add tag keys as standalone assignments.

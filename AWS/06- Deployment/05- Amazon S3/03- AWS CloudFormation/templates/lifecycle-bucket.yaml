@@ -1,0 +1,343 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: >
+  Provisions a private Amazon S3 bucket with configurable object lifecycle
+  management, versioning, server-side encryption, incomplete multipart upload
+  cleanup, and optional TLS-only access enforcement.
+
+Parameters:
+  BucketName:
+    Type: String
+    Description: Globally unique S3 bucket name.
+    MinLength: 3
+    MaxLength: 63
+    AllowedPattern: '^[a-z0-9][a-z0-9.-]*[a-z0-9]$'
+    ConstraintDescription: >
+      Bucket name must contain 3-63 lowercase letters, numbers, periods,
+      or hyphens. It must start and end with a letter or number.
+
+  Environment:
+    Type: String
+    Description: Deployment environment.
+    AllowedValues:
+      - dev
+      - staging
+      - production
+
+  KMSKeyArn:
+    Type: String
+    Default: ''
+    Description: >
+      Optional ARN of an existing customer-managed KMS key. Leave empty
+      to use SSE-S3. When supplied, the key must be enabled and usable
+      in the bucket's AWS Region.
+    AllowedPattern: '^$|^arn:[a-z0-9-]+:kms:[a-z0-9-]+:[0-9]{12}:key/[a-f0-9-]+$'
+    ConstraintDescription: >
+      Provide an empty value or a valid customer-managed KMS key ARN.
+
+  BucketKeyEnabled:
+    Type: String
+    Default: 'true'
+    Description: Enable S3 Bucket Keys when SSE-KMS is selected.
+    AllowedValues:
+      - 'true'
+      - 'false'
+
+  LifecycleFilterPrefix:
+    Type: String
+    Default: ''
+    Description: >
+      Optional object key prefix to which lifecycle rules apply.
+      An empty value applies the rules to all objects.
+
+  CurrentVersionExpirationDays:
+    Type: Number
+    Default: 0
+    Description: >
+      Number of days before current objects expire. Set to 0 to disable
+      current-version expiration.
+    MinValue: 0
+    MaxValue: 36500
+
+  NoncurrentVersionExpirationDays:
+    Type: Number
+    Default: 90
+    Description: >
+      Number of days before noncurrent object versions expire.
+      Set to 0 to disable noncurrent-version expiration.
+    MinValue: 0
+    MaxValue: 36500
+
+  StandardIATransitionDays:
+    Type: Number
+    Default: 0
+    Description: >
+      Number of days before current objects transition to S3 Standard-IA.
+      Set to 0 to disable this transition.
+    MinValue: 0
+    MaxValue: 36500
+
+  GlacierTransitionDays:
+    Type: Number
+    Default: 0
+    Description: >
+      Number of days before current objects transition to S3 Glacier Flexible Retrieval.
+      Set to 0 to disable this transition.
+    MinValue: 0
+    MaxValue: 36500
+
+  AbortIncompleteMultipartUploadDays:
+    Type: Number
+    Default: 7
+    Description: >
+      Number of days after which incomplete multipart uploads are aborted.
+    MinValue: 1
+    MaxValue: 36500
+
+  EnableLifecycleConfiguration:
+    Type: String
+    Default: 'true'
+    Description: Enable or disable lifecycle management.
+    AllowedValues:
+      - 'true'
+      - 'false'
+
+  RequireTLS:
+    Type: String
+    Default: 'true'
+    Description: Deny S3 bucket requests that do not use HTTPS.
+    AllowedValues:
+      - 'true'
+      - 'false'
+
+Conditions:
+  UseKMS: !Not
+    - !Equals
+      - !Ref KMSKeyArn
+      - ''
+
+  EnableLifecycle: !Equals
+    - !Ref EnableLifecycleConfiguration
+    - 'true'
+
+  EnableCurrentVersionExpiration: !And
+    - !Condition EnableLifecycle
+    - !Not
+      - !Equals
+        - !Ref CurrentVersionExpirationDays
+        - 0
+
+  EnableNoncurrentVersionExpiration: !And
+    - !Condition EnableLifecycle
+    - !Not
+      - !Equals
+        - !Ref NoncurrentVersionExpirationDays
+        - 0
+
+  EnableStandardIATransition: !And
+    - !Condition EnableLifecycle
+    - !Not
+      - !Equals
+        - !Ref StandardIATransitionDays
+        - 0
+
+  EnableGlacierTransition: !And
+    - !Condition EnableLifecycle
+    - !Not
+      - !Equals
+        - !Ref GlacierTransitionDays
+        - 0
+
+  EnforceTLS: !Equals
+    - !Ref RequireTLS
+    - 'true'
+
+Resources:
+  LifecycleManagedBucket:
+    Type: AWS::S3::Bucket
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Properties:
+      BucketName: !Ref BucketName
+
+      OwnershipControls:
+        Rules:
+          - ObjectOwnership: BucketOwnerEnforced
+
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+
+      VersioningConfiguration:
+        Status: Enabled
+
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: !If
+                - UseKMS
+                - aws:kms
+                - AES256
+              KMSMasterKeyID: !If
+                - UseKMS
+                - !Ref KMSKeyArn
+                - !Ref AWS::NoValue
+            BucketKeyEnabled: !If
+              - UseKMS
+              - !Ref BucketKeyEnabled
+              - !Ref AWS::NoValue
+
+      LifecycleConfiguration: !If
+        - EnableLifecycle
+        - Rules:
+            - Id: manage-current-object-lifecycle
+              Status: Enabled
+              Prefix: !Ref LifecycleFilterPrefix
+
+              ExpirationInDays: !If
+                - EnableCurrentVersionExpiration
+                - !Ref CurrentVersionExpirationDays
+                - !Ref AWS::NoValue
+
+              Transitions:
+                - !If
+                  - EnableStandardIATransition
+                  - StorageClass: STANDARD_IA
+                    TransitionInDays: !Ref StandardIATransitionDays
+                  - !Ref AWS::NoValue
+
+                - !If
+                  - EnableGlacierTransition
+                  - StorageClass: GLACIER
+                    TransitionInDays: !Ref GlacierTransitionDays
+                  - !Ref AWS::NoValue
+
+              AbortIncompleteMultipartUpload:
+                DaysAfterInitiation: !Ref AbortIncompleteMultipartUploadDays
+
+            - !If
+              - EnableNoncurrentVersionExpiration
+              - Id: expire-noncurrent-object-versions
+                Status: Enabled
+                Prefix: !Ref LifecycleFilterPrefix
+                NoncurrentVersionExpiration:
+                  NoncurrentDays: !Ref NoncurrentVersionExpirationDays
+              - !Ref AWS::NoValue
+        - !Ref AWS::NoValue
+
+      Tags:
+        - Key: Name
+          Value: !Ref BucketName
+        - Key: Environment
+          Value: !Ref Environment
+        - Key: ManagedBy
+          Value: CloudFormation
+        - Key: Service
+          Value: AmazonS3
+        - Key: SecurityClassification
+          Value: Private
+        - Key: LifecycleManaged
+          Value: 'true'
+
+  LifecycleBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Condition: EnforceTLS
+    Properties:
+      Bucket: !Ref LifecycleManagedBucket
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Sid: DenyInsecureTransport
+            Effect: Deny
+            Principal: '*'
+            Action:
+              - s3:*
+            Resource:
+              - !GetAtt LifecycleManagedBucket.Arn
+              - !Sub '${LifecycleManagedBucket.Arn}/*'
+            Condition:
+              Bool:
+                aws:SecureTransport: 'false'
+
+Outputs:
+  BucketName:
+    Description: Name of the lifecycle-managed S3 bucket.
+    Value: !Ref LifecycleManagedBucket
+    Export:
+      Name: !Sub '${AWS::StackName}-BucketName'
+
+  BucketArn:
+    Description: ARN of the lifecycle-managed S3 bucket.
+    Value: !GetAtt LifecycleManagedBucket.Arn
+    Export:
+      Name: !Sub '${AWS::StackName}-BucketArn'
+
+  BucketRegionalDomainName:
+    Description: Regional DNS name of the S3 bucket.
+    Value: !GetAtt LifecycleManagedBucket.RegionalDomainName
+
+  BucketRegion:
+    Description: AWS Region containing the bucket.
+    Value: !Ref AWS::Region
+
+  VersioningStatus:
+    Description: Versioning status of the bucket.
+    Value: Enabled
+
+  EncryptionAlgorithm:
+    Description: Server-side encryption algorithm configured for the bucket.
+    Value: !If
+      - UseKMS
+      - aws:kms
+      - AES256
+
+  KMSKeyArn:
+    Condition: UseKMS
+    Description: Customer-managed KMS key ARN used for SSE-KMS.
+    Value: !Ref KMSKeyArn
+
+  BucketKeyStatus:
+    Description: S3 Bucket Key setting when SSE-KMS is selected.
+    Value: !If
+      - UseKMS
+      - !Ref BucketKeyEnabled
+      - NotApplicable
+
+  LifecycleConfigurationStatus:
+    Description: Whether lifecycle management is enabled.
+    Value: !If
+      - EnableLifecycle
+      - Enabled
+      - Disabled
+
+  LifecycleFilterPrefix:
+    Description: Prefix to which lifecycle rules apply.
+    Value: !Ref LifecycleFilterPrefix
+
+  CurrentVersionExpirationDays:
+    Description: Current-version expiration period; zero disables expiration.
+    Value: !Ref CurrentVersionExpirationDays
+
+  NoncurrentVersionExpirationDays:
+    Description: Noncurrent-version expiration period; zero disables expiration.
+    Value: !Ref NoncurrentVersionExpirationDays
+
+  StandardIATransitionDays:
+    Description: Standard-IA transition period; zero disables the transition.
+    Value: !Ref StandardIATransitionDays
+
+  GlacierTransitionDays:
+    Description: Glacier Flexible Retrieval transition period; zero disables the transition.
+    Value: !Ref GlacierTransitionDays
+
+  AbortIncompleteMultipartUploadDays:
+    Description: Incomplete multipart upload cleanup period.
+    Value: !Ref AbortIncompleteMultipartUploadDays
+
+  TLSOnlyAccess:
+    Description: Whether the bucket policy denies requests over insecure transport.
+    Value: !If
+      - EnforceTLS
+      - Enforced
+      - NotEnforced

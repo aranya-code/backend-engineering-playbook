@@ -1,0 +1,166 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: >
+  Provisions a foundational Amazon S3 bucket with configurable versioning,
+  server-side encryption, enforced bucket ownership, and complete public
+  access blocking. The bucket is retained when the CloudFormation stack
+  is deleted or the bucket resource is replaced.
+
+Parameters:
+  BucketName:
+    Type: String
+    Description: Globally unique S3 bucket name.
+    MinLength: 3
+    MaxLength: 63
+    AllowedPattern: '^[a-z0-9][a-z0-9.-]*[a-z0-9]$'
+    ConstraintDescription: >
+      Bucket name must contain 3-63 lowercase letters, numbers, periods,
+      or hyphens. It must start and end with a letter or number.
+
+  Environment:
+    Type: String
+    Description: Deployment environment.
+    AllowedValues:
+      - dev
+      - staging
+      - production
+
+  EnableVersioning:
+    Type: String
+    Default: 'true'
+    Description: Enable S3 object versioning.
+    AllowedValues:
+      - 'true'
+      - 'false'
+
+  SSEAlgorithm:
+    Type: String
+    Default: AES256
+    Description: Server-side encryption algorithm.
+    AllowedValues:
+      - AES256
+      - aws:kms
+
+  KMSKeyArn:
+    Type: String
+    Default: ''
+    Description: >
+      Optional ARN of an existing customer-managed KMS key. Required when
+      SSEAlgorithm is aws:kms. The key must be enabled and usable in the
+      bucket's AWS Region.
+    AllowedPattern: '^$|^arn:[a-z0-9-]+:kms:[a-z0-9-]+:[0-9]{12}:key/[a-f0-9-]+$'
+    ConstraintDescription: >
+      Provide an empty value or a valid customer-managed KMS key ARN.
+
+  BucketKeyEnabled:
+    Type: String
+    Default: 'true'
+    Description: Enable S3 Bucket Keys when SSE-KMS is selected.
+    AllowedValues:
+      - 'true'
+      - 'false'
+
+Conditions:
+  VersioningEnabled: !Equals
+    - !Ref EnableVersioning
+    - 'true'
+
+  UseKMS: !Equals
+    - !Ref SSEAlgorithm
+    - aws:kms
+
+  UseS3ManagedEncryption: !Equals
+    - !Ref SSEAlgorithm
+    - AES256
+
+Resources:
+  BasicBucket:
+    Type: AWS::S3::Bucket
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Properties:
+      BucketName: !Ref BucketName
+
+      OwnershipControls:
+        Rules:
+          - ObjectOwnership: BucketOwnerEnforced
+
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+
+      VersioningConfiguration:
+        Status: !If
+          - VersioningEnabled
+          - Enabled
+          - Suspended
+
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: !Ref SSEAlgorithm
+              KMSMasterKeyID: !If
+                - UseKMS
+                - !Ref KMSKeyArn
+                - !Ref AWS::NoValue
+            BucketKeyEnabled: !If
+              - UseKMS
+              - !Ref BucketKeyEnabled
+              - !Ref AWS::NoValue
+
+      Tags:
+        - Key: Name
+          Value: !Ref BucketName
+        - Key: Environment
+          Value: !Ref Environment
+        - Key: ManagedBy
+          Value: CloudFormation
+        - Key: Service
+          Value: AmazonS3
+        - Key: SecurityClassification
+          Value: Private
+
+Outputs:
+  BucketName:
+    Description: Name of the provisioned S3 bucket.
+    Value: !Ref BasicBucket
+    Export:
+      Name: !Sub '${AWS::StackName}-BucketName'
+
+  BucketArn:
+    Description: ARN of the provisioned S3 bucket.
+    Value: !GetAtt BasicBucket.Arn
+    Export:
+      Name: !Sub '${AWS::StackName}-BucketArn'
+
+  BucketRegionalDomainName:
+    Description: Regional DNS name of the S3 bucket.
+    Value: !GetAtt BasicBucket.RegionalDomainName
+
+  BucketRegion:
+    Description: AWS Region containing the bucket.
+    Value: !Ref AWS::Region
+
+  VersioningStatus:
+    Description: Configured S3 bucket versioning status.
+    Value: !If
+      - VersioningEnabled
+      - Enabled
+      - Suspended
+
+  EncryptionAlgorithm:
+    Description: Configured server-side encryption algorithm.
+    Value: !Ref SSEAlgorithm
+
+  KMSKeyArn:
+    Condition: UseKMS
+    Description: Customer-managed KMS key ARN used for SSE-KMS.
+    Value: !Ref KMSKeyArn
+
+  BucketKeyStatus:
+    Description: S3 Bucket Key configuration when SSE-KMS is selected.
+    Value: !If
+      - UseKMS
+      - !Ref BucketKeyEnabled
+      - NotApplicable

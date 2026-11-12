@@ -1,0 +1,15 @@
+# S3 bucket that stores the Terraform state.
+# Replace with an existing, globally unique bucket name.
+bucket = "your-org-terraform-state"
+
+# Isolated state path for the development S3 environment.
+key = "amazon-s3/dev/terraform.tfstate"
+
+# Region where the Terraform state bucket exists.
+region = "ap-south-1"
+
+# Enable server-side encryption for state objects.
+encrypt = true
+
+# Use native S3 state locking (Terraform 1.10+).
+use_lockfile = true

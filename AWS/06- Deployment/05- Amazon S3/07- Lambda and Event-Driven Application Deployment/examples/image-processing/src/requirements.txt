@@ -1,0 +1,8 @@
+# Runtime dependencies for the S3-triggered image-processing Lambda.
+# Keep this file limited to dependencies imported by the Lambda application.
+
+# AWS SDK for Python: S3 operations and AWS service integration.
+boto3>=1.40,<2.0
+
+# Image decoding, resizing, EXIF orientation handling, and encoding.
+Pillow>=11.3,<13.0

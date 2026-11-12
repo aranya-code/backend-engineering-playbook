@@ -1,0 +1,297 @@
+name: Test and Deploy AWS CDK
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "06- Deployment/05- Amazon S3/**"
+      - ".github/workflows/cdk-test-and-deploy.yml"
+  push:
+    branches:
+      - main
+    paths:
+      - "06- Deployment/05- Amazon S3/**"
+      - ".github/workflows/cdk-test-and-deploy.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cdk-deployment-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  PYTHON_VERSION: "3.12"
+  NODE_VERSION: "22"
+  CDK_DEFAULT_REGION: ${{ vars.AWS_REGION }}
+
+jobs:
+  test:
+    name: Test CDK Application
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Validate CDK project configuration
+        env:
+          CDK_WORKING_DIRECTORY: ${{ vars.CDK_WORKING_DIRECTORY }}
+        run: |
+          if [ -z "$CDK_WORKING_DIRECTORY" ]; then
+            echo "::error::Repository variable CDK_WORKING_DIRECTORY is required."
+            exit 1
+          fi
+
+          if [ ! -d "$CDK_WORKING_DIRECTORY" ]; then
+            echo "::error::CDK project directory does not exist: $CDK_WORKING_DIRECTORY"
+            exit 1
+          fi
+
+          if [ ! -f "$CDK_WORKING_DIRECTORY/requirements.txt" ]; then
+            echo "::error::requirements.txt is missing from the CDK project."
+            exit 1
+          fi
+
+          if [ ! -f "$CDK_WORKING_DIRECTORY/cdk.json" ]; then
+            echo "::error::cdk.json is missing from the CDK project."
+            exit 1
+          fi
+
+          if [ ! -d "$CDK_WORKING_DIRECTORY/tests" ]; then
+            echo "::error::CDK tests directory is missing."
+            exit 1
+          fi
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+          cache-dependency-path: ${{ vars.CDK_WORKING_DIRECTORY }}/requirements.txt
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Install AWS CDK CLI
+        run: |
+          npm install --global aws-cdk@2
+
+      - name: Install Python dependencies
+        working-directory: ${{ vars.CDK_WORKING_DIRECTORY }}
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+          python -m pip install pytest
+
+      - name: Run CDK unit tests
+        working-directory: ${{ vars.CDK_WORKING_DIRECTORY }}
+        run: |
+          python -m pytest tests/ -v
+
+      - name: Synthesize CloudFormation templates
+        working-directory: ${{ vars.CDK_WORKING_DIRECTORY }}
+        run: |
+          cdk synth --all
+
+      - name: Upload synthesized templates
+        uses: actions/upload-artifact@v4
+        with:
+          name: cdk-cloudformation-templates
+          path: ${{ vars.CDK_WORKING_DIRECTORY }}/cdk.out/
+          if-no-files-found: error
+          retention-days: 7
+
+  deploy:
+    name: Deploy CDK Stack
+    runs-on: ubuntu-latest
+    needs: test
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+
+    environment:
+      name: ${{ github.event_name == 'workflow_dispatch' && 'production' || 'development' }}
+
+    permissions:
+      contents: read
+      id-token: write
+
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Validate deployment configuration
+        env:
+          AWS_ROLE_TO_ASSUME: ${{ vars.AWS_CDK_DEPLOY_ROLE_ARN }}
+          AWS_REGION: ${{ vars.AWS_REGION }}
+          CDK_WORKING_DIRECTORY: ${{ vars.CDK_WORKING_DIRECTORY }}
+        run: |
+          if [ -z "$AWS_ROLE_TO_ASSUME" ]; then
+            echo "::error::Repository variable AWS_CDK_DEPLOY_ROLE_ARN is required."
+            exit 1
+          fi
+
+          if [ -z "$AWS_REGION" ]; then
+            echo "::error::Repository variable AWS_REGION is required."
+            exit 1
+          fi
+
+          if [ -z "$CDK_WORKING_DIRECTORY" ]; then
+            echo "::error::Repository variable CDK_WORKING_DIRECTORY is required."
+            exit 1
+          fi
+
+          if [ ! -f "$CDK_WORKING_DIRECTORY/cdk.json" ]; then
+            echo "::error::CDK project configuration is missing."
+            exit 1
+          fi
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+          cache-dependency-path: ${{ vars.CDK_WORKING_DIRECTORY }}/requirements.txt
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Install AWS CDK CLI
+        run: |
+          npm install --global aws-cdk@2
+
+      - name: Install Python dependencies
+        working-directory: ${{ vars.CDK_WORKING_DIRECTORY }}
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+
+      - name: Configure AWS credentials using OIDC
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_CDK_DEPLOY_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_REGION }}
+          role-session-name: GitHubActionsCDKDeployment
+
+      - name: Verify AWS identity
+        run: |
+          aws sts get-caller-identity
+
+      - name: Verify CDK bootstrap environment
+        working-directory: ${{ vars.CDK_WORKING_DIRECTORY }}
+        run: |
+          cdk bootstrap --show-template > /dev/null
+
+          aws cloudformation describe-stacks \
+            --stack-name "CDKToolkit" \
+            --region "$AWS_REGION" \
+            --query "Stacks[0].StackStatus" \
+            --output text
+
+      - name: Synthesize deployment templates
+        working-directory: ${{ vars.CDK_WORKING_DIRECTORY }}
+        run: |
+          cdk synth --all
+
+      - name: Review CDK deployment changes
+        working-directory: ${{ vars.CDK_WORKING_DIRECTORY }}
+        run: |
+          cdk diff --all
+
+      - name: Deploy CDK stacks
+        working-directory: ${{ vars.CDK_WORKING_DIRECTORY }}
+        run: |
+          cdk deploy --all \
+            --require-approval broadening \
+            --progress events \
+            --outputs-file cdk-outputs.json
+
+      - name: Verify deployed CloudFormation stacks
+        working-directory: ${{ vars.CDK_WORKING_DIRECTORY }}
+        env:
+          AWS_REGION: ${{ vars.AWS_REGION }}
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          import subprocess
+          import sys
+
+          outputs_file = "cdk-outputs.json"
+
+          if not os.path.isfile(outputs_file):
+              print("::error::CDK outputs file was not generated.")
+              sys.exit(1)
+
+          with open(outputs_file, encoding="utf-8") as file:
+              outputs = json.load(file)
+
+          if not outputs:
+              print("::error::No deployed CDK stack outputs were found.")
+              sys.exit(1)
+
+          failed = []
+
+          for stack_name in outputs:
+              result = subprocess.run(
+                  [
+                      "aws",
+                      "cloudformation",
+                      "describe-stacks",
+                      "--stack-name",
+                      stack_name,
+                      "--region",
+                      os.environ["AWS_REGION"],
+                      "--query",
+                      "Stacks[0].StackStatus",
+                      "--output",
+                      "text",
+                  ],
+                  capture_output=True,
+                  text=True,
+                  check=False,
+              )
+
+              if result.returncode != 0:
+                  print(
+                      f"::error::Unable to inspect stack {stack_name}: "
+                      f"{result.stderr.strip()}"
+                  )
+                  failed.append(stack_name)
+                  continue
+
+              status = result.stdout.strip()
+              print(f"{stack_name}: {status}")
+
+              if status not in {"CREATE_COMPLETE", "UPDATE_COMPLETE"}:
+                  failed.append(stack_name)
+
+          if failed:
+              print(
+                  "::error::Deployment verification failed for: "
+                  + ", ".join(failed)
+              )
+              sys.exit(1)
+          PY
+
+      - name: Upload CDK deployment outputs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cdk-deployment-outputs-${{ github.run_id }}
+          path: ${{ vars.CDK_WORKING_DIRECTORY }}/cdk-outputs.json
+          if-no-files-found: ignore
+          retention-days: 7

@@ -1,0 +1,15 @@
+# S3 bucket used to store Terraform state.
+# Create this bucket separately before initializing the staging environment.
+bucket = "your-org-terraform-state"
+
+# Isolated state path for the staging S3 deployment.
+key = "amazon-s3/staging/terraform.tfstate"
+
+# AWS Region where the Terraform state bucket is located.
+region = "ap-south-1"
+
+# Enable server-side encryption for Terraform state objects.
+encrypt = true
+
+# Use native S3 state locking (Terraform 1.10+).
+use_lockfile = true

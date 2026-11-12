@@ -1,0 +1,180 @@
+name: Detect Infrastructure Drift
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 2 * * *"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: infrastructure-drift-detection
+  cancel-in-progress: false
+
+env:
+  TF_IN_AUTOMATION: "true"
+  TF_INPUT: "false"
+
+jobs:
+  terraform-drift:
+    name: Detect Terraform Drift
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      id-token: write
+
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Validate drift detection configuration
+        env:
+          AWS_ROLE_TO_ASSUME: ${{ vars.AWS_TERRAFORM_DRIFT_ROLE_ARN }}
+          AWS_REGION: ${{ vars.AWS_REGION }}
+          TF_WORKING_DIRECTORY: ${{ vars.TF_PROD_WORKING_DIRECTORY }}
+        run: |
+          if [ -z "$AWS_ROLE_TO_ASSUME" ]; then
+            echo "::error::Repository variable AWS_TERRAFORM_DRIFT_ROLE_ARN is required."
+            exit 1
+          fi
+
+          if [ -z "$AWS_REGION" ]; then
+            echo "::error::Repository variable AWS_REGION is required."
+            exit 1
+          fi
+
+          if [ -z "$TF_WORKING_DIRECTORY" ]; then
+            echo "::error::Repository variable TF_PROD_WORKING_DIRECTORY is required."
+            exit 1
+          fi
+
+          if [ ! -d "$TF_WORKING_DIRECTORY" ]; then
+            echo "::error::Terraform working directory does not exist."
+            exit 1
+          fi
+
+          if ! find "$TF_WORKING_DIRECTORY" \
+            -maxdepth 1 \
+            -type f \
+            -name '*.tf' \
+            -print -quit | grep -q .; then
+            echo "::error::No Terraform configuration files found."
+            exit 1
+          fi
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.9.8"
+          terraform_wrapper: false
+
+      - name: Configure AWS credentials using OIDC
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_TERRAFORM_DRIFT_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_REGION }}
+          role-session-name: GitHubActionsTerraformDriftDetection
+
+      - name: Verify AWS identity
+        run: |
+          aws sts get-caller-identity
+
+      - name: Initialize Terraform
+        working-directory: ${{ vars.TF_PROD_WORKING_DIRECTORY }}
+        run: |
+          terraform init \
+            -input=false \
+            -no-color \
+            -lockfile=readonly
+
+      - name: Validate Terraform configuration
+        working-directory: ${{ vars.TF_PROD_WORKING_DIRECTORY }}
+        run: |
+          terraform fmt -check -recursive -diff
+          terraform validate -no-color
+
+      - name: Detect infrastructure drift
+        id: drift
+        working-directory: ${{ vars.TF_PROD_WORKING_DIRECTORY }}
+        run: |
+          set +e
+
+          terraform plan \
+            -refresh-only \
+            -input=false \
+            -no-color \
+            -lock=true \
+            -lock-timeout=5m \
+            -detailed-exitcode \
+            -out=drift.tfplan
+
+          exit_code=$?
+
+          set -e
+
+          case "$exit_code" in
+            0)
+              echo "drift_detected=false" >> "$GITHUB_OUTPUT"
+              echo "No infrastructure drift detected."
+              ;;
+            2)
+              echo "drift_detected=true" >> "$GITHUB_OUTPUT"
+              echo "::warning::Infrastructure drift detected."
+              ;;
+            *)
+              echo "::error::Terraform drift detection failed with exit code ${exit_code}."
+              exit "$exit_code"
+              ;;
+          esac
+
+      - name: Generate drift report
+        if: always() && steps.drift.outcome == 'success'
+        working-directory: ${{ vars.TF_PROD_WORKING_DIRECTORY }}
+        run: |
+          if [ -f drift.tfplan ]; then
+            terraform show -no-color drift.tfplan > drift-report.txt
+          else
+            echo "No Terraform plan was generated." > drift-report.txt
+          fi
+
+          {
+            echo "## Terraform Infrastructure Drift Detection"
+            echo ""
+            echo "- Repository: ${GITHUB_REPOSITORY}"
+            echo "- Commit: ${GITHUB_SHA}"
+            echo "- Branch: ${GITHUB_REF_NAME}"
+            echo "- Workflow run: ${GITHUB_RUN_ID}"
+            echo ""
+            if [ "${{ steps.drift.outputs.drift_detected }}" = "true" ]; then
+              echo "### Drift detected"
+              echo "Review the uploaded drift report and investigate the affected resources."
+            else
+              echo "### No drift detected"
+              echo "Terraform reported no out-of-band infrastructure changes."
+            fi
+            echo ""
+            echo "The refresh-only plan is diagnostic. No infrastructure changes were applied."
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload drift report
+        if: always() && steps.drift.outcome == 'success'
+        uses: actions/upload-artifact@v4
+        with:
+          name: terraform-drift-report-${{ github.run_id }}
+          path: |
+            ${{ vars.TF_PROD_WORKING_DIRECTORY }}/drift-report.txt
+            ${{ vars.TF_PROD_WORKING_DIRECTORY }}/drift.tfplan
+          if-no-files-found: ignore
+          retention-days: 7
+
+      - name: Remove local Terraform plan
+        if: always()
+        working-directory: ${{ vars.TF_PROD_WORKING_DIRECTORY }}
+        run: |
+          rm -f drift.tfplan

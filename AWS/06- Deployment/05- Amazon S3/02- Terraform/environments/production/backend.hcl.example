@@ -1,0 +1,16 @@
+# S3 bucket used to store production Terraform state.
+# Create this bucket separately before initializing the production environment.
+# Replace with your organization's existing, globally unique state bucket.
+bucket = "your-org-terraform-state"
+
+# Isolated state path for the production S3 deployment.
+key = "amazon-s3/production/terraform.tfstate"
+
+# AWS Region where the Terraform state bucket exists.
+region = "ap-south-1"
+
+# Enable server-side encryption for Terraform state objects.
+encrypt = true
+
+# Use native S3 state locking (Terraform 1.10+).
+use_lockfile = true

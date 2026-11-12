@@ -1,0 +1,34 @@
+# AWS account and Region configuration
+aws_region         = "ap-south-1"
+replica_aws_region = "ap-southeast-1"
+
+# Replace with the 12-digit AWS account ID that owns the source bucket.
+source_account_id = "123456789012"
+
+# Replace with globally unique S3 bucket names.
+source_bucket_name  = "your-org-staging-s3-source-documents"
+replica_bucket_name = "your-org-staging-s3-replica-documents"
+
+# Keep false to prevent accidental deletion of non-empty buckets.
+force_destroy = false
+
+# Optional customer-managed KMS key ARNs.
+# Leave null to use the bucket module's default encryption configuration.
+source_kms_key_arn      = null
+destination_kms_key_arn = null
+
+# IAM role assumed by Amazon S3 for replication.
+replication_role_name = "staging-s3-replication-role"
+
+# Empty prefix selects all eligible objects.
+replication_filter_prefix = ""
+
+# Replication configuration
+replication_enabled = true
+destination_storage_class = "STANDARD"
+
+# Replication monitoring
+replication_metrics_enabled = true
+
+# RTC can incur additional charges.
+replication_time_control_enabled = false

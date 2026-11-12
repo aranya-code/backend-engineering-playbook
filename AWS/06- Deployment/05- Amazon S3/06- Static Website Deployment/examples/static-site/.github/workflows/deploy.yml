@@ -1,0 +1,156 @@
+name: Deploy Static Website
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "06- Deployment/05- Amazon S3/06- Static Website Deployment/examples/static-site/src/**"
+      - "06- Deployment/05- Amazon S3/06- Static Website Deployment/examples/static-site/.github/workflows/deploy.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: static-website-deployment
+  cancel-in-progress: false
+
+env:
+  AWS_REGION: ${{ vars.AWS_REGION }}
+  WEBSITE_SOURCE_DIR: 06- Deployment/05- Amazon S3/06- Static Website Deployment/examples/static-site/src
+
+jobs:
+  deploy:
+    name: Deploy website to S3 and CloudFront
+    runs-on: ubuntu-latest
+    environment: production
+
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Validate deployment configuration
+        shell: bash
+        env:
+          AWS_ROLE_ARN: ${{ secrets.AWS_ROLE_ARN }}
+          S3_BUCKET_NAME: ${{ vars.S3_BUCKET_NAME }}
+          CLOUDFRONT_DISTRIBUTION_ID: ${{ vars.CLOUDFRONT_DISTRIBUTION_ID }}
+        run: |
+          set -euo pipefail
+
+          for variable in AWS_REGION AWS_ROLE_ARN S3_BUCKET_NAME CLOUDFRONT_DISTRIBUTION_ID; do
+            if [[ -z "${!variable:-}" ]]; then
+              echo "::error::Required GitHub configuration is missing: ${variable}"
+              exit 1
+            fi
+          done
+
+          if [[ ! "${AWS_ROLE_ARN}" =~ ^arn:aws:iam::[0-9]{12}:role/.+ ]]; then
+            echo "::error::AWS_ROLE_ARN must be a valid IAM role ARN."
+            exit 1
+          fi
+
+      - name: Configure AWS credentials using OIDC
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_REGION }}
+          role-session-name: GitHubActionsStaticWebsiteDeployment
+
+      - name: Verify AWS identity
+        run: aws sts get-caller-identity
+
+      - name: Validate website source
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          test -f "${WEBSITE_SOURCE_DIR}/index.html"
+          test -f "${WEBSITE_SOURCE_DIR}/assets/styles.css"
+          test -f "${WEBSITE_SOURCE_DIR}/assets/app.js"
+
+      - name: Deploy website assets to S3
+        shell: bash
+        env:
+          S3_BUCKET_NAME: ${{ vars.S3_BUCKET_NAME }}
+        run: |
+          set -euo pipefail
+
+          aws s3 sync "${WEBSITE_SOURCE_DIR}/" "s3://${S3_BUCKET_NAME}/" \
+            --delete \
+            --no-progress
+
+      - name: Create CloudFront cache invalidation
+        id: invalidation
+        shell: bash
+        env:
+          CLOUDFRONT_DISTRIBUTION_ID: ${{ vars.CLOUDFRONT_DISTRIBUTION_ID }}
+        run: |
+          set -euo pipefail
+
+          INVALIDATION_ID="$(
+            aws cloudfront create-invalidation \
+              --distribution-id "${CLOUDFRONT_DISTRIBUTION_ID}" \
+              --paths "/*" \
+              --query 'Invalidation.Id' \
+              --output text
+          )"
+
+          if [[ -z "${INVALIDATION_ID}" || "${INVALIDATION_ID}" == "None" ]]; then
+            echo "::error::CloudFront invalidation was not created."
+            exit 1
+          fi
+
+          echo "invalidation_id=${INVALIDATION_ID}" >> "${GITHUB_OUTPUT}"
+
+      - name: Wait for CloudFront invalidation
+        env:
+          CLOUDFRONT_DISTRIBUTION_ID: ${{ vars.CLOUDFRONT_DISTRIBUTION_ID }}
+          INVALIDATION_ID: ${{ steps.invalidation.outputs.invalidation_id }}
+        run: |
+          set -euo pipefail
+
+          aws cloudfront wait invalidation-completed \
+            --distribution-id "${CLOUDFRONT_DISTRIBUTION_ID}" \
+            --id "${INVALIDATION_ID}"
+
+      - name: Verify deployed website endpoint
+        shell: bash
+        env:
+          WEBSITE_URL: ${{ vars.WEBSITE_URL }}
+        run: |
+          set -euo pipefail
+
+          if [[ -z "${WEBSITE_URL}" ]]; then
+            echo "::error::WEBSITE_URL GitHub variable is required for deployment verification."
+            exit 1
+          fi
+
+          if [[ ! "${WEBSITE_URL}" =~ ^https:// ]]; then
+            echo "::error::WEBSITE_URL must use HTTPS."
+            exit 1
+          fi
+
+          for attempt in {1..10}; do
+            if curl --fail --silent --show-error \
+              --connect-timeout 10 \
+              --max-time 30 \
+              "${WEBSITE_URL}" \
+              --output /tmp/deployed-index.html; then
+              if grep -q '<html' /tmp/deployed-index.html; then
+                echo "Website smoke test passed."
+                exit 0
+              fi
+            fi
+
+            echo "Website verification attempt ${attempt} failed."
+            sleep 10
+          done
+
+          echo "::error::Website endpoint verification failed."
+          exit 1

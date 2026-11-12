@@ -1,0 +1,102 @@
+name: Validate Terraform Configuration
+
+on:
+  pull_request:
+    paths:
+      - "**/*.tf"
+      - "**/*.tfvars"
+      - "**/.terraform.lock.hcl"
+      - ".github/workflows/terraform-validate.yml"
+  push:
+    branches:
+      - main
+    paths:
+      - "**/*.tf"
+      - "**/*.tfvars"
+      - "**/.terraform.lock.hcl"
+      - ".github/workflows/terraform-validate.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: terraform-validate-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Format and Validate Terraform
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.9.8"
+          terraform_wrapper: false
+
+      - name: Identify Terraform working directories
+        id: terraform-directories
+        run: |
+          mapfile -t directories < <(
+            find . \
+              -type d \
+              \( \
+                -name .git \
+                -o -name .terraform \
+                -o -name .venv \
+                -o -name venv \
+              \) -prune \
+              -o \
+              -type f -name '*.tf' -printf '%h\n' \
+            | sort -u
+          )
+
+          if [ "${#directories[@]}" -eq 0 ]; then
+            echo "No Terraform configuration files were found."
+            exit 1
+          fi
+
+          printf '%s\n' "${directories[@]}" > terraform-directories.txt
+
+          echo "Found ${#directories[@]} Terraform working directory(ies):"
+          printf '%s\n' "${directories[@]}"
+
+      - name: Check Terraform formatting
+        run: |
+          terraform fmt -check -recursive -diff
+
+      - name: Initialize and validate Terraform configurations
+        run: |
+          while IFS= read -r directory; do
+            [ -n "$directory" ] || continue
+
+            echo "::group::Validating ${directory}"
+
+            terraform -chdir="${directory}" init \
+              -backend=false \
+              -input=false \
+              -no-color
+
+            terraform -chdir="${directory}" validate \
+              -no-color
+
+            echo "::endgroup::"
+          done < terraform-directories.txt
+
+      - name: Upload Terraform directory report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: terraform-validation-directories
+          path: terraform-directories.txt
+          if-no-files-found: ignore
+          retention-days: 7

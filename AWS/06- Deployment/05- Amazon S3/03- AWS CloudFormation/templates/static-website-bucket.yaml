@@ -1,0 +1,251 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: >
+  Deploys a private Amazon S3 bucket for static website assets and a
+  CloudFront distribution using Origin Access Control (OAC). The bucket
+  blocks public access and permits object reads only through the associated
+  CloudFront distribution.
+
+Parameters:
+  BucketName:
+    Type: String
+    Description: Globally unique name of the private S3 website bucket.
+    MinLength: 3
+    MaxLength: 63
+    AllowedPattern: '^[a-z0-9][a-z0-9.-]*[a-z0-9]$'
+    ConstraintDescription: >
+      Bucket name must contain 3-63 lowercase letters, numbers, periods,
+      or hyphens. It must start and end with a letter or number.
+
+  Environment:
+    Type: String
+    Description: Deployment environment.
+    AllowedValues:
+      - dev
+      - staging
+      - production
+
+  DefaultRootObject:
+    Type: String
+    Default: index.html
+    Description: Default object returned for requests to the distribution root.
+
+  PriceClass:
+    Type: String
+    Default: PriceClass_100
+    Description: CloudFront price class controlling edge location coverage.
+    AllowedValues:
+      - PriceClass_100
+      - PriceClass_200
+      - PriceClass_All
+
+  EnableBucketVersioning:
+    Type: String
+    Default: 'true'
+    Description: Enable S3 bucket versioning for website asset recovery.
+    AllowedValues:
+      - 'true'
+      - 'false'
+
+  EnableCloudFrontAccessLogging:
+    Type: String
+    Default: 'false'
+    Description: Enable standard CloudFront access logging.
+    AllowedValues:
+      - 'true'
+      - 'false'
+
+  LoggingBucketName:
+    Type: String
+    Default: ''
+    Description: >
+      Name of an existing S3 logging bucket. Required when CloudFront
+      access logging is enabled. The destination bucket must be configured
+      to accept CloudFront standard log delivery.
+
+Conditions:
+  EnableVersioning: !Equals
+    - !Ref EnableBucketVersioning
+    - 'true'
+
+  EnableCloudFrontLogging: !Equals
+    - !Ref EnableCloudFrontAccessLogging
+    - 'true'
+
+Resources:
+  WebsiteBucket:
+    Type: AWS::S3::Bucket
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Properties:
+      BucketName: !Ref BucketName
+
+      OwnershipControls:
+        Rules:
+          - ObjectOwnership: BucketOwnerEnforced
+
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+
+      VersioningConfiguration:
+        Status: !If
+          - EnableVersioning
+          - Enabled
+          - Suspended
+
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+
+      Tags:
+        - Key: Name
+          Value: !Ref BucketName
+        - Key: Environment
+          Value: !Ref Environment
+        - Key: ManagedBy
+          Value: CloudFormation
+        - Key: Service
+          Value: AmazonS3
+        - Key: Purpose
+          Value: StaticWebsiteOrigin
+
+  CloudFrontOriginAccessControl:
+    Type: AWS::CloudFront::OriginAccessControl
+    Properties:
+      OriginAccessControlConfig:
+        Name: !Sub '${AWS::StackName}-s3-oac'
+        Description: Grants CloudFront signed access to the private S3 origin.
+        OriginAccessControlOriginType: s3
+        SigningBehavior: always
+        SigningProtocol: sigv4
+
+  WebsiteDistribution:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        Enabled: true
+        Comment: !Sub 'Static website distribution for ${Environment}'
+        DefaultRootObject: !Ref DefaultRootObject
+        PriceClass: !Ref PriceClass
+        IPV6Enabled: true
+        HttpVersion: http2and3
+
+        Origins:
+          - Id: S3WebsiteOrigin
+            DomainName: !GetAtt WebsiteBucket.RegionalDomainName
+            OriginAccessControlId: !GetAtt CloudFrontOriginAccessControl.Id
+            S3OriginConfig:
+              OriginAccessIdentity: ''
+
+        DefaultCacheBehavior:
+          TargetOriginId: S3WebsiteOrigin
+          ViewerProtocolPolicy: redirect-to-https
+          AllowedMethods:
+            - GET
+            - HEAD
+          CachedMethods:
+            - GET
+            - HEAD
+          Compress: true
+          CachePolicyId: 658327ea-f89d-4fab-a63d-7e88639e58f6
+
+        CustomErrorResponses:
+          - ErrorCode: 403
+            ResponseCode: 403
+            ErrorCachingMinTTL: 10
+          - ErrorCode: 404
+            ResponseCode: 404
+            ErrorCachingMinTTL: 10
+
+        Logging: !If
+          - EnableCloudFrontLogging
+          - Bucket: !Sub '${LoggingBucketName}.s3.amazonaws.com'
+            IncludeCookies: false
+            Prefix: !Sub 'cloudfront/${Environment}/'
+          - !Ref AWS::NoValue
+
+      Tags:
+        - Key: Name
+          Value: !Sub '${AWS::StackName}-distribution'
+        - Key: Environment
+          Value: !Ref Environment
+        - Key: ManagedBy
+          Value: CloudFormation
+        - Key: Service
+          Value: AmazonCloudFront
+
+  WebsiteBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref WebsiteBucket
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Sid: AllowCloudFrontReadOnlyAccess
+            Effect: Allow
+            Principal:
+              Service: cloudfront.amazonaws.com
+            Action:
+              - s3:GetObject
+            Resource: !Sub '${WebsiteBucket.Arn}/*'
+            Condition:
+              StringEquals:
+                AWS:SourceArn: !Sub
+                  - 'arn:${AWS::Partition}:cloudfront::${AWS::AccountId}:distribution/${DistributionId}'
+                  - DistributionId: !Ref WebsiteDistribution
+
+Outputs:
+  WebsiteBucketName:
+    Description: Name of the private S3 website origin bucket.
+    Value: !Ref WebsiteBucket
+    Export:
+      Name: !Sub '${AWS::StackName}-WebsiteBucketName'
+
+  WebsiteBucketArn:
+    Description: ARN of the private S3 website origin bucket.
+    Value: !GetAtt WebsiteBucket.Arn
+    Export:
+      Name: !Sub '${AWS::StackName}-WebsiteBucketArn'
+
+  WebsiteBucketRegion:
+    Description: AWS Region containing the S3 bucket.
+    Value: !Ref AWS::Region
+
+  CloudFrontDistributionId:
+    Description: ID of the CloudFront distribution.
+    Value: !Ref WebsiteDistribution
+    Export:
+      Name: !Sub '${AWS::StackName}-DistributionId'
+
+  CloudFrontDistributionDomainName:
+    Description: Domain name assigned to the CloudFront distribution.
+    Value: !GetAtt WebsiteDistribution.DomainName
+
+  WebsiteURL:
+    Description: HTTPS URL of the deployed website.
+    Value: !Sub 'https://${WebsiteDistribution.DomainName}'
+
+  OriginAccessControlId:
+    Description: ID of the CloudFront Origin Access Control.
+    Value: !GetAtt CloudFrontOriginAccessControl.Id
+
+  BucketVersioningStatus:
+    Description: S3 bucket versioning configuration.
+    Value: !If
+      - EnableVersioning
+      - Enabled
+      - Suspended
+
+  CloudFrontPriceClass:
+    Description: Configured CloudFront price class.
+    Value: !Ref PriceClass
+
+  CloudFrontAccessLogging:
+    Description: Whether CloudFront standard access logging is enabled.
+    Value: !If
+      - EnableCloudFrontLogging
+      - Enabled
+      - Disabled

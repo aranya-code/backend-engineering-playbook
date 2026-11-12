@@ -1,0 +1,367 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: >
+  Provisions a versioned Amazon S3 source bucket with Cross-Region
+  Replication configuration, a dedicated replication IAM role, and
+  least-privilege permissions for replication operations. The destination
+  bucket must be provisioned separately in the target AWS Region.
+
+Parameters:
+  SourceBucketName:
+    Type: String
+    Description: Globally unique name of the source S3 bucket.
+    MinLength: 3
+    MaxLength: 63
+    AllowedPattern: '^[a-z0-9][a-z0-9.-]*[a-z0-9]$'
+    ConstraintDescription: >
+      Bucket name must contain 3-63 lowercase letters, numbers, periods,
+      or hyphens. It must start and end with a letter or number.
+
+  DestinationBucketArn:
+    Type: String
+    Description: >
+      ARN of an existing versioned destination bucket in the target Region.
+      The destination bucket must permit replication from the source account.
+    AllowedPattern: '^arn:[a-z0-9-]+:s3:::[a-z0-9][a-z0-9.-]*[a-z0-9]$'
+    ConstraintDescription: Provide a valid S3 bucket ARN.
+
+  DestinationRegion:
+    Type: String
+    Description: AWS Region containing the destination bucket.
+    AllowedPattern: '^[a-z]{2}(-gov)?-[a-z]+-[0-9]+$'
+    ConstraintDescription: Provide a valid AWS Region identifier.
+
+  Environment:
+    Type: String
+    Description: Deployment environment.
+    AllowedValues:
+      - dev
+      - staging
+      - production
+
+  ReplicationPrefix:
+    Type: String
+    Default: ''
+    Description: >
+      Optional object key prefix to replicate. An empty value replicates
+      all eligible objects.
+
+  ReplicationStorageClass:
+    Type: String
+    Default: STANDARD
+    Description: Storage class assigned to replicated destination objects.
+    AllowedValues:
+      - STANDARD
+      - STANDARD_IA
+      - ONEZONE_IA
+      - INTELLIGENT_TIERING
+      - GLACIER
+      - DEEP_ARCHIVE
+
+  EnableDeleteMarkerReplication:
+    Type: String
+    Default: 'false'
+    Description: >
+      Whether delete markers created by simple DELETE operations are
+      replicated to the destination bucket.
+    AllowedValues:
+      - 'true'
+      - 'false'
+
+  EnableReplicationMetrics:
+    Type: String
+    Default: 'true'
+    Description: Enable replication metrics for monitoring replication latency and pending operations.
+    AllowedValues:
+      - 'true'
+      - 'false'
+
+  EnableReplicationTimeControl:
+    Type: String
+    Default: 'false'
+    Description: >
+      Enable S3 Replication Time Control (RTC). Additional charges apply.
+      RTC requires replication metrics to be enabled.
+    AllowedValues:
+      - 'true'
+      - 'false'
+
+  SourceKMSKeyArn:
+    Type: String
+    Default: ''
+    Description: >
+      Optional customer-managed KMS key ARN used to encrypt source objects.
+      When supplied, the replication role requires decrypt permission.
+    AllowedPattern: '^$|^arn:[a-z0-9-]+:kms:[a-z0-9-]+:[0-9]{12}:key/[a-f0-9-]+$'
+
+  DestinationKMSKeyArn:
+    Type: String
+    Default: ''
+    Description: >
+      Optional customer-managed KMS key ARN used to encrypt replicated
+      destination objects. When supplied, the replication role requires
+      encrypt and data-key generation permissions.
+    AllowedPattern: '^$|^arn:[a-z0-9-]+:kms:[a-z0-9-]+:[0-9]{12}:key/[a-f0-9-]+$'
+
+  EnableKMSReplication:
+    Type: String
+    Default: 'false'
+    Description: >
+      Enable replication of objects encrypted with SSE-KMS. Both source
+      and destination KMS keys must be configured and their key policies
+      must authorize the replication role.
+    AllowedValues:
+      - 'true'
+      - 'false'
+
+Conditions:
+  EnableDeleteMarkerReplicationCondition: !Equals
+    - !Ref EnableDeleteMarkerReplication
+    - 'true'
+
+  EnableReplicationMetricsCondition: !Equals
+    - !Ref EnableReplicationMetrics
+    - 'true'
+
+  EnableReplicationTimeControlCondition: !Equals
+    - !Ref EnableReplicationTimeControl
+    - 'true'
+
+  EnableKMSReplicationCondition: !Equals
+    - !Ref EnableKMSReplication
+    - 'true'
+
+  UseSourceKMS: !Not
+    - !Equals
+      - !Ref SourceKMSKeyArn
+      - ''
+
+  UseDestinationKMS: !Not
+    - !Equals
+      - !Ref DestinationKMSKeyArn
+      - ''
+
+Resources:
+  ReplicationRole:
+    Type: AWS::IAM::Role
+    Properties:
+      Description: IAM role assumed by Amazon S3 for object replication.
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Sid: AllowS3ReplicationService
+            Effect: Allow
+            Principal:
+              Service:
+                - s3.amazonaws.com
+            Action:
+              - sts:AssumeRole
+            Condition:
+              StringEquals:
+                aws:SourceAccount: !Ref AWS::AccountId
+              ArnLike:
+                aws:SourceArn: !Sub 'arn:${AWS::Partition}:s3:::${SourceBucketName}'
+
+      Policies:
+        - PolicyName: S3ReplicationPermissions
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Sid: ReadSourceBucketConfiguration
+                Effect: Allow
+                Action:
+                  - s3:GetReplicationConfiguration
+                  - s3:ListBucket
+                Resource:
+                  - !Sub 'arn:${AWS::Partition}:s3:::${SourceBucketName}'
+
+              - Sid: ReadSourceObjectVersions
+                Effect: Allow
+                Action:
+                  - s3:GetObjectVersionForReplication
+                  - s3:GetObjectVersionAcl
+                  - s3:GetObjectVersionTagging
+                Resource:
+                  - !Sub 'arn:${AWS::Partition}:s3:::${SourceBucketName}/*'
+
+              - Sid: ReplicateObjectsToDestination
+                Effect: Allow
+                Action:
+                  - s3:ReplicateObject
+                  - s3:ReplicateDelete
+                  - s3:ReplicateTags
+                Resource:
+                  - !Ref DestinationBucketArn
+                  - !Sub '${DestinationBucketArn}/*'
+
+              - !If
+                - EnableKMSReplicationCondition
+                - Sid: DecryptSourceObjects
+                  Effect: Allow
+                  Action:
+                    - kms:Decrypt
+                  Resource:
+                    - !Ref SourceKMSKeyArn
+                - !Ref AWS::NoValue
+
+              - !If
+                - EnableKMSReplicationCondition
+                - Sid: EncryptDestinationObjects
+                  Effect: Allow
+                  Action:
+                    - kms:Encrypt
+                    - kms:GenerateDataKey
+                  Resource:
+                    - !Ref DestinationKMSKeyArn
+                - !Ref AWS::NoValue
+
+      Tags:
+        - Key: Environment
+          Value: !Ref Environment
+        - Key: ManagedBy
+          Value: CloudFormation
+        - Key: Service
+          Value: AmazonS3
+        - Key: Purpose
+          Value: Replication
+
+  SourceBucket:
+    Type: AWS::S3::Bucket
+    DependsOn:
+      - ReplicationRole
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Properties:
+      BucketName: !Ref SourceBucketName
+
+      OwnershipControls:
+        Rules:
+          - ObjectOwnership: BucketOwnerEnforced
+
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+
+      VersioningConfiguration:
+        Status: Enabled
+
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+
+      ReplicationConfiguration:
+        Role: !GetAtt ReplicationRole.Arn
+        Rules:
+          - Id: replicate-objects-to-destination
+            Status: Enabled
+            Priority: 1
+            Filter:
+              Prefix: !Ref ReplicationPrefix
+            DeleteMarkerReplication:
+              Status: !If
+                - EnableDeleteMarkerReplicationCondition
+                - Enabled
+                - Disabled
+            Destination:
+              Bucket: !Ref DestinationBucketArn
+              StorageClass: !Ref ReplicationStorageClass
+              EncryptionConfiguration: !If
+                - EnableKMSReplicationCondition
+                - ReplicaKmsKeyID: !Ref DestinationKMSKeyArn
+                - !Ref AWS::NoValue
+              Metrics: !If
+                - EnableReplicationMetricsCondition
+                - Status: Enabled
+                  EventThreshold:
+                    Minutes: 15
+                - !Ref AWS::NoValue
+              ReplicationTime: !If
+                - EnableReplicationTimeControlCondition
+                - Status: Enabled
+                  Time:
+                    Minutes: 15
+                - !Ref AWS::NoValue
+            SourceSelectionCriteria: !If
+              - EnableKMSReplicationCondition
+              - SseKmsEncryptedObjects:
+                  Status: Enabled
+              - !Ref AWS::NoValue
+
+      Tags:
+        - Key: Name
+          Value: !Ref SourceBucketName
+        - Key: Environment
+          Value: !Ref Environment
+        - Key: ManagedBy
+          Value: CloudFormation
+        - Key: Service
+          Value: AmazonS3
+        - Key: ReplicationRole
+          Value: Source
+
+Outputs:
+  SourceBucketName:
+    Description: Name of the source S3 bucket.
+    Value: !Ref SourceBucket
+    Export:
+      Name: !Sub '${AWS::StackName}-SourceBucketName'
+
+  SourceBucketArn:
+    Description: ARN of the source S3 bucket.
+    Value: !GetAtt SourceBucket.Arn
+    Export:
+      Name: !Sub '${AWS::StackName}-SourceBucketArn'
+
+  SourceBucketRegion:
+    Description: AWS Region containing the source bucket.
+    Value: !Ref AWS::Region
+
+  DestinationBucketArn:
+    Description: ARN of the destination S3 bucket.
+    Value: !Ref DestinationBucketArn
+
+  DestinationRegion:
+    Description: AWS Region containing the destination bucket.
+    Value: !Ref DestinationRegion
+
+  ReplicationRoleArn:
+    Description: IAM role assumed by S3 for replication.
+    Value: !GetAtt ReplicationRole.Arn
+
+  ReplicationPrefix:
+    Description: Object key prefix covered by the replication rule.
+    Value: !Ref ReplicationPrefix
+
+  ReplicationStorageClass:
+    Description: Storage class configured for destination objects.
+    Value: !Ref ReplicationStorageClass
+
+  DeleteMarkerReplication:
+    Description: Whether delete marker replication is enabled.
+    Value: !If
+      - EnableDeleteMarkerReplicationCondition
+      - Enabled
+      - Disabled
+
+  ReplicationMetrics:
+    Description: Whether replication metrics are enabled.
+    Value: !If
+      - EnableReplicationMetricsCondition
+      - Enabled
+      - Disabled
+
+  ReplicationTimeControl:
+    Description: Whether S3 Replication Time Control is enabled.
+    Value: !If
+      - EnableReplicationTimeControlCondition
+      - Enabled
+      - Disabled
+
+  KMSReplication:
+    Description: Whether SSE-KMS encrypted object replication is enabled.
+    Value: !If
+      - EnableKMSReplicationCondition
+      - Enabled
+      - Disabled
