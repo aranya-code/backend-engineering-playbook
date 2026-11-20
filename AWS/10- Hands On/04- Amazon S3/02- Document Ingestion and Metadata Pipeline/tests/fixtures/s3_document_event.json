@@ -1,0 +1,38 @@
+{
+  "Records": [
+    {
+      "eventVersion": "2.1",
+      "eventSource": "aws:s3",
+      "awsRegion": "ap-south-1",
+      "eventTime": "2026-11-11T00:00:00.000Z",
+      "eventName": "ObjectCreated:Put",
+      "userIdentity": {
+        "principalId": "EXAMPLEPRINCIPAL"
+      },
+      "requestParameters": {
+        "sourceIPAddress": "192.0.2.10"
+      },
+      "responseElements": {
+        "x-amz-request-id": "EXAMPLEREQUESTID123",
+        "x-amz-id-2": "EXAMPLEHOSTID"
+      },
+      "s3": {
+        "s3SchemaVersion": "1.0",
+        "configurationId": "document-ingestion-notification",
+        "bucket": {
+          "name": "document-ingestion-tests",
+          "ownerIdentity": {
+            "principalId": "EXAMPLEOWNER"
+          },
+          "arn": "arn:aws:s3:::document-ingestion-tests"
+        },
+        "object": {
+          "key": "incoming%2Fsample-document-001.pdf",
+          "size": 24576,
+          "eTag": "d41d8cd98f00b204e9800998ecf8427e",
+          "sequencer": "00673A1B2C3D4E5F60"
+        }
+      }
+    }
+  ]
+}

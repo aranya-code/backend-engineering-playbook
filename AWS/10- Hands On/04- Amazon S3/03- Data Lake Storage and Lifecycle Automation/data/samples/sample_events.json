@@ -1,0 +1,155 @@
+[
+  {
+    "event_id": "8d0b5f5e-6b91-5a4f-9a42-3e6c2b1f0001",
+    "event_timestamp": "2026-01-01T09:15:32Z",
+    "event_date": "2026-01-01",
+    "tenant_id": "tenant-001",
+    "event_type": "purchase",
+    "user_id": "user-000101",
+    "amount": "149.99",
+    "currency": "USD",
+    "source": "web",
+    "attributes": {
+      "product_id": "product-0007",
+      "quantity": 2,
+      "payment_method": "card"
+    }
+  },
+  {
+    "event_id": "8d0b5f5e-6b91-5a4f-9a42-3e6c2b1f0002",
+    "event_timestamp": "2026-01-01T11:42:18Z",
+    "event_date": "2026-01-01",
+    "tenant_id": "tenant-002",
+    "event_type": "page_view",
+    "user_id": "user-000205",
+    "amount": "0.00",
+    "currency": "EUR",
+    "source": "mobile",
+    "attributes": {
+      "page": "/products",
+      "device": "mobile"
+    }
+  },
+  {
+    "event_id": "8d0b5f5e-6b91-5a4f-9a42-3e6c2b1f0003",
+    "event_timestamp": "2026-01-02T14:08:45Z",
+    "event_date": "2026-01-02",
+    "tenant_id": "tenant-001",
+    "event_type": "refund",
+    "user_id": "user-000101",
+    "amount": "-49.99",
+    "currency": "USD",
+    "source": "api",
+    "attributes": {
+      "order_id": "order-000142",
+      "reason": "customer_request"
+    }
+  },
+  {
+    "event_id": "8d0b5f5e-6b91-5a4f-9a42-3e6c2b1f0004",
+    "event_timestamp": "2026-01-03T08:30:00Z",
+    "event_date": "2026-01-03",
+    "tenant_id": "tenant-003",
+    "event_type": "signup",
+    "user_id": "user-000312",
+    "amount": "0.00",
+    "currency": "GBP",
+    "source": "web",
+    "attributes": {
+      "registration_channel": "referral",
+      "account_type": "business"
+    }
+  },
+  {
+    "event_id": "8d0b5f5e-6b91-5a4f-9a42-3e6c2b1f0005",
+    "event_timestamp": "2026-01-04T16:22:51Z",
+    "event_date": "2026-01-04",
+    "tenant_id": "tenant-004",
+    "event_type": "purchase",
+    "user_id": "user-000418",
+    "amount": "275.50",
+    "currency": "INR",
+    "source": "mobile",
+    "attributes": {
+      "product_id": "product-0023",
+      "quantity": 1,
+      "payment_method": "wallet"
+    }
+  },
+  {
+    "event_id": "8d0b5f5e-6b91-5a4f-9a42-3e6c2b1f0006",
+    "event_timestamp": "2026-01-05T19:05:13Z",
+    "event_date": "2026-01-05",
+    "tenant_id": "tenant-005",
+    "event_type": "page_view",
+    "user_id": "user-000519",
+    "amount": "0.00",
+    "currency": "USD",
+    "source": "api",
+    "attributes": {
+      "page": "/checkout",
+      "device": "desktop"
+    }
+  },
+  {
+    "event_id": "8d0b5f5e-6b91-5a4f-9a42-3e6c2b1f0007",
+    "event_timestamp": "2026-01-06T10:17:39Z",
+    "event_date": "2026-01-06",
+    "tenant_id": "tenant-006",
+    "event_type": "purchase",
+    "user_id": "user-000624",
+    "amount": "89.00",
+    "currency": "EUR",
+    "source": "web",
+    "attributes": {
+      "product_id": "product-0012",
+      "quantity": 3,
+      "payment_method": "bank_transfer"
+    }
+  },
+  {
+    "event_id": "8d0b5f5e-6b91-5a4f-9a42-3e6c2b1f0008",
+    "event_timestamp": "2026-01-07T13:54:06Z",
+    "event_date": "2026-01-07",
+    "tenant_id": "tenant-007",
+    "event_type": "refund",
+    "user_id": "user-000731",
+    "amount": "-25.00",
+    "currency": "GBP",
+    "source": "api",
+    "attributes": {
+      "order_id": "order-000387",
+      "reason": "product_return"
+    }
+  },
+  {
+    "event_id": "8d0b5f5e-6b91-5a4f-9a42-3e6c2b1f0009",
+    "event_timestamp": "2026-01-07T17:41:22Z",
+    "event_date": "2026-01-07",
+    "tenant_id": "tenant-008",
+    "event_type": "signup",
+    "user_id": "user-000842",
+    "amount": "0.00",
+    "currency": "INR",
+    "source": "mobile",
+    "attributes": {
+      "registration_channel": "campaign",
+      "account_type": "standard"
+    }
+  },
+  {
+    "event_id": "8d0b5f5e-6b91-5a4f-9a42-3e6c2b1f0010",
+    "event_timestamp": "2026-01-07T21:12:47Z",
+    "event_date": "2026-01-07",
+    "tenant_id": "tenant-009",
+    "event_type": "page_view",
+    "user_id": "user-000953",
+    "amount": "0.00",
+    "currency": "USD",
+    "source": "web",
+    "attributes": {
+      "page": "/account",
+      "device": "tablet"
+    }
+  }
+]

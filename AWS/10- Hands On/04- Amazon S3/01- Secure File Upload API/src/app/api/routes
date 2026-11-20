@@ -1,0 +1,16 @@
+"""Central API router aggregation for the Secure File Upload API.
+
+This module provides a single router entry point for composing API endpoints.
+Individual endpoint modules remain responsible for their own routes and
+business logic.
+"""
+
+from fastapi import APIRouter
+
+from app.api.health import router as health_router
+from app.api.objects import router as objects_router
+
+router = APIRouter()
+
+router.include_router(health_router)
+router.include_router(objects_router)
